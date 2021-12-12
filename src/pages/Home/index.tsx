@@ -67,7 +67,7 @@ const Home = (): JSX.Element => {
           <div className={styles.selectorContainer}>
             <GotchiSelector
               initialGotchiId={selectedAavegotchiId}
-              gotchis={[getDefaultGotchi()]}
+              gotchis={usersAavegotchis}
               selectGotchi={handleSelect}
             />
           </div>
