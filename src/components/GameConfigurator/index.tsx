@@ -1,23 +1,23 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import { Button, Card, Container, Form, InputGroup, Row } from "react-bootstrap";
-import { createGame, joinRandomGame } from "./functions";
-import {APIInterface, World} from "chisel-api-interface"
+import * as Chisel from "chisel-api-interface"
+import { useNavigate } from "react-router-dom";
+import Client from "../../matchmaking/Client"
+import {World} from "matchmaking/Schemas/World"
 
 class WorldsOptions extends React.Component {
     state = {data : null}
 
     componentDidMount() {
-        let apiInterface : APIInterface = new APIInterface('https://chisel.gotchiminer.rocks/api');
-        apiInterface.worlds().then(worlds => {
-            console.log(worlds);
+        Client.getInstance().apiInterface.worlds().then(worlds => {
             this.setState({data: worlds});
         })
     }
 
     render(): React.ReactNode {
         if(this.state.data !== null) {
-            return (this.state.data as unknown as World[]).map(function(world:World) {
-                return <option value={world.name}>{world.name}</option>
+            return (this.state.data as unknown as Chisel.World[]).map(function(world:Chisel.World) {
+                return <option value={world.id}>{world.name}</option>
             })
         }
         
@@ -28,6 +28,19 @@ class WorldsOptions extends React.Component {
 }
 
 const CreateGameForm = (): JSX.Element => {
+    let navigate = useNavigate();
+    function createGame(event: FormEvent<HTMLElement>) {
+        event.preventDefault();
+        // @ts-ignore: Unreachable code error
+        Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
+            Client.getInstance().chiselWorld = world;
+            // @ts-ignore: Unreachable code error
+            Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
+                Client.getInstance().colyseusRoom = room;
+                navigate("/play", {replace: false});
+            })
+        });
+    }
     return (
         <Form noValidate onSubmit={(e) => createGame(e)}>
             <Form.Group className="mb-3" controlId="world">
@@ -69,9 +82,28 @@ const JoinGameForm = (): JSX.Element => {
 }
 
 const JoinRandomGameForm = (): JSX.Element => {
+    let navigate = useNavigate();
+
+    function joinRandomGame(event: FormEvent<HTMLElement>) {
+        Client.getInstance().colyseusClient.getAvailableRooms().then(rooms => {
+            if(rooms.length === 0) {
+                alert("Cannot find an empty game, please create your own!")
+            } else {
+                // @ts-ignore: Unreachable code error
+                Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
+                    Client.getInstance().chiselWorld = world;
+                    // @ts-ignore: Unreachable code error
+                    Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
+                        Client.getInstance().colyseusRoom = room;
+                        navigate("/play", {replace: false});
+                    })
+                });
+            }
+        })
+    }
     return (
-        <Form>
-            <Button variant="primary" onClick={joinRandomGame}>
+        <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
+            <Button variant="primary" type="submit">
                 Join random game
             </Button>
         </Form>

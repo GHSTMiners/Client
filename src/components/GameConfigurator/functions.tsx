@@ -1,8 +1,8 @@
 import * as Colyseus from "colyseus.js"
 import { FormEvent } from "react";
+import { useNavigate } from 'react-router-dom';
 
 let client : Colyseus.Client = new Colyseus.Client('ws://localhost:2567');
-
 
 export function createGame(event: FormEvent<HTMLElement>) {
     event.preventDefault();
