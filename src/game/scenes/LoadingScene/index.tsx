@@ -1,20 +1,16 @@
 import * as Phaser from "phaser"
 import Client from "matchmaking/Client"
 import * as Chisel from "chisel-api-interface"
-import { World } from "matchmaking/Schemas/World"
-import { Room } from "colyseus.js"
 
 export default class LoadingScene extends Phaser.Scene {
     graphics!: Phaser.GameObjects.Graphics;
     newGraphics!: Phaser.GameObjects.Graphics;
 
     constructor() {
-        super({key: 'loadingScene'})
+        super({key: 'LoadingScene'})
     }
 
     preload() {
-        var self = this;
-
         // Create loading elements
         this.graphics = this.add.graphics();
         this.newGraphics = this.add.graphics();
@@ -26,11 +22,10 @@ export default class LoadingScene extends Phaser.Scene {
 
         this.newGraphics.fillStyle(0x3587e2, 1);
         this.newGraphics.fillRectShape(progressBarFill);
-        // @ts-expect-error: Let's ignore a compile error like this unreachable code 
-        var loadingText = this.add.text(this.cameras.main.width/2-190,this.cameras.main.height/2-15,"Loading: ", { fontSize: '32px', fill: '#FFF' });
+        var loadingText = this.add.text(this.cameras.main.width/2-190,this.cameras.main.height/2-15,"Loading: ", { fontSize: '32px' });
 
         this.load.on('progress', this.updateBar, {newGraphics:this.newGraphics,loadingText:loadingText, self:this});
-        // this.load.on('complete', this.complete, {scene:this.scene});
+        this.load.on('complete', this.complete, {scene:this.scene});
 
         let world : Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
         world.crypto.forEach(crypto => {
@@ -46,14 +41,11 @@ export default class LoadingScene extends Phaser.Scene {
         world.rocks.forEach(rock => {
             this.load.image(`rock_${rock.id}`, `https://chisel.gotchiminer.rocks/storage/${rock.image}`)
         })
-
         world.explosives.forEach(explosive => {
             this.load.audio(`explosive_${explosive.id}`, `https://chisel.gotchiminer.rocks/storage/${explosive.explosion_sound}`)
             this.load.image(`explosive_soil_${explosive.id}`, `https://chisel.gotchiminer.rocks/storage/${explosive.soil_image}`)
             this.load.image(`explosive_drop_${explosive.id}`, `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`)
             this.load.image(`explosive_inventory_${explosive.id}`, `https://chisel.gotchiminer.rocks/storage/${explosive.inventory_image}`)
-
-
         })
     }
 
@@ -66,5 +58,10 @@ export default class LoadingScene extends Phaser.Scene {
         percentage = percentage * 100;
         // @ts-expect-error: Let's ignore a compile error like this unreachable code 
         this.loadingText.setText("Loading: " + percentage.toFixed(2) + "%");
+    }
+
+    complete() {
+        console.log("Loading assets complete!");
+        this.scene.start("MainScene");
     }
 }

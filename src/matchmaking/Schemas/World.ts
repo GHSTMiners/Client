@@ -14,6 +14,7 @@ export class World extends Schema {
     @type("number") public width!: number;
     @type("number") public height!: number;
     @type("number") public gravity!: number;
+    @type ("boolean") public ready!: boolean;
     @type([ Block ]) public blocks: ArraySchema<Block> = new ArraySchema<Block>();
     @type([ Player ]) public players: ArraySchema<Player> = new ArraySchema<Player>();
 }

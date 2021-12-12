@@ -3,12 +3,12 @@ import * as Phaser from "phaser"
 import { Container } from "react-bootstrap";
 import Client from "matchmaking/Client";
 import { World } from "matchmaking/Schemas/World";
-import LoadingScene from "game/scenes/LoadingScene";
+import LoadingScene from "game/Scenes/LoadingScene";
+import MainScene from "game/Scenes/MainScene"
 
 export default class Play extends React.Component {
 
     componentDidMount() {
-        
         const config = {
             type: Phaser.AUTO,
             parent: "phaser-game",
@@ -19,7 +19,7 @@ export default class Play extends React.Component {
                 mode: Phaser.Scale.RESIZE ,
                 autoCenter: Phaser.Scale.CENTER_BOTH
             },
-            scene: LoadingScene
+            scene: [LoadingScene, MainScene]
           };
         new Phaser.Game(config);
         
