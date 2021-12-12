@@ -7,7 +7,7 @@ import { Tuple } from "types";
 const coreURI =
   "https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic";
 
-export const useSubgraph = async <T extends unknown>(
+export const callSubgraph = async <T extends unknown>(
   query: string,
   uri?: string
 ): Promise<T> => {
@@ -37,14 +37,14 @@ type DiamondCallMethods =
     }
   | {
       name: "getAavegotchiSideSvgs";
-      parameters: [string]
+      parameters: [string];
     }
   | {
       name: "previewSideAavegotchi";
       parameters: [string, string, Tuple<number, 6>, Tuple<number, 16>];
-    }
+    };
 
-export const useDiamondCall = async <R extends unknown>(
+export const callDiamond = async <R extends unknown>(
   provider: ethers.Signer | ethers.providers.Provider,
   method: DiamondCallMethods
 ): Promise<R> => {
