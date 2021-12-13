@@ -12,12 +12,7 @@ import { AavegotchiObject } from "types";
 
 const Home = (): JSX.Element => {
   const {
-    state: {
-      usersAavegotchis,
-      address = "0xE88632728Ed377f556cB964e6F670f6017d497e4",
-      selectedAavegotchiId = "3934",
-      networkId = "137",
-    },
+    state: { usersAavegotchis, address, selectedAavegotchiId, networkId },
     dispatch,
   } = useWeb3();
   const callDefaultGotchi = () => {
