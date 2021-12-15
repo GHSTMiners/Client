@@ -13,4 +13,5 @@ export interface State {
 
 export const initialState: State = {
   loading: false,
-}
+  address: "0xE88632728Ed377f556cB964e6F670f6017d497e4",
+};

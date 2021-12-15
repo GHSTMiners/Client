@@ -1,6 +1,6 @@
 import { useWeb3 } from "web3/context";
 import { useEffect, useState } from "react";
-import { useDiamondCall } from "web3/actions";
+import { callDiamond } from "web3/actions";
 import gotchiLoading from "assets/gifs/loading.gif";
 import { Web3Provider } from "@ethersproject/providers";
 import {
@@ -17,7 +17,12 @@ interface Props {
   side?: 0 | 1 | 2 | 3;
 }
 
-export const GotchiSVG = ({ tokenId, options, lazyloadIn, side = 0 }: Props) => {
+export const GotchiSVG = ({
+  tokenId,
+  options,
+  lazyloadIn,
+  side = 0,
+}: Props) => {
   const {
     state: { usersAavegotchis, provider },
     dispatch,
@@ -30,7 +35,7 @@ export const GotchiSVG = ({ tokenId, options, lazyloadIn, side = 0 }: Props) => 
     provider: Web3Provider
   ) => {
     try {
-      const res = await useDiamondCall<Tuple<string, 4>>(provider, {
+      const res = await callDiamond<Tuple<string, 4>>(provider, {
         name: "getAavegotchiSideSvgs",
         parameters: [id],
       });
