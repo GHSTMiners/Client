@@ -37,7 +37,9 @@ const CreateGameForm = (): JSX.Element => {
             // @ts-ignore: Unreachable code error
             Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
                 Client.getInstance().colyseusRoom = room;
-                navigate("/play", {replace: false});
+                room.onStateChange.once((state) => {
+                    navigate("/play", {replace: false});
+                });
             })
         });
     }
@@ -85,19 +87,21 @@ const JoinRandomGameForm = (): JSX.Element => {
     let navigate = useNavigate();
 
     function joinRandomGame(event: FormEvent<HTMLElement>) {
+        event.preventDefault();
         Client.getInstance().colyseusClient.getAvailableRooms().then(rooms => {
             if(rooms.length === 0) {
                 alert("Cannot find an empty game, please create your own!")
             } else {
-                // @ts-ignore: Unreachable code error
-                Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
-                    Client.getInstance().chiselWorld = world;
-                    // @ts-ignore: Unreachable code error
-                    Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
-                        Client.getInstance().colyseusRoom = room;
-                        navigate("/play", {replace: false});
-                    })
-                });
+                Client.getInstance().colyseusClient.joinById<World>(rooms[0].roomId).then(room => {
+                    Client.getInstance().colyseusRoom = room;
+                    room.onStateChange.once((state) => {
+                        console.log(state.id)
+                        Client.getInstance().apiInterface.world(state.id).then(world =>{
+                            Client.getInstance().chiselWorld = world;
+                            navigate("/play", {replace: false});
+                        });
+                    });
+                })
             }
         })
     }

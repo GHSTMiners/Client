@@ -1,9 +1,7 @@
 import $ from "jquery";
 import * as React from "react"
 import * as Phaser from "phaser"
-import { Container } from "react-bootstrap";
 import Client from "matchmaking/Client";
-import { World } from "matchmaking/Schemas/World";
 import LoadingScene from "game/Scenes/LoadingScene";
 import MainScene from "game/Scenes/MainScene"
 
@@ -17,7 +15,7 @@ export default class Play extends React.Component {
             room: Client.getInstance().colyseusRoom,
             scale: {
                 mode: Phaser.Scale.RESIZE,
-                autoCenter: Phaser.Scale.CENTER_BOTH
+                autoCenter: Phaser.Scale.NONE
             },
             scene: [LoadingScene, MainScene]
           };
@@ -29,7 +27,7 @@ export default class Play extends React.Component {
             let newWidth : number|undefined = $("#phaser-game").width();
             let newHeight : number|undefined = $("#phaser-game").width();
             if(typeof newWidth === "number" && typeof newHeight === "number") {
-                self.game.scale.setGameSize(newWidth, newHeight)
+                // self.game.scale.setGameSize(newWidth, newHeight)
                 // self.game.scale.resize(newWidth, newHeight)
                 // self.game.scene.scenes[1].cameras.main.setViewport(0, 0, newWidth, newHeight)
             }

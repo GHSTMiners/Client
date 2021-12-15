@@ -11,10 +11,7 @@ export default class LoadingScene extends Phaser.Scene {
     }
 
     create() {
-        this.cameras.main.setBounds(0, -1000, 40000, 40000);
-
         this.globalRenderer = new GlobalRenderer(this)
-        this.cameras.main.y += 600
 
         var cursors = this.input.keyboard.createCursorKeys();
 
