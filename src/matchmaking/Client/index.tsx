@@ -1,11 +1,12 @@
 import * as Chisel from "chisel-api-interface";
 import * as Colyseus from "colyseus.js"
+import Config from "config";
 import { World } from "matchmaking/Schemas/World";
 
 export default class Client {
     private static instance: Client;
-    public colyseusClient : Colyseus.Client = new Colyseus.Client('ws://localhost:2567');
-    public apiInterface : Chisel.APIInterface = new Chisel.APIInterface('https://chisel.gotchiminer.rocks/api')
+    public colyseusClient : Colyseus.Client = new Colyseus.Client(Config.colyseusURL);
+    public apiInterface : Chisel.APIInterface = new Chisel.APIInterface(Config.apiURL)
     public colyseusRoom! : Colyseus.Room<World>
     public chiselWorld! : Chisel.DetailedWorld
     /**

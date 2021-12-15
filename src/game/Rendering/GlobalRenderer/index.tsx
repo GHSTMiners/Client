@@ -6,5 +6,9 @@ export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
         this.blockRenderer = new BlockRenderer(scene)
     }
 
+    public update() {
+        this.blockRenderer.update()
+    }
+
     private blockRenderer : BlockRenderer
 }
