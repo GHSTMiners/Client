@@ -2,13 +2,15 @@
 import "./App.css";
 import styles from "./styles.module.css";
 import myGotchi from "assets/images/gotchi_example.png";
-import { Card, Col, Row, Container } from "react-bootstrap";
+import { Card, Col, Row, Container, Button } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
 import { GotchiSelector } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
-import { useWeb3, updateAavegotchis } from "web3/context";
+import { useWeb3, updateAavegotchis, connectToNetwork } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import { AavegotchiObject } from "types";
+import { networkIdToName } from "helpers/vars";
+import { smartTrim } from "helpers/functions";
 
 const Home = (): JSX.Element => {
   const {
@@ -20,6 +22,42 @@ const Home = (): JSX.Element => {
       type: "SET_USERS_AAVEGOTCHIS",
       usersAavegotchis: [getDefaultGotchi()],
     });
+  };
+
+  const WalletButton = () => {
+    const {
+      state: { address, networkId, loading },
+      dispatch,
+    } = useWeb3();
+
+    const handleWalletClick = () => {
+      if (!address) {
+        //playSound('click');
+        console.log(address?.toString);
+        connectToNetwork(dispatch, window.ethereum);
+      }
+    };
+
+    return (
+      <button
+        className={styles.walletContainer}
+        onClick={handleWalletClick}
+        disabled={!!address}
+      >
+        {loading ? (
+          "Loading..."
+        ) : address ? (
+          <div className={styles.walletAddress}>
+            <div className={styles.connectedDetails}>
+              <p>{networkId ? networkIdToName[networkId] : ""}</p>
+              <p>{smartTrim(address, 8)}</p>
+            </div>
+          </div>
+        ) : (
+          "Connect"
+        )}
+      </button>
+    );
   };
 
   /**
@@ -36,6 +74,8 @@ const Home = (): JSX.Element => {
   );
 
   useEffect(() => {
+    //connectToNetwork(dispatch, window.ethereum);
+
     if (process.env.REACT_APP_OFFCHAIN) return callDefaultGotchi();
 
     if (address) {
@@ -59,6 +99,7 @@ const Home = (): JSX.Element => {
     <Container fluid>
       <Row>
         <Col>
+          <WalletButton />
           <div className={styles.selectorContainer}>
             <GotchiSelector
               initialGotchiId={selectedAavegotchiId}
