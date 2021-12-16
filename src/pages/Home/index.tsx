@@ -2,7 +2,7 @@
 import "./App.css";
 import styles from "./styles.module.css";
 import myGotchi from "assets/images/gotchi_example.png";
-import { Card, Col, Row, Container, Button } from "react-bootstrap";
+import { Card, Col, Row, Container, Modal, Button } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
 import { GotchiSelector } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
@@ -11,6 +11,17 @@ import { useCallback, useEffect, useState } from "react";
 import { AavegotchiObject } from "types";
 import { networkIdToName } from "helpers/vars";
 import { smartTrim } from "helpers/functions";
+
+function LoadingModal() {
+  return (
+    <Modal>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+    </Modal>
+  );
+}
 
 const Home = (): JSX.Element => {
   const {
@@ -95,24 +106,28 @@ const Home = (): JSX.Element => {
     }
   }, [address]);
 
+  const [modalShow, setModalShow] = useState(false);
+
   return (
-    <Container fluid>
-      <Row>
-        <Col>
-          <WalletButton />
-          <div className={styles.selectorContainer}>
-            <GotchiSelector
-              initialGotchiId={selectedAavegotchiId}
-              gotchis={usersAavegotchis}
-              selectGotchi={handleSelect}
-            />
-          </div>
-        </Col>
-        <Col>
-          <GameConfigurator />
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container fluid>
+        <Row>
+          <Col>
+            <WalletButton />
+            <div className={styles.selectorContainer}>
+              <GotchiSelector
+                initialGotchiId={selectedAavegotchiId}
+                gotchis={usersAavegotchis}
+                selectGotchi={handleSelect}
+              />
+            </div>
+          </Col>
+          <Col>
+            <GameConfigurator />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

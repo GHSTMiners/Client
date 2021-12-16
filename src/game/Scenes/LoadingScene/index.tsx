@@ -28,9 +28,6 @@ export default class LoadingScene extends Phaser.Scene {
         this.load.on('complete', this.complete, {scene:this.scene});
 
         let world : Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
-        world.backgrounds.forEach(background => {
-            this.load.image(`background_${background.id}`, `https://chisel.gotchiminer.rocks/storage/${background.image}`)
-        })
         world.crypto.forEach(crypto => {
             this.load.audio(`crypto_${crypto.id}`, `https://chisel.gotchiminer.rocks/storage/${crypto.mining_sound}`)
             this.load.image(`crypto_soil_${crypto.id}`, `https://chisel.gotchiminer.rocks/storage/${crypto.soil_image}`);
