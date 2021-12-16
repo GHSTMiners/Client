@@ -71,10 +71,12 @@ export const GotchiSelector = ({
     val: "withSetsRarityScore",
     dir: "desc",
   });
-  const [activeToggle, setActiveToggle] = useState<"search" | "sort" | undefined>();
+  const [activeToggle, setActiveToggle] = useState<
+    "search" | "sort" | undefined
+  >();
 
   const width = useWindowWidth();
-  const isMobile = width < 768;
+  const isMobile = true; // width < 768;
 
   const handleSelect = useCallback(
     (id: string) => {
@@ -158,16 +160,25 @@ export const GotchiSelector = ({
     <div className={styles.gotchiSelector}>
       <div className={styles.filterOptions}>
         <SearchToggle
-          onToggle={() => activeToggle !== "search" ? setActiveToggle("search") :  setActiveToggle(undefined)}
+          onToggle={() =>
+            activeToggle !== "search"
+              ? setActiveToggle("search")
+              : setActiveToggle(undefined)
+          }
           activeOverride={isMobile ? activeToggle === "search" : undefined}
           placeholder="Token ID or Name"
           onChange={setSearchInput}
         />
         <SortToggle
-          onToggle={() => activeToggle !== "sort" ? setActiveToggle("sort") :  setActiveToggle(undefined)}
+          onToggle={() =>
+            activeToggle !== "sort"
+              ? setActiveToggle("sort")
+              : setActiveToggle(undefined)
+          }
           activeOverride={isMobile ? activeToggle === "sort" : undefined}
           options={sortOptions}
-          onSelect={setSort} selected={sort}
+          onSelect={setSort}
+          selected={sort}
         />
       </div>
       <div className={styles.selectorContainer}>
