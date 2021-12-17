@@ -1,4 +1,4 @@
-@import 'theme/vars.css';
+@import "theme/vars.css";
 
 .homeContainer {
   display: grid;
@@ -12,10 +12,7 @@
 }
 
 .gotchiContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  width: 50%;
 }
 .rotateButton {
   cursor: pointer;
@@ -69,7 +66,6 @@
 .errorContainer button {
   margin-top: 1.6rem;
 }
-
 
 .modalContent h1 {
   font-size: 3.2rem;
