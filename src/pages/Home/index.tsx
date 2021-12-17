@@ -4,13 +4,14 @@ import styles from "./styles.module.css";
 import myGotchi from "assets/images/gotchi_example.png";
 import { Card, Col, Row, Container, Modal, Button } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
-import { GotchiSelector } from "components";
+import { GotchiSelector, GotchiSVG } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
 import { useWeb3, updateAavegotchis, connectToNetwork } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import { AavegotchiObject } from "types";
 import { networkIdToName } from "helpers/vars";
 import { smartTrim } from "helpers/functions";
+import gotchiLoading from "assets/gifs/loading.gif";
 
 function LoadingModal() {
   return (
@@ -114,6 +115,20 @@ const Home = (): JSX.Element => {
         <Row>
           <Col>
             <WalletButton />
+
+            <div className="row justify-content-center">
+              <div className={styles.gotchiContainer}>
+                {selectedAavegotchiId ? (
+                  <GotchiSVG
+                    tokenId={selectedAavegotchiId}
+                    options={{ animate: true, removeBg: true }}
+                  />
+                ) : (
+                  <img src={gotchiLoading} alt="Loading Aavegotchi" />
+                )}
+              </div>
+            </div>
+
             <div className={styles.selectorContainer}>
               <GotchiSelector
                 initialGotchiId={selectedAavegotchiId}
