@@ -12,6 +12,7 @@ import { AavegotchiObject } from "types";
 import { networkIdToName } from "helpers/vars";
 import { smartTrim } from "helpers/functions";
 import gotchiLoading from "assets/gifs/loading.gif";
+import bgImage from "assets/images/bg.png";
 
 function LoadingModal() {
   return (
@@ -111,37 +112,38 @@ const Home = (): JSX.Element => {
 
   return (
     <>
-      <Container fluid>
-        <Row>
-          <Col>
-            <WalletButton />
-
-            <div className="row justify-content-center">
-              <div className={styles.gotchiContainer}>
-                {selectedAavegotchiId ? (
-                  <GotchiSVG
-                    tokenId={selectedAavegotchiId}
-                    options={{ animate: true, removeBg: true }}
-                  />
-                ) : (
-                  <img src={gotchiLoading} alt="Loading Aavegotchi" />
-                )}
+      <div className={styles.backgroundContainer}>
+        <Container fluid>
+          <Row>
+            <Col>
+              <WalletButton />
+              <div className="row justify-content-center">
+                <div className={styles.gotchiContainer}>
+                  {selectedAavegotchiId ? (
+                    <GotchiSVG
+                      tokenId={selectedAavegotchiId}
+                      options={{ animate: true, removeBg: true }}
+                    />
+                  ) : (
+                    <img src={gotchiLoading} alt="Loading Aavegotchi" />
+                  )}
+                </div>
               </div>
-            </div>
 
-            <div className={styles.selectorContainer}>
-              <GotchiSelector
-                initialGotchiId={selectedAavegotchiId}
-                gotchis={usersAavegotchis}
-                selectGotchi={handleSelect}
-              />
-            </div>
-          </Col>
-          <Col>
-            <GameConfigurator />
-          </Col>
-        </Row>
-      </Container>
+              <div className={styles.selectorContainer}>
+                <GotchiSelector
+                  initialGotchiId={selectedAavegotchiId}
+                  gotchis={usersAavegotchis}
+                  selectGotchi={handleSelect}
+                />
+              </div>
+            </Col>
+            <Col>
+              <GameConfigurator />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 };
