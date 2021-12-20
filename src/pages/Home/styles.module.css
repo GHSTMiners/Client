@@ -1,9 +1,17 @@
-@import 'theme/vars.css';
+@import "theme/vars.css";
 
 .homeContainer {
   display: grid;
   gap: 3.2rem;
   padding: 5.4rem 0;
+}
+
+.backgroundContainer {
+  background-image: url("assets/images/bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  background-position: center;
 }
 
 .selectorContainer {
@@ -12,10 +20,7 @@
 }
 
 .gotchiContainer {
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  width: 50%;
 }
 .rotateButton {
   cursor: pointer;
@@ -69,7 +74,6 @@
 .errorContainer button {
   margin-top: 1.6rem;
 }
-
 
 .modalContent h1 {
   font-size: 3.2rem;

@@ -57,8 +57,8 @@ const connectToNetwork = async (dispatch: React.Dispatch<Action>, eth: any) => {
     dispatch({ type: "SET_NETWORK_ID", networkId: chainId });
 
     // This was commented to use ETH address directly from the stored walled in the cookie
-    //const address = await provider.getSigner().getAddress();
-    //dispatch({ type: "SET_ADDRESS", address });
+    const address = await provider.getSigner().getAddress();
+    dispatch({ type: "SET_ADDRESS", address });
     dispatch({ type: "END_ASYNC" });
   } catch (error) {
     dispatch({ type: "SET_ERROR", error });

@@ -2,23 +2,26 @@
 import "./App.css";
 import styles from "./styles.module.css";
 import myGotchi from "assets/images/gotchi_example.png";
-import { Card, Col, Row, Container, Modal } from "react-bootstrap";
+import { Card, Col, Row, Container, Modal, Button } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
-import { GotchiSelector } from "components";
+import { GotchiSelector, GotchiSVG } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
-import { useWeb3, updateAavegotchis } from "web3/context";
+import { useWeb3, updateAavegotchis, connectToNetwork } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import { AavegotchiObject } from "types";
+import { networkIdToName } from "helpers/vars";
+import { smartTrim } from "helpers/functions";
+import gotchiLoading from "assets/gifs/loading.gif";
+import bgImage from "assets/images/bg.png";
 
-
-function LoadingModal () {
+function LoadingModal() {
   return (
     <Modal>
-    <Modal.Header closeButton>
-      <Modal.Title>Modal heading</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-  </Modal>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+    </Modal>
   );
 }
 
@@ -32,6 +35,42 @@ const Home = (): JSX.Element => {
       type: "SET_USERS_AAVEGOTCHIS",
       usersAavegotchis: [getDefaultGotchi()],
     });
+  };
+
+  const WalletButton = () => {
+    const {
+      state: { address, networkId, loading },
+      dispatch,
+    } = useWeb3();
+
+    const handleWalletClick = () => {
+      if (!address) {
+        //playSound('click');
+        console.log(address?.toString);
+        connectToNetwork(dispatch, window.ethereum);
+      }
+    };
+
+    return (
+      <button
+        className={styles.walletContainer}
+        onClick={handleWalletClick}
+        disabled={!!address}
+      >
+        {loading ? (
+          "Loading..."
+        ) : address ? (
+          <div className={styles.walletAddress}>
+            <div className={styles.connectedDetails}>
+              <p>{networkId ? networkIdToName[networkId] : ""}</p>
+              <p>{smartTrim(address, 8)}</p>
+            </div>
+          </div>
+        ) : (
+          "Connect"
+        )}
+      </button>
+    );
   };
 
   /**
@@ -48,6 +87,8 @@ const Home = (): JSX.Element => {
   );
 
   useEffect(() => {
+    //connectToNetwork(dispatch, window.ethereum);
+
     if (process.env.REACT_APP_OFFCHAIN) return callDefaultGotchi();
 
     if (address) {
@@ -69,25 +110,40 @@ const Home = (): JSX.Element => {
 
   const [modalShow, setModalShow] = useState(false);
 
-
   return (
     <>
-    <Container fluid>
-      <Row>
-        <Col>
-          <div className={styles.selectorContainer}>
-            <GotchiSelector
-              initialGotchiId={selectedAavegotchiId}
-              gotchis={usersAavegotchis}
-              selectGotchi={handleSelect}
-            />
-          </div>
-        </Col>
-        <Col>
-          <GameConfigurator />
-        </Col>
-      </Row>
-    </Container>
+      <div className={styles.backgroundContainer}>
+        <Container fluid>
+          <Row>
+            <Col>
+              <WalletButton />
+              <div className="row justify-content-center">
+                <div className={styles.gotchiContainer}>
+                  {selectedAavegotchiId ? (
+                    <GotchiSVG
+                      tokenId={selectedAavegotchiId}
+                      options={{ animate: true, removeBg: true }}
+                    />
+                  ) : (
+                    <img src={gotchiLoading} alt="Loading Aavegotchi" />
+                  )}
+                </div>
+              </div>
+
+              <div className={styles.selectorContainer}>
+                <GotchiSelector
+                  initialGotchiId={selectedAavegotchiId}
+                  gotchis={usersAavegotchis}
+                  selectGotchi={handleSelect}
+                />
+              </div>
+            </Col>
+            <Col>
+              <GameConfigurator />
+            </Col>
+          </Row>
+        </Container>
+      </div>
     </>
   );
 };

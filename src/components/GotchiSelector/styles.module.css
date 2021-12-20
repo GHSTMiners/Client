@@ -1,4 +1,4 @@
-@import 'theme/vars.css';
+@import "theme/vars.css";
 
 .gotchiSelector {
   position: relative;
@@ -80,7 +80,7 @@
   margin-left: 1.2rem;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 6768px) {
   .selectorContainer {
     flex-direction: column;
     margin: revert;
