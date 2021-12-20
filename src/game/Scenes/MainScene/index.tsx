@@ -1,8 +1,9 @@
+import Config from "config";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser"
 var controls;
 
-export default class LoadingScene extends Phaser.Scene {
+export default class MainScene extends Phaser.Scene {
     graphics!: Phaser.GameObjects.Graphics;
     newGraphics!: Phaser.GameObjects.Graphics;
     controls!: Phaser.Cameras.Controls.SmoothedKeyControl
@@ -28,6 +29,7 @@ export default class LoadingScene extends Phaser.Scene {
             maxSpeed: 1.0
         };
     
+        this.cameras.main.scrollY = -(this.cameras.main.height - Config.blockHeight*2)
         this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
     }
 
