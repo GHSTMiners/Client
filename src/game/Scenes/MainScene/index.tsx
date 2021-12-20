@@ -1,4 +1,5 @@
 import Config from "config";
+import MovementManager from "game/Management/MovementManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser"
 var controls;
@@ -9,6 +10,7 @@ export default class LoadingScene extends Phaser.Scene {
     controls!: Phaser.Cameras.Controls.SmoothedKeyControl
     constructor() {
         super({key: 'MainScene'})
+        console.log("Created mainscene")
     }
 
     create() {
@@ -31,6 +33,7 @@ export default class LoadingScene extends Phaser.Scene {
     
         this.cameras.main.scrollY = -(this.cameras.main.height - Config.blockHeight*2)
         this.controls = new Phaser.Cameras.Controls.SmoothedKeyControl(controlConfig);
+        this.movementManager = new MovementManager(this)
     }
 
     update(time: number, delta: number): void {
@@ -40,4 +43,5 @@ export default class LoadingScene extends Phaser.Scene {
     }
 
     private globalRenderer? : GlobalRenderer
+    private movementManager? : MovementManager
 }
