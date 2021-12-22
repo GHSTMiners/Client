@@ -1,0 +1,121 @@
+@import "theme/vars.css";
+
+.header {
+  background-color: transparent;
+}
+
+.logo {
+  content: url("assets/icons/logo.svg");
+  width: 15rem;
+  height: 5rem;
+}
+
+.desktopHeaderContent {
+  display: none;
+}
+
+.mobileHeaderContent {
+  padding: 1.6rem;
+}
+
+.navLink {
+  text-align: right;
+  color: #cecece;
+  font-family: Rocks;
+  opacity: 1;
+  font-size: 1.9rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: block;
+  padding: 2.5rem 0;
+}
+
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.activeNavLink {
+  opacity: 1;
+  position: relative;
+}
+.activeNavLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  bottom: 0;
+  background-color: #cecece;
+}
+
+.walletContainer {
+  background-image: url("assets/icons/wallet_connect.svg");
+  background-size: 100%;
+  background-color: transparent;
+  font-size: 1.4rem;
+  font-family: Rocks;
+  color: #cecece;
+  display: grid;
+  place-items: center;
+  height: fit-content;
+  border-style: none;
+  cursor: pointer;
+  min-width: 30rem;
+  min-height: 10rem;
+}
+.walletContainer:disabled {
+  cursor: auto;
+}
+
+.walletAddress {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.walletAddress p {
+  margin: 0 0 0 1.2rem;
+}
+
+.connectedDetails {
+  margin-left: 1.6rem;
+  color: #424241;
+}
+.connectedDetails p {
+  font-size: 1.2rem;
+  text-align: right;
+  margin: 0;
+  line-height: 1.4;
+  color: #424241;
+}
+
+@media only screen and (min-width: 768px) {
+  .desktopHeaderContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobileHeaderContent {
+    display: none;
+  }
+
+  .navContainer {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  .navContainer > * + * {
+    margin-left: 3.2rem;
+  }
+
+  .navLink {
+    text-align: left;
+  }
+
+  .walletContainer {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}

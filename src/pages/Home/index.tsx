@@ -13,6 +13,7 @@ import { networkIdToName } from "helpers/vars";
 import { smartTrim } from "helpers/functions";
 import gotchiLoading from "assets/gifs/loading.gif";
 import bgImage from "assets/images/bg.png";
+import { Header } from "components";
 
 function LoadingModal() {
   return (
@@ -35,42 +36,6 @@ const Home = (): JSX.Element => {
       type: "SET_USERS_AAVEGOTCHIS",
       usersAavegotchis: [getDefaultGotchi()],
     });
-  };
-
-  const WalletButton = () => {
-    const {
-      state: { address, networkId, loading },
-      dispatch,
-    } = useWeb3();
-
-    const handleWalletClick = () => {
-      if (!address) {
-        //playSound('click');
-        console.log(address?.toString);
-        connectToNetwork(dispatch, window.ethereum);
-      }
-    };
-
-    return (
-      <button
-        className={styles.walletContainer}
-        onClick={handleWalletClick}
-        disabled={!!address}
-      >
-        {loading ? (
-          "Loading..."
-        ) : address ? (
-          <div className={styles.walletAddress}>
-            <div className={styles.connectedDetails}>
-              <p>{networkId ? networkIdToName[networkId] : ""}</p>
-              <p>{smartTrim(address, 8)}</p>
-            </div>
-          </div>
-        ) : (
-          "Connect"
-        )}
-      </button>
-    );
   };
 
   /**
@@ -113,10 +78,10 @@ const Home = (): JSX.Element => {
   return (
     <>
       <div className={styles.backgroundContainer}>
+        <Header />
         <Container fluid>
           <Row>
             <Col>
-              <WalletButton />
               <div className="row justify-content-center">
                 <div className={styles.gotchiContainer}>
                   {selectedAavegotchiId ? (

@@ -9,6 +9,7 @@ import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
+import stoneRing from "assets/icons/ring_selected.svg";
 
 const sortOptions = [
   {

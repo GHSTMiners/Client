@@ -41,6 +41,7 @@
 .gotchiContainer img {
   max-height: 33rem;
   width: 100%;
+  padding-top: 2rem;
 }
 
 .buttonContainer {
