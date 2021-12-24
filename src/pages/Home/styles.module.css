@@ -20,8 +20,14 @@
 }
 
 .gotchiContainer {
+  width: 45%;
+  padding-left: 5%;
+}
+
+.stoneMenu {
   width: 50%;
 }
+
 .rotateButton {
   cursor: pointer;
   background-color: var(--color-purple_0);

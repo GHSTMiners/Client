@@ -1,5 +1,5 @@
 import { AavegotchiObject } from "types";
-import { ChevronUp, ChevronDown, click } from "assets";
+import { ChevronUp, ChevronDown, click, ArrowLeft, ArrowRight } from "assets";
 import { playSound } from "helpers/hooks/useSound";
 import globalStyles from "theme/globalStyles.module.css";
 import { useEffect, useState, useCallback } from "react";
@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
-import stoneRing from "assets/icons/ring_selected.svg";
+import { RingDeselected } from "assets";
 
 const sortOptions = [
   {
@@ -50,7 +50,7 @@ export const GotchiSelector = ({
   gotchis,
   selectGotchi,
   initialGotchiId,
-  maxVisible = 3,
+  maxVisible = 4,
 }: Props) => {
   const [selected, setSelected] = useState<string>();
   const [currentIteration, setCurrentIteration] = useState(0);
@@ -183,8 +183,8 @@ export const GotchiSelector = ({
         />
       </div>
       <div className={styles.selectorContainer}>
-        <ChevronUp
-          width={24}
+        <ArrowLeft
+          width={96}
           className={`${styles.chevron} ${styles.up} ${
             currentIteration === 0 ? styles.disabled : styles.enabled
           }`}
@@ -207,7 +207,7 @@ export const GotchiSelector = ({
             }
           >
             {gotchis === undefined
-              ? new Array(3).fill("").map((_, i) => (
+              ? new Array(4).fill("").map((_, i) => (
                   <div className={styles.loadingContainer} key={i}>
                     <img src={gotchiLoading} alt={`Loading gotchi ${i}`} />
                   </div>
@@ -235,8 +235,8 @@ export const GotchiSelector = ({
                 })}
           </div>
         </div>
-        <ChevronDown
-          width={24}
+        <ArrowRight
+          width={96}
           className={`${styles.chevron} ${styles.down} ${
             currentIteration === maxIterations
               ? styles.disabled

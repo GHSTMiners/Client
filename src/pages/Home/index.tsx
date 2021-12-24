@@ -14,6 +14,7 @@ import { smartTrim } from "helpers/functions";
 import gotchiLoading from "assets/gifs/loading.gif";
 import bgImage from "assets/images/bg.png";
 import { Header } from "components";
+import { StoneMenu } from "assets";
 
 function LoadingModal() {
   return (
@@ -93,6 +94,7 @@ const Home = (): JSX.Element => {
                     <img src={gotchiLoading} alt="Loading Aavegotchi" />
                   )}
                 </div>
+                <StoneMenu className={styles.stoneMenu} />
               </div>
 
               <div className={styles.selectorContainer}>
@@ -103,9 +105,7 @@ const Home = (): JSX.Element => {
                 />
               </div>
             </Col>
-            <Col>
-              <GameConfigurator />
-            </Col>
+            <Col></Col>
           </Row>
         </Container>
       </div>
