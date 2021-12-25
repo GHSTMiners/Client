@@ -11,3 +11,4 @@ export * from "./Portal";
 export * from "./SearchToggle";
 export * from "./SortToggle";
 export * from "./Sidetray";
+export * from "./FlipCard";
