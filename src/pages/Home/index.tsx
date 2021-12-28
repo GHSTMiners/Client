@@ -1,20 +1,16 @@
 //import myGotchi from "assets/images/gotchi_example.png";
 import "./App.css";
 import styles from "./styles.module.css";
-import myGotchi from "assets/images/gotchi_example.png";
 import { Card, Col, Row, Container, Modal, Button } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
 import { GotchiSelector, GotchiSVG } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
-import { useWeb3, updateAavegotchis, connectToNetwork } from "web3/context";
+import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
-import { AavegotchiObject } from "types";
-import { networkIdToName } from "helpers/vars";
-import { smartTrim } from "helpers/functions";
 import gotchiLoading from "assets/gifs/loading.gif";
-import bgImage from "assets/images/bg.png";
 import { Header } from "components";
 import { StoneMenu } from "assets";
+import { TraitsPanel } from "components/TraitsPanel";
 
 function LoadingModal() {
   return (
@@ -83,7 +79,7 @@ const Home = (): JSX.Element => {
         <Container fluid>
           <Row>
             <Col>
-              <div className="row justify-content-center">
+              <div className={styles.gotchiTraitsContainer}>
                 <div className={styles.gotchiContainer}>
                   {selectedAavegotchiId ? (
                     <GotchiSVG
@@ -94,7 +90,13 @@ const Home = (): JSX.Element => {
                     <img src={gotchiLoading} alt="Loading Aavegotchi" />
                   )}
                 </div>
-                <StoneMenu className={styles.stoneMenu} />
+                <div className={styles.stoneMenu}>
+                  <TraitsPanel
+                    selectedGotchi={usersAavegotchis?.find(
+                      (gotchi) => gotchi.id === selectedAavegotchiId
+                    )}
+                  />
+                </div>
               </div>
 
               <div className={styles.selectorContainer}>

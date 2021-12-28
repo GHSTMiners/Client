@@ -19,13 +19,20 @@
   justify-content: center;
 }
 
+.gotchiTraitsContainer {
+  display: flex;
+}
+
 .gotchiContainer {
-  width: 45%;
+  width: 40%;
   padding-left: 5%;
 }
 
 .stoneMenu {
-  width: 50%;
+  background-image: url("assets/icons/menu_stone.svg");
+  background-repeat: no-repeat;
+  height: 55vh;
+  width: 60%;
 }
 
 .rotateButton {
