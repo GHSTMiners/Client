@@ -2,7 +2,7 @@ import Client from "matchmaking/Client"
 
 export default class MovementManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
-        super(scene, "")
+        super(scene, "MovementManager")
         this.keys = new Map<number, Phaser.Input.Keyboard.Key>()
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.W, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, true))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.S, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, true))
@@ -20,7 +20,6 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionVector.y+=1
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionVector.x+=1
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionVector.x-=1
-        
         Client.getInstance().colyseusRoom.send("direction", JSON.stringify(directionVector))
     }
 
