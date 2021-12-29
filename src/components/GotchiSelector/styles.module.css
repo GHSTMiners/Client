@@ -33,7 +33,7 @@
 
 .chevron.up,
 .chevron.down {
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
 }
 .chevron.up {
   margin-right: 0.4rem;
@@ -56,6 +56,8 @@
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
+  background-image: url("assets/icons/ring_deselected.svg");
+  background-size: 100%;
 }
 
 .gotchiContainer.selected {
@@ -63,7 +65,7 @@
 }
 
 .loadingContainer {
-  background-color: white;
+  background-color: transparent;
 }
 .loadingContainer img {
   width: 100%;

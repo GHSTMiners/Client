@@ -19,9 +19,22 @@
   justify-content: center;
 }
 
-.gotchiContainer {
-  width: 50%;
+.gotchiTraitsContainer {
+  display: flex;
 }
+
+.gotchiContainer {
+  width: 40%;
+  padding-left: 5%;
+}
+
+.stoneMenu {
+  background-image: url("assets/icons/menu_stone.svg");
+  background-repeat: no-repeat;
+  height: 55vh;
+  width: 60%;
+}
+
 .rotateButton {
   cursor: pointer;
   background-color: var(--color-purple_0);
