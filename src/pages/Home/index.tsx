@@ -107,7 +107,7 @@ const Home = (): JSX.Element => {
                 />
               </div>
             </Col>
-            <Col></Col>
+            <Col><GameConfigurator></GameConfigurator></Col>
           </Row>
         </Container>
       </div>

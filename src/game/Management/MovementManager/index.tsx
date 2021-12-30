@@ -1,5 +1,5 @@
 import Client from "matchmaking/Client"
-
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 export default class MovementManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "MovementManager")
@@ -15,12 +15,13 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
     }
 
     private keysChanged() {
-        let directionVector : Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0)
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionVector.y-=1
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionVector.y+=1
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionVector.x+=1
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionVector.x-=1
-        Client.getInstance().colyseusRoom.send("direction", JSON.stringify(directionVector))
+        let directionChangedMessage : Protocol.ChangeDirection = new Protocol.ChangeDirection()
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
+        let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
+        Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
     }
 
     private keys : Map<number, Phaser.Input.Keyboard.Key>
