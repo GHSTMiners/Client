@@ -9,7 +9,9 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         //Handle player creation
         Client.getInstance().colyseusRoom.state.players.onAdd = this.addPlayerSprite.bind(this)
         Client.getInstance().colyseusRoom.state.players.onRemove = this.removePlayerSprite.bind(this)
-        Client.getInstance().colyseusRoom.state.players.forEach(this.addPlayerSprite, this)
+        Client.getInstance().colyseusRoom.state.players.forEach(player => {
+            this.addPlayerSprite(player)
+        }, this)
     }
 
     private addPlayerSprite(player : Schema.Player ) {
@@ -17,6 +19,11 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         let newPlayer : Player = new Player(this.scene, player)
         this.playerSprites.set(player.gotchiID, newPlayer)
         this.scene.add.existing(newPlayer)
+        //Check if this sprite belong to me
+        console.log(`${player.playerSessionID}, ${Client.getInstance().colyseusRoom.sessionId}`)
+        if(player.playerSessionID == Client.getInstance().colyseusRoom.sessionId) {
+            this.scene.cameras.main.startFollow(newPlayer)
+        }
     }
 
     private removePlayerSprite(player : Schema.Player) {
