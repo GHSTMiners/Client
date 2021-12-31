@@ -69,12 +69,12 @@
   margin-right: 2rem;
 }
 
-.nameTitle {
+.gotchiName {
   color: #cecece;
-  font-size: 18pt;
+  font-size: 20pt;
   margin-top: 0.5rem;
   display: flex;
-  align-items: center;
+  align-self: center;
   justify-content: center;
 }
 

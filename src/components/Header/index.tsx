@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useWeb3, connectToNetwork } from "web3/context";
 import { smartTrim } from "helpers/functions";
 import { networkIdToName } from "helpers/vars";
-import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
+//import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
@@ -32,7 +32,7 @@ const WalletButton = () => {
         "Loading..."
       ) : address ? (
         <div className={styles.walletAddress}>
-          <Jazzicon diameter={24} seed={jsNumberForAddress(address)} />
+          {/* <Jazzicon diameter={24} seed={jsNumberForAddress(address)} /> //this was commented to avoid problems */}
           <div className={styles.connectedDetails}>
             <p>{networkId ? networkIdToName[networkId] : ""}</p>
             <p>{smartTrim(address, 8)}</p>
