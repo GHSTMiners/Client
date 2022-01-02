@@ -80,6 +80,13 @@ const Home = (): JSX.Element => {
           <Row>
             <Col>
               <div className={styles.gotchiTraitsContainer}>
+                <div className={styles.stoneMenu}>
+                  <TraitsPanel
+                    selectedGotchi={usersAavegotchis?.find(
+                      (gotchi) => gotchi.id === selectedAavegotchiId
+                    )}
+                  />
+                </div>
                 <div className={styles.gotchiContainer}>
                   {selectedAavegotchiId ? (
                     <GotchiSVG
@@ -89,13 +96,6 @@ const Home = (): JSX.Element => {
                   ) : (
                     <img src={gotchiLoading} alt="Loading Aavegotchi" />
                   )}
-                </div>
-                <div className={styles.stoneMenu}>
-                  <TraitsPanel
-                    selectedGotchi={usersAavegotchis?.find(
-                      (gotchi) => gotchi.id === selectedAavegotchiId
-                    )}
-                  />
                 </div>
               </div>
 
@@ -107,7 +107,9 @@ const Home = (): JSX.Element => {
                 />
               </div>
             </Col>
-            <Col><GameConfigurator></GameConfigurator></Col>
+            <Col>
+              <GameConfigurator></GameConfigurator>
+            </Col>
           </Row>
         </Container>
       </div>

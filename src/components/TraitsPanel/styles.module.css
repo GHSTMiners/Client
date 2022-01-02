@@ -1,9 +1,9 @@
 @import "theme/vars.css";
 
 .graphContainer {
-  width: 14%;
-  top: 13rem;
-  left: 27rem;
+  width: 50%;
+  top: 3rem;
+  left: 3rem;
   position: absolute;
 }
 

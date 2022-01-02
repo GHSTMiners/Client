@@ -9,7 +9,7 @@ import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
-import { RingDeselected } from "assets";
+import ringDeselected from "assets/icons/ring_deselected3.svg";
 
 const sortOptions = [
   {
@@ -229,7 +229,13 @@ export const GotchiSelector = ({
                         handleSelect(gotchi.id);
                       }}
                     >
-                      <GotchiSVG tokenId={gotchi.id} lazyloadIn={loadIn} />
+                      <div className={styles.gotchiInnerRing}>
+                        <GotchiSVG tokenId={gotchi.id} lazyloadIn={loadIn} />
+                      </div>
+                      <img
+                        src={ringDeselected}
+                        className={styles.ringContainer}
+                      />
                     </div>
                   );
                 })}

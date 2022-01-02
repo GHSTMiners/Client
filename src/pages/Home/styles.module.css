@@ -21,18 +21,24 @@
 
 .gotchiTraitsContainer {
   display: flex;
+  position: relative;
 }
 
 .gotchiContainer {
   width: 40%;
-  padding-left: 5%;
+  position: absolute;
+  padding-left: 4%;
+  top: 25%;
+  left: 5%;
 }
 
 .stoneMenu {
   background-image: url("assets/icons/menu_stone.svg");
   background-repeat: no-repeat;
-  height: 55vh;
+  height: 540px;
   width: 60%;
+  margin-left: 21rem;
+  position: relative;
 }
 
 .rotateButton {
