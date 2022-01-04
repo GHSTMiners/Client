@@ -48,8 +48,8 @@
   border: none;
   border-radius: 0.2rem;
   position: absolute;
-  top: 0;
-  right: 0;
+  right: 84%;
+  top: 66%;
 }
 
 .highscore {

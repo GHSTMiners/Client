@@ -9,7 +9,7 @@ import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
 import { Header } from "components";
-import { StoneMenu } from "assets";
+import { RotateIcon } from "assets";
 import { TraitsPanel } from "components/TraitsPanel";
 
 function LoadingModal() {
@@ -47,6 +47,28 @@ const Home = (): JSX.Element => {
     },
     [dispatch]
   );
+
+  const [gotchiSide, setGotchiSide] = useState<0 | 1 | 2 | 3>(0);
+  const rotateGotchi = () => {
+    const currentPos = gotchiSide;
+    switch (currentPos) {
+      case 0:
+        setGotchiSide(1);
+        break;
+      case 1:
+        setGotchiSide(3);
+        break;
+      case 2:
+        setGotchiSide(0);
+        break;
+      case 3:
+        setGotchiSide(2);
+        break;
+      default:
+        setGotchiSide(0);
+        break;
+    }
+  };
 
   useEffect(() => {
     //connectToNetwork(dispatch, window.ethereum);
@@ -90,6 +112,7 @@ const Home = (): JSX.Element => {
                 <div className={styles.gotchiContainer}>
                   {selectedAavegotchiId ? (
                     <GotchiSVG
+                      side={gotchiSide}
                       tokenId={selectedAavegotchiId}
                       options={{ animate: true, removeBg: true }}
                     />
@@ -98,6 +121,10 @@ const Home = (): JSX.Element => {
                   )}
                 </div>
               </div>
+
+              <button className={styles.rotateButton}>
+                <RotateIcon width={32} height={24} onClick={rotateGotchi} />
+              </button>
 
               <div className={styles.selectorContainer}>
                 <GotchiSelector
