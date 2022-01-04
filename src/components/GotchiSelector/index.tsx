@@ -10,6 +10,7 @@ import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
 import ringDeselected from "assets/icons/ring_deselected3.svg";
+import ringSelected from "assets/icons/ring_selected3.svg";
 
 const sortOptions = [
   {
@@ -218,11 +219,7 @@ export const GotchiSelector = ({
 
                   return (
                     <div
-                      className={`${styles.gotchiContainer} ${
-                        isSelected
-                          ? `${styles.selected} ${globalStyles.glow}`
-                          : ""
-                      }`}
+                      className={`${styles.gotchiContainer}`}
                       key={i}
                       onClick={() => {
                         playSound(click);
@@ -232,10 +229,17 @@ export const GotchiSelector = ({
                       <div className={styles.gotchiInnerRing}>
                         <GotchiSVG tokenId={gotchi.id} lazyloadIn={loadIn} />
                       </div>
-                      <img
-                        src={ringDeselected}
-                        className={styles.ringContainer}
-                      />
+                      {isSelected ? (
+                        <img
+                          src={ringSelected}
+                          className={styles.ringContainer}
+                        />
+                      ) : (
+                        <img
+                          src={ringDeselected}
+                          className={styles.ringContainer}
+                        />
+                      )}
                     </div>
                   );
                 })}
