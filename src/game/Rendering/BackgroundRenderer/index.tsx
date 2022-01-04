@@ -23,7 +23,7 @@ export default class BackgroundRenderer extends Phaser.GameObjects.GameObject {
     }
 
     private layerToYCoordinate(layer : number) {
-        return layer * Config.blockHeight
+        return (layer-1) * Config.blockHeight 
     }
 
     public layersInView() : [number, number] {

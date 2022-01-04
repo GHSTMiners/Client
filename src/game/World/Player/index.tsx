@@ -4,6 +4,7 @@ import * as Phaser from "phaser"
 export class Player extends Phaser.GameObjects.Container {
     constructor(scene: Phaser.Scene, player: Schema.Player) {
         super(scene, player.x, player.y)
+        this.setDepth(2)
         this.playerSchema = player
         this.playerSprite = this.scene.add.sprite(0, 0, 'aavegotchi')
         this.add(this.playerSprite)
@@ -21,7 +22,7 @@ export class Player extends Phaser.GameObjects.Container {
         player.onChange = this.locationChanged.bind(this)
     }
 
-    private locationChanged() {        
+    private locationChanged() {  
         this.movementTween = this.scene.tweens.add({
             targets: this,
             duration: 1000/50,
