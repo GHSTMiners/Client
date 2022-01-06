@@ -7,11 +7,15 @@
 }
 
 .backgroundContainer {
-  background-image: url("assets/images/bg.png");
+  background-image: url("assets/images/bg2.png");
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
   background-position: center;
+}
+
+.gotchiMainContainer {
+  margin-left: 5%;
 }
 
 .selectorContainer {

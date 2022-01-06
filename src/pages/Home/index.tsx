@@ -101,37 +101,39 @@ const Home = (): JSX.Element => {
         <Container fluid>
           <Row>
             <Col>
-              <div className={styles.gotchiTraitsContainer}>
-                <div className={styles.stoneMenu}>
-                  <TraitsPanel
-                    selectedGotchi={usersAavegotchis?.find(
-                      (gotchi) => gotchi.id === selectedAavegotchiId
+              <div className={styles.gotchiMainContainer}>
+                <div className={styles.gotchiTraitsContainer}>
+                  <div className={styles.stoneMenu}>
+                    <TraitsPanel
+                      selectedGotchi={usersAavegotchis?.find(
+                        (gotchi) => gotchi.id === selectedAavegotchiId
+                      )}
+                    />
+                  </div>
+                  <div className={styles.gotchiContainer}>
+                    {selectedAavegotchiId ? (
+                      <GotchiSVG
+                        side={gotchiSide}
+                        tokenId={selectedAavegotchiId}
+                        options={{ animate: true, removeBg: true }}
+                      />
+                    ) : (
+                      <img src={gotchiLoading} alt="Loading Aavegotchi" />
                     )}
+                  </div>
+                </div>
+
+                <button className={styles.rotateButton}>
+                  <RotateIcon width={32} height={24} onClick={rotateGotchi} />
+                </button>
+
+                <div className={styles.selectorContainer}>
+                  <GotchiSelector
+                    initialGotchiId={selectedAavegotchiId}
+                    gotchis={usersAavegotchis}
+                    selectGotchi={handleSelect}
                   />
                 </div>
-                <div className={styles.gotchiContainer}>
-                  {selectedAavegotchiId ? (
-                    <GotchiSVG
-                      side={gotchiSide}
-                      tokenId={selectedAavegotchiId}
-                      options={{ animate: true, removeBg: true }}
-                    />
-                  ) : (
-                    <img src={gotchiLoading} alt="Loading Aavegotchi" />
-                  )}
-                </div>
-              </div>
-
-              <button className={styles.rotateButton}>
-                <RotateIcon width={32} height={24} onClick={rotateGotchi} />
-              </button>
-
-              <div className={styles.selectorContainer}>
-                <GotchiSelector
-                  initialGotchiId={selectedAavegotchiId}
-                  gotchis={usersAavegotchis}
-                  selectGotchi={handleSelect}
-                />
               </div>
             </Col>
             <Col>
