@@ -22,7 +22,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         //Check if this sprite belong to me
         console.log(`${player.playerSessionID}, ${Client.getInstance().colyseusRoom.sessionId}`)
         if(player.playerSessionID == Client.getInstance().colyseusRoom.sessionId) {
-            this.scene.cameras.main.startFollow(newPlayer)
+            this.scene.cameras.main.startFollow(newPlayer, true, 0.1, 0.1)
         }
     }
 

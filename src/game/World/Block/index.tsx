@@ -42,7 +42,6 @@ export default class Block extends Phaser.GameObjects.Container {
 
     private blockUpdated() {
         if(this.blockInfo?.spawnType == SpawnType.None && this.foregroundSprite && this.backgroundSprite) {
-            console.log('block updated')
             this.remove(this.foregroundSprite, true)
             this.backgroundSprite.setAlpha(0.5)
             //Remove foreground sprite too if it exists

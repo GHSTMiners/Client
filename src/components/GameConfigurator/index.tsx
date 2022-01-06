@@ -34,23 +34,24 @@ const CreateGameForm = (): JSX.Element => {
     function createGame(event: FormEvent<HTMLElement>) {
         setLoading(true);
         event.preventDefault();
-        try{
+        // @ts-ignore: Unreachable code error
+        Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
+            Client.getInstance().chiselWorld = world;
             // @ts-ignore: Unreachable code error
-            Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
-                Client.getInstance().chiselWorld = world;
-                // @ts-ignore: Unreachable code error
-                Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
-                    Client.getInstance().colyseusRoom = room;
-                    room.onStateChange.once((state) => {
-                        navigate("/play", {replace: false});
-                        setLoading(false);
-                    });
-                })
-            });
-        } catch(error: any) {
-            alert("Failed to create game! Maybe we're having server issues ?")
+            Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
+                Client.getInstance().colyseusRoom = room;
+                room.onStateChange.once((state) => {
+                    navigate("/play", {replace: false});
+                    setLoading(false);
+                });
+            }).catch(e =>{
+                setLoading(false);
+                alert("Failed to create game! Maybe we're having server issues ?")
+            })
+        }).catch(e =>{
             setLoading(false);
-        }
+            alert("Failed to create game! Maybe we're having server issues ?")
+        })
     }
     return (
         <Form noValidate onSubmit={(e) => createGame(e)}>
@@ -102,8 +103,8 @@ const JoinRandomGameForm = (): JSX.Element => {
         setLoading(true)
         Client.getInstance().colyseusClient.getAvailableRooms().then(rooms => {
             if(rooms.length === 0) {
-                setLoading(false)
                 alert("Cannot find an empty game, please create your own!")
+                setLoading(false)
             } else {
                 Client.getInstance().colyseusClient.joinById<World>(rooms[0].roomId).then(room => {
                     Client.getInstance().colyseusRoom = room;
@@ -113,8 +114,17 @@ const JoinRandomGameForm = (): JSX.Element => {
                             Client.getInstance().chiselWorld = world;
                             navigate("/play", {replace: false});
                             setLoading(false)
+                        }).catch(e =>{
+                            setLoading(false);
+                            alert("Failed to create game! Maybe we're having server issues ?")
                         });
                     });
+                }).catch(e =>{
+                    setLoading(false);
+                    alert("Failed to join game! Maybe we're having server issues ?")
+                }).catch(e =>{
+                    setLoading(false);
+                    alert("Failed to create game! Maybe we're having server issues ?")
                 })
             }
         })

@@ -7,7 +7,7 @@
 
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
 import { Block } from './Block'
-import { Player } from './Player'
+import { Player } from './Player/Player'
 
 export class World extends Schema {
     @type("number") public id!: number;

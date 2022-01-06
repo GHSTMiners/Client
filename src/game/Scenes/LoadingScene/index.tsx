@@ -27,6 +27,9 @@ export default class LoadingScene extends Phaser.Scene {
         this.load.on('progress', this.updateBar, {newGraphics:this.newGraphics,loadingText:loadingText, self:this});
         this.load.on('complete', this.complete, {scene:this.scene});
 
+        //Static images
+        this.load.image('dirtParticle', 'assets/images/stone.png')
+
         let world : Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
         this.load.image('aavegotchi', "https://play.gotchiminer.rocks/VOYAGER.png");
         world.backgrounds.forEach(background => {
