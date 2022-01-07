@@ -4,6 +4,7 @@ import * as Chisel from "chisel-api-interface"
 import { useNavigate } from "react-router-dom";
 import Client from "../../matchmaking/Client"
 import {World} from "matchmaking/Schemas/World"
+import { useWeb3 } from "web3/context";
 
 class WorldsOptions extends React.Component {
     state = {data : null}
@@ -31,6 +32,11 @@ const CreateGameForm = (): JSX.Element => {
     let navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
 
+    const {
+        state: { address, networkId, loading },
+        dispatch,
+      } = useWeb3();
+
     function createGame(event: FormEvent<HTMLElement>) {
         setLoading(true);
         event.preventDefault();
@@ -38,7 +44,7 @@ const CreateGameForm = (): JSX.Element => {
         Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
             Client.getInstance().chiselWorld = world;
             // @ts-ignore: Unreachable code error
-            Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`).then(room => {
+            Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
                 Client.getInstance().colyseusRoom = room;
                 room.onStateChange.once((state) => {
                     navigate("/play", {replace: false});
@@ -46,32 +52,32 @@ const CreateGameForm = (): JSX.Element => {
                 });
             }).catch(e =>{
                 setLoading(false);
-                alert("Failed to create game! Maybe we're having server issues ?")
+                alert(`Failed to create game! Reason: ${e.message}`)
             })
         }).catch(e =>{
             setLoading(false);
-            alert("Failed to create game! Maybe we're having server issues ?")
+            alert("Failed to fetch world information! Maybe we're having server issues ?")
         })
     }
     return (
         <Form noValidate onSubmit={(e) => createGame(e)}>
             <Form.Group className="mb-3" controlId="world">
                 <Form.Label>World</Form.Label>
-                <Form.Select aria-label="World" disabled={isLoading}>
+                <Form.Select aria-label="World" disabled={isLoading || !address}>
                     <WorldsOptions/>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="gameMode">
                 <Form.Label>Game Mode</Form.Label>
-                <Form.Select aria-label="World" disabled={isLoading}>
+                <Form.Select aria-label="World" disabled={isLoading || !address}>
                     <option value="Classic">Classic</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="private-game">
                 <Form.Label>Options</Form.Label>        
-                <Form.Check type="checkbox" label="Private game" disabled={isLoading}/>
+                <Form.Check type="checkbox" label="Private game" disabled={isLoading || !address}/>
             </Form.Group>       
-            <Button variant="primary" type="submit" disabled={isLoading}>
+            <Button variant="primary" type="submit" disabled={isLoading || !address}>
             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" hidden={!isLoading}/>
                 {isLoading ? ' Creating game...' : 'Create game'}
             </Button>
@@ -98,6 +104,11 @@ const JoinRandomGameForm = (): JSX.Element => {
     let navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
 
+    const {
+        state: { address, networkId, loading },
+        dispatch,
+      } = useWeb3();
+
     function joinRandomGame(event: FormEvent<HTMLElement>) {
         event.preventDefault();
         setLoading(true)
@@ -106,7 +117,7 @@ const JoinRandomGameForm = (): JSX.Element => {
                 alert("Cannot find an empty game, please create your own!")
                 setLoading(false)
             } else {
-                Client.getInstance().colyseusClient.joinById<World>(rooms[0].roomId).then(room => {
+                Client.getInstance().colyseusClient.joinById<World>(rooms[0].roomId, Client.getInstance().authenticationInfo).then(room => {
                     Client.getInstance().colyseusRoom = room;
                     room.onStateChange.once((state) => {
                         console.log(state.id)
@@ -131,7 +142,7 @@ const JoinRandomGameForm = (): JSX.Element => {
     }
     return (
         <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
-            <Button variant="primary" type="submit" disabled={isLoading}>
+            <Button variant="primary" type="submit" disabled={isLoading || !address}>
             <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" hidden={!isLoading}/>
                 {isLoading ? ' Joining random game...' : 'Join random game'}
             </Button>

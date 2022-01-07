@@ -1,6 +1,7 @@
 import * as Phaser from "phaser"
 import Client from "matchmaking/Client"
 import * as Chisel from "chisel-api-interface"
+import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 
 export default class LoadingScene extends Phaser.Scene {
     graphics!: Phaser.GameObjects.Graphics;
@@ -29,7 +30,6 @@ export default class LoadingScene extends Phaser.Scene {
 
         //Static images
         this.load.image('dirtParticle', 'assets/images/stone.png')
-
         let world : Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
         this.load.image('aavegotchi', "https://play.gotchiminer.rocks/VOYAGER.png");
         world.backgrounds.forEach(background => {

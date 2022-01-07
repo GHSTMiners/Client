@@ -6,7 +6,7 @@ export class Player extends Phaser.GameObjects.Container {
         super(scene, player.x, player.y)
         this.setDepth(3)
         this.playerSchema = player
-        this.playerSprite = this.scene.add.sprite(0, 0, 'aavegotchi')
+        this.playerSprite = this.scene.add.sprite(0, 0, `gotchi_${player.gotchiID}`)
         this.add(this.playerSprite)
         //Create movementtween
         this.movementTween = this.movementTween = this.scene.tweens.add({

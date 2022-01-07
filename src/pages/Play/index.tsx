@@ -4,36 +4,28 @@ import * as Phaser from "phaser"
 import Client from "matchmaking/Client";
 import LoadingScene from "game/Scenes/LoadingScene";
 import MainScene from "game/Scenes/MainScene"
+import { useNavigate } from "react-router-dom";
 
 export default class Play extends React.Component {
 
     componentDidMount() {
-        const config = {
-            type: Phaser.AUTO,
-            parent: "phaser-game",
+        if(Client.getInstance().colyseusRoom) {
+            const config = {
+                type: Phaser.AUTO,
+                parent: "phaser-game",
 
-            room: Client.getInstance().colyseusRoom,
-            scale: {
-                mode: Phaser.Scale.RESIZE,
-                autoCenter: Phaser.Scale.NONE
-            },
-            scene: [LoadingScene, MainScene]
-          };
-
-        //Handle resize
-        var self = this;
-        this.game = new Phaser.Game(config);
-        $(window).on('resize', function (event: JQuery.Event) {
-            let newWidth : number|undefined = $("#phaser-game").width();
-            let newHeight : number|undefined = $("#phaser-game").width();
-            if(typeof newWidth === "number" && typeof newHeight === "number") {
-                // self.game.scale.setGameSize(newWidth, newHeight)
-                // self.game.scale.resize(newWidth, newHeight)
-                // self.game.scene.scenes[1].cameras.main.setViewport(0, 0, newWidth, newHeight)
-            }
-            
-        })
-
+                room: Client.getInstance().colyseusRoom,
+                scale: {
+                    mode: Phaser.Scale.RESIZE,
+                    autoCenter: Phaser.Scale.NONE
+                },
+                scene: [LoadingScene, MainScene]
+            };
+            this.game = new Phaser.Game(config);
+            console.log(Client.getInstance().authenticationInfo.toJSON())
+        } else {
+            window.location.href = '/'
+        }
     }
 
     shouldComponentUpdate(): boolean {

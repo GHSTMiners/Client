@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import globalStyles from "theme/globalStyles.module.css";
 import { NavLink } from "react-router-dom";
 import { useWeb3, connectToNetwork } from "web3/context";
@@ -8,6 +8,7 @@ import { networkIdToName } from "helpers/vars";
 import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
+import Client from "matchmaking/Client";
 
 const WalletButton = () => {
   const {
@@ -15,12 +16,23 @@ const WalletButton = () => {
     dispatch,
   } = useWeb3();
 
+
   const handleWalletClick = () => {
     if (!address) {
       //playSound('click');
       connectToNetwork(dispatch, window.ethereum);
     }
   };
+
+  useEffect(() => {
+    // Update the document title using the browser API
+    setTimeout(function() {
+      if (!address) {
+        //playSound('click');
+        connectToNetwork(dispatch, window.ethereum);
+      }
+    }, 100)
+  });
 
   return (
     <button

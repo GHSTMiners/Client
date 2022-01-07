@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer } from "react";
+import $ from "jquery";
 import { ethers } from "ethers";
 import { Action, reducer } from "./reducer";
 import { initialState, State } from "./initialState";
@@ -7,6 +8,8 @@ import {
   AavegotchisOfOwner,
   getAllAavegotchisOfOwner,
 } from "web3/actions/queries";
+import Client from "matchmaking/Client";
+
 
 export const Web3Context = createContext<{
   state: State;
@@ -58,6 +61,7 @@ const connectToNetwork = async (dispatch: React.Dispatch<Action>, eth: any) => {
 
     // This was commented to use ETH address directly from the stored walled in the cookie
     const address = await provider.getSigner().getAddress();
+    Client.getInstance().authenticationInfo.walletAddress = address
     dispatch({ type: "SET_ADDRESS", address });
     dispatch({ type: "END_ASYNC" });
   } catch (error) {
@@ -65,10 +69,11 @@ const connectToNetwork = async (dispatch: React.Dispatch<Action>, eth: any) => {
   }
 };
 
+
+
 const Web3ContextProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const value = { state, dispatch };
-
   return <Web3Context.Provider value={value}>{children}</Web3Context.Provider>;
 };
 

@@ -11,6 +11,8 @@ import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
 import ringDeselected from "assets/icons/ring_deselected3.svg";
 import ringSelected from "assets/icons/ring_selected3.svg";
+import Client from "matchmaking/Client";
+
 
 const sortOptions = [
   {
@@ -83,7 +85,7 @@ export const GotchiSelector = ({
   const handleSelect = useCallback(
     (id: string) => {
       if (id === selected) return;
-
+      Client.getInstance().authenticationInfo.gotchiId = parseInt(id);
       setSelected(id);
       selectGotchi(id);
     },

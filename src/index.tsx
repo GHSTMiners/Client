@@ -4,8 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Button from 'react-bootstrap/Button';
+import Cookies from "js-cookie";
+import { useWeb3, connectToNetwork } from "web3/context";
+
+
 
 ReactDOM.render(
+
+  
   <React.StrictMode>
     <App />
   </React.StrictMode>,
