@@ -1,7 +1,6 @@
 //import myGotchi from "assets/images/gotchi_example.png";
-import "./App.css";
 import styles from "./styles.module.css";
-import { Card, Col, Row, Container, Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
 import { GotchiSelector, GotchiSVG } from "components";
 import { getDefaultGotchi } from "helpers/aavegotchi";
@@ -98,49 +97,45 @@ const Home = (): JSX.Element => {
     <>
       <div className={styles.backgroundContainer}>
         <Header />
-        <Container fluid>
-          <Row>
-            <Col>
-              <div className={styles.gotchiMainContainer}>
-                <div className={styles.gotchiTraitsContainer}>
-                  <div className={styles.stoneMenu}>
-                    <TraitsPanel
-                      selectedGotchi={usersAavegotchis?.find(
-                        (gotchi) => gotchi.id === selectedAavegotchiId
-                      )}
-                    />
-                  </div>
-                  <div className={styles.gotchiContainer}>
-                    {selectedAavegotchiId ? (
-                      <GotchiSVG
-                        side={gotchiSide}
-                        tokenId={selectedAavegotchiId}
-                        options={{ animate: true, removeBg: true }}
-                      />
-                    ) : (
-                      <img src={gotchiLoading} alt="Loading Aavegotchi" />
-                    )}
-                  </div>
-                </div>
-
-                <button className={styles.rotateButton}>
-                  <RotateIcon width={32} height={24} onClick={rotateGotchi} />
-                </button>
-
-                <div className={styles.selectorContainer}>
-                  <GotchiSelector
-                    initialGotchiId={selectedAavegotchiId}
-                    gotchis={usersAavegotchis}
-                    selectGotchi={handleSelect}
-                  />
-                </div>
+        <div className={styles.homeContainer}>
+          <div className={styles.gotchiMainContainer}>
+            <div className={styles.gotchiTraitsContainer}>
+              <div className={styles.stoneMenu}>
+                <TraitsPanel
+                  selectedGotchi={usersAavegotchis?.find(
+                    (gotchi) => gotchi.id === selectedAavegotchiId
+                  )}
+                />
               </div>
-            </Col>
-            <Col>
-              <GameConfigurator></GameConfigurator>
-            </Col>
-          </Row>
-        </Container>
+              <div className={styles.gotchiContainer}>
+                {selectedAavegotchiId ? (
+                  <GotchiSVG
+                    side={gotchiSide}
+                    tokenId={selectedAavegotchiId}
+                    options={{ animate: true, removeBg: true }}
+                  />
+                ) : (
+                  <img src={gotchiLoading} alt="Loading Aavegotchi" />
+                )}
+              </div>
+            </div>
+
+            <button className={styles.rotateButton}>
+              <RotateIcon width={32} height={24} onClick={rotateGotchi} />
+            </button>
+
+            <div className={styles.selectorContainer}>
+              <GotchiSelector
+                initialGotchiId={selectedAavegotchiId}
+                gotchis={usersAavegotchis}
+                selectGotchi={handleSelect}
+              />
+            </div>
+          </div>
+          <div className={styles.gameConfigContainer}>
+            <GameConfigurator />
+          </div>
+        </div>
       </div>
     </>
   );
