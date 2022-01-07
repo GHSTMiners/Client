@@ -69,10 +69,14 @@ export const TraitsPanel = ({ selectedGotchi }: Props) => {
       <div className={styles.gotchiName}>
         {selectedGotchi ? `${selectedGotchi?.name}` : "..."}
       </div>
-      <PolarArea options={displayOptions} data={data} />
-      {renderModifierBar("Explosives", `${gotchiGameTraits[5]}%`, "")}
-      {renderModifierBar("Crystals", `${gotchiGameTraits[6]}%`, "")}
-      {renderModifierBar("Upgrades", `${gotchiGameTraits[7]}%`, "")}
+      <div className={styles.polarChart}>
+        <PolarArea options={displayOptions} data={data} />
+      </div>
+      <div className={styles.barsContainer}>
+        {renderModifierBar("Explosives", `${gotchiGameTraits[5]}%`, "")}
+        {renderModifierBar("Crystals", `${gotchiGameTraits[6]}%`, "")}
+        {renderModifierBar("Upgrades", `${gotchiGameTraits[7]}%`, "")}
+      </div>
     </div>
   );
 };

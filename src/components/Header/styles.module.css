@@ -54,7 +54,7 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: transparent;
-  background-position: center; 
+  background-position: center;
   font-size: 1.4rem;
   font-family: Rocks;
   color: #cecece;
@@ -65,7 +65,7 @@
   min-width: 20rem;
   min-height: 10rem;
   margin-right: 10%;
-  border:none;
+  border: none;
 }
 .walletContainer:disabled {
   cursor: auto;
