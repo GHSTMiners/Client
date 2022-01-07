@@ -22,7 +22,6 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
             //Convert string from svg
             const blob = new Blob([svg], { type: 'image/svg+xml' });
             const url = URL.createObjectURL(blob);
-            console.log(url)
 
             this.scene.load.svg(`gotchi_${player.gotchiID}`, url)
             this.scene.load.start();
