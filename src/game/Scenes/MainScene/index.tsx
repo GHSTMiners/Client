@@ -10,14 +10,11 @@ export default class MainScene extends Phaser.Scene {
     controls!: Phaser.Cameras.Controls.SmoothedKeyControl
     constructor() {
         super({key: 'MainScene'})
-        console.log("Created mainscene")
     }
 
     create() {
         this.globalRenderer = new GlobalRenderer(this)
-
         var cursors = this.input.keyboard.createCursorKeys();
-
         var controlConfig = {
             camera: this.cameras.main,
             left: cursors.left,

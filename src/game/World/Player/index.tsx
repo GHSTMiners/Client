@@ -1,5 +1,6 @@
 import * as Schema from "matchmaking/Schemas";
 import * as Phaser from "phaser"
+import { DataChange } from '@colyseus/schema';
 
 export class Player extends Phaser.GameObjects.Container {
     constructor(scene: Phaser.Scene, player: Schema.Player) {
@@ -8,17 +9,7 @@ export class Player extends Phaser.GameObjects.Container {
         this.playerSchema = player
         this.playerSprite = this.scene.add.sprite(0, 0, `gotchi_${player.gotchiID}`)
         this.add(this.playerSprite)
-        //Create movementtween
-        this.movementTween = this.movementTween = this.scene.tweens.add({
-            targets: this,
-            duration: 1000/50,
-            ease: 'Linear',
-            delay: 0,
-            x:player.x,
-            y:player.y,
-            paused: false,
-            
-        });
+
         //Create particle emitter
         var particles = this.scene.add.particles('dirtParticle');
         particles.setDepth(2);
@@ -40,31 +31,19 @@ export class Player extends Phaser.GameObjects.Container {
 
         player.onChange = this.stateChanged.bind(this)
     }
-
-    private stateChanged() {  
-        // if(this.movementTween) this.scene.tweens.remove(this.movementTween)
-        // this.movementTween = this.scene.tweens.add({
-        //     targets: this,
-        //     duration: 1000/50,
-        //     ease: 'Linear',
-        //     delay: 0,
-        //     x:this.playerSchema.x,
-        //     y:this.playerSchema.y,
-        //     paused: false,
-            
-        // });
-        this.setPosition(this.playerSchema.x, this.playerSchema.y)
-        //Particles while digging
+    private stateChanged(change : DataChange<any>[]) {  
+        change.forEach(value=> {
+            if(value.field == 'x') this.setX(value.value)
+            else if(value.field == 'y') this.setY(value.value)
+            else if(this.body instanceof Phaser.Physics.Arcade.Body) {
+                if(value.field == 'velocityX') this.body.setVelocityX(value.value)
+                else if(value.field == 'velocityY') this.body.setVelocityY(value.value)
+            }
+        })
         if(this.playerSchema.playerState != Schema.PlayerState.Drilling && this.dirtParticleEmitter.on) this.dirtParticleEmitter.stop()
-        else if (this.playerSchema.playerState == Schema.PlayerState.Drilling && !this.dirtParticleEmitter.on) {
-            this.dirtParticleEmitter.start()
-            this.scene.cameras.main.shake(20, 0.0015);
-        }
-        
-
+        else if (this.playerSchema.playerState == Schema.PlayerState.Drilling && !this.dirtParticleEmitter.on) this.dirtParticleEmitter.start()
     }
     private dirtParticleEmitter: Phaser.GameObjects.Particles.ParticleEmitter
-    private movementTween : Phaser.Tweens.Tween
-    private playerSchema : Schema.Player
     private playerSprite : Phaser.GameObjects.Sprite
+    private playerSchema : Schema.Player
 }

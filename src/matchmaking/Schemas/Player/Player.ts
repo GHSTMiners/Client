@@ -13,8 +13,10 @@ import { CargoEntry } from './CargoEntry';
 export class Player extends Schema {
     @type("string") public name!: string;
     @type("string") public playerSessionID!: string;
-    @type("number") public x!: number;
-    @type("number") public y!: number;
+    @type("int32") public x!: number;
+    @type("int32") public y!: number;
+    @type ("int32") public velocityX!: number;
+    @type ("int32") public velocityY!: number;
     @type("number") public gotchiID!: number;
     @type ("number") public playerState! : PlayerState;
     @type ("number") public drillingDirection! : DrillingDirection;

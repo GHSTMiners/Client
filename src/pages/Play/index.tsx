@@ -19,6 +19,9 @@ export default class Play extends React.Component {
                     mode: Phaser.Scale.RESIZE,
                     autoCenter: Phaser.Scale.NONE
                 },
+                physics: {
+                    default: 'arcade',
+                },
                 scene: [LoadingScene, MainScene]
             };
             this.game = new Phaser.Game(config);
