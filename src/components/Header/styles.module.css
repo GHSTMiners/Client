@@ -50,19 +50,22 @@
 }
 
 .walletContainer {
-  background-image: url("assets/icons/wallet_connect.svg");
+  background-image: url("assets/icons/wallet_connect2.svg");
   background-size: 100%;
+  background-repeat: no-repeat;
   background-color: transparent;
+  background-position: center; 
   font-size: 1.4rem;
   font-family: Rocks;
   color: #cecece;
   display: grid;
   place-items: center;
   height: fit-content;
-  border-style: none;
   cursor: pointer;
-  min-width: 30rem;
+  min-width: 20rem;
   min-height: 10rem;
+  margin-right: 10%;
+  border:none;
 }
 .walletContainer:disabled {
   cursor: auto;

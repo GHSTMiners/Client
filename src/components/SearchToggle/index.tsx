@@ -43,7 +43,7 @@ export const SearchToggle = ({
       }`}
     >
       <button className={styles.toggle} onClick={handleToggle}>
-        <SearchIcon width={32} height={32} />
+        <SearchIcon width={64} height={64} />
       </button>
       <input
         ref={inputRef}
