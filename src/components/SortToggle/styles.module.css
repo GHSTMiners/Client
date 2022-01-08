@@ -13,7 +13,7 @@
 }
 .inputContainer.open .sortOptions {
   padding-left: 4.4rem;
-  opacity: 0;
+  opacity: 1;
 }
 
 .toggle {
@@ -26,7 +26,7 @@
   place-items: center;
   cursor: pointer;
   border: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 .sortOptions {
@@ -35,7 +35,7 @@
   width: 100%;
   padding: 0.4rem;
   font-size: 1.6rem;
-  opacity: 0;
+  opacity: 1;
   transition: all 400ms ease;
   overflow: hidden;
 }
@@ -45,20 +45,20 @@
   align-items: center;
   margin-left: 0.6rem;
   cursor: pointer;
+  color: #cecece;
 }
 .sortOptions p {
   margin: 0;
 }
 
 .option.active p {
-  color: var(--color-pink_0);
 }
 .option.active svg {
-  color: var(--color-pink_0);
   display: inline;
 }
 .option.inactive p {
-  opacity: 0.4;
+  opacity: 0.3;
+  z-index: 0;
 }
 .option.inactive svg {
   opacity: 0;
@@ -66,4 +66,5 @@
 
 .asc {
   transform: rotate(180deg);
+  color: white;
 }
