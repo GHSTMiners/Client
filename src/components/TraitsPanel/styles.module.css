@@ -14,7 +14,7 @@
 }
 
 .gotchiName {
-  color: #cecece;
+  color: white;
   font-size: 20pt;
   margin-top: 1.3em;
   display: flex;
@@ -41,7 +41,7 @@
 
 .modifierRow p {
   font-size: 1rem;
-  color: #cecece;
+  color: white;
   margin-left: 2rem;
 }
 
@@ -70,4 +70,5 @@
   left: 0;
   background-color: var(--color-pink_0);
   border-radius: 30px;
+  transition: all 400ms ease;
 }

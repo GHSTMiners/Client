@@ -10,3 +10,4 @@ export { ReactComponent as ArrowRight } from "assets/icons/stone_arrow_right.svg
 export { ReactComponent as StoneMenu } from "assets/icons/menu_stone.svg";
 export { ReactComponent as RingSelected } from "assets/icons/ring_selected.svg";
 export { ReactComponent as RingDeselected } from "assets/icons/ring_deselected.svg";
+export { ReactComponent as StoneCheckboxTick } from "assets/icons/dropdown_arrow.svg";

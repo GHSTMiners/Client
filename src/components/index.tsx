@@ -12,3 +12,4 @@ export * from "./SortToggle";
 export * from "./Sidetray";
 export * from "./FlipCard";
 export * from "./TraitsPanel";
+export * from "./RockyCheckbox";

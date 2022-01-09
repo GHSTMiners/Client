@@ -7,7 +7,7 @@ import { getDefaultGotchi } from "helpers/aavegotchi";
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
-import { Header } from "components";
+import { Header, RockyCheckbox } from "components";
 import { RotateIcon } from "assets";
 import { TraitsPanel } from "components/TraitsPanel";
 
@@ -107,7 +107,7 @@ const Home = (): JSX.Element => {
                   )}
                 />
               </div>
-              <div className={styles.gotchiContainer}>
+              <div className={styles.gotchiContainer} onClick={rotateGotchi}>
                 {selectedAavegotchiId ? (
                   <GotchiSVG
                     side={gotchiSide}
@@ -120,10 +120,6 @@ const Home = (): JSX.Element => {
               </div>
             </div>
 
-            <button className={styles.rotateButton}>
-              <RotateIcon width={32} height={24} onClick={rotateGotchi} />
-            </button>
-
             <div className={styles.selectorContainer}>
               <GotchiSelector
                 initialGotchiId={selectedAavegotchiId}
@@ -134,11 +130,12 @@ const Home = (): JSX.Element => {
           </div>
           <div className={styles.gameConfigContainer}>
             <GameConfigurator />
+            
           </div>
         </div>
       </div>
     </>
   );
 };
-
+//<RockyCheckbox textLabel="Test"/>
 export default Home;
