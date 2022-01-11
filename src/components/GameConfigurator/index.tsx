@@ -6,6 +6,7 @@ import Client from "../../matchmaking/Client";
 import { World } from "matchmaking/Schemas/World";
 import styles from "./styles.module.css";
 import { useWeb3 } from "web3/context";
+import { RockyCheckbox } from "components";
 
 class WorldsOptions extends React.Component {
   state = { data: null };
@@ -83,7 +84,8 @@ const CreateGameForm = (): JSX.Element => {
       </Form.Group>
       <Form.Group className="mb-3" controlId="private-game">
         <Form.Label>Options</Form.Label>
-        <Form.Check type="checkbox" label="Private game" disabled={isLoading} />
+        <RockyCheckbox textLabel="Private Game" />
+        {/*<Form.Check type="checkbox" label="Private game" disabled={isLoading} />*/}
       </Form.Group>
       <Button variant="primary" type="submit" disabled={isLoading}>
         <Spinner
@@ -164,7 +166,7 @@ const JoinRandomGameForm = (): JSX.Element => {
     )
 }
 
-const GameConfigurator = (): JSX.Element => {
+const GameConfigurator = () => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.createGameRock}>

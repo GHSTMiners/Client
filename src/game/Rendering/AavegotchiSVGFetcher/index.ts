@@ -22,8 +22,29 @@ export default class AavegotchiSVGFetcher {
           );
     }
 
+    public async getSideviews(): Promise<string> {
+        let svg : string = await this.aavegotchiFacet.methods.getAavegotchiSideSvgs(this.aavegotchiID).call();
+        return svg; 
+    }
     
     private web3 : Web3
     private aavegotchiFacet : Contract 
     public readonly aavegotchiID : number
 }
+
+/*
+    // from Coyote, an example found on his Github
+    // Given tokenId, return Aavegotchi sideviews   
+    const getAavegotchiSideview = async (
+        tokenId: string,
+        contract: ethers.Contract
+      ) => {
+        try {
+          // Returns an array of SVGs corresponding to each side of the Aavegotchi
+          const res = await contract.getAavegotchiSideSvgs(tokenId);
+          setSelectedGotchiSideviews(res);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+*/

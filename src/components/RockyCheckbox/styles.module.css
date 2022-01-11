@@ -1,0 +1,44 @@
+input[type="checkbox"] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  border: 1px solid red;
+}
+
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.container {
+  justify-content: flex-start;
+  display: flex;
+  font-family: Rocks;
+  color: white;
+  border: 0px solid magenta;
+}
+
+.checkbox {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  background: transparent;
+  margin-right: 4px;
+  background-image: url("assets/icons/checkbox_frame.svg");
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.checkboxTick {
+  height: 16px;
+  position: relative;
+  top: 5%;
+}

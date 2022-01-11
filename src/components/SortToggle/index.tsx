@@ -14,7 +14,7 @@ interface Props {
   }>;
   onSelect: (val: Sort) => void;
   selected: Sort;
-  onToggle?: (active: boolean) => void;
+  onToggle: (active: boolean) => void;
   activeOverride?: boolean;
 }
 
@@ -29,7 +29,7 @@ export const SortToggle = ({
 
   const handleToggle = () => {
     setOpen((prevState) => !prevState);
-    //onToggle ? onToggle(!open) : null; // TO BE FIXED IN THE FUTURE, NOT WORKING WITH THE CURRENT VESION OF ESLINT
+    onToggle(!open);
   };
 
   return (
@@ -67,8 +67,8 @@ export const SortToggle = ({
             >
               <p>{option.name}</p>
               <DropdownIcon
-                fill="#FC16F4"
-                width={16}
+                fill="#cecece"
+                width={32}
                 className={styles[direction]}
               />
             </div>
