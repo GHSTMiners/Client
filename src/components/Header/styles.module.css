@@ -67,6 +67,13 @@
   margin-right: 10%;
   border: none;
 }
+/*
+.walletContainer:hover {
+  background-image: url("assets/icons/wallet_connect2_hover.svg");
+  transition: all 500ms ease;
+  opacity: 1;
+}
+*/
 .walletContainer:disabled {
   cursor: auto;
 }
