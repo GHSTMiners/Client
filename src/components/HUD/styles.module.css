@@ -1,0 +1,73 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.hudContainer {
+  position: absolute;
+  font-family: Rocks;
+}
+
+.vitalsConsole {
+  width: 30rem;
+  height: 15rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  background-image: url("assets/hud/vitals_console_rear.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.vitalsBarsCovers {
+  background-image: url("assets/hud/vitals_console_front.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+}
+
+.fuelBar,
+.healthBar,
+.cargoBar {
+  position: absolute;
+  z-index: 1;
+  height: 1rem;
+  width: 14rem;
+  left: 14.8rem;
+  overflow: hidden;
+}
+
+.fuelBar {
+  top: 2.6rem;
+}
+
+.healthBar {
+  top: 5.4rem;
+}
+
+.cargoBar {
+  top: 8rem;
+}
+
+.vitalBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.depthTag {
+  font-size: 1.2rem;
+  color: black;
+  width: 5rem;
+  left: 1.5rem;
+  text-align: center;
+  top: 0.7rem;
+  position: absolute;
+  opacity: 0.6;
+  z-index: 2;
+}

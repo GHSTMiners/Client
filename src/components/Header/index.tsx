@@ -8,7 +8,6 @@ import { networkIdToName } from "helpers/vars";
 import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
-import Client from "matchmaking/Client";
 
 const WalletButton = () => {
   const {
