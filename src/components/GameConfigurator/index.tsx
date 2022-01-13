@@ -40,18 +40,20 @@ const CreateGameForm = (): JSX.Element => {
   let navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
-    const {
-        state: { address, networkId, loading },
-        dispatch,
-      } = useWeb3();
+  const {
+    state: { address, networkId, loading },
+    dispatch,
+  } = useWeb3();
 
-    function createGame(event: FormEvent<HTMLElement>) {
-        setLoading(true);
-        event.preventDefault();
-        // @ts-ignore: Unreachable code error
-        Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
+  function createGame(event: FormEvent<HTMLElement>) {
+    setLoading(true);
+    event.preventDefault();
+    // @ts-ignore: Unreachable code error
+    // prettier-ignore
+    Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
             Client.getInstance().chiselWorld = world;
             // @ts-ignore: Unreachable code error
+            // prettier-ignore
             Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
                 Client.getInstance().colyseusRoom = room;
                 room.onStateChange.once((state) => {
@@ -66,8 +68,8 @@ const CreateGameForm = (): JSX.Element => {
             setLoading(false);
             alert("Failed to fetch world information! Maybe we're having server issues ?")
         })
-    }
-  
+  }
+
   return (
     <Form noValidate onSubmit={(e) => createGame(e)}>
       <Form.Group className="mb-3" controlId="world">
@@ -82,22 +84,24 @@ const CreateGameForm = (): JSX.Element => {
           <option value="Classic">Classic</option>
         </Form.Select>
       </Form.Group>
-      <Form.Group className="mb-3" controlId="private-game">
-        <Form.Label>Options</Form.Label>
-        <RockyCheckbox textLabel="Private Game" />
-        {/*<Form.Check type="checkbox" label="Private game" disabled={isLoading} />*/}
-      </Form.Group>
-      <Button variant="primary" type="submit" disabled={isLoading}>
-        <Spinner
-          as="span"
-          animation="border"
-          size="sm"
-          role="status"
-          aria-hidden="true"
-          hidden={!isLoading}
-        />
-        {isLoading ? " Creating game..." : "Create game"}
-      </Button>
+      <div className={styles.createGameBottom}>
+        <Form.Group className="mb-3" controlId="private-game">
+          <Form.Label>Options</Form.Label>
+          <RockyCheckbox textLabel="Private Game" />
+          {/*<Form.Check type="checkbox" label="Private game" disabled={isLoading} />*/}
+        </Form.Group>
+        <Button variant="primary" type="submit" disabled={isLoading}>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            hidden={!isLoading}
+          />
+          {isLoading ? " Creating game..." : "Create game"}
+        </Button>
+      </div>
     </Form>
   );
 };
@@ -109,9 +113,13 @@ const JoinGameForm = (): JSX.Element => {
         <Form.Label>Room code</Form.Label>
         <Form.Control type="text" aria-label="room-code"></Form.Control>
       </Form.Group>
-      <Button variant="primary" type="submit">
-        Join game
-      </Button>
+      <div className={styles.joinButtonContainer}>
+        <Button variant="primary" type="submit">
+          Join game
+        </Button>
+        <p></p>
+        <JoinRandomGameForm />
+      </div>
     </Form>
   );
 };
@@ -120,51 +128,74 @@ const JoinRandomGameForm = (): JSX.Element => {
   let navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
 
-    const {
-        state: { address, networkId, loading },
-        dispatch,
-      } = useWeb3();
+  const {
+    state: { address, networkId, loading },
+    dispatch,
+  } = useWeb3();
 
-    function joinRandomGame(event: FormEvent<HTMLElement>) {
-        event.preventDefault();
-        setLoading(true)
-        Client.getInstance().colyseusClient.getAvailableRooms().then(rooms => {
-            if(rooms.length === 0) {
-                alert("Cannot find an empty game, please create your own!")
-                setLoading(false)
-            } else {
-                Client.getInstance().colyseusClient.joinById<World>(rooms[0].roomId, Client.getInstance().authenticationInfo).then(room => {
-                    Client.getInstance().colyseusRoom = room;
-                    room.onStateChange.once((state) => {
-                        console.log(state.id)
-                        Client.getInstance().apiInterface.world(state.id).then(world =>{
-                            Client.getInstance().chiselWorld = world;
-                            navigate("/play", {replace: false});
-                            setLoading(false)
-                        }).catch(e =>{
-                            setLoading(false);
-                            alert("Failed to create game! Maybe we're having server issues ?")
-                        });
-                    });
-                }).catch(e =>{
+  function joinRandomGame(event: FormEvent<HTMLElement>) {
+    event.preventDefault();
+    setLoading(true);
+    Client.getInstance()
+      .colyseusClient.getAvailableRooms()
+      .then((rooms) => {
+        if (rooms.length === 0) {
+          alert("Cannot find an empty game, please create your own!");
+          setLoading(false);
+        } else {
+          Client.getInstance()
+            .colyseusClient.joinById<World>(
+              rooms[0].roomId,
+              Client.getInstance().authenticationInfo
+            )
+            .then((room) => {
+              Client.getInstance().colyseusRoom = room;
+              room.onStateChange.once((state) => {
+                console.log(state.id);
+                Client.getInstance()
+                  .apiInterface.world(state.id)
+                  .then((world) => {
+                    Client.getInstance().chiselWorld = world;
+                    navigate("/play", { replace: false });
                     setLoading(false);
-                    alert("Failed to join game! Maybe we're having server issues ?")
-                }).catch(e =>{
+                  })
+                  .catch((e) => {
                     setLoading(false);
-                    alert("Failed to create game! Maybe we're having server issues ?")
-                })
-            }
-        })
-    }
-    return (
-        <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
-            <Button variant="primary" type="submit" disabled={isLoading || !address}>
-            <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" hidden={!isLoading}/>
-                {isLoading ? ' Joining random game...' : 'Join random game'}
-            </Button>
-        </Form>
-    )
-}
+                    alert(
+                      "Failed to create game! Maybe we're having server issues ?"
+                    );
+                  });
+              });
+            })
+            .catch((e) => {
+              setLoading(false);
+              alert("Failed to join game! Maybe we're having server issues ?");
+            })
+            .catch((e) => {
+              setLoading(false);
+              alert(
+                "Failed to create game! Maybe we're having server issues ?"
+              );
+            });
+        }
+      });
+  }
+  return (
+    <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
+      <Button variant="primary" type="submit" disabled={isLoading || !address}>
+        <Spinner
+          as="span"
+          animation="border"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+          hidden={!isLoading}
+        />
+        {isLoading ? " Joining random game..." : "Join random game"}
+      </Button>
+    </Form>
+  );
+};
 
 const GameConfigurator = () => {
   return (
@@ -180,8 +211,6 @@ const GameConfigurator = () => {
         <div className={styles.joinGameText}>
           <div className={styles.stoneTitles}>Join existing game</div>
           <JoinGameForm />
-          <p></p>
-          <JoinRandomGameForm />
         </div>
       </div>
     </div>

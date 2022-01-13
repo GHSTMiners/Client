@@ -1,7 +1,6 @@
 import { AavegotchiObject } from "types";
-import { ChevronUp, ChevronDown, click, ArrowLeft, ArrowRight } from "assets";
+import { click, ArrowLeft, ArrowRight } from "assets";
 import { playSound } from "helpers/hooks/useSound";
-import globalStyles from "theme/globalStyles.module.css";
 import { useEffect, useState, useCallback } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
 import useWindowWidth from "helpers/hooks/windowSize";
@@ -12,7 +11,6 @@ import { SortToggle, Sort } from "components/SortToggle";
 import ringDeselected from "assets/icons/ring_deselected3.svg";
 import ringSelected from "assets/icons/ring_selected3.svg";
 import Client from "matchmaking/Client";
-
 
 const sortOptions = [
   {

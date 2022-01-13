@@ -2,11 +2,9 @@ import Home from "pages/Home";
 import Play from "pages/Play";
 import About from "pages/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Header } from "components";
-import Web3ContextProvider, { useWeb3 } from "web3/context";
+import Web3ContextProvider from "web3/context";
 
 const App = () => {
-  
   return (
     <Web3ContextProvider>
       <BrowserRouter>
@@ -18,6 +16,6 @@ const App = () => {
       </BrowserRouter>
     </Web3ContextProvider>
   );
-}
+};
 
 export default App;

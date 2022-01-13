@@ -7,8 +7,7 @@ import { getDefaultGotchi } from "helpers/aavegotchi";
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
-import { Header, RockyCheckbox } from "components";
-import { RotateIcon } from "assets";
+import { Header } from "components";
 import { TraitsPanel } from "components/TraitsPanel";
 
 function LoadingModal() {
@@ -130,7 +129,6 @@ const Home = (): JSX.Element => {
           </div>
           <div className={styles.gameConfigContainer}>
             <GameConfigurator />
-            
           </div>
         </div>
       </div>
