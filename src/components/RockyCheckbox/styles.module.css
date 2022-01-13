@@ -15,10 +15,12 @@ input[type="checkbox"] {
 }
 
 .container {
-  justify-content: flex-start;
   display: flex;
+  justify-content: flex-start;
+  align-content: center;
   font-family: Rocks;
   color: white;
+  font-size: 0.8vw;
   border: 0px solid magenta;
 }
 

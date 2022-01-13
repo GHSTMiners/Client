@@ -1,27 +1,31 @@
 @import "theme/vars.css";
 
-.homeContainer {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
 .backgroundContainer {
   background-image: url("assets/images/bg2.png");
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   background-position: center;
+  min-height: 100%;
+}
+
+.homeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 100%;
+  align-self: stretch;
+  flex-wrap: wrap;
 }
 
 .gotchiMainContainer {
-  border: 0px solid darkblue;
+  min-width: 40%;
 }
 
 .gameConfigContainer {
-  border: 0px solid red;
+  min-width: 40%;
+  min-height: 100%;
 }
 
 .selectorContainer {
@@ -46,22 +50,11 @@
 .stoneMenu {
   background-image: url("assets/icons/menu_stone2.svg");
   background-repeat: no-repeat;
-  background-size: 100%;
-  min-height: 50vh;
-  width: 50%;
+  background-size: contain;
+  background-position-x: center;
+  width: 60%;
   left: 40%;
   position: relative;
-}
-
-.rotateButton {
-  cursor: pointer;
-  background-color: var(--color-purple_0);
-  padding: 0.4rem 1.2rem;
-  border: none;
-  border-radius: 0.2rem;
-  position: absolute;
-  right: 81%;
-  top: 60%;
 }
 
 .highscore {
@@ -115,6 +108,7 @@
   line-height: 1.5;
 }
 
+/*
 @media only screen and (min-width: 768px) {
   .homeContainer {
     grid-template-columns: repeat(3, 1fr);
@@ -126,4 +120,4 @@
   .detailsPanelContainer {
     margin-top: 0;
   }
-}
+} */

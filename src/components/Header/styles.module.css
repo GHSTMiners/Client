@@ -2,12 +2,13 @@
 
 .header {
   background-color: transparent;
+  border: 0px solid black;
 }
 
 .logo {
   content: url("assets/icons/logo.svg");
-  width: 15rem;
-  height: 5rem;
+  width: 15em;
+  height: 5em;
 }
 
 .desktopHeaderContent {
@@ -23,7 +24,7 @@
   color: #cecece;
   font-family: Rocks;
   opacity: 1;
-  font-size: 1.9rem;
+  font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
   display: block;
@@ -51,7 +52,7 @@
 
 .walletContainer {
   background-image: url("assets/icons/wallet_connect2.svg");
-  background-size: 100%;
+  background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
   background-position: center;
@@ -60,12 +61,11 @@
   color: #cecece;
   display: grid;
   place-items: center;
-  height: fit-content;
   cursor: pointer;
   min-width: 20rem;
-  min-height: 10rem;
+  min-height: 8rem;
   margin-right: 10%;
-  border: none;
+  border: 0px solid red;
 }
 /*
 .walletContainer:hover {

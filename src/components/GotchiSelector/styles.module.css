@@ -77,10 +77,16 @@
   position: absolute;
   width: 100%;
   top: 3%;
+  transition: width 2s, height 2s, transform 2s;
 }
-
+/*all 200ms ease;*/
 .gotchiContainer.selected {
   border: 2px solid var(--color-pink_0);
+  transition: 1s, height 1s, transform 5s;
+}
+
+.ringContainer:hover {
+  transform: rotate(90deg);
 }
 
 .loadingContainer {

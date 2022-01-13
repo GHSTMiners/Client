@@ -1,9 +1,9 @@
 @import "theme/vars.css";
 
 .container {
-  max-width: var(--container-width-xl);
   padding: 0 1.6rem;
-  margin: 0 auto;
+  margin: 0.5rem auto;
+  max-width: var(--container-width-xl);
 }
 
 .glow {

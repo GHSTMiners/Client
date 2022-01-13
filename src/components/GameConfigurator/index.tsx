@@ -90,7 +90,12 @@ const CreateGameForm = (): JSX.Element => {
           <RockyCheckbox textLabel="Private Game" />
           {/*<Form.Check type="checkbox" label="Private game" disabled={isLoading} />*/}
         </Form.Group>
-        <Button variant="primary" type="submit" disabled={isLoading}>
+        <Button
+          className={styles.createGameButton}
+          variant="primary"
+          type="submit"
+          disabled={isLoading}
+        >
           <Spinner
             as="span"
             animation="border"
