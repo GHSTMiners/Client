@@ -8,8 +8,9 @@
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
 
 
-export class Block extends Schema {
-    @type("int16") public soilID!: number;
-    @type("uint8") public spawnType!: number;
-    @type("int16") public spawnID!: number;
+export class Skill extends Schema {
+    @type("string") public name!: string;
+    @type("number") public maximum!: number;
+    @type("number") public minimum!: number;
+    @type("number") public currentValue!: number;
 }

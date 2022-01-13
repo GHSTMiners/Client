@@ -8,8 +8,7 @@
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
 
 
-export class Block extends Schema {
-    @type("int16") public soilID!: number;
-    @type("uint8") public spawnType!: number;
-    @type("int16") public spawnID!: number;
+export class WalletEntry extends Schema {
+    @type("number") public cryptoID!: number;
+    @type("number") public amount!: number;
 }

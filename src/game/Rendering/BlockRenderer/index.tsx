@@ -10,38 +10,27 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
         this.renderedLayers = new Map<number, Block[]>();
         this.layerToSoilType = this.generateLayerToSoil()
         this.generateLayerToSoil()
-        Client.getInstance().colyseusRoom.state.blocks.onChange = this.blockUpdated.bind(this)
-        Client.getInstance().colyseusRoom.state.blocks.onAdd = this.blockUpdated.bind(this)
     }
 
     private renderLayer(layer : number) {
-        if(!this.renderedLayers.has(layer) ) {
+        if(layer >= 0 && !this.renderedLayers.has(layer) ) {
             let worldWidth = Client.getInstance().chiselWorld.width;
-            let startIndex = layer * worldWidth;
-            let newLayer : Block[] = []
             let soilType : SoilType = this.layerToSoilType[layer];
-            for (let index = 0; index < worldWidth; index++) {
-                const element = Client.getInstance().colyseusRoom.state.blocks[startIndex + index];
-                let newBlock = new Block(this.scene, element, soilType, index * Config.blockWidth + Config.blockWidthOffset, layer * Config.blockHeight + Config.blockHeightOffset);
-                newLayer.push(newBlock)
-                this.scene.add.existing(newBlock)
+            let newLayer : Block[] = []
+            let schemaLayer = Client.getInstance().colyseusRoom.state.layers[layer]
+            if(schemaLayer) {
+                for (let index = 0; index < worldWidth; index++) {
+                    const element = schemaLayer.blocks[index];
+                    let newBlock = new Block(this.scene, element, soilType, index * Config.blockWidth + Config.blockWidthOffset, layer * Config.blockHeight + Config.blockHeightOffset);
+                    newLayer.push(newBlock)
+                    this.scene.add.existing(newBlock)
+                }
+                this.renderedLayers.set(layer, newLayer);
             }
-            this.renderedLayers.set(layer, newLayer);
         }
     }
 
-    private blockUpdated(block: Schema.Block, key: number) : void {
-        let blockLayer = Math.floor(key / Client.getInstance().chiselWorld.width);
-        let blockColumn = key - blockLayer * Client.getInstance().chiselWorld.width
-        let renderedLayer : Block[] | undefined = this.renderedLayers.get(blockLayer) 
 
-        if(renderedLayer) {
-            let soilType : SoilType = this.layerToSoilType[blockLayer];
-            renderedLayer[blockColumn].destroy()
-            renderedLayer[blockColumn] = new Block(this.scene, block, soilType, blockColumn * Config.blockWidth + Config.blockWidthOffset, blockLayer * Config.blockHeight + Config.blockHeightOffset)
-            this.scene.add.existing(renderedLayer[blockColumn])
-        }
-    }
 
     private unrenderLayer(layer : number) {
         let targetLayer : Block[] | undefined = this.renderedLayers.get(layer)

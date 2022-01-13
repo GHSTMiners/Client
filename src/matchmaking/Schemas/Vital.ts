@@ -8,8 +8,11 @@
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
 
 
-export class Crypto extends Schema {
+export class Vital extends Schema {
     @type("string") public name!: string;
-    @type("string") public address!: string;
-    @type("number") public weight!: number;
+    @type("number") public maximum!: number;
+    @type("number") public minimum!: number;
+    @type("number") public emptyValue!: number;
+    @type("number") public filledValue!: number;
+    @type("number") public currentValue!: number;
 }

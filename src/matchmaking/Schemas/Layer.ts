@@ -6,10 +6,8 @@
 // 
 
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
+import { Block } from './Block'
 
-
-export class Block extends Schema {
-    @type("int16") public soilID!: number;
-    @type("uint8") public spawnType!: number;
-    @type("int16") public spawnID!: number;
+export class Layer extends Schema {
+    @type([ Block ]) public blocks: ArraySchema<Block> = new ArraySchema<Block>();
 }

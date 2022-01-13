@@ -4,7 +4,7 @@ import { DataChange } from '@colyseus/schema';
 
 export class Player extends Phaser.GameObjects.Container {
     constructor(scene: Phaser.Scene, player: Schema.Player) {
-        super(scene, player.x, player.y)
+        super(scene, player.playerState.x, player.playerState.y)
         this.setDepth(3)
         this.playerSchema = player
         this.playerSprite = this.scene.add.sprite(0, 0, `gotchi_${player.gotchiID}`)
@@ -29,7 +29,7 @@ export class Player extends Phaser.GameObjects.Container {
         this.dirtParticleEmitter.stop();
         this.dirtParticleEmitter.startFollow(this)
 
-        player.onChange = this.stateChanged.bind(this)
+        player.playerState.onChange = this.stateChanged.bind(this)
     }
     private stateChanged(change : DataChange<any>[]) {  
         change.forEach(value=> {
@@ -40,8 +40,8 @@ export class Player extends Phaser.GameObjects.Container {
                 else if(value.field == 'velocityY') this.body.setVelocityY(value.value)
             }
         })
-        if(this.playerSchema.playerState != Schema.PlayerState.Drilling && this.dirtParticleEmitter.on) this.dirtParticleEmitter.stop()
-        else if (this.playerSchema.playerState == Schema.PlayerState.Drilling && !this.dirtParticleEmitter.on) this.dirtParticleEmitter.start()
+        if(this.playerSchema.playerState.movementState != Schema.MovementState.Drilling && this.dirtParticleEmitter.on) this.dirtParticleEmitter.stop()
+        else if (this.playerSchema.playerState.movementState == Schema.MovementState.Drilling && !this.dirtParticleEmitter.on) this.dirtParticleEmitter.start()
     }
     private dirtParticleEmitter: Phaser.GameObjects.Particles.ParticleEmitter
     private playerSprite : Phaser.GameObjects.Sprite

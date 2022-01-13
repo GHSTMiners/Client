@@ -2,19 +2,19 @@
 // THIS FILE HAS BEEN GENERATED AUTOMATICALLY
 // DO NOT CHANGE IT MANUALLY UNLESS YOU KNOW WHAT YOU'RE DOING
 // 
-// GENERATED USING @colyseus/schema 1.0.31
+// GENERATED USING @colyseus/schema 2.0.3
 // 
 
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
-import { Block } from './Block'
-import { Player } from './Player/Player'
+import { Player } from './Player'
+import { Layer } from './Layer'
 
 export class World extends Schema {
     @type("number") public id!: number;
     @type("number") public width!: number;
     @type("number") public height!: number;
     @type("number") public gravity!: number;
-    @type ("boolean") public ready!: boolean;
-    @type([ Block ]) public blocks: ArraySchema<Block> = new ArraySchema<Block>();
+    @type("boolean") public ready!: boolean;
     @type([ Player ]) public players: ArraySchema<Player> = new ArraySchema<Player>();
+    @type([ Layer ]) public layers: ArraySchema<Layer> = new ArraySchema<Layer>();
 }
