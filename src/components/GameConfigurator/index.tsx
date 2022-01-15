@@ -123,7 +123,7 @@ const JoinGameForm = (): JSX.Element => {
           Join game
         </Button>
         <p></p>
-        <JoinRandomGameForm />
+        {/*<JoinRandomGameForm />*/}
       </div>
     </Form>
   );
@@ -216,6 +216,7 @@ const GameConfigurator = () => {
         <div className={styles.joinGameText}>
           <div className={styles.stoneTitles}>Join existing game</div>
           <JoinGameForm />
+          <JoinRandomGameForm />
         </div>
       </div>
     </div>

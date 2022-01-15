@@ -26,6 +26,7 @@ export default class Play extends React.Component {
         scene: [LoadingScene, MainScene],
       };
       this.game = new Phaser.Game(config);
+      Client.getInstance().phaserGame = this.game;
       console.log(Client.getInstance().authenticationInfo.toJSON());
     } else {
       window.location.href = "/";

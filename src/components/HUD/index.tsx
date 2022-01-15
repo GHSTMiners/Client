@@ -2,6 +2,8 @@ import styles from "./styles.module.css";
 import fuelBar from "assets/hud/fuel_bar.svg";
 import healthBar from "assets/hud/health_bar.svg";
 import cargoBar from "assets/hud/cargo_bar.svg";
+import Client from "matchmaking/Client";
+import { useState, useEffect } from "react";
 
 export const HUD = () => {
   // TO DO: hook depth with current Depth from the Schemas
@@ -11,6 +13,17 @@ export const HUD = () => {
   const fuelWidth = "12rem";
   const healthWidth = "7rem";
   const cargothWidth = "9rem";
+
+  // Useless code because the hook only gets executed once since since we are using Phaser class-based instead of functional component-based
+  const [gameLoaded, setgameLoaded] = useState(false);
+  useEffect(() => {
+    if (Client.getInstance().phaserGame?.scene.isActive("MainScene")) {
+      setgameLoaded(true);
+    } else {
+      console.log("zzzzzzz zzzzzzzzzzz zzzzzzzz");
+      console.log(Client.getInstance().phaserGame.scene.isBooted); //
+    }
+  }, []);
 
   return (
     <div className={styles.hudContainer}>
