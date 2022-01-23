@@ -13,6 +13,7 @@
   height: 100%;
   flex-direction: column;
   align-items: stretch;
+  border: 0px solid greenyellow;
 }
 
 .mainContainer > * {
@@ -20,22 +21,25 @@
 }
 
 .createGameRock {
-  background-image: url("assets/icons/rock_creategame.svg");
+  background-image: url("assets/icons/rock_creategame3.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 50%;
+  height: 55%;
   display: flex;
   justify-content: center;
+  padding-top: 2em;
+  border: 0px solid red;
 }
 
 .joinGameRock {
-  background-image: url("assets/icons/rock_joingame.svg");
+  background-image: url("assets/icons/rock_joingame2.svg");
   background-repeat: no-repeat;
   background-position: center;
   height: 40%;
   display: flex;
   justify-content: center;
+  border: 0px solid green;
 }
 
 .stoneTitles {
@@ -47,7 +51,7 @@
 .createGameText {
   width: 40%;
   margin-top: 1.5rem;
-  margin-left: 2em;
+  margin-left: 1em;
 }
 
 .createGameBottom {
@@ -62,8 +66,8 @@
 
 .joinGameText {
   width: 40%;
-  margin-top: 7%;
-  margin-left: 5%;
+  margin-top: 5%;
+  margin-left: 2%;
 }
 
 .joinButtonContainer {

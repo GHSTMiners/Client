@@ -58,5 +58,12 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
     }
   }
 
+  update(time: number, delta: number): void {
+    //console.log("INSIDE PLAYER RENDERER");
+    this.playerSprites.forEach((sprite) => {
+      sprite.update(time, delta);
+    });
+  }
+
   private playerSprites: Map<number, Player>;
 }

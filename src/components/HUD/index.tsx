@@ -14,13 +14,12 @@ export const HUD = () => {
   const healthWidth = "7rem";
   const cargothWidth = "9rem";
 
-  // Useless code because the hook only gets executed once since since we are using Phaser class-based instead of functional component-based
+  // Useless code because the hook only gets executed once since since we are using the Client class-based instead of functional component-based
   const [gameLoaded, setgameLoaded] = useState(false);
   useEffect(() => {
     if (Client.getInstance().phaserGame?.scene.isActive("MainScene")) {
       setgameLoaded(true);
     } else {
-      console.log("zzzzzzz zzzzzzzzzzz zzzzzzzz");
       console.log(Client.getInstance().phaserGame.scene.isBooted); //
     }
   }, []);

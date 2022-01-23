@@ -7,6 +7,7 @@ import { World } from "matchmaking/Schemas/World";
 import styles from "./styles.module.css";
 import { useWeb3 } from "web3/context";
 import { RockyCheckbox } from "components";
+import GreenButton from "components/GreenButton";
 
 class WorldsOptions extends React.Component {
   state = { data: null };
@@ -90,12 +91,7 @@ const CreateGameForm = (): JSX.Element => {
           <RockyCheckbox textLabel="Private Game" />
           {/*<Form.Check type="checkbox" label="Private game" disabled={isLoading} />*/}
         </Form.Group>
-        <Button
-          className={styles.createGameButton}
-          variant="primary"
-          type="submit"
-          disabled={isLoading}
-        >
+        <GreenButton disabled={isLoading}>
           <Spinner
             as="span"
             animation="border"
@@ -104,8 +100,8 @@ const CreateGameForm = (): JSX.Element => {
             aria-hidden="true"
             hidden={!isLoading}
           />
-          {isLoading ? " Creating game..." : "Create game"}
-        </Button>
+          {isLoading ? " Initializing..." : "Create game"}
+        </GreenButton>
       </div>
     </Form>
   );
@@ -119,9 +115,7 @@ const JoinGameForm = (): JSX.Element => {
         <Form.Control type="text" aria-label="room-code"></Form.Control>
       </Form.Group>
       <div className={styles.joinButtonContainer}>
-        <Button variant="primary" type="submit">
-          Join game
-        </Button>
+        <GreenButton>Join game</GreenButton>
         <p></p>
         {/*<JoinRandomGameForm />*/}
       </div>
@@ -187,17 +181,25 @@ const JoinRandomGameForm = (): JSX.Element => {
   }
   return (
     <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
-      <Button variant="primary" type="submit" disabled={isLoading || !address}>
-        <Spinner
-          as="span"
-          animation="border"
-          size="sm"
-          role="status"
-          aria-hidden="true"
-          hidden={!isLoading}
-        />
-        {isLoading ? " Joining random game..." : "Join random game"}
-      </Button>
+      <Form.Group className="mb-3" controlId="room-id">
+        <Form.Label>Room code</Form.Label>
+        <Form.Control type="text" aria-label="room-code"></Form.Control>
+      </Form.Group>
+      <div className={styles.joinButtonContainer}>
+        <GreenButton>Join game</GreenButton>
+        <p></p>
+        <GreenButton disabled={isLoading || !address}>
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+            hidden={!isLoading}
+          />
+          {isLoading ? " Joining..." : "Join random game"}
+        </GreenButton>
+      </div>
     </Form>
   );
 };
@@ -215,7 +217,6 @@ const GameConfigurator = () => {
       <div className={styles.joinGameRock}>
         <div className={styles.joinGameText}>
           <div className={styles.stoneTitles}>Join existing game</div>
-          <JoinGameForm />
           <JoinRandomGameForm />
         </div>
       </div>

@@ -1,0 +1,21 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.greenButton {
+  background-image: url("assets/icons/green_button.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  background-size: contain;
+  font-family: Rocks;
+  font-size: 1em;
+  color: rgba(42, 42, 42);
+  min-height: 3.6em;
+  min-width: 10em;
+  padding: 1em;
+  border: 0px solid magenta;
+  outline: 0;
+  -moz-outline-style: none;
+}
