@@ -34,8 +34,13 @@ export class Player extends Phaser.GameObjects.Container {
     });
     this.dirtParticleEmitter.stop();
     this.dirtParticleEmitter.startFollow(this);
-
     player.playerState.onChange = this.stateChanged.bind(this);
+
+    player.vitals.forEach(vital => {
+      vital.onChange = function() {
+        console.log(this.currentValue)
+      }
+    }, this)
   }
   private stateChanged(change: DataChange<any>[]) {
     change.forEach((value) => {
