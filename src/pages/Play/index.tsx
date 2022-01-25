@@ -23,9 +23,15 @@ export default class Play extends React.Component {
         physics: {
           default: "arcade",
         },
+        fps: {
+          target: 30,
+          forceSetTimeOut: true,
+        },
         scene: [LoadingScene, MainScene],
       };
       this.game = new Phaser.Game(config);
+      Client.getInstance().phaserGame = this.game;
+
       console.log(Client.getInstance().authenticationInfo.toJSON());
     } else {
       window.location.href = "/";

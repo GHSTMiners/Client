@@ -14,8 +14,8 @@
 .inputContainer.open .input {
   padding-left: 4.6rem;
   opacity: 1;
-  background-color: transparent;
-  color: #cecece;
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
 }
 
 .toggle {
@@ -42,7 +42,4 @@
 }
 .input:focus {
   outline: none;
-  webkit-box-shadow: 0px 0px 15px 0px var(--color-pink_0);
-  -moz-box-shadow: 0px 0px 15px 0px var(--color-pink_0);
-  box-shadow: 0px 0px 15px 0px var(--color-pink_0);
 }

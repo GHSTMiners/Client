@@ -10,6 +10,7 @@
 }
 .inputContainer.open {
   width: 25rem;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 .inputContainer.open .sortOptions {
   padding-left: 4.4rem;
@@ -45,7 +46,7 @@
   align-items: center;
   margin-left: 0.6rem;
   cursor: pointer;
-  color: #cecece;
+  color: white;
 }
 .sortOptions p {
   margin: 0;
@@ -55,10 +56,11 @@
 }
 .option.active svg {
   display: inline;
+  z-index: 2;
 }
 .option.inactive p {
-  opacity: 0.3;
-  z-index: 0;
+  opacity: 0.5;
+  z-index: 1;
 }
 .option.inactive svg {
   opacity: 0;

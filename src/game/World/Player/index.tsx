@@ -2,6 +2,8 @@ import * as Schema from "matchmaking/Schemas";
 import * as Phaser from "phaser";
 import { DataChange } from "@colyseus/schema";
 import Config from "config";
+import { PlayerState } from "matchmaking/Schemas";
+import { time } from "console";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
@@ -16,6 +18,9 @@ export class Player extends Phaser.GameObjects.Container {
     this.playerSprite.setSize(Config.blockWidth, Config.blockHeight);
     this.add(this.playerSprite);
     this.setSize(Config.blockWidth, Config.blockHeight);
+    this.xVelocity = 0;
+    this.yVelocity = 0;
+    this.alphaRefresh = 0.4;
     //Create particle emitter
     var particles = this.scene.add.particles("dirtParticle");
     particles.setDepth(2);
@@ -35,37 +40,77 @@ export class Player extends Phaser.GameObjects.Container {
     this.dirtParticleEmitter.stop();
     this.dirtParticleEmitter.startFollow(this);
     player.playerState.onChange = this.stateChanged.bind(this);
-
-    player.vitals.forEach(vital => {
-      vital.onChange = function() {
-        console.log(this.currentValue)
-      }
-    }, this)
+    // enabling physics to act as a natural interpolator
+    this.scene.physics.add.existing(this);
+    this.scene.physics.world.enable(this);
   }
+
   private stateChanged(change: DataChange<any>[]) {
-    change.forEach((value) => {
-      if (value.field == "x") this.setX(value.value);
-      else if (value.field == "y") this.setY(value.value);
-      else if (this.body instanceof Phaser.Physics.Arcade.Body) {
-        if (value.field == "velocityX") this.body.setVelocityX(value.value);
-        else if (value.field == "velocityY")
-          this.body.setVelocityY(value.value);
-      }
-    });
+    //console.log(change);
+    let playerState: PlayerState = this.playerSchema.playerState;
+
     if (
-      this.playerSchema.playerState.movementState !=
-        Schema.MovementState.Drilling &&
+      playerState.movementState != Schema.MovementState.Drilling &&
       this.dirtParticleEmitter.on
     )
       this.dirtParticleEmitter.stop();
     else if (
-      this.playerSchema.playerState.movementState ==
-        Schema.MovementState.Drilling &&
+      playerState.movementState == Schema.MovementState.Drilling &&
       !this.dirtParticleEmitter.on
     )
       this.dirtParticleEmitter.start();
   }
+
+  private smoothMove(
+    targetPosition: number,
+    currentPosition: number,
+    delta: number,
+    velocity: number
+  ): [number, number] {
+    let newPosition = currentPosition;
+    let newVelocity = velocity;
+
+    if (targetPosition != currentPosition) {
+      const diffPosition = targetPosition - currentPosition;
+      newVelocity =
+        (1 - this.alphaRefresh) * velocity +
+        (this.alphaRefresh * diffPosition) / delta;
+      newPosition =
+        (1 - this.alphaRefresh) * currentPosition +
+        this.alphaRefresh * (newVelocity * delta + currentPosition);
+    }
+
+    return [newPosition, newVelocity];
+  }
+
   private dirtParticleEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
   private playerSprite: Phaser.GameObjects.Sprite;
   private playerSchema: Schema.Player;
+  private xVelocity: number;
+  private yVelocity: number;
+  private alphaRefresh: number;
+
+  update(time: number, delta: number): void {
+    let playerState: PlayerState = this.playerSchema.playerState;
+
+    if (playerState.x != this.x || playerState.y != this.y) {
+      let [xSmooth, vxSmooth] = this.smoothMove(
+        playerState.x,
+        this.x,
+        delta,
+        this.xVelocity
+      );
+      this.xVelocity = vxSmooth;
+
+      let [ySmooth, vySmooth] = this.smoothMove(
+        playerState.y,
+        this.y,
+        delta,
+        this.yVelocity
+      );
+      this.yVelocity = vySmooth;
+
+      this.setPosition(xSmooth, ySmooth);
+    }
+  }
 }

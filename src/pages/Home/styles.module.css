@@ -1,7 +1,7 @@
 @import "theme/vars.css";
 
 .backgroundContainer {
-  background-image: url("assets/images/bg2.png");
+  background-image: url("assets/images/bg3.png");
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
@@ -106,6 +106,12 @@
 .modalContent p {
   font-size: 1.4rem;
   line-height: 1.5;
+}
+
+@media only screen and (max-width: 1096px) {
+  .gameConfigContainer {
+    min-width: 80%;
+  }
 }
 
 /*

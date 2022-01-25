@@ -67,7 +67,7 @@ export const SortToggle = ({
             >
               <p>{option.name}</p>
               <DropdownIcon
-                fill="#cecece"
+                fill="#ffffff"
                 width={32}
                 className={styles[direction]}
               />

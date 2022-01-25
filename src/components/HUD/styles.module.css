@@ -62,12 +62,14 @@
 
 .depthTag {
   font-size: 1.2rem;
-  color: black;
+  color: white;
   width: 5rem;
   left: 1.5rem;
   text-align: center;
   top: 0.7rem;
   position: absolute;
-  opacity: 0.6;
+  opacity: 0.7;
   z-index: 2;
+  text-shadow: 0 0 7px #cecece, 0 0 10px #cecece, 0 0 21px #cecece,
+    0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
 }

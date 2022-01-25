@@ -15,8 +15,9 @@ export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
         console.log(`Size of world is now: width: ${Client.getInstance().chiselWorld.width}, height: ${Client.getInstance().chiselWorld.height}`)
     }
 
-    public update() {
-        this.blockRenderer.update()
+    public update(time: number, delta: number) {
+        this.blockRenderer.update();
+        this.playerRender.update(time, delta);
     }
 
     private blockRenderer : BlockRenderer
