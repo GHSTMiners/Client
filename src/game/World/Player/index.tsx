@@ -39,7 +39,6 @@ export class Player extends Phaser.GameObjects.Container {
     });
     this.dirtParticleEmitter.stop();
     this.dirtParticleEmitter.startFollow(this);
-
     player.playerState.onChange = this.stateChanged.bind(this);
     // enabling physics to act as a natural interpolator
     this.scene.physics.add.existing(this);
@@ -111,7 +110,8 @@ export class Player extends Phaser.GameObjects.Container {
       );
       this.yVelocity = vySmooth;
 
-      this.setPosition(xSmooth, ySmooth);
+      if(this.playerSchema.playerState.movementState != Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
+      else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
     }
   }
 }

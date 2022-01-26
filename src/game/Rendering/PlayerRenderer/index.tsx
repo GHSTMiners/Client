@@ -41,7 +41,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         if (
           player.playerSessionID == Client.getInstance().colyseusRoom.sessionId
         ) {
-          self.scene.cameras.main.startFollow(newPlayer, true, 0.1, 0.1);
+          self.scene.cameras.main.startFollow(newPlayer, true, 0.3, 0.3);
           Client.getInstance().ownPlayer = player;
           self.scene.game.events.emit("joined_game", player);
         }
