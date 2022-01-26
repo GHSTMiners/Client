@@ -75,13 +75,21 @@ const CreateGameForm = (): JSX.Element => {
     <Form noValidate onSubmit={(e) => createGame(e)}>
       <Form.Group className="mb-3" controlId="world">
         <Form.Label>World</Form.Label>
-        <Form.Select aria-label="World" disabled={isLoading}>
+        <Form.Select
+          aria-label="World"
+          disabled={isLoading}
+          className={styles.customSelect}
+        >
           <WorldsOptions />
         </Form.Select>
       </Form.Group>
       <Form.Group className="mb-3" controlId="gameMode">
         <Form.Label>Game Mode</Form.Label>
-        <Form.Select aria-label="World" disabled={isLoading}>
+        <Form.Select
+          aria-label="World"
+          disabled={isLoading}
+          className={styles.customSelect}
+        >
           <option value="Classic">Classic</option>
         </Form.Select>
       </Form.Group>
@@ -100,8 +108,15 @@ const CreateGameForm = (): JSX.Element => {
             aria-hidden="true"
             hidden={!isLoading}
           />
-          {isLoading ? " Initializing..." : "Create game"}
+          {isLoading ? " Initializing" : "Create game"}
         </GreenButton>
+        {/*}
+        <div className={styles.fuelGauge}>
+          <div className={styles.fuelBarContainer}>
+            <div className={styles.fuelBar} />
+          </div>
+        </div>
+  */}
       </div>
     </Form>
   );
@@ -115,7 +130,7 @@ const JoinGameForm = (): JSX.Element => {
         <Form.Control type="text" aria-label="room-code"></Form.Control>
       </Form.Group>
       <div className={styles.joinButtonContainer}>
-        <GreenButton>Join game</GreenButton>
+        <GreenButton>Join room</GreenButton>
         <p></p>
         {/*<JoinRandomGameForm />*/}
       </div>
@@ -183,10 +198,14 @@ const JoinRandomGameForm = (): JSX.Element => {
     <Form noValidate onSubmit={(e) => joinRandomGame(e)}>
       <Form.Group className="mb-3" controlId="room-id">
         <Form.Label>Room code</Form.Label>
-        <Form.Control type="text" aria-label="room-code"></Form.Control>
+        <Form.Control
+          type="text"
+          aria-label="room-code"
+          className={styles.roomLabel}
+        ></Form.Control>
       </Form.Group>
       <div className={styles.joinButtonContainer}>
-        <GreenButton>Join game</GreenButton>
+        <GreenButton>Join room</GreenButton>
         <p></p>
         <GreenButton disabled={isLoading || !address}>
           <Spinner
@@ -197,7 +216,7 @@ const JoinRandomGameForm = (): JSX.Element => {
             aria-hidden="true"
             hidden={!isLoading}
           />
-          {isLoading ? " Joining..." : "Join random game"}
+          {isLoading ? " Joining..." : "Random Game"}
         </GreenButton>
       </div>
     </Form>

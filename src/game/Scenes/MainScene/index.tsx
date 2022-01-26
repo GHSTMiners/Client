@@ -14,6 +14,7 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
+    this.game.events.emit("mainscene_ready");
   }
 
   update(time: number, delta: number): void {

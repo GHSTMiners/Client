@@ -10,12 +10,11 @@
   background-color: transparent;
   background-size: contain;
   font-family: Rocks;
-  font-size: 1em;
+  font-size: 0.95em;
   color: rgba(42, 42, 42);
-  min-height: 3.6em;
-  min-width: 10em;
+  min-width: 8em;
   padding: 1em;
-  border: 0px solid magenta;
+  border: 0px solid red;
   outline: 0;
   -moz-outline-style: none;
 }

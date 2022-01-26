@@ -1,4 +1,4 @@
-@import 'theme/vars.css';
+@import "theme/vars.css";
 
 .detailsPanel {
   color: white;
@@ -19,11 +19,11 @@
 
 .modifierRow {
   display: grid;
-  grid-template-columns: 15rem 1fr;
+  grid-template-columns: 2fr 3fr;
 }
 
 .modifierRow p {
-  font-size: 1.2rem;
+  font-size: 1.2em;
 }
 
 .modifierMeter {

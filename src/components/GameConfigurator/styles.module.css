@@ -73,5 +73,50 @@
 .joinButtonContainer {
   display: flex;
   flex-direction: row;
+  align-self: flex-start;
   justify-content: space-between;
+  border: 0px solid magenta;
+}
+
+.customSelect {
+  background-color: #515151;
+  font-size: 0.8em;
+  color: white;
+  border: none;
+}
+
+.roomLabel {
+  background-color: #515151;
+  font-size: 0.8em;
+  color: white;
+  border: none;
+}
+
+.fuelGauge {
+  position: relative;
+  border: 1px solid magenta;
+}
+
+.fuelBarContainer {
+  overflow: hidden;
+  width: 120px;
+  position: absolute;
+  top: 80%;
+  right: 80%;
+}
+
+.fuelBar {
+  background: url("assets/hud/fuel_bar.svg") repeat-x;
+  height: 17px;
+  width: 1576px;
+  animation: slide 60s linear infinite;
+}
+
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1300px, 0, 0);
+  }
 }

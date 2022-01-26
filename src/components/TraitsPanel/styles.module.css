@@ -31,22 +31,22 @@
 
 .barsContainer {
   position: relative;
-  width: 85%;
+  width: 80%;
   align-self: center;
   margin-bottom: 1.5em;
 }
 
 .modifierRow {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  margin-right: 1.5rem;
+  grid-template-columns: 2fr 3fr;
+  padding-left: 0rem;
+  padding-right: 2rem;
 }
 
 .modifierRow p {
-  font-size: 14px;
-  font-size: 0.85vw;
+  font-size: 1rem;
   color: white;
-  margin-left: 2em;
+  margin-left: 3rem;
 }
 
 .modifierMeter {

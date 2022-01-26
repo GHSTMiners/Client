@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
 import { Header } from "components";
 import { TraitsPanel } from "components/TraitsPanel";
+import RockySelect from "components/RockySelect";
 
 function LoadingModal() {
   return (
@@ -129,6 +130,7 @@ const Home = (): JSX.Element => {
           </div>
           <div className={styles.gameConfigContainer}>
             <GameConfigurator />
+            {/*<RockySelect />*/}
           </div>
         </div>
       </div>

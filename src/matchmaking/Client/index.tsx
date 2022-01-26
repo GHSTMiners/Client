@@ -4,6 +4,7 @@ import Config from "config";
 import { World } from "matchmaking/Schemas/World";
 import * as Protocol from "gotchiminer-multiplayer-protocol";
 import Phaser from "phaser";
+import * as Schema from "matchmaking/Schemas";
 
 export default class Client {
   private static instance: Client;
@@ -17,6 +18,7 @@ export default class Client {
   public chiselWorld!: Chisel.DetailedWorld;
   public authenticationInfo: Protocol.AuthenticationInfo;
   public phaserGame!: Phaser.Game;
+  public ownPlayer!: Schema.Player;
   /**
    * The Singleton's constructor should always be private to prevent direct
    * construction calls with the `new` operator.

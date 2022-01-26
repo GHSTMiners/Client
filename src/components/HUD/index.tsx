@@ -10,30 +10,58 @@ export const HUD = () => {
   const currentDepth = -50;
 
   // TO DO: convert these numbers into percentage form
-  const fuelWidth = "12rem";
-  const healthWidth = "7rem";
+  const fuelWidth = "8rem";
+  const healthWidth = "14rem";
   const cargothWidth = "9rem";
 
   // Useless code because the hook only gets executed once since since we are using the Client class-based instead of functional component-based
   const [gameLoaded, setgameLoaded] = useState(false);
+  const [fuel, setFuel] = useState("12rem");
+  const [cargo, setCargo] = useState("12rem");
+  const [health, setHealth] = useState("12rem");
+
   useEffect(() => {
-    if (Client.getInstance().phaserGame?.scene.isActive("MainScene")) {
+    // Only show when the main scene was loaded
+    Client.getInstance().phaserGame.events.on("mainscene_ready", () => {
       setgameLoaded(true);
-    } else {
-      console.log(Client.getInstance().phaserGame.scene.isBooted); //
-    }
+    });
+    //Wait until the player was admitted to the server
+    Client.getInstance().phaserGame.events.on("joined_game", () => {
+      Client.getInstance().ownPlayer.vitals.forEach((vital) => {
+        if (vital.name == "Fuel") {
+          vital.onChange = () => {
+            let remFuelValue: number =
+              (vital.currentValue / vital.filledValue) * 14;
+            setFuel(`${remFuelValue}rem`);
+          };
+        } else if (vital.name == "Health") {
+          vital.onChange = () => {
+            let remFuelValue: number =
+              (vital.currentValue / vital.filledValue) * 14;
+            setHealth(`${remFuelValue}rem`);
+          };
+        } else if (vital.name == "Cargo") {
+          vital.onChange = () => {
+            let remFuelValue: number =
+              (1 - vital.currentValue / vital.filledValue) * 14;
+            setCargo(`${remFuelValue}rem`);
+          };
+        }
+      });
+    });
+    //Update the health, fuel and cargo bar
   }, []);
 
   return (
     <div className={styles.hudContainer}>
-      <div className={styles.vitalsConsole}>
-        <div className={styles.fuelBar} style={{ width: fuelWidth }}>
+      <div className={styles.vitalsConsole} hidden={!gameLoaded}>
+        <div className={styles.fuelBar} style={{ width: fuel }}>
           <img src={fuelBar} className={styles.vitalBar} />
         </div>
-        <div className={styles.healthBar} style={{ width: healthWidth }}>
+        <div className={styles.healthBar} style={{ width: health }}>
           <img src={healthBar} className={styles.vitalBar} />
         </div>
-        <div className={styles.cargoBar} style={{ width: cargothWidth }}>
+        <div className={styles.cargoBar} style={{ width: cargo }}>
           <img src={cargoBar} className={styles.vitalBar} />
         </div>
         <div className={styles.vitalsBarsCovers}></div>

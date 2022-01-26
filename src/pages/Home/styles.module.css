@@ -108,9 +108,14 @@
   line-height: 1.5;
 }
 
-@media only screen and (max-width: 1096px) {
+@media only screen and (max-width: 1400px) {
   .gameConfigContainer {
     min-width: 80%;
+  }
+
+  .gameConfigContainer > div > div {
+    padding: 5em;
+    padding-top: 2em;
   }
 }
 
