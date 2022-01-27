@@ -2,13 +2,13 @@ import styles from "./styles.module.css";
 import fuelBar from "assets/hud/fuel_bar.svg";
 import healthBar from "assets/hud/health_bar.svg";
 import cargoBar from "assets/hud/cargo_bar.svg";
+import mainConsole from "assets/hud/main_hud.svg";
 import Client from "matchmaking/Client";
 import { useState, useEffect } from "react";
+import Config from "config";
+import { DataChange } from "@colyseus/schema";
 
 export const HUD = () => {
-  // TO DO: hook depth with current Depth from the Schemas
-  const currentDepth = -50;
-
   // TO DO: convert these numbers into percentage form
   const fuelWidth = "8rem";
   const healthWidth = "14rem";
@@ -19,14 +19,18 @@ export const HUD = () => {
   const [fuel, setFuel] = useState("12rem");
   const [cargo, setCargo] = useState("12rem");
   const [health, setHealth] = useState("12rem");
+  const [consoleUp, setConsoleUp] = useState(false);
+  const [depth, setDepth] = useState(0);
 
   useEffect(() => {
-    // Only show when the main scene was loaded
+    // Display HUD only when the main scene was loaded
     Client.getInstance().phaserGame.events.on("mainscene_ready", () => {
       setgameLoaded(true);
     });
+
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
+      //Update the health, fuel and cargo bar
       Client.getInstance().ownPlayer.vitals.forEach((vital) => {
         if (vital.name == "Fuel") {
           vital.onChange = () => {
@@ -48,13 +52,21 @@ export const HUD = () => {
           };
         }
       });
+      // Updating depth
+      Client.getInstance().ownPlayer.playerState.onChange = (
+        change: DataChange<any>[]
+      ) => {
+        change.forEach((value) => {
+          if (value.field == "y")
+            setDepth(Math.ceil(value.value / Config.blockHeight));
+        });
+      };
     });
-    //Update the health, fuel and cargo bar
   }, []);
 
   return (
-    <div className={styles.hudContainer}>
-      <div className={styles.vitalsConsole} hidden={!gameLoaded}>
+    <div className={styles.hudContainer} hidden={!gameLoaded}>
+      <div className={styles.vitalsConsole}>
         <div className={styles.fuelBar} style={{ width: fuel }}>
           <img src={fuelBar} className={styles.vitalBar} />
         </div>
@@ -65,7 +77,18 @@ export const HUD = () => {
           <img src={cargoBar} className={styles.vitalBar} />
         </div>
         <div className={styles.vitalsBarsCovers}></div>
-        <div className={styles.depthTag}>Depth: {currentDepth}</div>
+        <div className={styles.depthTag}>
+          Depth:~{"\n"} {depth}
+        </div>
+      </div>
+      <div
+        className={`${styles.mainConsole} 
+        ${consoleUp ? styles.mainConsoleUp : styles.mainConsoleDown}`}
+        onClick={() => {
+          setConsoleUp(!consoleUp);
+        }}
+      >
+        <img src={mainConsole} className={styles.mainConsoleImg} />
       </div>
     </div>
   );
