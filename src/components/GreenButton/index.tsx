@@ -21,7 +21,7 @@ const GreenButton: React.FC<Props> = ({
       className={styles.greenButton}
       disabled={disabled}
     >
-      {children}
+      <div className={styles.buttonText}>{children}</div>
     </button>
   );
 };

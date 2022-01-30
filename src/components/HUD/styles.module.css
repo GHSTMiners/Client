@@ -3,6 +3,11 @@
   src: url("assets/fonts/gomarice_rocks.woff");
 }
 
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
 .hudContainer {
   position: absolute;
   font-family: Rocks;
@@ -99,8 +104,10 @@
 }
 
 .mainConsoleImg {
+  position: absolute;
   width: 100%;
   height: auto;
+  z-index: 0;
 }
 
 .overlay {
@@ -110,4 +117,64 @@
   width: 100%;
   height: 0;
   transition: 0.5s ease;
+}
+
+.mainConsoleContainer {
+  display: grid;
+  background-image: url("assets/hud/main_hud.svg");
+  background-size: cover;
+  width: 100rem;
+  height: 45rem;
+  grid-template-rows: 2fr 1fr 2fr 2fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "playerButtons playerButtons"
+    "inventory inventory"
+    "consumables crypto"
+    "artifacts crypto";
+  padding-left: 12.9rem;
+  padding-right: 15.5rem;
+  padding-bottom: 2rem;
+  column-gap: 2rem;
+  font-size: 3em;
+  color: white;
+  font-family: Pixelar;
+  text-shadow: 0 0 7px #cecece, 0 0 10px #cecece, 0 0 21px #cecece,
+    0 0 42px #0fa, 0 0 82px #0fa, 0 0 92px #0fa, 0 0 102px #0fa, 0 0 151px #0fa;
+  z-index: 10;
+}
+
+.mainConsoleContainer > * {
+  font-size: 0.5em;
+}
+
+.playerButtons {
+  grid-area: playerButtons;
+  align-self: center;
+  justify-self: center;
+}
+
+.inventoryTitle {
+  grid-area: inventory;
+  font-size: 1em;
+  justify-self: center;
+}
+
+.sectionTitle {
+  font-size: 2rem;
+}
+
+.consumablesContainer {
+  grid-area: consumables;
+  margin-left: 5rem;
+}
+
+.artifactsContainer {
+  grid-area: artifacts;
+  margin-left: 5rem;
+}
+
+.cryptoContainer {
+  grid-area: crypto;
+  margin-right: 4rem;
 }

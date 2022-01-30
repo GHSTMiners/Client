@@ -13,8 +13,14 @@
   font-size: 0.95em;
   color: rgba(42, 42, 42);
   min-width: 8em;
-  padding: 1em;
+  height: 2.8em;
   border: 0px solid red;
   outline: 0;
+  margin: auto;
   -moz-outline-style: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.buttonText:hover {
+  box-shadow: 0 5px 20px rgba(0, 255, 0, 0.8);
 }

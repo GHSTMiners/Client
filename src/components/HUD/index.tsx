@@ -88,7 +88,24 @@ export const HUD = () => {
           setConsoleUp(!consoleUp);
         }}
       >
-        <img src={mainConsole} className={styles.mainConsoleImg} />
+        {/*<img src={mainConsole} className={styles.mainConsoleImg} />*/}
+        <div className={styles.mainConsoleContainer}>
+          <div className={styles.playerButtons}>BUTTONS GO HERE</div>
+          <div className={styles.inventoryTitle}>INVENTORY</div>
+          <div className={styles.consumablesContainer}>
+            <div className={styles.sectionTitle}>CONSUMABLES</div>
+            consumable items go here
+          </div>
+          <div className={styles.artifactsContainer}>
+            <div className={styles.sectionTitle}>ARTIFACTS</div>
+            artifact items go here
+          </div>
+          <div className={styles.cryptoContainer}>
+            <div className={styles.sectionTitle}>CRYPTO</div>
+            crypto items go here
+          </div>
+        </div>
+        {/*<img src={mainConsole} className={styles.mainConsoleImg} />*/}
       </div>
     </div>
   );
