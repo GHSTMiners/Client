@@ -110,7 +110,7 @@ const CreateGameForm = (): JSX.Element => {
           />
           {isLoading ? " Initializing" : "Create game"}
         </GreenButton>
-        {/*}
+        {/*
         <div className={styles.fuelGauge}>
           <div className={styles.fuelBarContainer}>
             <div className={styles.fuelBar} />
