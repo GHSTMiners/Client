@@ -8,18 +8,53 @@ import { useState, useEffect } from "react";
 import Config from "config";
 import { DataChange } from "@colyseus/schema";
 import SquareButton from "components/SquareButton";
+import cargoIcon from "assets/hud/cargo_icon.svg";
 
 export const HUD = () => {
   const smallButton = "3.3rem";
   const bigButton = "5.8rem";
-
-  // Useless code because the hook only gets executed once since since we are using the Client class-based instead of functional component-based
   const [gameLoaded, setgameLoaded] = useState(false);
   const [fuel, setFuel] = useState("14rem");
   const [cargo, setCargo] = useState("14rem");
   const [health, setHealth] = useState("14rem");
   const [consoleUp, setConsoleUp] = useState(false);
   const [depth, setDepth] = useState(0);
+
+  const inventoryCargoBar = (percentage: string) => (
+    <div className={styles.modifierRow}>
+      <div className={styles.modifierMeter}>
+        <div className={styles.labelStyles}>
+          <span
+            className={styles.progress}
+            style={{ width: percentage }}
+          ></span>
+        </div>
+      </div>
+      <div className={styles.barTagContainer}>
+        <div>EMPTY</div>
+        <div>FULL</div>
+      </div>
+    </div>
+  );
+
+  const itemList = [];
+  for (let i = 1; i < 9; i++) {
+    itemList.push(<SquareButton size={smallButton}>ITEM {i}</SquareButton>);
+  }
+
+  const artifactList = [];
+  for (let i = 1; i < 5; i++) {
+    artifactList.push(<SquareButton size={smallButton}>ITEM {i}</SquareButton>);
+  }
+
+  const inventoryCrystal = (tag: string, quantity: number) => (
+    <div className={styles.crystalContainer}>
+      <div className={styles.crystalIcon} />
+      <div className={styles.crystalTag}>
+        {tag} x {quantity}
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     // Display HUD only when the main scene was loaded
@@ -99,32 +134,30 @@ export const HUD = () => {
           <div className={styles.inventoryTitle}>INVENTORY</div>
           <div className={styles.consumablesContainer}>
             <div className={styles.sectionTitle}>CONSUMABLES</div>
-            <div className={styles.consumableItems}>
-              <SquareButton size={smallButton}>ITEM 1</SquareButton>
-              <SquareButton size={smallButton}>ITEM 2</SquareButton>
-              <SquareButton size={smallButton}>ITEM 3</SquareButton>
-              <SquareButton size={smallButton}>ITEM 4</SquareButton>
-              <SquareButton size={smallButton}>ITEM 5</SquareButton>
-              <SquareButton size={smallButton}>ITEM 6</SquareButton>
-              <SquareButton size={smallButton}>ITEM 7</SquareButton>
-              <SquareButton size={smallButton}>ITEM 8</SquareButton>
-            </div>
+            <div className={styles.consumableItems}>{itemList}</div>
           </div>
           <div className={styles.artifactsContainer}>
             <div className={styles.sectionTitle}>ARTIFACTS</div>
-            <div className={styles.artifactItems}>
-              <SquareButton size={smallButton}>ITEM 1</SquareButton>
-              <SquareButton size={smallButton}>ITEM 2</SquareButton>
-              <SquareButton size={smallButton}>ITEM 3</SquareButton>
-              <SquareButton size={smallButton}>ITEM 4</SquareButton>
-            </div>
+            <div className={styles.artifactItems}>{artifactList}</div>
           </div>
           <div className={styles.cryptoContainer}>
             <div className={styles.sectionTitle}>CRYPTO</div>
-            crypto items go here
+            <img src={cargoIcon} className={styles.cargoIcon} />
+            Total Inventory Weight
+            {inventoryCargoBar("50%")}
+            <div className={styles.cryptoGallery}>
+              {inventoryCrystal("GHST", 10)}
+              {inventoryCrystal("BTC", 0)}
+              {inventoryCrystal("MATIC", 25)}
+              {inventoryCrystal("QUICK", 2)}
+              {inventoryCrystal("DAI", 3)}
+              {inventoryCrystal("YFI", 6)}
+              {inventoryCrystal("LINK", 7)}
+              {inventoryCrystal("ETH", 1)}
+              {inventoryCrystal("AAVE", 3)}
+            </div>
           </div>
         </div>
-        {/*<img src={mainConsole} className={styles.mainConsoleImg} />*/}
       </div>
     </div>
   );

@@ -25,5 +25,5 @@
 }
 
 .buttonText:hover {
-  box-shadow: 0 0.3px 1.5em rgba(0, 255, 0, 0.8);
+  box-shadow: 0 0.3px 1.5em rgba(255, 255, 255, 0.8);
 }
