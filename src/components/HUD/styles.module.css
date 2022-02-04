@@ -154,10 +154,24 @@
   justify-self: center;
   display: flex;
   width: 100%;
-  padding-bottom: 8%;
+  padding-bottom: 8.2%;
   padding-right: 15.6%;
   padding-left: 7.5%;
   justify-content: space-evenly;
+}
+
+.expandButton {
+  position: absolute;
+  right: 24.8%;
+}
+
+.expandIconUp {
+  transition: all 400ms ease;
+}
+
+.expandIconDown {
+  transform: rotate(180deg);
+  transition: all 400ms ease;
 }
 
 .inventoryTitle {

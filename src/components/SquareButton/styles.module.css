@@ -12,7 +12,7 @@
   outline: 1px dashed #cecece;
   outline-width: 3px;
   overflow: hidden;
-  box-shadow: 0 0.2em 1em rgb(255 255 255 / 0.5);
+  box-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
   -moz-outline-style: none;
   transition: all 0.2s ease-in-out;
 }
@@ -24,6 +24,6 @@
   align-items: center;
 }
 
-.buttonText:hover {
-  box-shadow: 0 0.3px 1.5em rgba(255, 255, 255, 0.8);
+.squareButton:hover {
+  box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
 }

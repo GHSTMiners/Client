@@ -9,6 +9,7 @@ import Config from "config";
 import { DataChange } from "@colyseus/schema";
 import SquareButton from "components/SquareButton";
 import cargoIcon from "assets/hud/cargo_icon.svg";
+import expandIcon from "assets/hud/expand_icon.svg";
 
 export const HUD = () => {
   const smallButton = "3.3rem";
@@ -118,11 +119,7 @@ export const HUD = () => {
       <div
         className={`${styles.mainConsole} 
         ${consoleUp ? styles.mainConsoleUp : styles.mainConsoleDown}`}
-        onClick={() => {
-          setConsoleUp(!consoleUp);
-        }}
       >
-        {/*<img src={mainConsole} className={styles.mainConsoleImg} />*/}
         <div className={styles.mainConsoleContainer}>
           <div className={styles.playerButtons}>
             <SquareButton size={bigButton}>TOOL</SquareButton>
@@ -130,6 +127,22 @@ export const HUD = () => {
             <SquareButton size={smallButton}>ITEM 2</SquareButton>
             <SquareButton size={smallButton}>ITEM 3</SquareButton>
             <SquareButton size={smallButton}>ITEM 4</SquareButton>
+            <div
+              className={styles.expandButton}
+              onClick={() => {
+                setConsoleUp(!consoleUp);
+              }}
+              style={{ width: smallButton, height: smallButton }}
+            >
+              <img
+                src={expandIcon}
+                className={`${styles.expandIncon} 
+                ${consoleUp ? styles.expandIconUp : styles.expandIconDown}`}
+                onClick={() => {
+                  setConsoleUp(!consoleUp);
+                }}
+              />
+            </div>
           </div>
           <div className={styles.inventoryTitle}>INVENTORY</div>
           <div className={styles.consumablesContainer}>
@@ -154,7 +167,6 @@ export const HUD = () => {
               {inventoryCrystal("YFI", 6)}
               {inventoryCrystal("LINK", 7)}
               {inventoryCrystal("ETH", 1)}
-              {inventoryCrystal("AAVE", 3)}
             </div>
           </div>
         </div>
