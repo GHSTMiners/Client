@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.css";
 
 interface Props {
-  textLabel?: string;
+  quantitiy?: number;
   children?: React.ReactNode;
   onClick?: () => void;
   size?: string;
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const SquareButton: React.FC<Props> = ({
+  quantitiy = 0,
   children,
   onClick,
   size,
@@ -24,6 +25,7 @@ const SquareButton: React.FC<Props> = ({
       <div className={styles.buttonText} style={{ width: size, height: size }}>
         {children}
       </div>
+      <div className={styles.quantity}>x{quantitiy}</div>
     </button>
   );
 };

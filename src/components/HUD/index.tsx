@@ -10,6 +10,7 @@ import { DataChange } from "@colyseus/schema";
 import SquareButton from "components/SquareButton";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import expandIcon from "assets/hud/expand_icon.svg";
+import drillIcon from "assets/hud/drill.png";
 
 export const HUD = () => {
   const smallButton = "3.3rem";
@@ -122,8 +123,12 @@ export const HUD = () => {
       >
         <div className={styles.mainConsoleContainer}>
           <div className={styles.playerButtons}>
-            <SquareButton size={bigButton}>TOOL</SquareButton>
-            <SquareButton size={smallButton}>ITEM 1</SquareButton>
+            <SquareButton size={bigButton} quantitiy={1}>
+              <img src={drillIcon} className={styles.toolIcon} />
+            </SquareButton>
+            <SquareButton size={smallButton} quantitiy={2}>
+              ITEM 1
+            </SquareButton>
             <SquareButton size={smallButton}>ITEM 2</SquareButton>
             <SquareButton size={smallButton}>ITEM 3</SquareButton>
             <SquareButton size={smallButton}>ITEM 4</SquareButton>

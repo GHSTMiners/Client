@@ -15,6 +15,7 @@
   box-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
   -moz-outline-style: none;
   transition: all 0.2s ease-in-out;
+  position: relative;
 }
 
 .buttonText {
@@ -26,4 +27,11 @@
 
 .squareButton:hover {
   box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
+}
+
+.quantity {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 0.8em;
 }
