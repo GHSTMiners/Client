@@ -16,8 +16,8 @@ export default class LoadingScene extends Phaser.Scene {
     this.graphics = this.add.graphics();
     this.newGraphics = this.add.graphics();
     var progressBar = new Phaser.Geom.Rectangle(
-      this.cameras.main.width / 2 - 200,
-      this.cameras.main.height / 2 - 25,
+      this.cameras.main.width / 2 - 210,
+      this.cameras.main.height / 2 - 32,
       400,
       50
     );
@@ -35,7 +35,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.newGraphics.fillRectShape(progressBarFill);
     var loadingText = this.add.text(
       this.cameras.main.width / 2 - 190,
-      this.cameras.main.height / 2 - 15,
+      this.cameras.main.height / 2 - 20,
       "Loading: ",
       { fontSize: "32px" }
     );

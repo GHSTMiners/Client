@@ -292,9 +292,9 @@
 }
 
 .crystalIcon {
-  border: 1px solid #ccfffeff;
   height: 3rem;
   width: 3rem;
+  opacity: 0.9;
   margin-left: 0.5rem;
 }
 

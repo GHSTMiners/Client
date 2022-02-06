@@ -11,6 +11,7 @@ import SquareButton from "components/SquareButton";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
+import * as Chisel from "chisel-api-interface";
 
 export const HUD = () => {
   const smallButton = "3.3rem";
@@ -21,6 +22,9 @@ export const HUD = () => {
   const [health, setHealth] = useState("14rem");
   const [consoleUp, setConsoleUp] = useState(false);
   const [depth, setDepth] = useState(0);
+
+  const world: Chisel.DetailedWorld | undefined =
+    Client.getInstance().chiselWorld;
 
   const inventoryCargoBar = (percentage: string) => (
     <div className={styles.modifierRow}>
@@ -49,14 +53,26 @@ export const HUD = () => {
     artifactList.push(<SquareButton size={smallButton}>ITEM {i}</SquareButton>);
   }
 
-  const inventoryCrystal = (tag: string, quantity: number) => (
+  let crystalsArray: { name: string; image: string }[] = [];
+  for (let i = 0; i < world.crypto.length; i++) {
+    crystalsArray.push({
+      name: `${world.crypto[i].name}`,
+      image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
+    });
+  }
+
+  const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer}>
-      <div className={styles.crystalIcon} />
+      <img src={image} className={styles.crystalIcon} />
       <div className={styles.crystalTag}>
         {tag} x {quantity}
       </div>
     </div>
   );
+
+  const cryptoInventoryList = crystalsArray.map(function (crypto) {
+    return inventoryCrystal(crypto.name, 0, crypto.image);
+  });
 
   useEffect(() => {
     // Display HUD only when the main scene was loaded
@@ -163,16 +179,7 @@ export const HUD = () => {
             <img src={cargoIcon} className={styles.cargoIcon} />
             Total Inventory Weight
             {inventoryCargoBar("50%")}
-            <div className={styles.cryptoGallery}>
-              {inventoryCrystal("GHST", 10)}
-              {inventoryCrystal("BTC", 0)}
-              {inventoryCrystal("MATIC", 25)}
-              {inventoryCrystal("QUICK", 2)}
-              {inventoryCrystal("DAI", 3)}
-              {inventoryCrystal("YFI", 6)}
-              {inventoryCrystal("LINK", 7)}
-              {inventoryCrystal("ETH", 1)}
-            </div>
+            <div className={styles.cryptoGallery}>{cryptoInventoryList}</div>
           </div>
         </div>
       </div>
