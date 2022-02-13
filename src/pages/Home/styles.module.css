@@ -45,6 +45,7 @@
   padding-left: 4%;
   top: 25%;
   left: 5%;
+  aspect-ratio: 1 / 1;
 }
 
 .stoneMenu {
@@ -52,8 +53,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position-x: center;
-  width: 60%;
+  width: 55%;
   left: 40%;
+  aspect-ratio: 277 / 364;
   position: relative;
 }
 

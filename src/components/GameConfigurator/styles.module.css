@@ -8,28 +8,26 @@
 .mainContainer {
   color: white;
   font-family: Rocks;
-  display: flex;
-  justify-content: space-around;
   height: 100%;
-  flex-direction: column;
-  align-items: stretch;
-  border: 0px solid greenyellow;
+  width: 39rem;
 }
 
+/*
 .mainContainer > * {
   font-size: 1vw;
 }
+*/
 
 .createGameRock {
   background-image: url("assets/icons/rock_creategame3.svg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 55%;
-  display: flex;
-  justify-content: center;
-  padding-top: 2em;
-  border: 0px solid red;
+  padding-top: 0em;
+  aspect-ratio: 678 / 482;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .joinGameRock {
@@ -37,21 +35,22 @@
   background-repeat: no-repeat;
   background-position: center;
   height: 40%;
-  display: flex;
-  justify-content: center;
-  border: 0px solid green;
+  margin-top: 1rem;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  padding-bottom: 2rem;
 }
 
 .stoneTitles {
-  font-size: 20pt;
+  font-size: 1.7rem;
   display: flex;
   justify-content: center;
 }
 
 .createGameText {
-  width: 40%;
-  margin-top: 1.5rem;
-  margin-left: 1em;
+  width: 60%;
+  margin-left: 1.5em;
 }
 
 .createGameBottom {
@@ -65,7 +64,7 @@
 }
 
 .joinGameText {
-  width: 40%;
+  width: 60%;
   margin-top: 5%;
   margin-left: 2%;
 }
@@ -78,11 +77,57 @@
   border: 0px solid magenta;
 }
 
+.selectorContainer {
+  width: 100%;
+  cursor: pointer;
+  background-color: transparent;
+  display: grid;
+  grid-template-areas: "select";
+  align-items: center;
+}
+
 .customSelect {
-  background-color: #515151;
-  font-size: 0.8em;
-  color: white;
+  appearance: none;
+  background-color: transparent;
+  background-image: url("assets/icons/dropdown_frame.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
   border: none;
+  padding: 0.2em 1em 0 0;
+  margin: 0;
+  width: 100%;
+  color: white;
+  min-height: 2.5rem;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: 2.5rem;
+  padding-left: 1em;
+  padding-bottom: 4.5%;
+  aspect-ratio: 425 / 54;
+}
+
+.selectorContainer::after {
+  justify-self: end;
+  content: "";
+  width: 1.5rem;
+  height: 0.6rem;
+  margin-top: 1%;
+  margin-right: 10%;
+  background-image: url("assets/icons/dropdown_arrow.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+}
+
+.customSelect,
+.selectorContainer:after {
+  grid-area: select;
+}
+
+.customSelect:focus + .focus {
+  font-family: Rocks;
+  color: red;
 }
 
 .roomLabel {

@@ -75,23 +75,27 @@ const CreateGameForm = (): JSX.Element => {
     <Form noValidate onSubmit={(e) => createGame(e)}>
       <Form.Group className="mb-3" controlId="world">
         <Form.Label>World</Form.Label>
-        <Form.Select
-          aria-label="World"
-          disabled={isLoading}
-          className={styles.customSelect}
-        >
-          <WorldsOptions />
-        </Form.Select>
+        <div className={styles.selectorContainer}>
+          <Form.Select
+            aria-label="World"
+            disabled={isLoading}
+            className={styles.customSelect}
+          >
+            <WorldsOptions />
+          </Form.Select>
+        </div>
       </Form.Group>
       <Form.Group className="mb-3" controlId="gameMode">
         <Form.Label>Game Mode</Form.Label>
-        <Form.Select
-          aria-label="World"
-          disabled={isLoading}
-          className={styles.customSelect}
-        >
-          <option value="Classic">Classic</option>
-        </Form.Select>
+        <div className={styles.selectorContainer}>
+          <Form.Select
+            aria-label="World"
+            disabled={isLoading}
+            className={styles.customSelect}
+          >
+            <option value="Classic">Classic</option>
+          </Form.Select>
+        </div>
       </Form.Group>
       <div className={styles.createGameBottom}>
         <Form.Group className="mb-3" controlId="private-game">
@@ -228,7 +232,7 @@ const GameConfigurator = () => {
     <div className={styles.mainContainer}>
       <div className={styles.createGameRock}>
         <div className={styles.createGameText}>
-          <div className={styles.stoneTitles}>Create a game</div>
+          <div className={styles.stoneTitles}>Create Game</div>
           <CreateGameForm />
         </div>
       </div>

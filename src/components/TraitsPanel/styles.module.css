@@ -14,8 +14,7 @@
 
 .gotchiName {
   color: white;
-  font-size: 20pt;
-  font-size: 1.2vw;
+  font-size: 1.7rem;
   margin-top: 0.3em;
   display: flex;
   align-self: center;
@@ -39,14 +38,12 @@
 .modifierRow {
   display: grid;
   grid-template-columns: 2fr 3fr;
-  padding-left: 0rem;
-  padding-right: 2rem;
 }
 
 .modifierRow p {
   font-size: 1rem;
   color: white;
-  margin-left: 3rem;
+  margin-left: 1.5rem;
 }
 
 .modifierMeter {
@@ -62,7 +59,6 @@
   margin-left: 1rem;
   color: "white";
   font-weight: "bold";
-  font-size: 110%;
 }
 
 .progress {
