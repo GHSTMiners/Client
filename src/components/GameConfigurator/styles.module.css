@@ -98,13 +98,17 @@
   width: 100%;
   color: white;
   min-height: 2.5rem;
-  font-family: inherit;
+  font-family: Rocks;
   font-size: inherit;
   cursor: inherit;
   line-height: 2.5rem;
   padding-left: 1em;
   padding-bottom: 4.5%;
   aspect-ratio: 425 / 54;
+}
+
+.selectOptions {
+  color: blue;
 }
 
 .selectorContainer::after {
@@ -125,9 +129,9 @@
   grid-area: select;
 }
 
-.customSelect:focus + .focus {
-  font-family: Rocks;
-  color: red;
+.customSelect:disabled {
+  background-color: transparent;
+  color: #999999;
 }
 
 .roomLabel {
