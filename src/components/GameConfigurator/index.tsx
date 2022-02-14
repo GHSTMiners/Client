@@ -57,6 +57,10 @@ const CreateGameForm = (): JSX.Element => {
             // prettier-ignore
             Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
                 Client.getInstance().colyseusRoom = room;
+                Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
+                  Client.getInstance().messageRouter.processRawMessage(type as string, message);
+                });
+
                 room.onStateChange.once((state) => {
                     navigate("/play", {replace: false});
                     setLoading(false);

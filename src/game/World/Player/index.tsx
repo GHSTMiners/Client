@@ -25,7 +25,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.playerMessage = this.scene.add.text(0, 0, "Hallo");
     this.playerMessage.setDepth(50)
     this.playerMessage.setFontSize(25)
-    this.playerMessage.setFontFamily("Karmatic Arcade")
+    this.playerMessage.setFontFamily("Rocks")
     this.playerMessage.setShadow(5, 5, '#000', 15)
     this.playerMessage.setVisible(false);
     this.add(this.playerMessage)
@@ -46,7 +46,10 @@ export class Player extends Phaser.GameObjects.Container {
       lifespan: 1500,
       blendMode: "COLOR",
     });
-    this.dirtParticleEmitter.stop();
+    //Add sound
+    this.jackHammerSound = scene.sound.add("jackHammer")
+    this.thrustersSound = scene.sound.add("thrusters")
+    this.dirtParticleEmitter.stop()
     this.dirtParticleEmitter.startFollow(this);
     // enabling physics to act as a natural interpolator
     this.scene.physics.add.existing(this);
@@ -104,9 +107,18 @@ export class Player extends Phaser.GameObjects.Container {
 
   update(time: number, delta: number): void {
     //Drilling update stuff
-
     let playerState: PlayerState = this.playerSchema.playerState;
-
+  
+    //Process sound
+    if ((playerState.movementState == Schema.MovementState.Drilling) != this.jackHammerSound.isPlaying) {
+      if((playerState.movementState == Schema.MovementState.Drilling)) this.jackHammerSound.play()
+      else this.jackHammerSound.pause()
+    } else if ((playerState.movementState == Schema.MovementState.Flying) != this.thrustersSound.isPlaying) {
+      if((playerState.movementState == Schema.MovementState.Flying)) this.thrustersSound.play()
+      else this.thrustersSound.pause()
+    }
+    
+    //Process drilling particles
     if (
       playerState.movementState != Schema.MovementState.Drilling &&
       this.dirtParticleEmitter.on
@@ -137,6 +149,8 @@ export class Player extends Phaser.GameObjects.Container {
       else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
     }
   }
+  private thrustersSound : Phaser.Sound.BaseSound
+  private jackHammerSound : Phaser.Sound.BaseSound
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
 }
