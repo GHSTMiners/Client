@@ -17,6 +17,8 @@ export default class Client {
   public colyseusRoom!: Colyseus.Room<World>;
   public chiselWorld!: Chisel.DetailedWorld;
   public authenticationInfo: Protocol.AuthenticationInfo;
+  public messageRouter : Protocol.MessageRouter
+
   public phaserGame!: Phaser.Game;
   public ownPlayer!: Schema.Player;
   /**
@@ -25,6 +27,7 @@ export default class Client {
    */
   private constructor() {
     this.authenticationInfo = new Protocol.AuthenticationInfo();
+    this.messageRouter = new Protocol.MessageRouter()
   }
 
   /**

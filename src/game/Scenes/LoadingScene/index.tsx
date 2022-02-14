@@ -47,8 +47,11 @@ export default class LoadingScene extends Phaser.Scene {
     });
     this.load.on("complete", this.complete, { scene: this.scene });
 
-    //Static images
+    //Static images and audio files
     this.load.image("dirtParticle", "assets/images/stone.png");
+    this.load.audio("jackHammer", "assets/audio/jackHammer.wav");
+    this.load.audio("thrusters", "assets/audio/thrusters.wav");
+
     let world: Chisel.DetailedWorld | undefined =
       Client.getInstance().chiselWorld;
     //this.load.image('aavegotchi', "https://play.gotchiminer.rocks/VOYAGER.png");
@@ -71,6 +74,16 @@ export default class LoadingScene extends Phaser.Scene {
         `crypto_wallet_${crypto.id}`,
         `https://chisel.gotchiminer.rocks/storage/${crypto.soil_image}`
       );
+    });
+    world.buildings.forEach((building) => {
+      this.load.video(
+        `building_${building.id}`,
+        `https://chisel.gotchiminer.rocks/storage/${building.video}`,
+        undefined, true, true
+      );
+      this.load.audio(`building_activation_${building.id}`,
+      `https://chisel.gotchiminer.rocks/storage/${building.activation_sound}`
+      )
     });
     world.soil.forEach((soil) => {
       this.load.image(

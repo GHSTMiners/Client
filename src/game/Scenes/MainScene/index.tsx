@@ -1,6 +1,7 @@
 import { Client } from "colyseus.js";
 import Config from "config";
 import MovementManager from "game/Management/MovementManager";
+import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
 
@@ -14,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
   create() {
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
+    this.excavationManager = new ExcavationManager(this)
     this.game.events.emit("mainscene_ready");
   }
 
@@ -25,4 +27,5 @@ export default class MainScene extends Phaser.Scene {
 
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
+  private excavationManager?: ExcavationManager
 }

@@ -18,35 +18,36 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
   }
 
   private addPlayerSprite(player: Schema.Player) {
-    console.log(
-      `Player entered the game with Aavegotchi ID: ${player.gotchiID}`
-    );
-    let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher(
-      player.gotchiID
-    );
-    aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
-      console.log(svg);
-      //Convert string from svg
-      const blob = new Blob([svg], { type: "image/svg+xml" });
-      const url = URL.createObjectURL(blob);
+    if(!this.playerSprites.has(player.gotchiID)){
+      console.log(
+        `Player entered the game with Aavegotchi ID: ${player.gotchiID}`
+      );
+      let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher(
+        player.gotchiID
+      );
+      aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
+        //Convert string from svg
+        const blob = new Blob([svg], { type: "image/svg+xml" });
+        const url = URL.createObjectURL(blob);
 
-      this.scene.load.svg(`gotchi_${player.gotchiID}`, url);
-      this.scene.load.start();
-      var self = this;
-      this.scene.load.on(Phaser.Loader.Events.COMPLETE, function () {
-        let newPlayer: Player = new Player(self.scene, player);
-        self.playerSprites.set(player.gotchiID, newPlayer);
-        self.scene.add.existing(newPlayer);
-        //Check if self sprite belong to me
-        if (
-          player.playerSessionID == Client.getInstance().colyseusRoom.sessionId
-        ) {
-          self.scene.cameras.main.startFollow(newPlayer, true, 0.3, 0.3);
-          Client.getInstance().ownPlayer = player;
-          self.scene.game.events.emit("joined_game", player);
-        }
+        this.scene.load.svg(`gotchi_${player.gotchiID}`, url);
+        this.scene.load.start();
+        var self = this;
+        this.scene.load.on(Phaser.Loader.Events.COMPLETE, function () {
+          let newPlayer: Player = new Player(self.scene, player);
+          self.playerSprites.set(player.gotchiID, newPlayer);
+          self.scene.add.existing(newPlayer);
+          //Check if self sprite belong to me
+          if (
+            player.playerSessionID == Client.getInstance().colyseusRoom.sessionId
+          ) {
+            self.scene.cameras.main.startFollow(newPlayer, true, 0.3, 0.3);
+            Client.getInstance().ownPlayer = player;
+            self.scene.game.events.emit("joined_game", player, newPlayer);
+          }
+        });
       });
-    });
+    }
   }
 
   private removePlayerSprite(player: Schema.Player) {
@@ -61,7 +62,6 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
   }
 
   update(time: number, delta: number): void {
-    //console.log("INSIDE PLAYER RENDERER");
     this.playerSprites.forEach((sprite) => {
       sprite.update(time, delta);
     });

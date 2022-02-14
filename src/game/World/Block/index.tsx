@@ -11,7 +11,7 @@ export enum SoilType {
 export default class Block extends Phaser.GameObjects.Container {
     constructor(scene : Phaser.Scene, blockInfo: Schema.Block, soilType: SoilType, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
         super(scene, x, y, children)
-        this.setDepth(1)
+        this.setDepth(10)
         this.soilType = soilType
         if(blockInfo) {
             this.blockInfo = blockInfo;

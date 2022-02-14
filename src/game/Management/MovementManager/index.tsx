@@ -25,19 +25,15 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
     }
  
-    
-     public velocityVector () : Phaser.Math.Vector2 {
+    public velocityVector () : Phaser.Math.Vector2 {
         var velocityVector : Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0)
-        if(this.cursors.up.isDown) console.log("up!!!!!");
         if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) velocityVector.x -= 1
         if(this.cursors.right.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
         if(this.cursors.up.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) velocityVector.y -= 1
         if(this.cursors.down.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
-        
         return velocityVector;
     }
 
     private keys : Map<number, Phaser.Input.Keyboard.Key>
-    
     private cursors :Phaser.Types.Input.Keyboard.CursorKeys
 }

@@ -3,9 +3,11 @@ import Client from "matchmaking/Client"
 import BlockRenderer from "../BlockRenderer"
 import BackgroundRenderer from "../BackgroundRenderer"
 import PlayerRenderer from "../PlayerRenderer"
+import BuildingRenderer from "../BuildingRenderer"
 export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "GlobalRenderer")
+        this.buildingRenderer = new BuildingRenderer(scene)
         this.blockRenderer = new BlockRenderer(scene)
         this.backgroundRenderer = new BackgroundRenderer(scene)
         this.playerRender = new PlayerRenderer(scene)
@@ -20,6 +22,7 @@ export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
         this.playerRender.update(time, delta);
     }
 
+    private buildingRenderer : BuildingRenderer
     private blockRenderer : BlockRenderer
     private playerRender : PlayerRenderer
     private backgroundRenderer : BackgroundRenderer
