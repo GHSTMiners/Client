@@ -8,7 +8,7 @@ import { time } from "console";
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
     super(scene, player.playerState.x, player.playerState.y);
-    this.setDepth(3);
+    this.setDepth(40);
     this.playerSchema = player;
     this.playerSprite = this.scene.add.sprite(
       0,
@@ -21,9 +21,18 @@ export class Player extends Phaser.GameObjects.Container {
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.alphaRefresh = 0.4;
+    //Add messages
+    this.playerMessage = this.scene.add.text(0, 0, "Hallo");
+    this.playerMessage.setDepth(50)
+    this.playerMessage.setFontSize(25)
+    this.playerMessage.setFontFamily("Karmatic Arcade")
+    this.playerMessage.setShadow(5, 5, '#000', 15)
+    this.playerMessage.setVisible(false);
+    this.add(this.playerMessage)
+    this.playerMessageTimer = scene.time.addEvent({});
     //Create particle emitter
     var particles = this.scene.add.particles("dirtParticle");
-    particles.setDepth(2);
+    particles.setDepth(30);
     this.dirtParticleEmitter = particles.createEmitter({
       active: true,
       angle: { min: 247.5, max: 292.5 },
@@ -39,27 +48,30 @@ export class Player extends Phaser.GameObjects.Container {
     });
     this.dirtParticleEmitter.stop();
     this.dirtParticleEmitter.startFollow(this);
-    player.playerState.onChange = this.stateChanged.bind(this);
     // enabling physics to act as a natural interpolator
     this.scene.physics.add.existing(this);
     this.scene.physics.world.enable(this);
   }
 
-  private stateChanged(change: DataChange<any>[]) {
-    //console.log(change);
-    let playerState: PlayerState = this.playerSchema.playerState;
 
-    if (
-      playerState.movementState != Schema.MovementState.Drilling &&
-      this.dirtParticleEmitter.on
-    )
-      this.dirtParticleEmitter.stop();
-    else if (
-      playerState.movementState == Schema.MovementState.Drilling &&
-      !this.dirtParticleEmitter.on
-    )
-      this.dirtParticleEmitter.start();
+  public displayMessage(message : string, timeout : number) {
+    this.playerMessage.setText(message)
+    this.playerMessage.setVisible(true)
+    this.playerMessage.setPosition(-this.playerMessage.width/2, -this.playerSprite.height+this.playerMessage.height)
+    var self = this;
+    this.playerMessageTimer.reset( {
+      delay: timeout,                // ms
+      callback: function () { self.playerMessage.setVisible(false) },
+      callbackScope: this,
+      loop: false
+    })
   }
+
+  public hideMessage() {
+    this.playerMessage.setVisible(false)
+  }
+
+
 
   private smoothMove(
     targetPosition: number,
@@ -84,14 +96,25 @@ export class Player extends Phaser.GameObjects.Container {
   }
 
   private dirtParticleEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
-  private playerSprite: Phaser.GameObjects.Sprite;
+  public playerSprite: Phaser.GameObjects.Sprite;
   private playerSchema: Schema.Player;
   private xVelocity: number;
   private yVelocity: number;
   private alphaRefresh: number;
 
   update(time: number, delta: number): void {
+    //Drilling update stuff
+
     let playerState: PlayerState = this.playerSchema.playerState;
+
+    if (
+      playerState.movementState != Schema.MovementState.Drilling &&
+      this.dirtParticleEmitter.on
+    ) {this.dirtParticleEmitter.stop();}
+    else if (
+      playerState.movementState == Schema.MovementState.Drilling &&
+      !this.dirtParticleEmitter.on
+    ) {this.dirtParticleEmitter.start();}
 
     if (playerState.x != this.x || playerState.y != this.y) {
       let [xSmooth, vxSmooth] = this.smoothMove(
@@ -114,4 +137,6 @@ export class Player extends Phaser.GameObjects.Container {
       else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
     }
   }
+  private playerMessageTimer : Phaser.Time.TimerEvent
+  private playerMessage: Phaser.GameObjects.Text;
 }

@@ -72,6 +72,16 @@ export default class LoadingScene extends Phaser.Scene {
         `https://chisel.gotchiminer.rocks/storage/${crypto.soil_image}`
       );
     });
+    world.buildings.forEach((building) => {
+      this.load.video(
+        `building_${building.id}`,
+        `https://chisel.gotchiminer.rocks/storage/${building.video}`,
+        undefined, true, true
+      );
+      this.load.audio(`building_activation_${building.id}`,
+      `https://chisel.gotchiminer.rocks/storage/${building.activation_sound}`
+      )
+    });
     world.soil.forEach((soil) => {
       this.load.image(
         `soil_top_${soil.id}`,
