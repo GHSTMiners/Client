@@ -19,7 +19,7 @@ const WalletButton = () => {
   const handleWalletClick = () => {
     if (!address) {
       //playSound('click');
-      connectToNetwork(dispatch, window.ethereum);
+      if(!loading) connectToNetwork(dispatch, window.ethereum);
     }
   };
 
@@ -28,7 +28,7 @@ const WalletButton = () => {
     setTimeout(function() {
       if (!address) {
         //playSound('click');
-        connectToNetwork(dispatch, window.ethereum);
+        if(!loading) connectToNetwork(dispatch, window.ethereum);
       }
     }, 100)
   });
