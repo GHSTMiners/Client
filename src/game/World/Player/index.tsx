@@ -1,9 +1,9 @@
 import * as Schema from "matchmaking/Schemas";
 import * as Phaser from "phaser";
-import { DataChange } from "@colyseus/schema";
 import Config from "config";
 import { PlayerState } from "matchmaking/Schemas";
-import { time } from "console";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
+import Client from "matchmaking/Client";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
@@ -54,6 +54,10 @@ export class Player extends Phaser.GameObjects.Container {
     // enabling physics to act as a natural interpolator
     this.scene.physics.add.existing(this);
     this.scene.physics.world.enable(this);
+    //Message handlers
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerCollision, this.handleCollision.bind(this))
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
+
   }
 
 
@@ -74,7 +78,16 @@ export class Player extends Phaser.GameObjects.Container {
     this.playerMessage.setVisible(false)
   }
 
+  private handleCollision(message : Protocol.NotifyPlayerCollision) {
+    this.scene.sound.play(`metalThud`)
+    this.scene.cameras.main.flash();
+  }
 
+
+  private handleLavaMined(message : Protocol.NotifyPlayerMinedLava) {
+    this.scene.sound.play(`metalThud`)
+    this.scene.cameras.main.flash(250, 255, 0, 0, true);
+  }
 
   private smoothMove(
     targetPosition: number,
