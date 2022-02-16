@@ -53,9 +53,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("thrusters", "assets/audio/thrusters.wav");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
 
-    let world: Chisel.DetailedWorld | undefined =
-      Client.getInstance().chiselWorld;
-    //this.load.image('aavegotchi', "https://play.gotchiminer.rocks/VOYAGER.png");
+    let world: Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
     world.backgrounds.forEach((background) => {
       this.load.image(
         `background_${background.id}`,
@@ -127,6 +125,9 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   updateBar(percentage: number) {
+    //Move to correct locations
+    
+
     this.newGraphics.clear();
     this.newGraphics.fillStyle(0x3587e2, 1);
     // @ts-expect-error: Let's ignore a compile error like this unreachable code

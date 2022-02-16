@@ -26,7 +26,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.playerMessage.setDepth(50)
     this.playerMessage.setFontSize(25)
     this.playerMessage.setFontFamily("Rocks")
-    this.playerMessage.setShadow(5, 5, '#000', 15)
+    this.playerMessage.setShadow(3, 3, '#000', 1)
     this.playerMessage.setVisible(false);
     this.add(this.playerMessage)
     this.playerMessageTimer = scene.time.addEvent({});
