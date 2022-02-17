@@ -53,7 +53,15 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("thrusters", "assets/audio/thrusters.wav");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
 
-    let world: Chisel.DetailedWorld | undefined = Client.getInstance().chiselWorld;
+    let world: Chisel.DetailedWorld | undefined =
+      Client.getInstance().chiselWorld;
+    //this.load.image('aavegotchi', "https://play.gotchiminer.rocks/VOYAGER.png");
+
+    world.music.forEach(music=> {
+      this.load.audio(`music_${music.name}`, 
+      `https://chisel.gotchiminer.rocks/storage/${music.audio}`)
+      console.log(music)
+    })
     world.backgrounds.forEach((background) => {
       this.load.image(
         `background_${background.id}`,
