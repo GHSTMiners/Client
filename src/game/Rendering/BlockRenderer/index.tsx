@@ -65,7 +65,7 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
     public layersInView() : [number, number] {
         var layersThatFitInView = this.scene.cameras.main.height / Config.blockHeight
         var cameraBlockCenterY = this.scene.cameras.main.midPoint.y / Config.blockHeight
-        return [Math.ceil(cameraBlockCenterY + layersThatFitInView/2), Math.floor(cameraBlockCenterY - layersThatFitInView/2)]
+        return [Math.ceil(cameraBlockCenterY + layersThatFitInView/2) +2, Math.floor(cameraBlockCenterY - layersThatFitInView/2)-2]
     }
 
     private static sortSoil(a : Soil, b : Soil) {

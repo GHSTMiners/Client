@@ -5,6 +5,10 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         super(scene, "MovementManager")
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.keys = new Map<number, Phaser.Input.Keyboard.Key>()
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.DOWN, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.UP, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.LEFT, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.RIGHT, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.W, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.S, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))

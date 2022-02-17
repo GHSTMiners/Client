@@ -33,7 +33,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         this.scene.load.svg(`gotchi_${player.gotchiID}`, url);
         this.scene.load.start();
         var self = this;
-        this.scene.load.on(Phaser.Loader.Events.COMPLETE, function () {
+        this.scene.load.once(Phaser.Loader.Events.COMPLETE, function () {
           let newPlayer: Player = new Player(self.scene, player);
           self.playerSprites.set(player.gotchiID, newPlayer);
           self.scene.add.existing(newPlayer);
@@ -41,7 +41,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
           if (
             player.playerSessionID == Client.getInstance().colyseusRoom.sessionId
           ) {
-            self.scene.cameras.main.startFollow(newPlayer, true, 0.3, 0.3);
+            self.scene.cameras.main.startFollow(newPlayer, true, 0.15, 0.15);
             Client.getInstance().ownPlayer = player;
             self.scene.game.events.emit("joined_game", player, newPlayer);
           }

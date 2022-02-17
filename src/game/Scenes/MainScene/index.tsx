@@ -1,9 +1,9 @@
-import { Client } from "colyseus.js";
 import Config from "config";
 import MovementManager from "game/Management/MovementManager";
 import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
+import Client from "matchmaking/Client";
 
 var controls;
 
@@ -13,6 +13,12 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
+    //Register message handlers
+    Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
+      console.log(message)
+      Client.getInstance().messageRouter.processRawMessage(type as string, message);
+    });
+
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this)
