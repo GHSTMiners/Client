@@ -9,8 +9,6 @@ const MainConsole = () => {
   const smallButton = "3.3rem";
   const bigButton = "5.8rem";
   const [consoleUp, setConsoleUp] = useState(false);
-  
-
 
   return (
     <div
