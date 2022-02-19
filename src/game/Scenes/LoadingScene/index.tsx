@@ -60,7 +60,6 @@ export default class LoadingScene extends Phaser.Scene {
     world.music.forEach(music=> {
       this.load.audio(`music_${music.name}`, 
       `https://chisel.gotchiminer.rocks/storage/${music.audio}`)
-      console.log(music)
     })
     world.backgrounds.forEach((background) => {
       this.load.image(

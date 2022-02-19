@@ -4,6 +4,7 @@ import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
+import MusicManager from "game/Management/MusicManager";
 
 var controls;
 
@@ -18,7 +19,7 @@ export default class MainScene extends Phaser.Scene {
       console.log(message)
       Client.getInstance().messageRouter.processRawMessage(type as string, message);
     });
-
+    this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this)
@@ -30,7 +31,7 @@ export default class MainScene extends Phaser.Scene {
     this.globalRenderer?.update(time, delta);
     // console.log(this.game.loop.actualFps); // for debuggin purposes, looking into the interpolation issue
   }
-
+  private musicManager?: MusicManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
   private excavationManager?: ExcavationManager
