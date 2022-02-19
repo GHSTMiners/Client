@@ -232,6 +232,21 @@
   top: 1%;
 }
 
+.iconSelected {
+  opacity: 100%;
+}
+
+.iconDeselected {
+  opacity: 40%;
+}
+
+.walletIcon {
+  position: absolute;
+  height: 2em;
+  right: 20%;
+  top: 1%;
+}
+
 .modifierRow {
   width: 70%;
 }
