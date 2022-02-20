@@ -4,58 +4,75 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import walletIcon from "assets/hud/wallet_icon.png";
 import { useEffect, useState } from "react";
-import { CargoEntry } from "matchmaking/Schemas";
+import { CargoEntry, WalletEntry } from "matchmaking/Schemas";
 
 const Crypto = () => {
   //prettier-ignore
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const [walletOn, setWalletOn] = useState(false);
+  const [aboveGround, setAboveGround] = useState(false); // TODO: implement automatic switch
 
-  let crystalsArray: {
-    cryptoID: number;
-    name: string;
-    quantity: number;
-    image: string;
-  }[] = [];
+  type CryptoArray = { cryptoID: number; name: string; image: string };
+  type BalanceData = Record<number, number>; // ( cryptoID , quantity }
 
+  let crystalsArray: CryptoArray[] = [];
+  let tempCargoBalance: BalanceData = [];
+  let tempWalletBalance: BalanceData = [];
+
+  // inializing cargo & wallet ballances to 0
   for (let i = 0; i < world.crypto.length; i++) {
     crystalsArray.push({
       cryptoID: world.crypto[i].id,
-      name: `${world.crypto[i].name}`,
-      quantity: 0,
+      name: `${world.crypto[i].shortcode}`,
       image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
     });
+    tempCargoBalance[world.crypto[i].id] = 0;
+    tempWalletBalance[world.crypto[i].id] = 0;
   }
 
-  const initialCrystalArray = crystalsArray;
-
-  const [playerCargo, setPlayerCargo] = useState(initialCrystalArray);
+  const [cargoBalance, setCargoBalance] = useState(tempCargoBalance);
+  const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
 
   useEffect(() => {
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
-      //Attach an event handler to refresh the cargo
+      // CARGO
       Client.getInstance().ownPlayer.cargo.onAdd = (item: CargoEntry) => {
-        crystalsArray.map((el) => {
-          if (el.cryptoID == item.cryptoID) {
-            el.quantity = item.amount;
-          }
-        });
-        setPlayerCargo(crystalsArray);
-
+        tempCargoBalance = cargoBalance;
+        tempCargoBalance[item.cryptoID] = item.amount;
+        setCargoBalance(tempCargoBalance);
         // item onCHANGE
         item.onChange = () => {
-          crystalsArray.map((el) => {
-            if (el.cryptoID == item.cryptoID) {
-              el.quantity = item.amount;
-            }
-          });
-          setPlayerCargo(crystalsArray);
+          tempCargoBalance = cargoBalance;
+          tempCargoBalance[item.cryptoID] = item.amount;
+          setCargoBalance(tempCargoBalance);
         };
       };
-
-      // TO DO: Reset cargo after player dies
+      Client.getInstance().ownPlayer.cargo.onRemove = (item: CargoEntry) => {
+        tempCargoBalance[item.cryptoID] = 0;
+        setCargoBalance(tempCargoBalance);
+      }
+      // WALLET
+      Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
+        tempWalletBalance = walletBalance;
+        tempWalletBalance[item.cryptoID] = item.amount;
+        setWalletBalance(tempWalletBalance);
+        // item onCHANGE
+        item.onChange = () => {
+          tempWalletBalance = walletBalance;
+          tempWalletBalance[item.cryptoID] = item.amount;
+          setWalletBalance(tempWalletBalance);
+        };
+      };
+      /*// Updating depth
+      Client.getInstance().ownPlayer.playerState.onChange = (change) => {
+        change.forEach((value) => {
+          (value.field == "y" && value.value >=0) ? setAboveGround(true) : setAboveGround(false) 
+        });
+      };*/
     });
+    // Updating pre-defined choice for displaying either wallet or cargo
+    aboveGround ? setWalletOn(true) : setWalletOn(false);
   }, []);
 
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
@@ -67,16 +84,15 @@ const Crypto = () => {
     </div>
   );
 
-  let cryptoInventoryList = playerCargo.map(function (crypto) {
-    return inventoryCrystal(crypto.name, crypto.quantity, crypto.image);
+  let cryptoInventoryList = crystalsArray.map(function (crypto) {
+    return inventoryCrystal(
+      crypto.name,
+      walletOn ? walletBalance[crypto.cryptoID] : cargoBalance[crypto.cryptoID],
+      crypto.image
+    );
   });
 
-  // Updating crypto list when player cargo changes
-  useEffect(() => {
-    cryptoInventoryList = playerCargo.map(function (crypto) {
-      return inventoryCrystal(crypto.name, crypto.quantity, crypto.image);
-    });
-  }, playerCargo);
+
 
   return (
     <div className={styles.cryptoContainer}>

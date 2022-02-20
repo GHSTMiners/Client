@@ -12,4 +12,5 @@ export class Crypto extends Schema {
     @type("string") public name!: string;
     @type("string") public address!: string;
     @type("number") public weight!: number;
+    @type("string") public shortcode!: string;
 }

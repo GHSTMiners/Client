@@ -16,13 +16,13 @@ export default class MainScene extends Phaser.Scene {
   create() {
     //Register message handlers
     Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
-      console.log(message)
-      Client.getInstance().messageRouter.processRawMessage(type as string, message);
+      //prettier-ignore
+      Client.getInstance().messageRouter.processRawMessage( type as string, message);
     });
     this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
-    this.excavationManager = new ExcavationManager(this)
+    this.excavationManager = new ExcavationManager(this);
     this.game.events.emit("mainscene_ready");
   }
 
@@ -34,5 +34,5 @@ export default class MainScene extends Phaser.Scene {
   private musicManager?: MusicManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
-  private excavationManager?: ExcavationManager
+  private excavationManager?: ExcavationManager;
 }
