@@ -11,6 +11,7 @@ import { Vital } from './Vital'
 import { Skill } from './Skill'
 import { CargoEntry } from './CargoEntry'
 import { WalletEntry } from './WalletEntry'
+import { ExplosiveEntry } from './ExplosiveEntry';
 
 export class Player extends Schema {
     @type("string") public name!: string;
@@ -21,4 +22,5 @@ export class Player extends Schema {
     @type([ Skill ]) public skills: ArraySchema<Skill> = new ArraySchema<Skill>();
     @type({ map: CargoEntry }) public cargo: MapSchema<CargoEntry> = new MapSchema<CargoEntry>();
     @type({ map: WalletEntry }) public wallet: MapSchema<WalletEntry> = new MapSchema<WalletEntry>();
+    @type({ map: ExplosiveEntry }) public explosives: MapSchema<ExplosiveEntry> = new MapSchema<ExplosiveEntry>();
 }

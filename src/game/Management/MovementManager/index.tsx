@@ -13,6 +13,8 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.S, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
+
         this.keys.forEach(key => {
             key.on('down', this.keysChanged.bind(this))
             key.on('up', this.keysChanged.bind(this)) 
@@ -25,8 +27,15 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.cursors.down.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
         if(this.cursors.right.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
         if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
-        let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
-        Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.B)?.isDown) {
+            let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
+            requestDropExplosive.explosiveID = 2
+            let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
+            Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        } else {
+            let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
+            Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        }
     }
  
     public velocityVector () : Phaser.Math.Vector2 {
