@@ -12,7 +12,7 @@ const VitalsConsole = () => {
   const [cargo, setCargo] = useState("14rem");
   const [health, setHealth] = useState("14rem");
   const [depth, setDepth] = useState(0);
-
+  
   useEffect(() => {
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
@@ -63,7 +63,7 @@ const VitalsConsole = () => {
       </div>
       <div className={styles.vitalsBarsCovers}></div>
       <div className={styles.depthTag}>
-        Depth:~{"\n"} {depth}
+        Depth:<br /> {depth}
       </div>
     </div>
   );

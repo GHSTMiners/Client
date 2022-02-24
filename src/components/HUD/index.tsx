@@ -3,6 +3,7 @@ import Client from "matchmaking/Client";
 import { useState, useEffect } from "react";
 import VitalsConsole from "./VitalsConsole";
 import MainConsole from "./MainConsole";
+import MiningShop from "../MiningShop";
 
 export const HUD = () => {
   const [gameLoaded, setgameLoaded] = useState(false);
@@ -18,6 +19,7 @@ export const HUD = () => {
     <div className={styles.hudContainer} hidden={!gameLoaded}>
       <VitalsConsole />
       <MainConsole />
+      <MiningShop />
     </div>
   );
 };

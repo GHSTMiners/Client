@@ -3,14 +3,16 @@ import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import walletIcon from "assets/hud/wallet_icon.png";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CargoEntry, WalletEntry } from "matchmaking/Schemas";
+import VitalsConsole from "./VitalsConsole";
 
 const Crypto = () => {
   //prettier-ignore
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const [walletOn, setWalletOn] = useState(false);
   const [aboveGround, setAboveGround] = useState(false); // TODO: implement automatic switch
+  const [playerY,setPlayerY] = useState(0);
 
   type CryptoArray = { cryptoID: number; name: string; image: string };
   type BalanceData = Record<number, number>; // ( cryptoID , quantity }
@@ -64,22 +66,19 @@ const Crypto = () => {
           setWalletBalance(tempWalletBalance);
         };
       };
-      /*// Updating depth
-      Client.getInstance().ownPlayer.playerState.onChange = (change) => {
-        change.forEach((value) => {
-          (value.field == "y" && value.value >=0) ? setAboveGround(true) : setAboveGround(false) 
-        });
-      };*/
-    });
-    // Updating pre-defined choice for displaying either wallet or cargo
+      
+    // Updating pre-defined choice for displaying either wallet or cargo (TO DO)
+    //setPlayerY(Client.getInstance().ownPlayer.playerState.y);  
     aboveGround ? setWalletOn(true) : setWalletOn(false);
+    });
   }, []);
+
 
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer}>
       <img src={image} className={styles.crystalIcon} />
       <div className={styles.crystalTag}>
-        {tag} x {quantity}
+        {tag}x{quantity}
       </div>
     </div>
   );
@@ -91,8 +90,6 @@ const Crypto = () => {
       crypto.image
     );
   });
-
-
 
   return (
     <div className={styles.cryptoContainer}>

@@ -1,0 +1,50 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+
+@font-face {
+  font-family: MSDOS;
+  src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
+}
+
+
+.shopContainer{
+  background-image: url('assets/hud/shop_hud2.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  width: 60%;
+  height: 78%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.displayOn{
+  top: 0rem;
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -50rem;
+  transition: all 400ms ease;
+}
+
+.shopTabs{
+  width: 68%;
+  margin-top: 24%;
+  margin-left: 17%;
+  font-size: 2em;
+  height: 26rem;
+  display: flex;
+  color: white;
+  position: static;
+}

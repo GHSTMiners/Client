@@ -3,20 +3,31 @@
   src: url("assets/fonts/gomarice_rocks.woff");
 }
 
+
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+@font-face {
+  font-family: MSDOS;
+  src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
+}
+
 .squareButton {
   background: transparent;
-  font-family: Rocks;
-  font-size: 0.5em;
-  color: #cecece;
+  font-family: Pixelar;
+  font-size: 0.6em;
+  color: white;
   border: 0px solid red;
   outline: 1px dashed #cecece;
   outline-width: 3px;
   overflow: hidden;
-  box-shadow: 0 0 1em rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 1em  #00ffaa75;
   -moz-outline-style: none;
   transition: all 0.2s ease-in-out;
   position: relative;
-}
+}  
 
 .buttonText {
   height: 100%;
