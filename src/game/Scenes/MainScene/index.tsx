@@ -5,7 +5,6 @@ import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import MusicManager from "game/Management/MusicManager";
-import ExplosivesManager from "game/Management/ExplosivesManager";
 
 var controls;
 
@@ -23,9 +22,9 @@ export default class MainScene extends Phaser.Scene {
     this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
-    this.explosivesManager = new ExplosivesManager(this);
     this.excavationManager = new ExcavationManager(this);
     this.game.events.emit("mainscene_ready");
+    this.sound.pauseOnBlur = false
   }
 
   update(time: number, delta: number): void {
@@ -36,6 +35,5 @@ export default class MainScene extends Phaser.Scene {
   private musicManager?: MusicManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
-  private explosivesManager?: ExplosivesManager;
   private excavationManager?: ExcavationManager;
 }
