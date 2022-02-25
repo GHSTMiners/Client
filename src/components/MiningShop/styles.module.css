@@ -48,3 +48,50 @@
   color: white;
   position: static;
 }
+
+.contentContainer{
+  display:flex;
+}
+
+.galleryPanel {
+  height: 22rem;
+  width: 70%;
+  scrollbar-width: thin;
+  scrollbar-color: #6db9aeff #a4ffff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.itemContainer {
+  display: flex;
+  font-size: 0.9em;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 2rem;
+}
+
+.itemImage {
+  height: auto;
+  width: 4rem;
+  opacity: 0.9;
+}
+
+.itemText {
+  width: 80%;
+  border-bottom: 3px solid #a4ffff;
+}
+
+.buyButton{
+  margin-top: 0.5rem;
+  background-color: #a4ffff;
+  width: 80%;
+}
+
+.detailsPanel{
+  width: 30%;
+  padding-left: 1rem;
+  border-left:1px solid #a4ffff;
+}

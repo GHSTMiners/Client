@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
+
 // Tabs Components
 import TabUpgrades from "./TabUpgrades";
 import TabConsumables from "./TabConsumables";
@@ -26,11 +27,12 @@ const tabs: TabsType = [
 ];
 
 const MiningShop = () => {
+  
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
-  const [displayShop, setDisplayShop] = useState<boolean>(false);
+  const [displayShop, setDisplayShop] = useState<boolean>(true);
 
   return (
-    <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{setDisplayShop(false)}}>
+    <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{setDisplayShop(true)}}>
       <div className={styles.shopTabs}>
         <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
       </div>
