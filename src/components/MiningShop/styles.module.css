@@ -62,6 +62,7 @@
   grid-template-columns: repeat(3, 1fr);
   overflow: auto;
   white-space: nowrap;
+  position:relative;
 }
 
 .itemContainer {
@@ -94,4 +95,13 @@
   width: 30%;
   padding-left: 1rem;
   border-left:1px solid #a4ffff;
+}
+
+.drillIcon{
+  opacity: 50%;
+  position: absolute;
+  left:40%;
+  height: 15rem;
+  margin-top:4rem;
+  transform: rotate(-30deg);
 }

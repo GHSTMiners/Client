@@ -29,6 +29,9 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
             activateBuildingMessage.id = this.currentBuilding.id
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(activateBuildingMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+            if (this.currentBuilding.type == 'Bazaar'){
+                this.scene.game.events.emit("show_shop")
+            }
         }
     }
 
@@ -45,19 +48,32 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     }
 
     public preUpdate(time: number, delta: number) {
-        this.currentBuilding = undefined
+        //this.currentBuilding = undefined
         if(this.player) {
+            this.playerAtBuilding = false;
             this.buildings.forEach(building => {
                 if(Phaser.Geom.Intersects.RectangleToRectangle(building.getBounds(), this.player!.getBounds())) {
-                    this.player?.displayMessage(building.buildingInfo.activation_message, 10)
-                    this.currentBuilding = building.buildingInfo
+                    this.playerAtBuilding = true;
+                    if( this.currentBuilding != building.buildingInfo){
+                        this.player?.setPlayerAtBuilding(building.buildingInfo.type)
+                        this.player?.displayMessage(building.buildingInfo.activation_message,  10)
+                        this.currentBuilding = building.buildingInfo
+                    }
                     return
-                }
+                } 
             })
+
+            if (this.playerAtBuilding == false){
+                if (this.currentBuilding){
+                    this.player?.hideMessage()
+                    this.currentBuilding = undefined;
+                }
+            }
         }
-        if(!this.currentBuilding) this.player?.hideMessage()
     }
+    
     private player : Player | undefined;
     private buildings : Map<APIInterface.Building, Building>
-    private currentBuilding : APIInterface.Building | undefined
+    private currentBuilding : APIInterface.Building | undefined = undefined;
+    private playerAtBuilding: boolean = false;
 }

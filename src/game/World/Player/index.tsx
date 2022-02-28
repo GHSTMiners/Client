@@ -4,6 +4,8 @@ import Config from "config";
 import { PlayerState } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
+import { dispatch } from "@svgdotjs/svg.js";
+import MainScene from "game/Scenes/MainScene";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
@@ -29,6 +31,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.playerMessage.setShadow(3, 3, '#000', 1)
     this.playerMessage.setVisible(false);
     this.add(this.playerMessage)
+    this.currentBuilding = '';
     this.playerMessageTimer = scene.time.addEvent({});
     //Create particle emitter
     var particles = this.scene.add.particles("dirtParticle");
@@ -60,6 +63,11 @@ export class Player extends Phaser.GameObjects.Container {
 
   }
 
+  public setPlayerAtBuilding( buildingName : string) {
+    this.currentBuilding = buildingName;
+    //console.log(`Entering ${buildingName}`)
+  }
+
 
   public displayMessage(message : string, timeout : number) {
     this.playerMessage.setText(message)
@@ -76,6 +84,9 @@ export class Player extends Phaser.GameObjects.Container {
 
   public hideMessage() {
     this.playerMessage.setVisible(false)
+    this.scene.game.events.emit("exit_building",this.currentBuilding) // to close shop window automatically
+    //console.log(`Exiting ${this.currentBuilding}`)
+    this.currentBuilding = '';
   }
 
   private handleCollision(message : Protocol.NotifyPlayerCollision) {
@@ -166,4 +177,5 @@ export class Player extends Phaser.GameObjects.Container {
   private jackHammerSound : Phaser.Sound.BaseSound
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
+  private currentBuilding: string;
 }
