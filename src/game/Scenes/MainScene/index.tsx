@@ -25,6 +25,7 @@ export default class MainScene extends Phaser.Scene {
     this.excavationManager = new ExcavationManager(this);
     this.game.events.emit("mainscene_ready");
     this.sound.pauseOnBlur = false
+    this.cameras.main.zoom = 0.75
   }
 
   update(time: number, delta: number): void {

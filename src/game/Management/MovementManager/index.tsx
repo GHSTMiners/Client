@@ -29,7 +29,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.B)?.isDown) {
             let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
-            requestDropExplosive.explosiveID = 3
+            requestDropExplosive.explosiveID = 1
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
         } else {

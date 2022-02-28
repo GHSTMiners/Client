@@ -2,6 +2,7 @@ import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Schema from "matchmaking/Schemas";
 import Explosive from "game/World/Explosive";
+import { ExplosionAnimation } from "game/World/ExplosionAnimation";
 
 export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -35,6 +36,15 @@ export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
     }
 
     private handleBombExploded(notification : Protocol.NotifyBombExploded) {
+        //Create sprite
+        let explosionSprite : ExplosionAnimation = new ExplosionAnimation(this.scene, notification.x, notification.y)
+        this.scene.add.existing(explosionSprite)
+
+        Client.getInstance().chiselWorld.explosives.find(({ id }) => id === notification.bombId)?.explosion_coordinates.forEach(coordinate=> {
+            let explosionSprite : ExplosionAnimation = new ExplosionAnimation(this.scene, notification.x + coordinate.y, notification.y + coordinate.x)
+            this.scene.add.existing(explosionSprite) 
+        })
+
         this.scene.sound.play(`explosion`, {})
     }
 
