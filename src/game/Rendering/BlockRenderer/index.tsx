@@ -63,7 +63,7 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
     }
 
     public layersInView() : [number, number] {
-        var layersThatFitInView = this.scene.cameras.main.height / Config.blockHeight
+        var layersThatFitInView = this.scene.cameras.main.height / this.scene.cameras.main.zoom / Config.blockHeight
         var cameraBlockCenterY = this.scene.cameras.main.midPoint.y / Config.blockHeight
         return [Math.ceil(cameraBlockCenterY + layersThatFitInView/2) +2, Math.floor(cameraBlockCenterY - layersThatFitInView/2)-2]
     }

@@ -6,6 +6,7 @@ export default class Explosive extends Phaser.GameObjects.Image {
         super(scene, schema.x, schema.y, `explosive_soil_${schema.explosiveID}`)
         this.schema = schema
         this.setDepth(40);
+        this.setOrigin(0, 0)
     }
 
     public update(time: number, delta: number) {
