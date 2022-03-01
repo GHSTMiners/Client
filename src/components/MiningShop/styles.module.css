@@ -30,7 +30,6 @@
 
 .displayOn{
   top: 0rem;
-  display: none;
   transition: all 400ms ease;
 }
 

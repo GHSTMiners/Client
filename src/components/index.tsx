@@ -17,3 +17,4 @@ export * from "./HUD";
 export * from "./GreenButton";
 export * from "./GotchiSelector";
 export * from "./Tabs";
+export * from "./UpgradeBar";

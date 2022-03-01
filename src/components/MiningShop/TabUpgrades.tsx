@@ -4,6 +4,7 @@ import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import drillIcon from "assets/hud/drill.png";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
+import UpgradeBar from "components/UpgradeBar";
 import PlayerRenderer from "game/Rendering/PlayerRenderer";
 
 const TabUpgrades: FC<{}> = () => {
@@ -23,7 +24,11 @@ const TabUpgrades: FC<{}> = () => {
   return (
     <div className={styles.contentContainer}>
       <div className={styles.galleryPanel}>
-        Fancy pictures and upgrade components
+        <UpgradeBar text='Movement Speed'  topPosition={80} leftPosition={4} />
+        <UpgradeBar text='Health'  topPosition={0} leftPosition={4} />
+        <UpgradeBar text='Inventory'  topPosition={40} leftPosition={20} />
+        <UpgradeBar text='Fuel'  topPosition={20} leftPosition={70} />
+        <UpgradeBar text='Drill Speed'  topPosition={80} leftPosition={65} />
         <img src={drillIcon} className={styles.drillIcon}></img>
       </div>
       <div className={styles.detailsPanel}>

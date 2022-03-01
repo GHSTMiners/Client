@@ -50,7 +50,6 @@ const MiningShop = () => {
   },[]);
 
 
-
   return (
     <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.shopTabs}>
