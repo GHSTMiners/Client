@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
+import * as Chisel from "chisel-api-interface";
+import Client from "matchmaking/Client";
 
 // Tabs Components
 import TabUpgrades from "./TabUpgrades";
@@ -28,11 +30,28 @@ const tabs: TabsType = [
 
 const MiningShop = () => {
   
+  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
-  const [displayShop, setDisplayShop] = useState<boolean>(true);
+  const [displayShop, setDisplayShop] = useState<boolean>(false);
+
+  const openShop = () => {
+    setDisplayShop(true);
+  }
+
+  const closeShop = (buildingName:string) => {
+    if (buildingName == 'Bazaar'){
+      setDisplayShop(false);
+    } 
+  }
+
+  useEffect( () => {
+    Client.getInstance().phaserGame.events.on("exit_building", closeShop );
+    Client.getInstance().phaserGame.events.on("show_shop", openShop );
+  },[]);
+
 
   return (
-    <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{setDisplayShop(true)}}>
+    <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.shopTabs}>
         <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
       </div>

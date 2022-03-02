@@ -1,0 +1,51 @@
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+.upgradeBarContainer{
+  width: 8rem;
+  height: 3.5rem;
+  border-color: #a4ffff;
+  position: absolute;
+  z-index: 50;
+}
+
+.upgradeButton {
+  width: 2rem;
+  height: 1.5rem;
+  text-align:center; 
+  vertical-align:middle;
+  background-color: #a4ffff;
+  padding: 0px;
+  z-index: 50;
+  position: absolute;
+  clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
+}
+
+.upgradeButton:hover {
+  box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
+}
+
+.upgradeButtonText{
+  font-size: 1rem;
+  font-weight: bold;
+  font-family:verdana;
+  transform: translate(-10%,-15%);
+  color: #3c4c41;
+}
+
+.levelContainer{
+  display: flex;
+  margin-left: 1.8rem;
+}
+
+.levelElement{
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: skew(-18deg);
+}
+
+
+
+
