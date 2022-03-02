@@ -8,6 +8,8 @@ import { networkIdToName } from "helpers/vars";
 import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
+import Client from "matchmaking/Client";
+
 
 const WalletButton = () => {
   const {
@@ -19,19 +21,14 @@ const WalletButton = () => {
   const handleWalletClick = () => {
     if (!address) {
       //playSound('click');
-      if(!loading) connectToNetwork(dispatch, window.ethereum);
+      if(!loading) Client.getInstance().authenticator.authenticate(dispatch)
     }
   };
 
   useEffect(() => {
+    Client.getInstance().authenticator.authenticate(dispatch)
     // Update the document title using the browser API
-    setTimeout(function() {
-      if (!address) {
-        //playSound('click');
-        if(!loading) connectToNetwork(dispatch, window.ethereum);
-      }
-    }, 100)
-  });
+  }, []);
 
   return (
     <button

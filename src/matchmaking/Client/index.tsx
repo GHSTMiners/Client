@@ -5,6 +5,7 @@ import { World } from "matchmaking/Schemas/World";
 import * as Protocol from "gotchiminer-multiplayer-protocol";
 import Phaser from "phaser";
 import * as Schema from "matchmaking/Schemas";
+import Authenticator from "matchmaking/Authenticator";
 
 export default class Client {
   private static instance: Client;
@@ -18,7 +19,7 @@ export default class Client {
   public chiselWorld!: Chisel.DetailedWorld;
   public authenticationInfo: Protocol.AuthenticationInfo;
   public messageRouter : Protocol.MessageRouter
-
+  public authenticator : Authenticator
   public phaserGame!: Phaser.Game;
   public ownPlayer!: Schema.Player;
   /**
@@ -26,6 +27,7 @@ export default class Client {
    * construction calls with the `new` operator.
    */
   private constructor() {
+    this.authenticator = new Authenticator();
     this.authenticationInfo = new Protocol.AuthenticationInfo();
     this.messageRouter = new Protocol.MessageRouter()
   }

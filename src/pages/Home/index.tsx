@@ -70,7 +70,6 @@ const Home = (): JSX.Element => {
   };
 
   useEffect(() => {
-    //connectToNetwork(dispatch, window.ethereum);
 
     if (process.env.REACT_APP_OFFCHAIN) return callDefaultGotchi();
 

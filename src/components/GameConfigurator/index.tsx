@@ -53,6 +53,10 @@ const CreateGameForm = (): JSX.Element => {
     // prettier-ignore
     Client.getInstance().apiInterface.world(event.target.world.value).then(world =>{
             Client.getInstance().chiselWorld = world;
+            Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
+            Client.getInstance().authenticationInfo.walletAddress = Client.getInstance().authenticator.currentAccount()
+            Client.getInstance().authenticationInfo.authenticationToken = Client.getInstance().authenticator.token()
+            
             // @ts-ignore: Unreachable code error
             // prettier-ignore
             Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
