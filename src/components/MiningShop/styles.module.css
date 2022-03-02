@@ -95,6 +95,9 @@
   width: 30%;
   padding-left: 1rem;
   border-left:1px solid #a4ffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .drillIcon{
@@ -104,4 +107,37 @@
   height: 15rem;
   margin-top:4rem;
   transform: rotate(-30deg);
+}
+
+.detailsTitle{
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.detailsBody{
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+}
+
+.detailsBody > img {
+  width:60%;
+  padding: 1rem;
+}
+
+.amountContainer{
+  width:100%;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.buyManyButton{
+  width: 50%;
+  margin-top: 0.5rem;
+  background-color: #a4ffff;
 }
