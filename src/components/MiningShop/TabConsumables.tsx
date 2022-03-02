@@ -45,7 +45,10 @@ const TabConsumables: FC<{}> = () => {
         {shopInventory}
       </div>
       <div className={styles.detailsPanel}>
-        Selected item details
+        <div className={styles.detailsTitle}>
+        </div>
+        <div className={styles.detailsBody}>
+        </div>
       </div>
     </div>
   );
