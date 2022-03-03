@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
@@ -23,6 +23,18 @@ const TabConsumables: FC<{}> = () => {
    })
 
    const [selectedItem, setSelectedItem] = useState(shopItemArray[0]);
+   const [itemQuantity, setItemQuantity] = useState<number>(1);
+   const [multipleItemPrice, setmultipleItemPrice] = useState<number>(shopItemArray[0].price);
+
+   useEffect(()=>{ 
+     setmultipleItemPrice(itemQuantity*selectedItem.price)}
+    ,[itemQuantity])
+   
+   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement> ) => {
+     if (+event.target.value>=0){
+      setItemQuantity(+event.target.value);
+     }
+  }
 
    const displaySelectedItem = (item : shopItem) => {
     setSelectedItem(item)
@@ -54,9 +66,13 @@ const TabConsumables: FC<{}> = () => {
         </div>
         <div className={styles.detailsBody}>
           <img src={selectedItem.image} className={styles.itemImage} />
-          Price: {selectedItem.price}
+          Price: {multipleItemPrice}
           <div className={styles.amountContainer}>
-            Amount: 1 
+            <input className={styles.inputQuantity} 
+                   type="number" 
+                   value={itemQuantity} 
+                   onChange={(e)=>{handleInputChange(e)}
+                   }/>
             <button className={styles.buyManyButton}>BUY</button>
           </div>
         </div>

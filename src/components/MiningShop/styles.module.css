@@ -137,7 +137,11 @@
 }
 
 .buyManyButton{
-  width: 50%;
+  width: 40%;
   margin-top: 0.5rem;
   background-color: #a4ffff;
+}
+
+.inputQuantity{
+  width: 40%;
 }
