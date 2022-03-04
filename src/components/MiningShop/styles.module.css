@@ -113,6 +113,7 @@
   width: 100%;
   text-align: center;
   font-size: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .detailsBody{
@@ -123,9 +124,11 @@
   align-items: center;
 }
 
-.detailsBody > img {
-  width:60%;
-  padding: 1rem;
+.detailsTitle > img {
+  height: 4rem;
+  width: auto;
+  padding-left: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .amountContainer{
@@ -144,4 +147,24 @@
 
 .inputQuantity{
   width: 40%;
+}
+
+.explosivePattern{
+  display: flex;
+  padding: 0rem;
+  width: 100%;
+  flex-wrap: wrap;
+  gap:0.2rem;
+}
+
+.patternElement{
+  width: 0.9rem;
+  height: 0.9rem;
+  opacity: 50%;
+  border:1px solid #a4ffff;
+}
+
+.totalPrice{
+  padding-top: 0.5rem;
+  font-size: 1.2rem;
 }

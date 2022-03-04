@@ -26,6 +26,20 @@ const TabConsumables: FC<{}> = () => {
    const [itemQuantity, setItemQuantity] = useState<number>(1);
    const [multipleItemPrice, setmultipleItemPrice] = useState<number>(shopItemArray[0].price);
 
+     // Initializing empty explosive pattern 
+  const explosivePatternArrray = [];
+  for (let row = -5 ; row < 6 ; row++ ) {
+    for (let column = -5 ; column < 6 ; column++ ) {
+      explosivePatternArrray.push({x: row, y: column});
+    } 
+  } 
+
+  let renderExplosivePattern = explosivePatternArrray.map( function(element) {
+    return (
+      <div className={styles.patternElement} />)
+  }
+  );
+
    useEffect(()=>{ 
      setmultipleItemPrice(itemQuantity*selectedItem.price)}
     ,[itemQuantity])
@@ -38,6 +52,7 @@ const TabConsumables: FC<{}> = () => {
 
    const displaySelectedItem = (item : shopItem) => {
     setSelectedItem(item)
+    //item.pattern.forEach(()=>{ }) // to do
    }
 
    // TO DO: add also consumables when available to the shopItemArray
@@ -51,6 +66,12 @@ const TabConsumables: FC<{}> = () => {
     </div>
   );
 
+  
+
+
+
+    
+
   let shopInventory = shopItemArray.map(function (shopItem) {
     return renderShopItem( shopItem );
   });
@@ -63,10 +84,12 @@ const TabConsumables: FC<{}> = () => {
       <div className={styles.detailsPanel}>
         <div className={styles.detailsTitle}>
           {selectedItem.name}
+          <img src={selectedItem.image} className={styles.itemImage} />
         </div>
         <div className={styles.detailsBody}>
-          <img src={selectedItem.image} className={styles.itemImage} />
-          Price: {multipleItemPrice}
+          <div className={styles.explosivePattern}>
+            {renderExplosivePattern}
+          </div>
           <div className={styles.amountContainer}>
             <input className={styles.inputQuantity} 
                    type="number" 
@@ -75,6 +98,9 @@ const TabConsumables: FC<{}> = () => {
                    }/>
             <button className={styles.buyManyButton}>BUY</button>
           </div>
+          <div className={styles.totalPrice}>
+            Price: {multipleItemPrice}
+            </div>
         </div>
       </div>
     </div>
