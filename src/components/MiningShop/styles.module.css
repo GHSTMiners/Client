@@ -164,6 +164,15 @@
   border:1px solid #a4ffff;
 }
 
+.explosionElement{
+  background-color: red;
+}
+
+.detonationElement{
+  background-color: #a4ffff;
+  opacity: 0.9;
+}
+
 .totalPrice{
   padding-top: 0.5rem;
   font-size: 1.2rem;
