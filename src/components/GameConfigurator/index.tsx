@@ -165,6 +165,10 @@ const JoinRandomGameForm = (): JSX.Element => {
           alert("Cannot find an empty game, please create your own!");
           setLoading(false);
         } else {
+          Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
+          Client.getInstance().authenticationInfo.walletAddress = Client.getInstance().authenticator.currentAccount()
+          Client.getInstance().authenticationInfo.authenticationToken = Client.getInstance().authenticator.token()
+
           Client.getInstance()
             .colyseusClient.joinById<World>(
               rooms[0].roomId,
