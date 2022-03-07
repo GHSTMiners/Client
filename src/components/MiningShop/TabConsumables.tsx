@@ -2,14 +2,16 @@ import React, { FC, Fragment, useEffect, useState } from "react";
 import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 import SquareButton from "components/SquareButton";
 import { forEachLeadingCommentRange } from "typescript";
+import { PurchaseExplosive } from "gotchiminer-multiplayer-protocol";
 
 const TabConsumables: FC<{}> = () => {
 
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   
-  type shopItem = { name: string; price: number; pattern:Chisel.ExplosionCoordinate[]; image: string };
+  type shopItem = { name: string; id: number, price: number; pattern:Chisel.ExplosionCoordinate[]; image: string };
   type patternElement = { x: number; y: number; styleTag: string };
 
   let shopItemArray: shopItem[] = [];
@@ -17,7 +19,8 @@ const TabConsumables: FC<{}> = () => {
    // extracting info from Chisel about all possible explosives
    world.explosives.forEach((explosive)=>{
     shopItemArray.push({ 
-      name: explosive.name, 
+      name: explosive.name,
+      id: explosive.id, 
       price: explosive.price, 
       pattern: explosive.explosion_coordinates,
       image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`
@@ -44,7 +47,8 @@ const TabConsumables: FC<{}> = () => {
     return (
       <div className={`${styles.patternElement} 
         ${ (element.styleTag=='explosionElement') ? styles.explosionElement : '' }
-        ${ (element.styleTag=='detonationElement') ? styles.detonationElement : '' } `} />)
+        ${ (element.styleTag=='detonationElement') ? styles.detonationElement : '' } `}>
+      </div> )
   }
   );
 
@@ -74,6 +78,14 @@ const TabConsumables: FC<{}> = () => {
     setExplosionPattern(patternArray);
    }
 
+   const buyItem = ( item:shopItem , quantity:number) =>{
+    let purchaseMessage : Protocol.PurchaseExplosive = new Protocol.PurchaseExplosive;
+    purchaseMessage.id = item.id;
+    purchaseMessage.quantity = quantity;
+    const serializedMessage = Protocol.MessageSerializer.serialize(purchaseMessage);
+    Client.getInstance().colyseusRoom.send(serializedMessage.name,serializedMessage.data);
+   }
+
    // TO DO: add also consumables when available to the shopItemArray
   const renderShopItem = (item: shopItem) => (
   <div className={styles.itemContainer} onClick={()=>{ displaySelectedItem(item); }}>
@@ -81,7 +93,7 @@ const TabConsumables: FC<{}> = () => {
       <div className={styles.itemText}>
         {item.name} : {item.price} GHST
       </div>
-      <button className={styles.buyButton}> BUY </button>
+      <button className={styles.buyButton} onClick={ ()=>{buyItem(item,1)} }> BUY </button>
     </div>
   );
 

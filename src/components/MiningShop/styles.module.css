@@ -64,7 +64,7 @@
   white-space: nowrap;
   position:relative;
 }
-
+ 
 .itemContainer {
   display: flex;
   font-size: 0.9em;
@@ -160,16 +160,17 @@
 .patternElement{
   width: 0.9rem;
   height: 0.9rem;
-  opacity: 50%;
-  border:1px solid #a4ffff;
+  opacity: 10%;
+  background-color: #a4ffff;
 }
 
 .explosionElement{
+  opacity: 50%;
   background-color: red;
 }
 
 .detonationElement{
-  background-color: #a4ffff;
+  background-color: red;
   opacity: 0.9;
 }
 

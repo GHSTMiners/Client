@@ -11,7 +11,35 @@ const TabUpgrades: FC<{}> = () => {
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const playerSprite = `gotchi_${Client.getInstance().ownPlayer.gotchiID}`;
 
+  type upgradeLabel = "Movement" | "Health" | "Inventory" | "Fuell" | "Drill";
+  type upgradesRecord = Record<upgradeLabel, number>; // ( upgrade label , level }
+
+  // TO DO: retrieve this list from Chisel
+  let upgradeLabels: String[] = [];
+  upgradeLabels.push('Movement')
+  upgradeLabels.push('Health')
+  upgradeLabels.push('Inventory')
+  upgradeLabels.push('Fuell')
+  upgradeLabels.push('Drill')
+
+  let rarityLabel: String[] = [];
+  rarityLabel.push('Common')
+  rarityLabel.push('Uncommon')
+  rarityLabel.push('Rare')
+  rarityLabel.push('Legendary')
+  rarityLabel.push('Mythical')
+  rarityLabel.push('Godlike')
+  
+  let gotchiUpgrades: upgradesRecord[] = [];
+
+  // inializing cargo & wallet ballances to 0
+  for (let i = 0; i < upgradeLabels.length; i++) {
+    //gotchiUpgrades.push( [upgradeLabels[i] : 0] );
+  } 
+
   let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );
+
+
 
   aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
     //Convert string from svg
