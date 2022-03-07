@@ -8,6 +8,7 @@
   flex-direction: column;
   background-position: center;
   min-height: 100%;
+  overflow: hidden;
 }
 
 .homeContainer {
@@ -17,10 +18,12 @@
   height: 100%;
   align-self: stretch;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .gotchiMainContainer {
   min-width: 40%;
+  overflow: hidden;
 }
 
 .gameConfigContainer {
@@ -28,6 +31,7 @@
   min-height: 100%;
   display: grid;
   justify-content: center;
+  overflow: hidden;
 }
 
 .selectorContainer {

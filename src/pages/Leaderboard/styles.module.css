@@ -1,0 +1,17 @@
+@import "theme/vars.css";
+
+.backgroundContainer {
+  background-image: url("assets/images/bg3.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  background-position: center;
+  min-height: 100%;
+}
+
+p {
+  color:white;
+  display: grid;
+  justify-content: center;
+}
