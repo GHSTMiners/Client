@@ -7,11 +7,13 @@
 }
 
 .backgroundContainer {
-  background-image: url("assets/images/bg2.png");
+  background-image: url("assets/images/bg3.png");
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
   background-position: center;
+  min-height: 100%;
 }
 
 .buttonContainer {
