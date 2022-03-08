@@ -1,14 +1,19 @@
 import styles from "./styles.module.css";
-import { useState , createContext, useContext } from "react";
+import { useState , createContext, useContext, useEffect } from "react";
 import SquareButton from "components/SquareButton";
 import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
 import Inventory from "./Inventory";
+import Client from "matchmaking/Client";
 
 const MainConsole = () => {
   const smallButton = "3.3rem";
   const bigButton = "5.8rem";
   const [consoleUp, setConsoleUp] = useState(false);
+
+  useEffect(()=>{
+    Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{setConsoleUp(false)} );
+  },[])
 
   return (
     <div

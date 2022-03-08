@@ -28,6 +28,39 @@
   z-index: 10;
 }
 
+.screenContainer{
+  position:relative;
+  width: 68%;
+  margin-top: 22%;
+  height: 28rem;
+  margin-left: 16%;
+}
+
+.closeButton{
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  right: 0.5rem;
+  top: 0.5rem;
+  color:#a4ffff;
+  outline: 0;
+  margin: auto;
+  -moz-outline-style: none;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border-width: 1px;
+    background-color: rgba(0,255,255,0.3);
+    border-color: #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
 .displayOn{
   top: 0rem;
   transition: all 400ms ease;
@@ -39,11 +72,8 @@
 }
 
 .shopTabs{
-  width: 68%;
-  margin-top: 24%;
-  margin-left: 17%;
+  padding-top: 2rem;
   font-size: 2em;
-  height: 26rem;
   display: flex;
   color: white;
   position: static;
@@ -72,6 +102,7 @@
   flex-direction: column;
   justify-content: flex-end;
   padding-bottom: 2rem;
+  cursor: pointer; 
 }
 
 .itemImage {
@@ -147,6 +178,7 @@
 
 .inputQuantity{
   width: 40%;
+  text-align: center;
 }
 
 .explosivePattern{

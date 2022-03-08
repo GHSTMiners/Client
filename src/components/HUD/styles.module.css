@@ -13,6 +13,14 @@
   src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
 }
 
+body{
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
 .hudContainer {
   position: absolute;
   font-family: Pixelar;

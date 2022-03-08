@@ -47,13 +47,17 @@ const MiningShop = () => {
   useEffect( () => {
     Client.getInstance().phaserGame.events.on("exit_building", closeShop );
     Client.getInstance().phaserGame.events.on("show_shop", openShop );
+    Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{closeShop('Bazaar')} );
   },[]);
 
 
   return (
     <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
-      <div className={styles.shopTabs}>
-        <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
+      <div className={styles.screenContainer}>
+        <button className={styles.closeButton} onClick={()=>closeShop('Bazaar')}>X</button>
+        <div className={styles.shopTabs}>
+          <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
+        </div>
       </div>
     </div>
   );

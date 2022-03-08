@@ -10,9 +10,7 @@ export const HUD = () => {
 
   useEffect(() => {
     // Display HUD only when the main scene was loaded
-    Client.getInstance().phaserGame.events.on("mainscene_ready", () => {
-      setgameLoaded(true);
-    });
+    Client.getInstance().phaserGame.events.on("mainscene_ready", () => {setgameLoaded(true)});
   }, []);
 
   return (

@@ -14,6 +14,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
 
         this.keys.forEach(key => {
             key.on('down', this.keysChanged.bind(this))
@@ -35,6 +36,9 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         } else {
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
+            this.scene.game.events.emit("close_dialogs")
         }
     }
  
