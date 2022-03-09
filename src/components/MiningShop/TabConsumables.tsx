@@ -8,11 +8,11 @@ import { forEachLeadingCommentRange } from "typescript";
 import { PurchaseExplosive } from "gotchiminer-multiplayer-protocol";
 
 const TabConsumables: FC<{}> = () => {
-
-  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   
   type shopItem = { name: string; id: number, price: number; pattern:Chisel.ExplosionCoordinate[]; image: string };
   type patternElement = { x: number; y: number; styleTag: string };
+
+  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   let shopItemArray: shopItem[] = [];
 

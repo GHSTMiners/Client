@@ -4,8 +4,9 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import walletIcon from "assets/hud/wallet_icon.png";
 import { useContext, useEffect, useState } from "react";
-import { CargoEntry, WalletEntry } from "matchmaking/Schemas";
+import { CargoEntry, ExplosiveEntry, WalletEntry } from "matchmaking/Schemas";
 import VitalsConsole from "./VitalsConsole";
+import Explosive from "game/World/Explosive";
 
 const Crypto = () => {
   //prettier-ignore
@@ -40,33 +41,24 @@ const Crypto = () => {
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       // CARGO
       Client.getInstance().ownPlayer.cargo.onAdd = (item: CargoEntry) => {
-        tempCargoBalance = cargoBalance;
-        tempCargoBalance[item.cryptoID] = item.amount;
-        setCargoBalance(tempCargoBalance);
+        cargoBalance[item.cryptoID] = item.amount;
         // item onCHANGE
         item.onChange = () => {
-          tempCargoBalance = cargoBalance;
-          tempCargoBalance[item.cryptoID] = item.amount;
-          setCargoBalance(tempCargoBalance);
+          cargoBalance[item.cryptoID] = item.amount;
         };
       };
       Client.getInstance().ownPlayer.cargo.onRemove = (item: CargoEntry) => {
-        tempCargoBalance[item.cryptoID] = 0;
-        setCargoBalance(tempCargoBalance);
+        cargoBalance[item.cryptoID] = 0;
       }
       // WALLET
       Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
-        tempWalletBalance = walletBalance;
-        tempWalletBalance[item.cryptoID] = item.amount;
-        setWalletBalance(tempWalletBalance);
+        walletBalance[item.cryptoID] = item.amount;
         // item onCHANGE
         item.onChange = () => {
-          tempWalletBalance = walletBalance;
-          tempWalletBalance[item.cryptoID] = item.amount;
-          setWalletBalance(tempWalletBalance);
+          walletBalance[item.cryptoID] = item.amount;
         };
       };
-      
+
     // Updating pre-defined choice for displaying either wallet or cargo (TO DO)
     //setPlayerY(Client.getInstance().ownPlayer.playerState.y);  
     aboveGround ? setWalletOn(true) : setWalletOn(false);
