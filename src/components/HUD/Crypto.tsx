@@ -42,7 +42,6 @@ const Crypto = () => {
       // CARGO
       Client.getInstance().ownPlayer.cargo.onAdd = (item: CargoEntry) => {
         cargoBalance[item.cryptoID] = item.amount;
-        // item onCHANGE
         item.onChange = () => {
           cargoBalance[item.cryptoID] = item.amount;
         };
@@ -53,7 +52,6 @@ const Crypto = () => {
       // WALLET
       Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
         walletBalance[item.cryptoID] = item.amount;
-        // item onCHANGE
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
         };

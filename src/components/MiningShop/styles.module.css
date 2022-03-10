@@ -113,6 +113,8 @@
 
 .itemText {
   width: 80%;
+  display:grid;
+  justify-content: center;
   border-bottom: 3px solid #a4ffff;
 }
 

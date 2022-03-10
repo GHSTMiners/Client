@@ -36,7 +36,7 @@ const About = (): JSX.Element => {
             <FlipCard
               imageURL={GotchinomicsIm}
               title="Gotchinomics"
-              description="Game Design &amp; Developer"
+              description="Front-End Developer"
               twitter="Gotchinomics"
               discord="Gotchinomics#4936"
             />

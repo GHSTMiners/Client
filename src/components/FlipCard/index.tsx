@@ -27,13 +27,12 @@ export const FlipCard = ({
           <div className={styles.cardText}>
             <h2>{title}</h2>
             <p>{description}</p>
-            <p>
-              <FaTwitter />
-              {twitter}
-              <br />
-              <FaDiscord />
-              {discord}
-            </p>
+            <div>
+              <FaTwitter /> {twitter}
+            </div>
+            <div>
+              <FaDiscord /> {discord}
+            </div>
           </div>
         </div>
       </div>

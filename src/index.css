@@ -15,7 +15,8 @@ body {
 }
 
 #phaser-game {
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 code {
