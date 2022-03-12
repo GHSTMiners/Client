@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { createContext, useEffect, useState, useContext } from "react";
+import ReactDOM from "react-dom";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
 import * as Chisel from "chisel-api-interface";
@@ -28,11 +29,13 @@ const tabs: TabsType = [
   }
 ];
 
+export const ShopContext = createContext(0);
+
 const MiningShop = () => {
   
-  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const [displayShop, setDisplayShop] = useState<boolean>(false);
+  const [playerDoekoes, setPlayerDoekoes] = useState<number>(0);
 
   const openShop = () => {
     setDisplayShop(true);
@@ -44,20 +47,30 @@ const MiningShop = () => {
     } 
   }
 
+
+  const updatePlayerBalance = (quantity:number) =>{
+    setPlayerDoekoes(quantity);
+  }
+
   useEffect( () => {
     Client.getInstance().phaserGame.events.on("exit_building", closeShop );
     Client.getInstance().phaserGame.events.on("show_shop", openShop );
     Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{closeShop('Bazaar')} );
+    Client.getInstance().phaserGame.events.on("joined_game", () => {
+      Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
+    });
   },[]);
 
 
   return (
     <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
-        <button className={styles.closeButton} onClick={()=>closeShop('Bazaar')}>X</button>
-        <div className={styles.shopTabs}>
-          <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
-        </div>
+        <ShopContext.Provider value={playerDoekoes}>
+          <button className={styles.closeButton} onClick={()=>closeShop('Bazaar')}>X</button>
+            <div className={styles.shopTabs}>
+              <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
+            </div>
+        </ShopContext.Provider>
       </div>
     </div>
   );

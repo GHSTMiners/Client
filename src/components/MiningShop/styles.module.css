@@ -120,8 +120,24 @@
 
 .buyButton{
   margin-top: 0.5rem;
-  background-color: #a4ffff;
   width: 80%;
+}
+
+.enabledButton{
+  color:black;
+  background-color: #a4ffff;
+}
+
+.disabledButton{
+  background-color: transparent;
+  border: 1px solid #a4ffff;
+  color: #a4ffff;
+  opacity: 70%;
+  cursor:auto;
+}
+
+.disabledContainer{
+  filter: grayscale(0.5);  
 }
 
 .detailsPanel{
@@ -175,7 +191,6 @@
 .buyManyButton{
   width: 40%;
   margin-top: 0.5rem;
-  background-color: #a4ffff;
 }
 
 .inputQuantity{

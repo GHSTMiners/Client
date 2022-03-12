@@ -33,6 +33,9 @@ const Crypto = () => {
     tempWalletBalance[world.crypto[i].id] = 0;
   }
 
+  // Setting world currency
+  const worldCurrency = world.crypto.find( i => i.shortcode == 'GHST');
+
   const [cargoBalance, setCargoBalance] = useState(tempCargoBalance);
   const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
 
@@ -54,6 +57,9 @@ const Crypto = () => {
         walletBalance[item.cryptoID] = item.amount;
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
+          if (worldCurrency?.id == item.cryptoID) {
+            Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
+          }
         };
       };
 

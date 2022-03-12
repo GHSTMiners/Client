@@ -1,11 +1,10 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import SquareButton from "components/SquareButton";
-import { forEachLeadingCommentRange } from "typescript";
-import { PurchaseExplosive } from "gotchiminer-multiplayer-protocol";
+import { ShopContext } from ".";
+
 
 const TabConsumables: FC<{}> = () => {
   
@@ -30,8 +29,9 @@ const TabConsumables: FC<{}> = () => {
    const [selectedItem, setSelectedItem] = useState<shopItem | any>([]);
    const [itemQuantity, setItemQuantity] = useState<number>(1);
    const [multipleItemPrice, setmultipleItemPrice] = useState<number>(shopItemArray[0].price);
+   const playerDoekoes = useContext(ShopContext);
 
-     // Initializing empty explosive pattern (double definition to avoid pointer problems)
+  // Initializing empty explosive pattern (double definition to avoid pointer problems)
   let emptyPatternArrray: patternElement[] = [];
   let patternArray: patternElement[] = [];
   for (let row = -5 ; row < 6 ; row++ ) {
@@ -57,10 +57,10 @@ const TabConsumables: FC<{}> = () => {
     ,[itemQuantity,selectedItem])
    
    const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement> ) => {
-     if (+event.target.value>=0){
+     if (+event.target.value>=1){
       setItemQuantity(+event.target.value);
      }
-  }
+  } 
 
    const displaySelectedItem = (item : shopItem) => {
     setSelectedItem(item)
@@ -88,18 +88,26 @@ const TabConsumables: FC<{}> = () => {
 
    // TO DO: add also consumables when available to the shopItemArray
   const renderShopItem = (item: shopItem) => (
-  <div className={styles.itemContainer} onClick={()=>{ displaySelectedItem(item); }}>
+  <div className={`${styles.itemContainer}
+                  ${playerDoekoes>=item.price? styles.enabledContainer : styles.disabledContainer }`} 
+       onClick={()=>{ displaySelectedItem(item); }}>
       <img src={item.image} className={styles.itemImage} />
       <div className={styles.itemText}>
         {item.name} : {item.price} GHST
       </div>
-      <button className={styles.buyButton} onClick={ ()=>{buyItem(item,1)} }> BUY </button>
+      <button className={`${styles.buyButton} 
+                          ${playerDoekoes>=item.price? styles.enabledButton : styles.disabledButton }`} 
+              onClick={ ()=>{buyItem(item,1)} }
+              disabled={playerDoekoes>=item.price? false: true}> 
+              BUY 
+      </button>
     </div>
   );
 
   let shopInventory = shopItemArray.map(function (shopItem) {
     return renderShopItem( shopItem );
   });
+
 
   const detailsPanel = (
     <>
@@ -117,7 +125,11 @@ const TabConsumables: FC<{}> = () => {
                  value={itemQuantity} 
                  onChange={(e)=>{handleInputChange(e)}
                  }/>
-          <button className={styles.buyManyButton}>BUY</button>
+          <button className={`${styles.buyManyButton} 
+                            ${playerDoekoes>=multipleItemPrice? styles.enabledButton : styles.disabledButton }` }
+                  disabled={playerDoekoes>=multipleItemPrice? false: true }>
+                  BUY
+          </button>
         </div>
         <div className={styles.totalPrice}>
           Price: {multipleItemPrice}
@@ -138,3 +150,4 @@ const TabConsumables: FC<{}> = () => {
   );
 };
 export default TabConsumables;
+
