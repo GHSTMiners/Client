@@ -71,6 +71,20 @@
   transition: all 400ms ease;
 }
 
+.playerDoekoes{
+  background-color: transparent;
+  text-align: center;
+  width: 8rem;
+  height: 2rem;
+  right: 2.5rem;
+  top: 0.5rem;
+  color:#a4ffff;
+  margin: auto;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+}
+
 .shopTabs{
   padding-top: 2rem;
   font-size: 2em;

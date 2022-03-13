@@ -127,6 +127,7 @@ const TabConsumables: FC<{}> = () => {
                  }/>
           <button className={`${styles.buyManyButton} 
                             ${playerDoekoes>=multipleItemPrice? styles.enabledButton : styles.disabledButton }` }
+                  onClick={ ()=>{buyItem(selectedItem,itemQuantity)} }
                   disabled={playerDoekoes>=multipleItemPrice? false: true }>
                   BUY
           </button>

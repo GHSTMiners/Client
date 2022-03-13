@@ -40,9 +40,15 @@
   box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
 }
 
+.squareButton:disabled {
+  box-shadow: none;
+  color: #cecece;
+}
+
 .quantity {
   position: absolute;
   bottom: 5%;
   right: 5%;
   font-size: 0.8em;
 }
+

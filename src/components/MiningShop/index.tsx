@@ -66,6 +66,7 @@ const MiningShop = () => {
     <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
         <ShopContext.Provider value={playerDoekoes}>
+          <div className={styles.playerDoekoes}>{playerDoekoes} GHST</div>
           <button className={styles.closeButton} onClick={()=>closeShop('Bazaar')}>X</button>
             <div className={styles.shopTabs}>
               <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />

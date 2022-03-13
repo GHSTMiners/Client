@@ -332,19 +332,23 @@ body{
   margin-left: 0.5rem;
 }
 
-.crystalDisabled{
+.itemDisabled{
   filter: grayscale(1);
   opacity: 30%;
   transition: all 400ms ease-in-out;
 }
 
-.crystalEnabled{
+.itemEnabled{
   transition: all 300ms ease;
 }
 
 
 .crystalTag {
   margin-left: 0.8rem;
+}
+
+.inventoryConsumable > img {
+  height: 1.5rem;
 }
 
 
