@@ -25,7 +25,9 @@ const SquareButton: React.FC<Props> = ({
       <div className={styles.buttonText} style={{ width: size, height: size }}>
         {children}
       </div>
-      <div className={styles.quantity}>x {quantitiy}</div>
+      <div className={styles.quantity}>
+        { quantitiy>0 ? `x  ${quantitiy}` : ''}
+      </div>
     </button>
   );
 };

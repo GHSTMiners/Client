@@ -60,6 +60,12 @@ body{
   transition: visibility 0s 1.5s, opacity 1.5s linear;
 }
 
+.reveal {
+  visibility:visible;
+  opacity: 1;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
 .hudContainer {
   position: absolute;
   font-family: Pixelar;

@@ -14,6 +14,10 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.ONE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.FOUR, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
 
         this.keys.forEach(key => {
@@ -28,14 +32,27 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.cursors.down.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
         if(this.cursors.right.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
         if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.B)?.isDown) {
-            let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
-            requestDropExplosive.explosiveID = 1
-            let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
-            Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-        } else {
+        //if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.B)?.isDown) {
+        //    let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
+        //    requestDropExplosive.explosiveID = 1
+        //    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
+        //    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        //} else {
+        if (directionChangedMessage){    
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ONE)?.isDown) {
+            this.scene.game.events.emit("shortcut",1)
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TWO)?.isDown) {
+            this.scene.game.events.emit("shortcut",2)
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.THREE)?.isDown) {
+            this.scene.game.events.emit("shortcut",3)
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown) {
+            this.scene.game.events.emit("shortcut",4)
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
             this.scene.game.events.emit("close_dialogs")

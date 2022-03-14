@@ -1,8 +1,8 @@
 import styles from "./styles.module.css";
 import SquareButton from "components/SquareButton";
+import { smallButton } from ".";
 
 const Artifacts = () => {
-  const smallButton = "3.3rem";
   const artifactList = [];
 
   for (let i = 1; i < 5; i++) {

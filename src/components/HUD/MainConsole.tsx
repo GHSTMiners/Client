@@ -1,19 +1,41 @@
 import styles from "./styles.module.css";
-import { useState , createContext, useContext, useEffect } from "react";
+import { useState , createContext, useContext, useEffect, ReactFragment } from "react";
 import SquareButton from "components/SquareButton";
 import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
 import Inventory from "./Inventory";
 import Client from "matchmaking/Client";
+import { HUDContext, smallButton } from ".";
 
 const MainConsole = () => {
-  const smallButton = "3.3rem";
   const bigButton = "5.8rem";
   const [consoleUp, setConsoleUp] = useState(false);
 
   useEffect(()=>{
     Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{setConsoleUp(false)} );
   },[])
+
+  const playerConsumables = useContext(HUDContext);
+
+  // rendering function for each consumable  slot. TO DO: replace by drag-and-drop system to assign shortcuts
+  const renderConsumable = (index:number) =>{
+    const isFilled = (playerConsumables.length >= index);
+    return (
+    <SquareButton size={smallButton} 
+                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : 0 }
+                  disabled={ isFilled ? false : true}>
+      <div className={styles.inventoryConsumable}>
+        <img src={ isFilled ? playerConsumables[index-1].image : ''} />
+      </div>
+    </SquareButton>
+    );
+  }
+
+  // rendering the initial shortcut slots
+  let shortcutButtons = [];
+  for (let i = 1; i < 5; i++) {
+    shortcutButtons.push( renderConsumable(i) )
+  }
 
   return (
     <div
@@ -25,12 +47,7 @@ const MainConsole = () => {
           <SquareButton size={bigButton} quantitiy={1}>
             <img src={drillIcon} className={styles.toolIcon} />
           </SquareButton>
-          <SquareButton size={smallButton} quantitiy={2}>
-            ITEM 1
-          </SquareButton>
-          <SquareButton size={smallButton}>ITEM 2</SquareButton>
-          <SquareButton size={smallButton}>ITEM 3</SquareButton>
-          <SquareButton size={smallButton}>ITEM 4</SquareButton>
+          {shortcutButtons}
           <div
             className={styles.expandButton}
             onClick={() => {
