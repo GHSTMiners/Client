@@ -7,6 +7,7 @@ import MiningShop from "../MiningShop";
 import * as Chisel from "chisel-api-interface";
 import { ExplosiveEntry } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import Chat from "components/Chat";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -35,6 +36,7 @@ export const HUD = () => {
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   const [playerConsumables, setPlayerConsumables] = useState(consumablesArray);
+  //const [hideChat, setHideChat] = useState<boolean>(largeChat);
 
   const handleLoadingBar = (percentage:number) => {
     setLoadingPercentage(percentage)
@@ -49,6 +51,7 @@ export const HUD = () => {
   }
 
   const useShortcut = (index:number) =>{
+    console.log(playerConsumables)
     if (playerConsumables.length >= index){
       let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
       requestDropExplosive.explosiveID = playerConsumables[index-1].id;
@@ -70,11 +73,11 @@ export const HUD = () => {
           type: 'explosive',
           quantity: item.amount
         }
-        //setPlayerConsumables([...playerConsumables,newConsumableItem]);
-        //setPlayerConsumables( (value) =>{ value.push(newConsumableItem) }   );
+        
+        // the React Hook doesn't update the array size, therefore push is required TO DO: fix it properly
+        setPlayerConsumables( playerConsumables.concat(newConsumableItem) );
         playerConsumables.push(newConsumableItem);
 
-        console.log('Player purchased a new explosive!')
         item.onChange = () => {
           playerConsumables.forEach( consumable => {
             if (consumable.id ==item.explosiveID){
@@ -103,6 +106,7 @@ export const HUD = () => {
       <HUDContext.Provider value={playerConsumables}>
         <VitalsConsole />
         <MainConsole />
+        <Chat disabled={true} />
         <MiningShop />
         </HUDContext.Provider>
       </div> 

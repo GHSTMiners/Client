@@ -13,7 +13,7 @@
   src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
 }
 
-body{
+body {
   user-select: none; /* supported by Chrome and Opera */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -21,7 +21,7 @@ body{
   -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
-.loadingScene{
+.loadingScene {
   justify-content: center;
   align-items: center;
   background: #000;
@@ -31,11 +31,11 @@ body{
   width: 100%;
   padding: 0;
   margin: 0;
-  position:absolute;
+  position: absolute;
 }
 
 .progressBar {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   justify-content: flex-start;
   border-radius: 100px;
   align-items: center;
@@ -61,7 +61,7 @@ body{
 }
 
 .reveal {
-  visibility:visible;
+  visibility: visible;
   opacity: 1;
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
@@ -132,14 +132,15 @@ body{
   color: white;
   width: 5rem;
   left: 1.5rem;
-  line-height:1.7rem;
+  line-height: 1.7rem;
   text-align: center;
   top: 0.7rem;
   position: absolute;
   opacity: 1;
   z-index: 2;
   text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
-    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75, 0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
+    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
+    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
 }
 
 .mainConsole {
@@ -200,7 +201,8 @@ body{
   color: white;
   font-family: Pixelar;
   text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
-    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75, 0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
+    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
+    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
   z-index: 10;
 }
 
@@ -322,7 +324,7 @@ body{
   grid-template-columns: repeat(3, 1fr);
   overflow: auto;
   white-space: nowrap;
-  box-shadow: 0 0 1em  #00ffaa75;
+  box-shadow: 0 0 1em #00ffaa75;
 }
 
 .crystalContainer {
@@ -338,16 +340,15 @@ body{
   margin-left: 0.5rem;
 }
 
-.itemDisabled{
+.itemDisabled {
   filter: grayscale(1);
   opacity: 30%;
   transition: all 400ms ease-in-out;
 }
 
-.itemEnabled{
+.itemEnabled {
   transition: all 300ms ease;
 }
-
 
 .crystalTag {
   margin-left: 0.8rem;
@@ -356,6 +357,3 @@ body{
 .inventoryConsumable > img {
   height: 1.5rem;
 }
-
-
-

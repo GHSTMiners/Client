@@ -1,0 +1,68 @@
+.chatContainer {
+  width: 30rem;
+  bottom: 10rem;
+  position: absolute;
+  background-color: rgba(61, 77, 66, 0.5);
+}
+
+.largeContainer{
+  height: 20rem;
+}
+.smallContainer{
+  height: 10rem;
+}
+
+.chatHistory {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  margin: 1rem;
+  padding-left: 0.5rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(61, 77, 66);
+}
+
+.largeHistory{
+  height: 12rem;
+}
+
+.smallHistory{
+  height: 3rem;
+}
+
+.textBoxContainer {
+  margin: 2rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.chatMessage {
+  color: white;
+}
+
+.chatUser {
+  font-weight: bold;
+}
+
+.textBox {
+  width: 80%;
+  justify-content: flex-start;
+  color: white;
+  padding-left: 0.5rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.chatButton {
+  width: 20%;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  outline: none;
+  -moz-outline-style: none;
+  border: none;
+}
+
+

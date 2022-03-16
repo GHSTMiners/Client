@@ -18,3 +18,4 @@ export * from "./GreenButton";
 export * from "./GotchiSelector";
 export * from "./Tabs";
 export * from "./UpgradeBar";
+export * from "./Chat";
