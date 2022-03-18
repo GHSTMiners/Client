@@ -5,6 +5,7 @@ import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import MusicManager from "game/Management/MusicManager";
+import ChatManager from "game/Management/ChatManager";
 
 var controls;
 
@@ -19,6 +20,7 @@ export default class MainScene extends Phaser.Scene {
       //prettier-ignore
       Client.getInstance().messageRouter.processRawMessage( type as string, message);
     });
+    this.chatManager = new ChatManager(this);
     this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
@@ -33,6 +35,7 @@ export default class MainScene extends Phaser.Scene {
     this.globalRenderer?.update(time, delta);
     // console.log(this.game.loop.actualFps); // for debuggin purposes, looking into the interpolation issue
   }
+  private chatManager? : ChatManager
   private musicManager?: MusicManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;

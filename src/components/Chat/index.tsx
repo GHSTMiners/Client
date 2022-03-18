@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 interface Props {
   disabled?: boolean;
@@ -26,6 +26,11 @@ const Chat : React.FC<Props> = ({ disabled }) => {
     const newText = renderMessage(playerName.toString(), chatMessage);
     setChatHistory([newText].concat(chatHistory));
     setChatMessage("");
+    //Create message and send
+    let message : Protocol.MessageToServer = new Protocol.MessageToServer();
+    message.msg = chatMessage;
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
   };
 
   function handleClick (event:any ) {
