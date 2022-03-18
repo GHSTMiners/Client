@@ -2,14 +2,15 @@
   width: 30rem;
   bottom: 10rem;
   position: absolute;
-  background-color: rgba(61, 77, 66, 0.5);
 }
 
 .largeContainer{
   height: 20rem;
+  background-color: rgba(61, 77, 66, 0.5);
 }
 .smallContainer{
   height: 10rem;
+  background-image: linear-gradient(0deg, rgba(61, 77, 66,0.5), rgba(61, 77, 66,0));
 }
 
 .chatHistory {
@@ -18,17 +19,18 @@
   align-items: flex-start;
   margin: 1rem;
   padding-left: 0.5rem;
+}
+
+.largeHistory{
+  height: 12rem;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: rgb(61, 77, 66);
 }
 
-.largeHistory{
-  height: 12rem;
-}
-
 .smallHistory{
   height: 3rem;
+  overflow: hidden
 }
 
 .textBoxContainer {

@@ -5,6 +5,14 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         super(scene, "MovementManager")
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.keys = new Map<number, Phaser.Input.Keyboard.Key>()
+        this.addAllKeys();
+        this.setGameMode();
+        // Adding event related actions to open/close the chat with a mouse click
+        this.scene.game.events.on("open_chat",  ()=>{this.setChatMode()} );
+        this.scene.game.events.on("close_chat", ()=>{this.setGameMode()} );
+    }
+
+    private addAllKeys=()=>{
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.DOWN, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.UP, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.LEFT, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false))
@@ -19,25 +27,52 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.FOUR, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.T, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T, true, false))
+        // remove SPACE blockage (set by default)
+        this.scene.input.keyboard.removeCapture('SPACE'); 
+    }
 
+    private setGameMode=()=>{
+        this.clearKeys();
+        this.enableGameKeys();
         this.keys.forEach(key => {
-            key.on('down', this.keysChanged.bind(this))
-            key.on('up', this.keysChanged.bind(this)) 
+            key.on('down', ()=>{this.keysChangedGaming()})
+            key.on('up', ()=>{this.keysChangedGaming()}) 
         }, this)
     }
 
-    private keysChanged() {
+    private setChatMode=()=>{
+        this.clearKeys();
+        this.scene.input.keyboard.addCapture(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false) );
+        this.keys.forEach(key => {
+            key.on('down', ()=>{this.keysChangedChatting()} )
+            key.on('up', ()=>{this.keysChangedChatting()}) 
+        }, this)
+    }
+
+    private enableGameKeys=()=>{
+        this.clearKeys();
+        this.keys.forEach( key => {
+            this.scene.input.keyboard.addCapture(key.keyCode)
+            this.keys.set( key.keyCode , this.scene.input.keyboard.addKey(key.keyCode, true, false) ) 
+        });        
+    }
+
+    private clearKeys=()=>{
+        // remove all keys' callbacks
+        this.keys.forEach( key =>  this.scene.input.keyboard.removeKey(key.keyCode) );
+        // remove key events being routed to phaser, unblocking its usage
+        this.keys.forEach( key =>  this.scene.input.keyboard.removeCapture(key.keyCode) );
+    }
+
+    private keysChangedGaming() {
         let directionChangedMessage : Protocol.ChangeDirection = new Protocol.ChangeDirection()
         if(this.cursors.up.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
         if(this.cursors.down.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
         if(this.cursors.right.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
         if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
-        //if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.B)?.isDown) {
-        //    let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
-        //    requestDropExplosive.explosiveID = 1
-        //    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
-        //    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-        //} else {
+
         if (directionChangedMessage){    
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
@@ -57,6 +92,16 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
             this.scene.game.events.emit("close_dialogs")
         }
+        // Change event handlers when the game goes into chat mode
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.T)?.isDown) {
+            this.scene.game.events.emit("open_chat")
+        }
+    }
+
+    private keysChangedChatting() {
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
+            this.scene.game.events.emit("close_chat")
+        }        
     }
  
     public velocityVector () : Phaser.Math.Vector2 {
@@ -70,4 +115,5 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
 
     private keys : Map<number, Phaser.Input.Keyboard.Key>
     private cursors :Phaser.Types.Input.Keyboard.CursorKeys
+    private chatState : boolean = false;
 }

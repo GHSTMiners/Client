@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import VitalsConsole from "./VitalsConsole";
 import MainConsole from "./MainConsole";
 import MiningShop from "../MiningShop";
@@ -12,6 +12,7 @@ import Chat from "components/Chat";
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 let consumablesArray : consumableItem[] = [];
+
 export const HUDContext = createContext(consumablesArray);
 export const smallButton = "3.3rem";
 
@@ -36,6 +37,7 @@ export const HUD = () => {
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   const [playerConsumables, setPlayerConsumables] = useState(consumablesArray);
+  const [chatMode, setChatMode] = useState<boolean>(false)
   //const [hideChat, setHideChat] = useState<boolean>(largeChat);
 
   const handleLoadingBar = (percentage:number) => {
@@ -57,6 +59,15 @@ export const HUD = () => {
       requestDropExplosive.explosiveID = playerConsumables[index-1].id;
       let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
       Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data) 
+    }
+  }
+
+  function handleClick (event:any ) {
+    // if the user clicks on the background, all open dialogs are closed
+    const divID = event.target.getAttribute('id');
+    if (divID == 'game-background'){
+      Client.getInstance().phaserGame.events.emit("close_chat");
+      Client.getInstance().phaserGame.events.emit("close_dialogs");
     }
   }
 
@@ -94,6 +105,8 @@ export const HUD = () => {
     Client.getInstance().phaserGame.events.on("shortcut", useShortcut );
     Client.getInstance().phaserGame.events.on("loading", handleLoadingBar );
     Client.getInstance().phaserGame.events.on("mainscene_ready", () => {setgameLoaded(true)});
+    Client.getInstance().phaserGame.events.on("open_chat",()=>setChatMode(true));
+    Client.getInstance().phaserGame.events.on("close_chat",()=>setChatMode(false));
   }, []);
 
 
@@ -102,11 +115,14 @@ export const HUD = () => {
       <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
         {loadingBar(loadingPercentage)}
       </div>
-      <div className={`${styles.hudContainer} ${!gameLoaded? styles.hidden : styles.reveal }`} hidden={!gameLoaded}>
+      <div className={`${styles.hudContainer} ${!gameLoaded? styles.hidden : styles.reveal }`} 
+           onClick={e => handleClick(e)}
+           id="game-background"
+           hidden={!gameLoaded}>
       <HUDContext.Provider value={playerConsumables}>
         <VitalsConsole />
         <MainConsole />
-        <Chat disabled={true} />
+        <Chat disabled={!chatMode} />
         <MiningShop />
         </HUDContext.Provider>
       </div> 
