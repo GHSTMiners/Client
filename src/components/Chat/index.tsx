@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
 
@@ -35,6 +35,12 @@ const Chat : React.FC<Props> = ({ disabled }) => {
       Client.getInstance().phaserGame.events.emit("open_chat");
     }
   }
+
+  useEffect(()=>{
+    Client.getInstance().phaserGame.events.on('chat_message',(text:any)=>{
+      setChatHistory([<div>{text}</div>].concat(chatHistory));
+    })
+  },[chatHistory]);
 
   return (
     <div  id="chat" 
