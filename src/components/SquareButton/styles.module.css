@@ -36,6 +36,11 @@
   align-items: center;
 }
 
+.disabled {
+  filter:grayscale(1);
+}
+
+
 .squareButton:hover {
   box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
 }
