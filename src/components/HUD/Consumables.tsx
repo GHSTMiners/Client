@@ -13,7 +13,7 @@ const Consumables = () => {
     const isFilled = (playerConsumables.length >= index);
     return (
     <SquareButton size={smallButton} 
-                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : 0 }
+                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}>
       <div className={styles.inventoryConsumable}>
         <img src={ isFilled ? playerConsumables[index-1].image : ''} />

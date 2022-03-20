@@ -8,6 +8,7 @@ import * as Chisel from "chisel-api-interface";
 import { ExplosiveEntry } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Chat from "components/Chat";
+import Exchange from "components/Exchange";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -36,7 +37,7 @@ export const HUD = () => {
   
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
-  const [playerConsumables, setPlayerConsumables] = useState(consumablesArray);
+  let [playerConsumables, setPlayerConsumables] = useState(consumablesArray);
   const [chatMode, setChatMode] = useState<boolean>(false)
   //const [hideChat, setHideChat] = useState<boolean>(largeChat);
 
@@ -58,7 +59,13 @@ export const HUD = () => {
       let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
       requestDropExplosive.explosiveID = playerConsumables[index-1].id;
       let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
-      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data) 
+      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+      /*// Deleting the explosive if this is the last one about to be used (TO DO: do it server-side on 0)
+      if (playerConsumables[index-1].quantity == 1){
+        playerConsumables= playerConsumables.filter( consumable => consumable.id !== playerConsumables[index-1].id );
+        setPlayerConsumables(playerConsumables);
+        console.log('entered deleting loop')
+      } */
     }
   }
 
@@ -71,37 +78,48 @@ export const HUD = () => {
     }
   }
 
-  // TO DO: loop through all other consumables, potions, etc.
+  function addExplosive (item: consumableItem){
+    playerConsumables.push(item);
+    setPlayerConsumables(playerConsumables);
+  }
+
+  function updateExplosives (item:ExplosiveEntry) {
+    let currentExplosives = [...playerConsumables]; ;
+    currentExplosives.forEach( consumable => {
+      if (consumable.id ==item.explosiveID){
+        consumable.quantity = item.amount;
+      }
+    });
+    setPlayerConsumables(currentExplosives);
+  }
+
+    // TO DO: loop through all other consumables, potions, etc.
   useEffect(() => {
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       // INVENTORY EXPLOSIVES
       Client.getInstance().ownPlayer.explosives.onAdd = (item: ExplosiveEntry ) =>{
-        let newConsumableItem : consumableItem = {
+        const newConsumableItem : consumableItem = {
           name: worldExplosives[item.explosiveID].name,
           id: item.explosiveID,
           image: worldExplosives[item.explosiveID].image,
           type: 'explosive',
           quantity: item.amount
         }
-        
-        // the React Hook doesn't update the array size, therefore push is required TO DO: fix it properly
-        setPlayerConsumables( playerConsumables.concat(newConsumableItem) );
-        playerConsumables.push(newConsumableItem);
+        addExplosive(newConsumableItem);
 
         item.onChange = () => {
-          playerConsumables.forEach( consumable => {
-            if (consumable.id ==item.explosiveID){
-              consumable.quantity = item.amount;
-            }
-          })
+          updateExplosives(item);
         };
       }
       Client.getInstance().ownPlayer.explosives.onRemove = (item: ExplosiveEntry) =>{
         playerConsumables.filter( consumable => consumable.id !== item.explosiveID );
       }
     });
+  }, []);
 
+  // Declaring event listeners
+  useEffect(() => {
     Client.getInstance().phaserGame.events.on("shortcut", useShortcut );
     Client.getInstance().phaserGame.events.on("loading", handleLoadingBar );
     Client.getInstance().phaserGame.events.on("mainscene_ready", () => {setgameLoaded(true)});
@@ -119,11 +137,12 @@ export const HUD = () => {
            onClick={e => handleClick(e)}
            id="game-background"
            hidden={!gameLoaded}>
-      <HUDContext.Provider value={playerConsumables}>
-        <VitalsConsole />
-        <MainConsole />
-        <Chat disabled={!chatMode} />
-        <MiningShop />
+        <HUDContext.Provider value={playerConsumables}>
+          <VitalsConsole />
+          <MainConsole />
+          <Chat disabled={!chatMode} />
+          <MiningShop />
+          <Exchange hidden={true} />
         </HUDContext.Provider>
       </div> 
     </>

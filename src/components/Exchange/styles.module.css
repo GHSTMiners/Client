@@ -1,0 +1,117 @@
+.exchangeContainer {
+  background-image: url('assets/hud/exchange_hud.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  width: 55rem;
+  height: 45rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.displayOn{
+  top: 0rem;
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -100rem;
+  transition: all 400ms ease;
+}
+
+.exchangeDisplayContainer{
+  position:relative;
+  color: white;
+  width: 77%;
+  margin-top: 25%;
+  height: 25rem;
+  margin-left: 12%;
+  padding: 1rem;
+  border:1px solid #a4ffff;
+}
+
+.exchangeHeader{
+  position: relative;
+}
+
+.playerDoekoes{
+  background-color: transparent;
+  text-align: center;
+  width: 8rem;
+  height: 2rem;
+  right: 2.5rem;
+  top: 0.4rem;
+  color:#a4ffff;
+  margin: auto;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+}
+
+.closeButton{
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  right: 0.5rem;
+  top: 0.4rem;
+  color:#a4ffff;
+  outline: 0;
+  margin: auto;
+  -moz-outline-style: none;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border: 1px solid #a4ffff;;
+  background-color: rgba(0,255,255,0.3);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.coinList{
+  height: 21rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #6db9aeff #ccfffeff;
+  margin-right: 0.6rem;
+}
+
+.coinContainer{
+  height: 3rem;
+  border: 1px solid #a4ffff;
+  margin: 0.25rem;
+  display: grid;
+  grid-template-columns: 2fr 2fr 20fr ;
+  align-items: center;
+  justify-items: center;
+}
+
+.exchangeCoin{
+  height: 2rem;
+}
+
+.sellButton{
+  justify-self:flex-end;
+  width: 4rem;
+  margin-right: 1rem;
+  outline: none;
+}
+
+.enabledButton{
+  color:black;
+  background-color: #a4ffff;
+}
+
+.disabledButton{
+  background-color: transparent;
+  border: 1px solid #a4ffff;
+  color: #a4ffff;
+  opacity: 70%;
+  cursor:auto;
+}
