@@ -3,7 +3,6 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 export default class MovementManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "MovementManager")
-        this.cursors = scene.input.keyboard.createCursorKeys();
         this.keys = new Map<number, Phaser.Input.Keyboard.Key>()
         this.addAllKeys();
         this.setGameMode();
@@ -22,6 +21,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.R, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ONE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false))
@@ -68,10 +68,10 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
 
     private keysChangedGaming() {
         let directionChangedMessage : Protocol.ChangeDirection = new Protocol.ChangeDirection()
-        if(this.cursors.up.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
-        if(this.cursors.down.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
-        if(this.cursors.right.isDown ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
-        if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
 
         if (directionChangedMessage){    
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
@@ -92,6 +92,9 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
             this.scene.game.events.emit("close_dialogs")
         }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.R)?.isDown) {
+            this.scene.game.events.emit("open_exchange")
+        }
         // Change event handlers when the game goes into chat mode
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.T)?.isDown) {
             this.scene.game.events.emit("open_chat")
@@ -106,14 +109,13 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
  
     public velocityVector () : Phaser.Math.Vector2 {
         var velocityVector : Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0)
-        if(this.cursors.left.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) velocityVector.x -= 1
-        if(this.cursors.right.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
-        if(this.cursors.up.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) velocityVector.y -= 1
-        if(this.cursors.down.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) velocityVector.x -= 1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) velocityVector.y -= 1
+        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
+             
         return velocityVector;
     }
 
     private keys : Map<number, Phaser.Input.Keyboard.Key>
-    private cursors :Phaser.Types.Input.Keyboard.CursorKeys
-    private chatState : boolean = false;
 }

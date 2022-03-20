@@ -8,6 +8,7 @@ import * as Chisel from "chisel-api-interface";
 import { ExplosiveEntry } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Chat from "components/Chat";
+import Exchange from "components/Exchange";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -136,11 +137,12 @@ export const HUD = () => {
            onClick={e => handleClick(e)}
            id="game-background"
            hidden={!gameLoaded}>
-      <HUDContext.Provider value={playerConsumables}>
-        <VitalsConsole />
-        <MainConsole />
-        <Chat disabled={!chatMode} />
-        <MiningShop />
+        <HUDContext.Provider value={playerConsumables}>
+          <VitalsConsole />
+          <MainConsole />
+          <Chat disabled={!chatMode} />
+          <MiningShop />
+          <Exchange hidden={true} />
         </HUDContext.Provider>
       </div> 
     </>
