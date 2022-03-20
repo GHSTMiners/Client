@@ -306,13 +306,6 @@ body {
   transition: all 500ms ease-in-out;
 }
 
-.walletIcon {
-  position: absolute;
-  height: 2em;
-  right: 20%;
-  top: 1%;
-}
-
 .cryptoGallery {
   margin-top: 1.4rem;
   height: 70%;

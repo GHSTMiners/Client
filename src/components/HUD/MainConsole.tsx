@@ -22,7 +22,7 @@ const MainConsole = () => {
     const isFilled = (playerConsumables.length >= index);
     return (
     <SquareButton size={smallButton} 
-                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : -1 }
+                  quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}>
       <div className={styles.inventoryConsumable}>
         <img src={ isFilled ? playerConsumables[index-1].image : ''} />
@@ -57,7 +57,7 @@ const MainConsole = () => {
     >
       <div className={styles.mainConsoleContainer}>
         <div className={styles.playerButtons}>
-          <SquareButton size={bigButton} quantitiy={1}>
+          <SquareButton size={bigButton} quantity={1}>
             <img src={drillIcon} className={styles.toolIcon} />
           </SquareButton>
           {consoleButtons}
