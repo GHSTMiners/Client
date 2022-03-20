@@ -21,7 +21,7 @@ const Chat : React.FC<Props> = ({ disabled }) => {
 
   const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // prevent the page from reloading
-    const playerName = Client.getInstance().ownPlayer.gotchiID;
+    const playerName = Client.getInstance().ownPlayer.name;
     const newText = renderMessage(playerName.toString(), chatMessage);
     setChatHistory([newText].concat(chatHistory));
     setChatMessage("");

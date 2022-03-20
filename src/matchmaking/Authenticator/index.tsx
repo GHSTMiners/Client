@@ -113,7 +113,7 @@ export default class Authenticator {
       var self = this;
       var jqxhr = $.post( "https://chisel.gotchiminer.rocks/api/wallet/validate", { wallet_address: this.m_currentAccount, chain_id: this.m_chainId, challenge: this.m_challenge, signature: this.m_signedChallenge } , async function(data, succes ) {
         if(succes) {
-          Cookies.set(`token_${self.m_chainId}_${self.m_currentAccount}`, data.token)
+          Cookies.set(`token_${self.m_chainId}_${self.m_currentAccount}`, data.token, {expires : 356})
           self.m_token = data.token
           self.m_state = AuthenticatorState.ValidatingToken
           self.runStateMachine();
