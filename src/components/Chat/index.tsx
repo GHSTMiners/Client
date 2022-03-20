@@ -1,7 +1,8 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 interface Props {
   disabled?: boolean;
@@ -25,17 +26,40 @@ const Chat : React.FC<Props> = ({ disabled }) => {
     const newText = renderMessage(playerName.toString(), chatMessage);
     setChatHistory([newText].concat(chatHistory));
     setChatMessage("");
+    //Create message and send
+    let message : Protocol.MessageToServer = new Protocol.MessageToServer();
+    message.msg = chatMessage;
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
   };
 
+  function handleClick (event:any ) {
+    // if the user clicks on the background, all open dialogs are closed
+    const divID = event.target.getAttribute('id');
+    if (divID == 'chat' || divID == 'chat-history' || divID == 'chat-textbox'){
+      Client.getInstance().phaserGame.events.emit("open_chat");
+    }
+  }
+
+  useEffect(()=>{
+    Client.getInstance().phaserGame.events.on('chat_message',(text:any)=>{
+      setChatHistory([<div>{text}</div>].concat(chatHistory));
+    })
+  },[chatHistory]);
+
   return (
-    <div className={`${styles.chatContainer}
-                     ${disabled? styles.smallContainer: styles.largeContainer }`}>
-      <div className={`${styles.chatHistory}
+    <div  id="chat" 
+          className={`${styles.chatContainer}
+                     ${disabled? styles.smallContainer: styles.largeContainer }`}
+           onClick={(e)=>handleClick(e)}>
+      <div  id="chat-history"
+            className={`${styles.chatHistory}
                      ${disabled? styles.smallHistory : styles.largeHistory }`}>
                        {chatHistory}</div>
       <div className={styles.textBoxContainer}>
         <form onSubmit={submitMessage}>
           <input
+            id="chat-textbox"
             className={styles.textBox}
             type="text"
             placeholder="Write your message here..."

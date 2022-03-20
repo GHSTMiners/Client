@@ -22,7 +22,7 @@ const MainConsole = () => {
     const isFilled = (playerConsumables.length >= index);
     return (
     <SquareButton size={smallButton} 
-                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : 0 }
+                  quantitiy={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}>
       <div className={styles.inventoryConsumable}>
         <img src={ isFilled ? playerConsumables[index-1].image : ''} />
@@ -37,6 +37,19 @@ const MainConsole = () => {
     shortcutButtons.push( renderConsumable(i) )
   }
 
+  function updateButtons (){
+    let updatedButtons = [];
+    for (let i = 1; i < 5; i++) {
+      updatedButtons.push( renderConsumable(i) )
+    }
+    setConsoleButtons( updatedButtons );
+    console.log(updatedButtons)
+  }
+
+  const [consoleButtons , setConsoleButtons] = useState(shortcutButtons);
+
+  useEffect(()=>{  updateButtons()  },[playerConsumables])
+
   return (
     <div
       className={`${styles.mainConsole} 
@@ -47,7 +60,7 @@ const MainConsole = () => {
           <SquareButton size={bigButton} quantitiy={1}>
             <img src={drillIcon} className={styles.toolIcon} />
           </SquareButton>
-          {shortcutButtons}
+          {consoleButtons}
           <div
             className={styles.expandButton}
             onClick={() => {
