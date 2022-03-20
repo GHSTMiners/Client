@@ -45,7 +45,7 @@ export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
             this.scene.add.existing(explosionSprite) 
         })
 
-        this.scene.sound.play(`explosion`, {})
+        this.scene.sound.play(`explosive_${notification.bombId}`, {})
     }
 
     private explosives :  Map<Schema.Explosive, Explosive>
