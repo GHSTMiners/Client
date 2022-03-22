@@ -9,6 +9,10 @@ export default class ChatManager extends Phaser.GameObjects.GameObject {
     }
 
     private handleMessage(notification : Protocol.MessageFromServer) {
-        Client.getInstance().phaserGame.events.emit('chat_message', notification.msg)
+        if (notification.systemMessage) {
+            Client.getInstance().phaserGame.events.emit('system_message', notification)
+        } else {
+            Client.getInstance().phaserGame.events.emit('chat_message', notification)
+        } 
     }
 }

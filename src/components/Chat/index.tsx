@@ -3,6 +3,8 @@ import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+//import { format } from 'fecha';
+
 
 interface Props {
   disabled?: boolean;
@@ -12,19 +14,37 @@ const Chat : React.FC<Props> = ({ disabled }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
 
-  const renderMessage = (user: string, text: string) => {
+  const renderMessage = (id: number, text: string) => {
+     let messageColor = '#ffffff';
+     let user = '';
+
+    Client.getInstance().colyseusRoom.state.players.forEach( player => {
+      if (player.gotchiID == id){
+       messageColor = player.chatColor;
+       user = player.name;
+       return;
+      }
+    })
+
     return (
       <div className={styles.chatMessage}>
-        <span className={styles.chatUser}> [{user}] </span> : {text}
+        <span className={styles.chatUser} style={{color: messageColor}}> [{user}] </span> : {text}
       </div>
     );
   };
 
+  const renderSystemMessage = (text: string) => {
+    // alternative div with timestamp
+    //<div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`}> 
+    // [{format(new Date(), 'shortTime')}] {text} </div>
+   return (
+     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`}> {text} </div>
+   );
+ };
+
   const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // prevent the page from reloading
     const playerName = Client.getInstance().ownPlayer.name;
-    const newText = renderMessage(playerName.toString(), chatMessage);
-    setChatHistory([newText].concat(chatHistory));
     setChatMessage("");
     //Create message and send
     let message : Protocol.MessageToServer = new Protocol.MessageToServer();
@@ -42,8 +62,13 @@ const Chat : React.FC<Props> = ({ disabled }) => {
   }
 
   useEffect(()=>{
-    Client.getInstance().phaserGame.events.on('chat_message',(text:any)=>{
-      setChatHistory([<div>{text}</div>].concat(chatHistory));
+    Client.getInstance().phaserGame.events.on('chat_message',(notification: Protocol.MessageFromServer)=>{
+      setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
+    })
+    Client.getInstance().phaserGame.events.on('system_message',(notification: Protocol.MessageFromServer)=>{
+      if (notification.msg) {
+        setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
+      }
     })
   },[chatHistory]);
 

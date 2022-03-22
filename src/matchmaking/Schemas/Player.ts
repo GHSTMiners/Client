@@ -17,6 +17,7 @@ export class Player extends Schema {
     @type("string") public name!: string;
     @type("string") public playerSessionID!: string;
     @type("number") public gotchiID!: number;
+    @type("string") public chatColor!: string;
     @type(PlayerState) public playerState: PlayerState = new PlayerState();
     @type([ Vital ]) public vitals: ArraySchema<Vital> = new ArraySchema<Vital>();
     @type([ Skill ]) public skills: ArraySchema<Skill> = new ArraySchema<Skill>();
