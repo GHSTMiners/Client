@@ -60,30 +60,49 @@ export class Player extends Phaser.GameObjects.Container {
     //Message handlers
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerCollision, this.handleCollision.bind(this))
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
-    // Add animations
+    //Add animations
+    this.createAnimations();
+  }
+
+  public createAnimations = ()=>{
+    const spriteKey =  `gotchi_${this.playerSchema.gotchiID}`;
+
     this.playerSprite.anims.create({
       key: 'happy',
-      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { start: 0, end: 1 }),
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { start: 0, end: 1 }),
       frameRate: 2,
       repeat: -1,
     });
     this.playerSprite.anims.create({
       key: 'idle',
-      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 0 ]}),
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 0 ]}),
     });
     this.playerSprite.anims.create({
       key: 'left',
-      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 2 ]}),
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 2 ]}),
     });
     this.playerSprite.anims.create({
       key: 'right',
-      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 4 ]}),
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 4 ]}),
     });
     this.playerSprite.anims.create({
       key: 'up',
-      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 6 ]}),
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 6 ]}),
     }); 
-
+    this.playerSprite.anims.create({
+        key: 'flying',
+        frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [8] }),
+    });
+    this.playerSprite.anims.create({
+        key: 'drilling',
+        frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [9] }),
+    });
+    this.playerSprite.anims.create({
+        key: 'falling',
+        frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 8, 9] }),
+        frameRate: 8,
+        repeat: -1,
+    });
   }
 
   public setPlayerAtBuilding( buildingName : string) {
@@ -198,6 +217,10 @@ export class Player extends Phaser.GameObjects.Container {
           this.playerSprite.anims.play('right',true);
         } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
           this.playerSprite.anims.play('left',true);
+        } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity<0 ) {
+          this.playerSprite.anims.play('flying',true);
+        } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity>0 && playerState.movementState != Schema.MovementState.Drilling) {
+          this.playerSprite.anims.play('falling',true);
         } else {
           this.playerSprite.anims.play('idle',true);
         }

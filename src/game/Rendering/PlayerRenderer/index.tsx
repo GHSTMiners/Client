@@ -115,7 +115,32 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         // Right
         [
           customiseSvg(svg[3], { removeBg: true }),
-        ]
+        ],
+        // Falling animation [2,3]
+        [
+          customiseSvg(svg[0], {
+            eyes: "mad",
+            mouth: "neutral",
+            armsUp: true,
+            removeBg: true,
+            removeShadow: false
+          }),
+          customiseSvg(svg[0], { 
+            eyes: "mad",
+            mouth: "neutral",
+            armsUp: false,
+            removeBg: true,
+            removeShadow: false }),
+        ],
+        [
+          customiseSvg(svg[0], {
+            eyes: "sleeping",
+            mouth: "neutral",
+            armsUp: false,
+            removeBg: true,
+            removeShadow: false  }),
+        ],
+
       ];
       const { src, dimensions } = await constructSpritesheet(spriteMatrix);
       this.scene.load.spritesheet(gotchiObject.spritesheetKey, src, {
