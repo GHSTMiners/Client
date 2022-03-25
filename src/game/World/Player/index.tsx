@@ -6,17 +6,14 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
 import { dispatch } from "@svgdotjs/svg.js";
 import MainScene from "game/Scenes/MainScene";
+import Jetpack from "../Jetpack";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
     super(scene, player.playerState.x, player.playerState.y);
     this.setDepth(40);
     this.playerSchema = player;
-    this.playerSprite = this.scene.add.sprite(
-      0,
-      0,
-      `gotchi_${player.gotchiID}`
-    );
+    this.playerSprite = this.scene.add.sprite( 0, 0, `gotchi_${player.gotchiID}`);
     this.playerSprite.setSize(Config.blockWidth, Config.blockHeight);
     this.add(this.playerSprite);
     this.setSize(Config.blockWidth, Config.blockHeight);
@@ -62,6 +59,8 @@ export class Player extends Phaser.GameObjects.Container {
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
     //Add animations
     this.createAnimations();
+    //Add artifacts
+    this.playerJetpack = new Jetpack(scene, this);
   }
 
   public createAnimations = ()=>{
@@ -166,7 +165,7 @@ export class Player extends Phaser.GameObjects.Container {
 
   private dirtParticleEmitter: Phaser.GameObjects.Particles.ParticleEmitter;
   public playerSprite: Phaser.GameObjects.Sprite;
-  private playerSchema: Schema.Player;
+  public playerSchema: Schema.Player;
   private xVelocity: number;
   private yVelocity: number;
   private alphaRefresh: number;
@@ -213,6 +212,7 @@ export class Player extends Phaser.GameObjects.Container {
       
       //Process sideviews selection, very rough first implementation. TO DO: use playerState to be more accurate
       if (playerState.movementState > 0 ){
+        //this.playerJetpack.update(); // at the moment crashes because it cannot find the animation
         if ( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity>0  ) {
           this.playerSprite.anims.play('right',true);
         } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
@@ -236,5 +236,6 @@ export class Player extends Phaser.GameObjects.Container {
   private jackHammerSound : Phaser.Sound.BaseSound
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
+  private playerJetpack: Jetpack;
   private currentBuilding: string;
 }

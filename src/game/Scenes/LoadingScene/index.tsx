@@ -38,7 +38,8 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("explosion", "assets/audio/explosion.mp3");
     this.load.audio("fuse", "assets/audio/fuse.wav");
     this.load.spritesheet("explosionAnimation", "assets/images/explosionSprite.png", {frameHeight: 128, frameWidth: 128, startFrame:0, endFrame: 15})
-
+    this.load.spritesheet("jetpackAnimation", "assets/sprites/jetpack_rear.png", {frameHeight: 337, frameWidth: 296, startFrame:0, endFrame: 24})
+        
     let world: Chisel.DetailedWorld | undefined =
       Client.getInstance().chiselWorld;
 
