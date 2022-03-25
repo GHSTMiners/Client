@@ -4,6 +4,7 @@ import { Contract } from "web3-eth-contract";
 import diamondABI from "../../../web3/abi/diamond.json";
 import * as svgjs from "@svgdotjs/svg.js";
 import Config from "config";
+import { Tuple } from "types";
 
 export default class AavegotchiSVGFetcher {
   constructor(aavegotchiID: number) {
@@ -32,8 +33,8 @@ export default class AavegotchiSVGFetcher {
     );
   }
 
-  public async getSideviews(): Promise<string> {
-    let svg: string = await this.aavegotchiFacet.methods
+  public async getSideviews(): Promise<Tuple<string, 4>> {
+    let svg: Tuple<string, 4> = await this.aavegotchiFacet.methods
       .getAavegotchiSideSvgs(this.aavegotchiID)
       .call();
     return svg;

@@ -60,6 +60,29 @@ export class Player extends Phaser.GameObjects.Container {
     //Message handlers
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerCollision, this.handleCollision.bind(this))
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
+    // Add animations
+    this.playerSprite.anims.create({
+      key: 'happy',
+      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { start: 0, end: 1 }),
+      frameRate: 2,
+      repeat: -1,
+    });
+    this.playerSprite.anims.create({
+      key: 'idle',
+      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 0 ]}),
+    });
+    this.playerSprite.anims.create({
+      key: 'left',
+      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 2 ]}),
+    });
+    this.playerSprite.anims.create({
+      key: 'right',
+      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 4 ]}),
+    });
+    this.playerSprite.anims.create({
+      key: 'up',
+      frames: this.playerSprite.anims.generateFrameNumbers( `gotchi_${player.gotchiID}` || '', { frames: [ 6 ]}),
+    }); 
 
   }
 
@@ -168,6 +191,19 @@ export class Player extends Phaser.GameObjects.Container {
         this.yVelocity
       );
       this.yVelocity = vySmooth;
+      
+      //Process sideviews selection, very rough first implementation. TO DO: use playerState to be more accurate
+      if (playerState.movementState > 0 ){
+        if ( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity>0  ) {
+          this.playerSprite.anims.play('right',true);
+        } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
+          this.playerSprite.anims.play('left',true);
+        } else {
+          this.playerSprite.anims.play('idle',true);
+        }
+      } else{
+        this.playerSprite.anims.play('idle',true);
+      }
 
       if(this.playerSchema.playerState.movementState != Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
       else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
