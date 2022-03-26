@@ -1,0 +1,31 @@
+
+.rankingList{
+  height: 29rem;
+  width: 50%;
+  font-family: Rocks;
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+  padding: 2rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: white #6db9aeff;
+  scroll-margin-right: 1rem;
+}
+
+.tableRow{
+  display: grid;
+  grid-template-columns: 1fr 2fr 10fr;
+  width: 100%;
+  align-items: center;
+  justify-items: flex-end;
+  padding-right: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.tableEntry{
+
+}
+
+.rankingHeader{
+  border-bottom: 2px solid white;
+}

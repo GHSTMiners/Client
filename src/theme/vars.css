@@ -8,3 +8,8 @@
 
   --container-width-xl: 150rem;
 }
+
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
