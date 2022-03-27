@@ -1,15 +1,12 @@
 
 .rankingList{
-  height: 29rem;
-  width: 50%;
   font-family: Rocks;
   background-color: rgba(0,0,0,0.3);
   color: white;
   padding: 2rem;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: white #6db9aeff;
-  scroll-margin-right: 1rem;
+  padding-top: 4rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .tableRow{
