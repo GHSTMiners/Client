@@ -1,18 +1,40 @@
 import styles from "./styles.module.css";
-import { GotchiSVG, Header, LeaderboardCoyote } from "components";
+import { GotchiSVG, Header, LeaderboardCoyote, RockyCheckbox } from "components";
 import gotchiPodium from "assets/svgs/podium.svg"
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
-import { useWeb3 } from "web3/context";
+import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
+import { getDefaultGotchi } from "helpers/aavegotchi";
+
 
 const Leaderboard = (): JSX.Element => {
 
-  const { state: { usersAavegotchis } } = useWeb3();
   const highScores : Array<HighScore> = [];
-  
-  // Competition parameters 
+  const [showOnlyMine,setShowOnlyMine] = useState<boolean>(false);
+  const { state: { usersAavegotchis, address },dispatch } = useWeb3();
+ 
+  useEffect(() => {
+
+    if (address) {
+      const prevGotchis = usersAavegotchis || [];
+      if (
+        prevGotchis.find(
+          (gotchi) => gotchi.owner.id.toLowerCase() === address.toLowerCase()
+        )
+      )
+        return;
+
+      dispatch({
+        type: "SET_SELECTED_AAVEGOTCHI",
+        selectedAavegotchiId: undefined,
+      });
+      updateAavegotchis(dispatch, address);
+    }
+  }, [address]);
+
+  // Competition parameters. TO DO: get this from Chisel
   const endDate = new Date('April 15, 2022 16:00:00 UTC+2') ;
   const getReward = (position : number , score?:  number) => {
     if (position == 1) {
@@ -28,6 +50,16 @@ const Leaderboard = (): JSX.Element => {
     }
   }
   const competition = { endDate , rewards:getReward };
+
+  // Random data
+  for (let i=0; i<100;i++){
+    let gotchiID = i+3930;
+    let randomName = (Math.random() + 1).toString(36).substring(7);
+    if (gotchiID == 3934) randomName='Yoda'
+    if (gotchiID == 3935) randomName='Attila'
+    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 100-i })
+  }
+
 
   const renderGotchi = (id:number, winner:boolean)=>{
     return(
@@ -67,16 +99,16 @@ const Leaderboard = (): JSX.Element => {
           </div>
 
           <div className={styles.tableContainer}>
-            <LeaderboardTable />
-            {/*<LeaderboardCoyote highscores={highScores} 
-                               ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
-                               competition={competition}  
-          />*/}
+            <LeaderboardTable highscores={highScores}
+                              ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
+                              onlyMine={showOnlyMine}
+                              competition={competition}   />
           </div> 
         </div>
+        <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)} />
         <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
     </div>
-  );
+  );  
 };
 
 export default Leaderboard;

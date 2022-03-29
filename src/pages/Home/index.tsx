@@ -1,9 +1,7 @@
 //import myGotchi from "assets/images/gotchi_example.png";
 import styles from "./styles.module.css";
-import { Modal } from "react-bootstrap";
 import GameConfigurator from "components/GameConfigurator";
 import { GotchiSelector, GotchiSVG } from "components";
-import { getDefaultGotchi } from "helpers/aavegotchi";
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
@@ -11,28 +9,13 @@ import { Header } from "components";
 import { TraitsPanel } from "components/TraitsPanel";
 import RockySelect from "components/RockySelect";
 
-function LoadingModal() {
-  return (
-    <Modal>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-    </Modal>
-  );
-}
 
 const Home = (): JSX.Element => {
   const {
     state: { usersAavegotchis, address, selectedAavegotchiId, networkId },
     dispatch,
   } = useWeb3();
-  const callDefaultGotchi = () => {
-    dispatch({
-      type: "SET_USERS_AAVEGOTCHIS",
-      usersAavegotchis: [getDefaultGotchi()],
-    });
-  };
+
 
   /**
    * Updates global state with selected gotchi
@@ -70,8 +53,6 @@ const Home = (): JSX.Element => {
   };
 
   useEffect(() => {
-
-    if (process.env.REACT_APP_OFFCHAIN) return callDefaultGotchi();
 
     if (address) {
       const prevGotchis = usersAavegotchis || [];

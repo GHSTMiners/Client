@@ -4,9 +4,10 @@ import StoneCheckboxTick from "assets/icons/dropdown_arrow.svg";
 
 interface Props {
   textLabel?: string;
+  onClick?: () => void;
 }
 
-export function RockyCheckbox({ textLabel }: Props) {
+export function RockyCheckbox({ textLabel, onClick }: Props) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -17,6 +18,7 @@ export function RockyCheckbox({ textLabel }: Props) {
           setIsChecked(!isChecked);
           console.log(isChecked);
         }}
+        onClick={onClick}
       ></input>
       <span className={styles.checkbox}>
         {isChecked ? (

@@ -1,28 +1,69 @@
+import { useEffect, useState } from "react";
+import { HighScore } from "types";
 import styles from "./styles.module.css";
 
-const LeaderboardTable = () => {
 
-  type LeaderboardRow = { rank:number; name:string; score: number };
+interface Props {
+  highscores?: Array<HighScore>;
+  ownedGotchis?: Array<string>;
+  onlyMine?: boolean;
+  competition?: {
+    endDate: Date;
+    rewards: (position: number, score?: number) => React.ReactNode;
+  };
+}
 
-  let leaderbordTable: LeaderboardRow[] = [];
+interface LeaderbordData extends HighScore {
+  position: number;
+  reward?: React.ReactNode;
+}
 
-  for (let i=0; i<100;i++){
-    let randomName = (Math.random() + 1).toString(36).substring(7);
-    leaderbordTable.push({ rank:i+1 , name: randomName, score: 100-i })
-  }
+const LeaderboardTable = ({highscores,ownedGotchis,onlyMine,competition}:Props) => {
+
+  const [leaderboardData, setLeaderboardData] = useState<Array<LeaderbordData>>([]);
+  const [displayedScores, setDisplayedScores] = useState<Array<LeaderbordData>>([]);
+
+  // Adding competition and ranking fields to the highscores data
+  useEffect(() => {
+    if (highscores) {
+      const hs = highscores.map((score, i) => {
+        const position = i + 1;
+        return {
+          ...score,
+          position,
+          reward: competition
+            ? competition.rewards(position, score.score)
+            : undefined,
+        };
+      });
+      setLeaderboardData(hs);
+    }
+  }, [highscores]);
+
+  // Filtering and setting up on screen the selected dataset
+  useEffect(() => {
+    if (onlyMine && ownedGotchis) {
+      const myLeaderboardData = [...leaderboardData].filter((score) =>
+        ownedGotchis.includes(score.tokenId)
+      );
+      setDisplayedScores(myLeaderboardData);
+    } else {
+      setDisplayedScores(leaderboardData);
+    }
+  }, [onlyMine, leaderboardData, ownedGotchis]);
   
-  const renderRankingRow = ( rank:number, name:string, score: number ) =>{
+  const renderRankingRow = ( rank:number, name:string, score: number) =>{
     return(
     <div className={styles.tableRow}>
-      <div>`&#35;` {rank}</div>
+      <div> `&#35;` {rank}</div>
       <div>{name}</div>
       <div>{score}</div>
     </div>
     )
   }
   
-  let leaderboardDisplayData = leaderbordTable.map(function (row) {
-    return( renderRankingRow( row.rank, row.name, row.score ) )
+  let leaderboardDisplayData = displayedScores?.map(function (row,i) {
+    return( renderRankingRow( row.position, row.name, row.score) )
   });
 
   return (
