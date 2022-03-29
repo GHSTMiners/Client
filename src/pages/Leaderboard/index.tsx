@@ -1,12 +1,11 @@
 import styles from "./styles.module.css";
-import { GotchiSVG, Header, LeaderboardCoyote, RockyCheckbox } from "components";
+import { GotchiSVG, Header, RockyCheckbox } from "components";
 import gotchiPodium from "assets/svgs/podium.svg"
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
-import { getDefaultGotchi } from "helpers/aavegotchi";
 
 
 const Leaderboard = (): JSX.Element => {
@@ -16,22 +15,7 @@ const Leaderboard = (): JSX.Element => {
   const { state: { usersAavegotchis, address },dispatch } = useWeb3();
  
   useEffect(() => {
-
-    if (address) {
-      const prevGotchis = usersAavegotchis || [];
-      if (
-        prevGotchis.find(
-          (gotchi) => gotchi.owner.id.toLowerCase() === address.toLowerCase()
-        )
-      )
-        return;
-
-      dispatch({
-        type: "SET_SELECTED_AAVEGOTCHI",
-        selectedAavegotchiId: undefined,
-      });
-      updateAavegotchis(dispatch, address);
-    }
+    if (address)  updateAavegotchis(dispatch, address);
   }, [address]);
 
   // Competition parameters. TO DO: get this from Chisel
@@ -59,7 +43,6 @@ const Leaderboard = (): JSX.Element => {
     if (gotchiID == 3935) randomName='Attila'
     highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 100-i })
   }
-
 
   const renderGotchi = (id:number, winner:boolean)=>{
     return(
