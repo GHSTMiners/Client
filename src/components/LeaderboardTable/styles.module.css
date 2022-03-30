@@ -1,10 +1,9 @@
 
 .rankingList{
   font-family: Rocks;
-  background-color: rgba(0,0,0,0.3);
   color: white;
   padding: 2rem;
-  padding-top: 4rem;
+  padding-top: 0rem;
   display: flex;
   flex-direction: column;
 }

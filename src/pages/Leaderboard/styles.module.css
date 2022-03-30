@@ -97,7 +97,9 @@ p {
 }
 
 .tableContainer{
-  width: 50rem;
+  width: 50rem; 
+  padding-top: 2rem;
+  background-color: rgba(0,0,0,0.3);
 }
 
 .leaderboardFooter{

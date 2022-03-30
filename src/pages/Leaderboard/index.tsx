@@ -6,6 +6,7 @@ import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
+import { Pagination } from 'components/Pagination';
 
 
 const Leaderboard = (): JSX.Element => {
@@ -13,6 +14,8 @@ const Leaderboard = (): JSX.Element => {
   const highScores : Array<HighScore> = [];
   const [showOnlyMine,setShowOnlyMine] = useState<boolean>(false);
   const { state: { usersAavegotchis, address },dispatch } = useWeb3();
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePages = (updatePage: number) => setCurrentPage(updatePage);
  
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
@@ -82,6 +85,11 @@ const Leaderboard = (): JSX.Element => {
           </div>
 
           <div className={styles.tableContainer}>
+          
+          <Pagination page={currentPage} 
+                    totalPages={50} 
+                    handlePagination={handlePages} />
+
             <LeaderboardTable highscores={highScores}
                               ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                               onlyMine={showOnlyMine}
@@ -89,6 +97,7 @@ const Leaderboard = (): JSX.Element => {
           </div> 
         </div>
         <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)} />
+        
         <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
     </div>
   );  

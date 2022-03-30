@@ -22,6 +22,9 @@ const LeaderboardTable = ({highscores,ownedGotchis,onlyMine,competition}:Props) 
 
   const [leaderboardData, setLeaderboardData] = useState<Array<LeaderbordData>>([]);
   const [displayedScores, setDisplayedScores] = useState<Array<LeaderbordData>>([]);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const pageTotal = 100; // entries per page
 
   // Adding competition and ranking fields to the highscores data
   useEffect(() => {
