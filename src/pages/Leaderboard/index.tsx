@@ -6,6 +6,7 @@ import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
+import { Pagination } from 'components/Pagination';
 
 
 const Leaderboard = (): JSX.Element => {
@@ -13,7 +14,9 @@ const Leaderboard = (): JSX.Element => {
   const highScores : Array<HighScore> = [];
   const [showOnlyMine,setShowOnlyMine] = useState<boolean>(false);
   const { state: { usersAavegotchis, address },dispatch } = useWeb3();
- 
+  const [currentPage, setCurrentPage] = useState(1);
+  const handlePages = (updatePage: number) => setCurrentPage(updatePage);
+
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
   }, [address]);
@@ -36,13 +39,18 @@ const Leaderboard = (): JSX.Element => {
   const competition = { endDate , rewards:getReward };
 
   // Random data
-  for (let i=0; i<100;i++){
+  for (let i=0; i<300;i++){
     let gotchiID = i+3930;
-    let randomName = (Math.random() + 1).toString(36).substring(7);
+    let randomName = i.toString(36) //.substring(7);
     if (gotchiID == 3934) randomName='Yoda'
     if (gotchiID == 3935) randomName='Attila'
-    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 100-i })
+    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 300-i })
   }
+
+  
+  const entriesPerPage = 50;
+  const totalPages = Math.ceil(highScores.length/entriesPerPage);
+ 
 
   const renderGotchi = (id:number, winner:boolean)=>{
     return(
@@ -82,13 +90,21 @@ const Leaderboard = (): JSX.Element => {
           </div>
 
           <div className={styles.tableContainer}>
-            <LeaderboardTable highscores={highScores}
+          
+          <Pagination page={currentPage} 
+                    totalPages={totalPages} 
+                    handlePagination={handlePages} />
+
+            <LeaderboardTable pageIndex={currentPage}
+                              entriesPerPage={entriesPerPage}
+                              highscores={highScores}
                               ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                               onlyMine={showOnlyMine}
                               competition={competition}   />
           </div> 
         </div>
         <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)} />
+        
         <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
     </div>
   );  
