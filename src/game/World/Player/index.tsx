@@ -12,6 +12,12 @@ export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
     super(scene, player.playerState.x, player.playerState.y);
     this.setDepth(40);
+
+    //Add artifacts
+    this.playerJetpack = new Jetpack(scene, this);
+    this.add(this.playerJetpack);
+
+    //Add player
     this.playerSchema = player;
     this.playerSprite = this.scene.add.sprite( 0, 0, `gotchi_${player.gotchiID}`);
     this.playerSprite.setSize(Config.blockWidth, Config.blockHeight);
@@ -20,6 +26,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.alphaRefresh = 0.4;
+
     //Add messages
     this.playerMessage = this.scene.add.text(0, 0, "Hallo");
     this.playerMessage.setDepth(50)
@@ -59,8 +66,6 @@ export class Player extends Phaser.GameObjects.Container {
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
     //Add animations
     this.createAnimations();
-    //Add artifacts
-    this.playerJetpack = new Jetpack(scene, this);
   }
 
   public createAnimations = ()=>{
@@ -102,6 +107,12 @@ export class Player extends Phaser.GameObjects.Container {
         frameRate: 8,
         repeat: -1,
     });
+    this.playerSprite.anims.create({
+      key: 'flying_normal',
+      frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 10] }),
+      frameRate: 8,
+      repeat: -1,
+  });
   }
 
   public setPlayerAtBuilding( buildingName : string) {
@@ -171,6 +182,9 @@ export class Player extends Phaser.GameObjects.Container {
   private alphaRefresh: number;
 
   update(time: number, delta: number): void {
+    //Update jetpack
+    this.playerJetpack.process();
+
     //Drilling update stuff
     let playerState: PlayerState = this.playerSchema.playerState;
   
@@ -210,31 +224,37 @@ export class Player extends Phaser.GameObjects.Container {
       );
       this.yVelocity = vySmooth;
       
-      //Process sideviews selection, very rough first implementation. TO DO: use playerState to be more accurate
-      // if (playerState.movementState > 0 ){
-      //   //this.playerJetpack.update(); // at the moment crashes because it cannot find the animation
-      //   if ( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity>0  ) {
-      //     this.playerSprite.anims.play('right',true);
-      //   } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
-      //     this.playerSprite.anims.play('left',true);
-      //   } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity<0 ) {
-      //     this.playerSprite.anims.play('flying',true);
-      //   } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity>0 && playerState.movementState != Schema.MovementState.Drilling) {
-      //     this.playerSprite.anims.play('falling',true);
-      //   } else {
-      //     this.playerSprite.anims.play('idle',true);
-      //   }
-      // } else{
-      //   this.playerSprite.anims.play('idle',true);
-      // }
-
       switch(playerState.movementState) {
-        case Schema.MovementState.Flying:
-          this.playerSprite.anims.play('flying',true);
-        break;
         case Schema.MovementState.Stationary:
           this.playerSprite.anims.play('idle', true);
         break;
+
+        case Schema.MovementState.Drilling:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('drilling', true);
+          }
+        break;
+
+        case Schema.MovementState.Flying:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('flying', true);
+          }
+        break;
+
         default:
           switch(playerState.movementDirection) {
             case Schema.MovementDirection.Left:
