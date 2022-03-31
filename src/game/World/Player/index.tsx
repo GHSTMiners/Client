@@ -211,21 +211,41 @@ export class Player extends Phaser.GameObjects.Container {
       this.yVelocity = vySmooth;
       
       //Process sideviews selection, very rough first implementation. TO DO: use playerState to be more accurate
-      if (playerState.movementState > 0 ){
-        //this.playerJetpack.update(); // at the moment crashes because it cannot find the animation
-        if ( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity>0  ) {
-          this.playerSprite.anims.play('right',true);
-        } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
-          this.playerSprite.anims.play('left',true);
-        } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity<0 ) {
+      // if (playerState.movementState > 0 ){
+      //   //this.playerJetpack.update(); // at the moment crashes because it cannot find the animation
+      //   if ( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity>0  ) {
+      //     this.playerSprite.anims.play('right',true);
+      //   } else if( Math.abs(this.xVelocity) > Math.abs(this.yVelocity) && this.xVelocity<0 ) {
+      //     this.playerSprite.anims.play('left',true);
+      //   } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity<0 ) {
+      //     this.playerSprite.anims.play('flying',true);
+      //   } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity>0 && playerState.movementState != Schema.MovementState.Drilling) {
+      //     this.playerSprite.anims.play('falling',true);
+      //   } else {
+      //     this.playerSprite.anims.play('idle',true);
+      //   }
+      // } else{
+      //   this.playerSprite.anims.play('idle',true);
+      // }
+
+      switch(playerState.movementState) {
+        case Schema.MovementState.Flying:
           this.playerSprite.anims.play('flying',true);
-        } else if( Math.abs(this.xVelocity) < Math.abs(this.yVelocity) && this.yVelocity>0 && playerState.movementState != Schema.MovementState.Drilling) {
-          this.playerSprite.anims.play('falling',true);
-        } else {
-          this.playerSprite.anims.play('idle',true);
-        }
-      } else{
-        this.playerSprite.anims.play('idle',true);
+        break;
+        case Schema.MovementState.Stationary:
+          this.playerSprite.anims.play('idle', true);
+        break;
+        default:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('idle', true);
+          }
       }
 
       if(this.playerSchema.playerState.movementState != Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
