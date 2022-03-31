@@ -16,7 +16,7 @@ const Leaderboard = (): JSX.Element => {
   const { state: { usersAavegotchis, address },dispatch } = useWeb3();
   const [currentPage, setCurrentPage] = useState(1);
   const handlePages = (updatePage: number) => setCurrentPage(updatePage);
- 
+
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
   }, [address]);
@@ -39,13 +39,18 @@ const Leaderboard = (): JSX.Element => {
   const competition = { endDate , rewards:getReward };
 
   // Random data
-  for (let i=0; i<100;i++){
+  for (let i=0; i<300;i++){
     let gotchiID = i+3930;
-    let randomName = (Math.random() + 1).toString(36).substring(7);
+    let randomName = i.toString(36) //.substring(7);
     if (gotchiID == 3934) randomName='Yoda'
     if (gotchiID == 3935) randomName='Attila'
-    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 100-i })
+    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 300-i })
   }
+
+  
+  const entriesPerPage = 50;
+  const totalPages = Math.ceil(highScores.length/entriesPerPage);
+ 
 
   const renderGotchi = (id:number, winner:boolean)=>{
     return(
@@ -87,10 +92,12 @@ const Leaderboard = (): JSX.Element => {
           <div className={styles.tableContainer}>
           
           <Pagination page={currentPage} 
-                    totalPages={50} 
+                    totalPages={totalPages} 
                     handlePagination={handlePages} />
 
-            <LeaderboardTable highscores={highScores}
+            <LeaderboardTable pageIndex={currentPage}
+                              entriesPerPage={entriesPerPage}
+                              highscores={highScores}
                               ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                               onlyMine={showOnlyMine}
                               competition={competition}   />

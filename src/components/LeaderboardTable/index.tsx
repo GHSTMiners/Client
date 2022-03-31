@@ -4,6 +4,8 @@ import styles from "./styles.module.css";
 
 
 interface Props {
+  pageIndex:number;
+  entriesPerPage:number;
   highscores?: Array<HighScore>;
   ownedGotchis?: Array<string>;
   onlyMine?: boolean;
@@ -18,13 +20,10 @@ interface LeaderbordData extends HighScore {
   reward?: React.ReactNode;
 }
 
-const LeaderboardTable = ({highscores,ownedGotchis,onlyMine,competition}:Props) => {
+const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,onlyMine,competition}:Props) => {
 
   const [leaderboardData, setLeaderboardData] = useState<Array<LeaderbordData>>([]);
   const [displayedScores, setDisplayedScores] = useState<Array<LeaderbordData>>([]);
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const pageTotal = 100; // entries per page
 
   // Adding competition and ranking fields to the highscores data
   useEffect(() => {
@@ -51,7 +50,8 @@ const LeaderboardTable = ({highscores,ownedGotchis,onlyMine,competition}:Props) 
       );
       setDisplayedScores(myLeaderboardData);
     } else {
-      setDisplayedScores(leaderboardData);
+      let pageData = leaderboardData.slice((pageIndex-1) * entriesPerPage, pageIndex * entriesPerPage );
+      setDisplayedScores(pageData);
     }
   }, [onlyMine, leaderboardData, ownedGotchis]);
   

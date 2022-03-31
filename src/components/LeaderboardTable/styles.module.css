@@ -10,7 +10,7 @@
 
 .tableRow{
   display: grid;
-  grid-template-columns: 1fr 2fr 10fr;
+  grid-template-columns: 1.5fr 2fr 10fr;
   width: 100%;
   align-items: center;
   justify-items: flex-end;

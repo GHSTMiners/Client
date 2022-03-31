@@ -2,6 +2,7 @@
 .paginationWrapper {
   padding: 2rem 0;
   display: flex;
+  color:white;
   justify-content: center;
 }
 
@@ -18,7 +19,7 @@
   margin: 0 0.25rem;
   border-radius: 50%;
   font-weight: 600;
-  color: black;
+  color: white;
 }
 
 .pageItem:hover{
@@ -31,8 +32,8 @@
 }
 
 .active {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 .sides {
