@@ -3,6 +3,7 @@ import { GotchiSVG, Header, RockyCheckbox } from "components";
 import gotchiPodium from "assets/svgs/podium.svg"
 import { useEffect, useState } from "react";
 import LeaderboardTable from "components/LeaderboardTable";
+import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
@@ -47,11 +48,6 @@ const Leaderboard = (): JSX.Element => {
     highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 300-i })
   }
 
-  
-  const entriesPerPage = 50;
-  const totalPages = Math.ceil(highScores.length/entriesPerPage);
- 
-
   const renderGotchi = (id:number, winner:boolean)=>{
     return(
       <GotchiSVG tokenId={`${id}`}  
@@ -59,53 +55,63 @@ const Leaderboard = (): JSX.Element => {
       />
     )
   }
+    
+  const entriesPerPage = 50;
+  const totalPages = Math.ceil(highScores.length/entriesPerPage);
 
   return (
     <div className={styles.backgroundContainer}>
-    <Header />
-        <div className={styles.leaderboardContainer}>
-          <div className={styles.gotchiPodiumContainer}>
-            <div className={styles.gotchiRank1}>
-              {renderGotchi(20689,true)}
-            </div>
-            <div className={`${styles.podiumText} ${styles.rank1Text}`}>
-              Martens
-              <div style={{color:'#ffffff'}} >420</div>
-            </div>
-            <div className={styles.gotchiRank2}>
-              {renderGotchi(21223,false)}
-            </div>
-            <div className={`${styles.podiumText} ${styles.rank2Text}`}>
-              Corelone
-              <div style={{color:'#ffffff'}} >169</div>
-            </div>
-            <div className={styles.gotchiRank3}>
-              {renderGotchi(3934,false)}
-            </div>
-            <div className={`${styles.podiumText} ${styles.rank3Text}`}>
-              Yoda
-              <div style={{color:'#ffffff'}} >101</div>
-            </div>
-            <img className={styles.gotchiPodium} src={gotchiPodium} />
+      <Header />
+      <div className={styles.leaderboardContainer}>
+        <div className={styles.gotchiPodiumContainer}>
+          <div className={styles.gotchiRank1}>
+            {renderGotchi(20689,true)}
           </div>
+          <div className={`${styles.podiumText} ${styles.rank1Text}`}>
+            Martens
+            <div style={{color:'#ffffff'}} >420</div>
+          </div>
+          <div className={styles.gotchiRank2}>
+            {renderGotchi(21223,false)}
+          </div>
+          <div className={`${styles.podiumText} ${styles.rank2Text}`}>
+            Corelone
+            <div style={{color:'#ffffff'}} >169</div>
+          </div>
+          <div className={styles.gotchiRank3}>
+            {renderGotchi(3934,false)}
+          </div>
+          <div className={`${styles.podiumText} ${styles.rank3Text}`}>
+            Yoda
+            <div style={{color:'#ffffff'}} >101</div>
+          </div>
+          <img className={styles.gotchiPodium} src={gotchiPodium} />
+        </div>
 
-          <div className={styles.tableContainer}>
-          
-          <Pagination page={currentPage} 
+        <div className={styles.tableContainer}>
+          <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
+          <div className={styles.tableBackground}>
+            <div className={styles.tableToolbar}>
+              <div></div>
+              <Pagination page={currentPage} 
                     totalPages={totalPages} 
                     handlePagination={handlePages} />
-
-            <LeaderboardTable pageIndex={currentPage}
+              <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)}
+                             textLabel={'Only Mine'} />            
+            </div>
+            <div className={styles.leaderboardTableContainer}>
+              <LeaderboardTable pageIndex={currentPage}
                               entriesPerPage={entriesPerPage}
                               highscores={highScores}
                               ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                               onlyMine={showOnlyMine}
                               competition={competition}   />
-          </div> 
-        </div>
-        <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)} />
-        
-        <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
+            </div>
+          </div>
+          <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
+        </div> 
+      </div>
+       
     </div>
   );  
 };
