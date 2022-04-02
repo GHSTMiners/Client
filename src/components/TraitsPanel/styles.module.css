@@ -6,8 +6,10 @@
 }
 
 .graphContainer {
-  width: 100%;
+  width: 90%;
+  margin-left: 5%;
   display: flex;
+  align-items: center;
   flex-direction: column;
   font-family: Rocks;
 }
@@ -30,8 +32,9 @@
 
 .barsContainer {
   position: relative;
-  width: 80%;
+  width: 75%;
   align-self: center;
+  margin-top:1rem;
   margin-bottom: 1.5em;
 }
 
@@ -41,9 +44,9 @@
 }
 
 .modifierRow p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: white;
-  margin-left: 1.5rem;
+  margin-left: 1.3rem;
 }
 
 .modifierMeter {

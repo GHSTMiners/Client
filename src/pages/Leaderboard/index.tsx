@@ -40,7 +40,7 @@ const Leaderboard = (): JSX.Element => {
   const competition = { endDate , rewards:getReward };
 
   // Random data
-  for (let i=0; i<300;i++){
+  for (let i=0; i<20000;i++){
     let gotchiID = i+3930;
     let randomName = i.toString(36) //.substring(7);
     if (gotchiID == 3934) randomName='Yoda'

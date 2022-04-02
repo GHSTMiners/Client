@@ -20,5 +20,4 @@ export * from "./Tabs";
 export * from "./UpgradeBar";
 export * from "./Chat";
 export * from "./LeaderboardTable"
-export * from "./LeaderboardCoyote"
 export * from "./Pagination"
