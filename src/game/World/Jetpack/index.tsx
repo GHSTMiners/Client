@@ -3,37 +3,75 @@ import * as Schema from "matchmaking/Schemas";
 import { PlayerState } from "matchmaking/Schemas";
 
 
-export default class Jetpack extends Phaser.GameObjects.GameObject {
+export default class Jetpack extends Phaser.GameObjects.Container {
     constructor(scene : Phaser.Scene, player: Player) {
-        super(scene, 'Jetpack')
+        super(scene, 0, 0)
         this.player = player;
-        this.jetpackSprite = this.scene.add.sprite(0, 0, 'jetpackAnimation')
-        this.jetpackSprite.setDepth(this.player.playerSprite.depth+1)
-        this.jetpackSprite.setScale(0.5)
+        this.jetpackSpriteRear = this.scene.add.sprite(0, 0, 'jetpackAnimationRear')
+        this.jetpackSpriteSide = this.scene.add.sprite(-45, 0, 'jetpackAnimationSide')
 
-        this.jetpackSprite.anims.create({
-            key: 'idle',
-            frames: this.jetpackSprite.anims.generateFrameNumbers( 'jetpackAnimation' || '', { start:  0 , end: 24 } ),
+        this.jetpackSpriteRear.setScale(0.40)
+        this.jetpackSpriteSide.setScale(0.45)
+
+        this.jetpackSpriteRear.anims.create({
+            key: 'idle_rear',
+            frames: this.jetpackSpriteRear.anims.generateFrameNumbers( 'jetpackAnimationRear' || '', { start:  0 , end: 0 } ),
         });
+
+        this.jetpackSpriteRear.anims.create({
+            key: 'running_rear',
+            frames: this.jetpackSpriteRear.anims.generateFrameNumbers( 'jetpackAnimationRear' || '', { start:  0 , end: 24 } ),
+            repeat: -1
+        });
+
+        this.jetpackSpriteSide.anims.create({
+            key: 'idle_side',
+            frames: this.jetpackSpriteSide.anims.generateFrameNumbers( 'jetpackAnimationSide' || '', { start:  0 , end: 0 } ),
+            repeat: -1
+        });
+
+        this.jetpackSpriteSide.anims.create({
+            key: 'running_side',
+            frames: this.jetpackSpriteSide.anims.generateFrameNumbers( 'jetpackAnimationSide' || '', { start:  0 , end: 24 } ),
+            repeat: -1
+        });
+
+        this.add(this.jetpackSpriteSide)
+        this.add(this.jetpackSpriteRear)
+
     }
 
-
-    update() { 
-        let playerState: PlayerState = this.player.playerSchema.playerState;
-        
-        this.jetpackSprite.setPosition(this.player.playerSprite.x, this.player.playerSprite.y+50)
-
-        //Handle flying
-        if( playerState.movementState == Schema.MovementState.Flying ) {
-            this.jetpackSprite.anims.play('idle', true)
+    process() {
+        //Process direction
+        switch(this.player.playerSchema.playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+                this.jetpackSpriteRear.setVisible(false)
+                this.jetpackSpriteSide.setVisible(true)
+                this.jetpackSpriteSide.setX(45)
+                this.jetpackSpriteSide.flipX = true
+            break;
+            case Schema.MovementDirection.Right:
+                this.jetpackSpriteRear.setVisible(false)
+                this.jetpackSpriteSide.setVisible(true)
+                this.jetpackSpriteSide.setX(-45)
+                this.jetpackSpriteSide.flipX = false
+            break;
+            default:
+                this.jetpackSpriteRear.setVisible(true)
+                this.jetpackSpriteSide.setVisible(false)  
         }
-        else {
-            //this.jetpackSprite.stop();
-            //this.jetpackSprite.setTexture("jetpackAnimation", 0)
+        //Process animation
+        if(this.player.playerSchema.playerState.movementState == Schema.MovementState.Flying) {
+            this.jetpackSpriteRear.anims.play('running_rear', true)
+            this.jetpackSpriteSide.anims.play('running_side', true)
+        } else {
+            this.jetpackSpriteRear.anims.play('idle_rear', true)
+            this.jetpackSpriteSide.anims.play('idle_side', true)
         }
-        
     }
 
-    protected player: Player 
-    protected jetpackSprite : Phaser.GameObjects.Sprite
+    protected player : Player 
+    protected jetpackSpriteRear : Phaser.GameObjects.Sprite
+    protected jetpackSpriteSide : Phaser.GameObjects.Sprite
+
 }

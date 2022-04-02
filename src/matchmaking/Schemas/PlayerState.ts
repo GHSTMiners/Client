@@ -14,7 +14,7 @@ export class PlayerState extends Schema {
     @type("int32") public velocityX!: number;
     @type("int32") public velocityY!: number;
     @type("number") public movementState!: MovementState;
-    @type("number") public drillingDirection!: DrillingDirection;
+    @type ("number") movementDirection : MovementDirection = MovementDirection.Down
 }
 
 export enum MovementState {
@@ -24,7 +24,7 @@ export enum MovementState {
     Drilling = 3
 }
 
-export enum DrillingDirection {
+export enum MovementDirection {
     Down = 1,
     Left = 2,
     Right = 3,
