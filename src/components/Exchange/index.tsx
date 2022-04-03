@@ -6,6 +6,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
+import MainScene from "game/Scenes/MainScene";
 
 interface Props {
   hidden: boolean;
@@ -15,25 +16,29 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   type BalanceData = Record<number, number>; // ( cryptoID , quantity }
 
   const [displayExchange, setDisplayExchange] = useState<boolean>(!hidden);
-  const [playerDoekoes, setPlayerDoekoes] = useState<number>(0);
+  const [playerBalance, setPlayerBalance] = useState<number>(0);
   let tempWalletBalance: BalanceData = [];
   
   // Setting world currency
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const worldCurrency = world.crypto.find( i => i.shortcode == 'GHST');
   
-  type CryptoArray = { cryptoID: number; name: string; image: string };
+  type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
 
-  let cryptoArray: CryptoArray[] = [];
+  let cryptoIdArray: number[] = [];
+  let cryptoRecord : Record<number,CryptoObj> = [];
   
   // inializing cargo & wallet ballances to 0
   for (let i = 0; i < world.crypto.length; i++) {
-    cryptoArray.push({
+    const newCrypto = {
       cryptoID: world.crypto[i].id,
       name: `${world.crypto[i].shortcode}`,
       image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
-    });
+      price: 1
+    }
+    cryptoIdArray.push( world.crypto[i].id );
     tempWalletBalance[world.crypto[i].id] = 0;
+    cryptoRecord[world.crypto[i].id] = newCrypto;
   }
   
   const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
@@ -54,6 +59,20 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     });
   }, []);
 
+  
+  const sellCrypto = (cryptoID : number, amount: number) => {
+    console.log(`Selling ${amount} X cryptoID ${cryptoID}`)
+    /*
+    let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
+    message.source_crypto_id = cryptoID;
+    message.target_crypto_id = worldCurrency?.id;
+    message.amount = amount;
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    */
+  };
+  
+
   const openExchange = () => {
     setDisplayExchange(true);
   }
@@ -64,22 +83,24 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   const updatePlayerBalance = (quantity:number) =>{
-    setPlayerDoekoes(quantity);
+    setPlayerBalance(quantity);
   }
 
-  const renderCoinEntry = ( name: string , quantity: number, image: string) => {
+  const renderCoinEntry = ( id: number ) => {
+    const quantity = walletBalance[id];
     const hasCoins = quantity>0;
     return(
       <div className={`${styles.coinContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
-        <img src={image} className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
-        {quantity} x {name} 
-        <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}>SELL</button> 
+        <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
+        {quantity} x {cryptoRecord[id].name} &nbsp; | &nbsp; {cryptoRecord[id].price*quantity} GGMS
+        <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}
+                onClick={ () => sellCrypto(id,quantity) } > SELL </button> 
       </div>
     )
   }
 
-  let cryptoList = cryptoArray.map(function (crypto) {
-    return renderCoinEntry( crypto.name, walletBalance[crypto.cryptoID], crypto.image );
+  let cryptoList = cryptoIdArray.map(function (id) {
+    return renderCoinEntry( id );
   });
 
   useEffect( () => {
@@ -99,9 +120,9 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
             <div className={styles.exchangeDisplayContainer}>
               <div className={styles.exchangeHeader}>
                 <h2>WALLET</h2>
-                <div className={styles.playerDoekoes}>
+                <div className={styles.playerBalance}>
                   <img src={ggemsIcon} className={styles.ggemsIcon} />
-                  {playerDoekoes} x GGEMS
+                  {playerBalance} x GGEMS
                 </div>
                 <button className={styles.closeButton} onClick={closeExchange}>X</button>
               </div>
