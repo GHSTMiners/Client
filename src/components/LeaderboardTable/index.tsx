@@ -77,7 +77,9 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
           <div>Name</div>
           <div>Score</div>
         </div>
-        {leaderboardDisplayData}
+        <div className={styles.rankingData}>
+          {leaderboardDisplayData}
+        </div>
       </div>
     </>
   );

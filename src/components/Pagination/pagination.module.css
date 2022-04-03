@@ -1,6 +1,10 @@
+.pagination{
+  align-self: center;
+  font-family: Rocks;
+}
 
 .paginationWrapper {
-  padding: 2rem 0;
+  padding: 1rem 0;
   display: flex;
   color:white;
   justify-content: center;

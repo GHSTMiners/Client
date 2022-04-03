@@ -53,11 +53,11 @@
 }
 
 .stoneMenu {
-  background-image: url("assets/icons/menu_stone2.svg");
+  background-image: url("assets/icons/menu_stone3.svg");
   background-repeat: no-repeat;
   background-size: contain;
   background-position-x: center;
-  width: 50%;
+  width: 55%;
   left: 40%;
   aspect-ratio: 277 / 364;
   position: relative;

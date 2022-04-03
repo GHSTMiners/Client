@@ -2,8 +2,8 @@
 .rankingList{
   font-family: Rocks;
   color: white;
-  padding: 2rem;
-  padding-top: 0rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -15,7 +15,7 @@
   align-items: center;
   justify-items: flex-end;
   padding-right: 3rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .tableEntry{
@@ -23,5 +23,14 @@
 }
 
 .rankingHeader{
+  border-top: 2px solid white;
+  padding-top: 1rem;
   border-bottom: 2px solid white;
+  margin-bottom: 1rem;
+}
+
+.rankingData{
+  height: 30rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
 }
