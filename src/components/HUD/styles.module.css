@@ -291,9 +291,9 @@ body {
 
 .cargoIcon {
   position: absolute;
-  width: 3em;
-  right: 2%;
-  top: 1%;
+  width: 2em;
+  left: 19%;
+  top: 2%;
 }
 
 .iconSelected {

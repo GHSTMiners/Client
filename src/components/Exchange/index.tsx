@@ -92,9 +92,10 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     return(
       <div className={styles.coinContainer}>
         <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
-        <span className={`${styles.exchangeRowText} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
-        {quantity} x {cryptoRecord[id].name} &nbsp; | &nbsp; {cryptoRecord[id].price*quantity} GGMS
-        </span>
+        <div className={`${styles.exchangeRowText} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
+          <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGMS</div>
+          <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
+        </div>
         <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}
                 onClick={ () => sellCrypto(id,quantity) } > SELL </button> 
       </div>
