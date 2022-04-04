@@ -96,25 +96,39 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
       const spriteMatrix = [
         // Front
         [
-          customiseSvg(svg[0], { removeBg: true }),
+          customiseSvg(svg[0], { 
+            removeBg: true , 
+            removePet: true, 
+            removeHandWearables: true}),
           customiseSvg(svg[0], {
             armsUp: true,
             eyes: "happy",
             float: true,
             removeBg: true,
+            removePet: true,
+            removeHandWearables: true
           }),
         ],
         // Left
         [
-          customiseSvg(svg[1], { removeBg: true }),
+          customiseSvg(svg[1], { 
+            removeBg: true, 
+            removePet: true, 
+            removeHandWearables: true }),
         ],
         // Right
         [
-          customiseSvg(svg[2], { removeBg: true }),
+          customiseSvg(svg[2], { 
+            removeBg: true, 
+            removePet: true, 
+            removeHandWearables: true }),
         ],
         // Right
         [
-          customiseSvg(svg[3], { removeBg: true }),
+          customiseSvg(svg[3], { 
+            removeBg: true, 
+            removePet: true, 
+            removeHandWearables: true}),
         ],
         // Falling animation [2,3]
         [
@@ -123,14 +137,18 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
             mouth: "neutral",
             armsUp: true,
             removeBg: true,
-            removeShadow: false
+            removeShadow: false,
+            removePet: true,
+            removeHandWearables: true
           }),
           customiseSvg(svg[0], { 
             eyes: "mad",
             mouth: "neutral",
             armsUp: false,
             removeBg: true,
-            removeShadow: false }),
+            removeShadow: false,
+            removePet: true,
+            removeHandWearables: true }),
         ],
         [
           customiseSvg(svg[0], {
@@ -138,7 +156,9 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
             mouth: "neutral",
             armsUp: false,
             removeBg: true,
-            removeShadow: false  }),
+            removeShadow: false,
+            removePet: true,
+            removeHandWearables: true  }),
         ],
 
       ];
