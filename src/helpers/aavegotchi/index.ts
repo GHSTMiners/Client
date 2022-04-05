@@ -102,6 +102,33 @@ export const removeShadow = (svg: string) => {
 };
 
 /**
+ * Removes pet from Aavegotchi SVG
+ * @param {string} svg - SVG you want to customise
+ * @returns {string} Returns customised SVG
+ */
+ export const removePet = (svg: string) => {
+  let styledSvg = svg.replace(
+  `wearable-pet"`,
+  `wearable-pet" style="opacity: 0;"`);
+  return styledSvg;
+};
+
+/**
+ * Removes hand wearables from Aavegotchi SVG
+ * @param {string} svg - SVG you want to customise
+ * @returns {string} Returns customised SVG
+ */
+ export const removeHandWearables = (svg: string) => {
+  let styledSvg = svg.replace(
+  `wearable-hand-left"`,
+  `wearable-hand-left" style="opacity: 0;"`);
+  styledSvg = styledSvg.replace(
+  `wearable-hand-right"`,
+  `wearable-hand-right" style="opacity: 0;"`);
+  return styledSvg;
+};
+
+/**
  * Adds Keyframe animation to SVG. (NOT TO BE USED IN IN GAME SPRITESHEET)
  * @param {string} svg - SVG you want to customise
  * @returns {string} Returns customised SVG
@@ -296,6 +323,8 @@ export type CustomiseOptions = {
   animate?: boolean;
   armsUp?: boolean;
   removeShadow?: boolean;
+  removePet?:boolean;
+  removeHandWearables?: boolean;
 };
 
 /**
@@ -338,6 +367,10 @@ export const customiseSvg = (
           ));
         case "removeShadow":
           return (styledSvg = removeShadow(styledSvg));
+        case "removePet":
+          return (styledSvg = removePet(styledSvg));
+        case "removeHandWearables":
+          return (styledSvg = removeHandWearables(styledSvg));
         default:
           return styledSvg;
       }
