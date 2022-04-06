@@ -9,6 +9,7 @@ import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@co
 import { Player } from './Player'
 import { Layer } from './Layer'
 import { Explosive } from './Explosive';
+import { ExchangeEntry } from './ExchangeEntry';
 
 export class World extends Schema {
     @type("number") public id!: number;
@@ -16,6 +17,7 @@ export class World extends Schema {
     @type("number") public height!: number;
     @type("number") public gravity!: number;
     @type("boolean") public ready!: boolean;
+    @type ({map : ExchangeEntry}) public exchange = new MapSchema<ExchangeEntry>()
     @type([ Explosive ]) public explosives: ArraySchema<Explosive> = new ArraySchema<Explosive>();
     @type([ Player ]) public players: ArraySchema<Player> = new ArraySchema<Player>();    
     @type([ Layer ]) public layers: ArraySchema<Layer> = new ArraySchema<Layer>();
