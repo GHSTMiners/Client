@@ -1,6 +1,7 @@
 import * as Schema from "matchmaking/Schemas";
 import * as APIInterface from "chisel-api-interface"
 import { SpawnType } from "chisel-api-interface";
+import { BlockInterface } from "game/helpers/BlockSchemaWrapper";
 
 export enum SoilType {
     Top = 'top',
@@ -9,13 +10,12 @@ export enum SoilType {
   }
 
 export default class Block extends Phaser.GameObjects.Container {
-    constructor(scene : Phaser.Scene, blockInfo: Schema.Block, soilType: SoilType, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
+    constructor(scene : Phaser.Scene, blockInfo: BlockInterface, soilType: SoilType, x?: number, y?: number, children?: Phaser.GameObjects.GameObject[]) {
         super(scene, x, y, children)
         this.setDepth(10)
         this.soilType = soilType
         if(blockInfo) {
             this.blockInfo = blockInfo;
-            this.blockInfo.onChange = this.blockUpdated.bind(this)
             //Create sprites and images
             switch(blockInfo.spawnType) {
                 case APIInterface.SpawnType.Crypto: 
@@ -41,6 +41,11 @@ export default class Block extends Phaser.GameObjects.Container {
         }
     }
 
+    public updateBlock(blockInfo : BlockInterface) {
+        this.blockInfo = blockInfo
+        this.blockUpdated()
+    }
+
     private blockUpdated() {
         if(this.blockInfo?.spawnType == SpawnType.None && this.backgroundSprite ) {
             this.backgroundSprite.setAlpha(0.5)
@@ -58,6 +63,6 @@ export default class Block extends Phaser.GameObjects.Container {
 
     public backgroundSprite? : Phaser.GameObjects.Image
     public itemSprite?: Phaser.GameObjects.Image
-    private blockInfo? : Schema.Block
+    private blockInfo? : BlockInterface
     private soilType : SoilType
 }

@@ -6,8 +6,7 @@
 // 
 
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
-import { Block } from './Block'
 
 export class Layer extends Schema {
-    @type([ Block ]) public blocks: ArraySchema<Block> = new ArraySchema<Block>();
+    @type(["string"]) public blocks: ArraySchema<string> = new ArraySchema<string>();
 }

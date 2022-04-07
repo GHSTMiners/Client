@@ -3,6 +3,7 @@ import Block, { SoilType } from "game/World/Block"
 import * as Schema from "matchmaking/Schemas";
 import Client from "matchmaking/Client"
 import { Soil } from "chisel-api-interface";
+import { BlockSchemaWrapper } from "game/helpers/BlockSchemaWrapper";
 
 export default class BlockRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -18,10 +19,18 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
             let soilType : SoilType = this.layerToSoilType[layer];
             let newLayer : Block[] = []
             let schemaLayer = Client.getInstance().colyseusRoom.state.layers[layer]
+            var self = this;
+            schemaLayer.blocks.onChange = (item: string, key: number) => {
+                let blocks : Block[] | undefined = self.renderedLayers.get(layer)
+                if(blocks) {
+                    blocks[key].updateBlock(BlockSchemaWrapper.stringToBlock(item))
+                }
+                
+            }
             if(schemaLayer) {
                 for (let index = 0; index < worldWidth; index++) {
                     const element = schemaLayer.blocks[index];
-                    let newBlock = new Block(this.scene, element, soilType, index * Config.blockWidth + Config.blockWidthOffset, layer * Config.blockHeight + Config.blockHeightOffset);
+                    let newBlock = new Block(this.scene, BlockSchemaWrapper.stringToBlock(element), soilType, index * Config.blockWidth + Config.blockWidthOffset, layer * Config.blockHeight + Config.blockHeightOffset);
                     newLayer.push(newBlock)
                     this.scene.add.existing(newBlock)
                 }
