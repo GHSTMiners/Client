@@ -7,6 +7,7 @@ import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
 import MainScene from "game/Scenes/MainScene";
+import * as Schema from "../../matchmaking/Schemas"
 
 interface Props {
   hidden: boolean;
@@ -20,8 +21,9 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   let tempWalletBalance: BalanceData = [];
   
   // Setting world currency
+  const schema: Schema.World = Client.getInstance().colyseusRoom.state;
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const worldCurrency = world.crypto.find( i => i.shortcode == 'GHST');
+  const worldCurrency = world.crypto.find( i => i.shortcode == 'DAI');
   
   type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
 
@@ -30,11 +32,12 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   
   // inializing cargo & wallet ballances to 0
   for (let i = 0; i < world.crypto.length; i++) {
+    const cryptoPrice = schema.exchange.get(world.crypto[i].id.toString());
     const newCrypto = {
       cryptoID: world.crypto[i].id,
       name: `${world.crypto[i].shortcode}`,
       image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
-      price: 1
+      price: (cryptoPrice? cryptoPrice.usd_value : 1)
     }
     cryptoIdArray.push( world.crypto[i].id );
     tempWalletBalance[world.crypto[i].id] = 0;
@@ -62,14 +65,14 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   
   const sellCrypto = (cryptoID : number, amount: number) => {
     console.log(`Selling ${amount} X cryptoID ${cryptoID}`)
-    /*
-    let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
-    message.source_crypto_id = cryptoID;
-    message.target_crypto_id = worldCurrency?.id;
-    message.amount = amount;
-    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-    */
+    if (worldCurrency){
+      let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
+      message.sourceCryptoId = cryptoID;
+      message.targetCryptoId = worldCurrency?.id;
+      message.amount = amount;
+      let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    }
   };
   
 
