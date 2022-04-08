@@ -23,7 +23,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   // Setting world currency
   const schema: Schema.World = Client.getInstance().colyseusRoom.state;
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const worldCurrency = world.crypto.find( i => i.shortcode == 'DAI');
   
   type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
 
@@ -54,7 +53,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
         walletBalance[item.cryptoID] = item.amount;
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
-          if (worldCurrency?.id == item.cryptoID) {
+          if (world.world_crypto_id == item.cryptoID) {
             Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
           }
         };
@@ -64,15 +63,12 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
 
   
   const sellCrypto = (cryptoID : number, amount: number) => {
-    console.log(`Selling ${amount} X cryptoID ${cryptoID}`)
-    if (worldCurrency){
-      let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
-      message.sourceCryptoId = cryptoID;
-      message.targetCryptoId = worldCurrency?.id;
-      message.amount = amount;
-      let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-    }
+    let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
+    message.sourceCryptoId = cryptoID;
+    message.targetCryptoId = world.world_crypto_id;
+    message.amount = amount;
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
   };
   
 
@@ -82,7 +78,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
 
   const closeExchange = () => {
     setDisplayExchange(false); 
-    console.log("closing exchange via ESC")
   }
 
   const updatePlayerBalance = (quantity:number) =>{
@@ -106,7 +101,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   let cryptoList = cryptoIdArray.map(function (id) {
-    return renderCoinEntry( id );
+    return id==world.world_crypto_id ? <></> : renderCoinEntry( id );
   });
 
   useEffect( () => {
