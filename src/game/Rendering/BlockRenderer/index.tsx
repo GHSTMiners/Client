@@ -20,7 +20,7 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
             let newLayer : Block[] = []
             let schemaLayer = Client.getInstance().colyseusRoom.state.layers[layer]
             var self = this;
-            schemaLayer.blocks.onChange = (item: string, key: number) => {
+            schemaLayer.blocks.onChange = (item: number, key: number) => {
                 let blocks : Block[] | undefined = self.renderedLayers.get(layer)
                 if(blocks) {
                     blocks[key].updateBlock(BlockSchemaWrapper.stringToBlock(item))

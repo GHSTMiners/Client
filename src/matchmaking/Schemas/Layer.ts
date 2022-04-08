@@ -8,5 +8,5 @@
 import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
 
 export class Layer extends Schema {
-    @type(["string"]) public blocks: ArraySchema<string> = new ArraySchema<string>();
+    @type(["uint32"]) public blocks: ArraySchema<number> = new ArraySchema<number>();
 }
