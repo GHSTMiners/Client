@@ -95,6 +95,7 @@
 
 .contentContainer{
   display:flex;
+  padding-top: 1rem;
 }
 
 .galleryPanel {
@@ -240,4 +241,12 @@
 .totalPrice{
   padding-top: 0.5rem;
   font-size: 1.2rem;
+}
+
+.gotchiPreview{
+  opacity: 50%;
+  position: absolute;
+  left:-8rem;
+  height: 15rem;
+  margin-top:2.5rem;
 }
