@@ -112,8 +112,8 @@ const TabConsumables: FC<{}> = () => {
   const detailsPanel = (
     <>
       <div className={styles.detailsTitle}>
-        {selectedItem.name}
-        <img src={selectedItem.image} className={styles.itemImage} />
+        <div>{selectedItem.name}</div>
+        <img src={selectedItem.image} className={styles.titleImage} />
       </div>
       <div className={styles.detailsBody}>
         <div className={styles.explosivePattern}>

@@ -96,6 +96,7 @@
 .contentContainer{
   display:flex;
   padding-top: 1rem;
+  padding-right: 1rem;
 }
 
 .galleryPanel {
@@ -164,6 +165,8 @@
   justify-content: center;
 }
 
+
+
 .drillIcon{
   opacity: 50%;
   position: absolute;
@@ -175,9 +178,19 @@
 
 .detailsTitle{
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 3rem;
+  align-items: center;
   text-align: center;
-  font-size: 1.5rem;
-  padding-bottom: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.titleImage {
+  height: 3rem;
+  opacity: 0.9;
 }
 
 .detailsBody{
@@ -186,13 +199,6 @@
   flex-direction: column; 
   justify-content: center;
   align-items: center;
-}
-
-.detailsTitle > img {
-  height: 4rem;
-  width: auto;
-  padding-left: 1rem;
-  padding-bottom: 0.5rem;
 }
 
 .amountContainer{
