@@ -33,7 +33,7 @@ const UpgradeBar: React.FC<Props> = ({
   
   //
   const purchaseUpgrade = ()=>{
-    if (upgradeLevel<6) {
+    if (upgradeLevel<upgradeLevelArray.length-1) {
       setUpgradeLevel(upgradeLevel+1); // TO DO: replace this with an upgrade message to the server if funds are available
     }
   }
@@ -46,7 +46,9 @@ const UpgradeBar: React.FC<Props> = ({
 
   // rendering the array of level elements and storing into one variable
   const upgradeLevels = upgradeLevelArray.map( (upgradeElement , index) => {
-    return(  ( index<=upgradeLevel ? renderUpgradeLevel( upgradeElement.name, upgradeElement.color, false ) : '')  );
+    return(  
+      ( index<=upgradeLevel ? renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false ) : '')  
+      );
   });
 
   return (
