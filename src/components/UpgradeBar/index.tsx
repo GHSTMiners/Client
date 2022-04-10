@@ -4,16 +4,12 @@ import styles from "./styles.module.css";
 
 interface Props {
   text?: string;
-  topPosition?:number;
-  leftPosition?:number;
   initialLevel?:number;
   onUpgrade?: () => void;
 }
 
 const UpgradeBar: React.FC<Props> = ({
   text,
-  topPosition,
-  leftPosition,
   initialLevel = 0,
   onUpgrade
 }) => {
@@ -52,12 +48,17 @@ const UpgradeBar: React.FC<Props> = ({
   });
 
   return (
-    <div className={styles.upgradeBarContainer} style={{top: `${topPosition}%` , left:  `${leftPosition}%` }}>
-      {text} <br />
+    <div className={styles.upgradeBarContainer} >
+      
+      <div className={styles.upgradeBarTitle}>
+        {text}
+      </div>
+       
       <button className={styles.upgradeButton}
               onClick={purchaseUpgrade} >
         <div className={styles.upgradeButtonText}>+</div>        
       </button>  
+      
       <div className={styles.levelContainer}>
         {upgradeLevels}
       </div>

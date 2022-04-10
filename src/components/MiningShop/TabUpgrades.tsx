@@ -40,16 +40,18 @@ const TabUpgrades: FC<{}> = () => {
   return (
     <div className={styles.contentContainer}>
       <div className={styles.galleryPanel}>
-        <UpgradeBar text='Movement Speed'  topPosition={80} leftPosition={4} />
-        <UpgradeBar text='Health'  topPosition={0} leftPosition={4} />
-        <UpgradeBar text='Inventory'  topPosition={40} leftPosition={20} />
-        <UpgradeBar text='Fuel'  topPosition={20} leftPosition={70} />
-        <UpgradeBar text='Drill Speed'  topPosition={80} leftPosition={65} />
-        <img src={drillIcon} className={styles.drillIcon}></img>
+        <div className={styles.upgradesList}>
+          <UpgradeBar text='Movement Speed'   />
+          <UpgradeBar text='Health'  />
+          <UpgradeBar text='Inventory'   />
+          <UpgradeBar text='Fuel'  />
+          <UpgradeBar text='Drill Speed'  />
+        </div>
         <img src={gotchiSVG} className={styles.gotchiPreview}></img>
       </div>
       <div className={styles.detailsPanel}>
         Selected item details
+        {/*<img src={drillIcon} className={styles.drillIcon}></img>*/}
       </div>
     </div>
   );

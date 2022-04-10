@@ -4,11 +4,13 @@
 }
 
 .upgradeBarContainer{
-  width: 8rem;
+  width: 100%;
   height: 3.5rem;
   border-color: #a4ffff;
-  position: absolute;
   z-index: 50;
+  display: grid;
+  grid-template-columns: 10rem 0.1rem 8fr ;
+  align-items: center;
 }
 
 .upgradeButton {
@@ -19,7 +21,6 @@
   background-color: #a4ffff;
   padding: 0px;
   z-index: 50;
-  position: absolute;
   clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
 }
 
@@ -47,6 +48,11 @@
   transform: skew(-18deg);
 }
 
+.upgradeBarTitle{
+  justify-self:flex-end;
+  padding-right: 1rem;
+  font-size: 1.2rem;
+}
 
 
 

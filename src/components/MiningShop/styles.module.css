@@ -106,9 +106,17 @@
   scrollbar-color: #6db9aeff #a4ffff;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   white-space: nowrap;
   position:relative;
+}
+
+.upgradesList{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
  
 .itemContainer {
@@ -170,8 +178,8 @@
 .drillIcon{
   opacity: 50%;
   position: absolute;
-  left:40%;
-  height: 15rem;
+  right:0rem;
+  height: 12rem;
   margin-top:4rem;
   transform: rotate(-30deg);
 }
@@ -252,7 +260,7 @@
 .gotchiPreview{
   opacity: 50%;
   position: absolute;
-  left:-8rem;
-  height: 15rem;
+  right:-8rem;
+  height: 16rem;
   margin-top:2.5rem;
 }
