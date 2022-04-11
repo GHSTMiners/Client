@@ -8,6 +8,9 @@ import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { HighScore } from "types";
 import { Pagination } from 'components/Pagination';
+import * as Chisel from "chisel-api-interface";
+import Client from "matchmaking/Client";
+import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
 
 
 const Leaderboard = (): JSX.Element => {
@@ -59,6 +62,25 @@ const Leaderboard = (): JSX.Element => {
   const entriesPerPage = 50;
   const totalPages = Math.ceil(highScores.length/entriesPerPage);
 
+  const renderCathegoryElement = ( cathegoryObj:StatisticCategory) => {
+    return <option value={cathegoryObj.id}>{cathegoryObj.name}</option>
+  }
+
+  const emptyList : JSX.Element[] = [];
+  const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyList);
+  
+  useEffect(()=>{
+    const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
+    rawCathegories.then( cathegoryList => {
+         const optionList = cathegoryList.map(
+           function(cathegoryObj) { return renderCathegoryElement(cathegoryObj) }
+         ) 
+         if (optionList){
+          setLeaderboardCathegories(optionList);
+         }
+      })
+  },[])
+
   return (
     <div className={styles.backgroundContainer}>
       <Header />
@@ -92,7 +114,9 @@ const Leaderboard = (): JSX.Element => {
           <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
           <div className={styles.tableBackground}>
             <div className={styles.tableToolbar}>
-              <div></div>
+              <select onChange={()=>{}} className={styles.selectDropdown}>
+                {leaderboardCathegories}
+              </select>
               <Pagination page={currentPage} 
                     totalPages={totalPages} 
                     handlePagination={handlePages} />

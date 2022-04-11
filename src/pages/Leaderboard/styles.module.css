@@ -127,3 +127,13 @@
   padding-top: 2rem;
 }
 
+.selectDropdown{
+  background-color: rgba(0.3,0.3,0.3,0.3);
+  color:white;
+  border:none;
+  height: 2rem;
+  width: 14rem;
+  align-self: center;
+  text-align: center;
+  margin-left: 2rem;
+}
