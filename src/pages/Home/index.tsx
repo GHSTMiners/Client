@@ -76,7 +76,7 @@ const Home = (): JSX.Element => {
   return (
     <>
       <div className={styles.backgroundContainer}>
-        <Header />
+        
         <div className={styles.homeContainer}>
           <div className={styles.gotchiMainContainer}>
             <div className={styles.gotchiTraitsContainer}>

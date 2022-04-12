@@ -99,7 +99,6 @@ const Leaderboard = (): JSX.Element => {
 
   return (
     <div className={styles.backgroundContainer}>
-      <Header />
       <div className={styles.leaderboardContainer}>
         
         <div className={styles.gotchiPodiumContainer}>

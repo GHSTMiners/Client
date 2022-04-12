@@ -10,7 +10,6 @@ const About = (): JSX.Element => {
   return (
     <>
       <div className={styles.backgroundContainer}>
-        <Header />
 
         <div className={styles.about}>
           A demo version of this game was developed for the first Aavegotchi

@@ -5,7 +5,9 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Button from 'react-bootstrap/Button';
 import Cookies from "js-cookie";
-import { useWeb3, connectToNetwork } from "web3/context";
+import Web3ContextProvider, { useWeb3, connectToNetwork } from "web3/context";
+import { BrowserRouter } from "react-router-dom";
+import { Header } from "components";
 
 
 
@@ -13,7 +15,12 @@ ReactDOM.render(
 
   
   <React.StrictMode>
-    <App />
+    <Web3ContextProvider>
+    <BrowserRouter>
+    <Header />
+      <App />
+    </BrowserRouter>
+    </Web3ContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

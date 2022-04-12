@@ -23,12 +23,19 @@
   text-align: right;
   color: #cecece;
   font-family: Rocks;
-  opacity: 1;
+  opacity: 0.6;
   font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
   display: block;
   padding: 2.5rem 0;
+  transition: 0.3s;
+}
+
+.navLink:hover {
+  color: #cecece;
+  font-family: Rocks;
+  opacity: 0.9;
 }
 
 @font-face {
@@ -37,9 +44,24 @@
 }
 
 .activeNavLink {
+  text-align: right;
+  color: #dddddd;
+  font-family: Rocks;
   opacity: 1;
-  position: relative;
+  font-size: 1.9em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: block;
+  padding: 2.5rem 0;
+  cursor: default;
+  transition: 0.3s;
+
 }
+
+.activeNavLink:hover {
+  color: #dddddd;
+}
+
 .activeNavLink::after {
   content: "";
   position: absolute;

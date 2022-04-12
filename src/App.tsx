@@ -3,23 +3,26 @@ import Play from "pages/Play";
 import Leaderboard from "pages/Leaderboard";
 import HowToPlay from "pages/HowToPlay";
 import About from "pages/About";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Web3ContextProvider from "web3/context";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const App = () => {
+  const location = useLocation();
+
   return (
-    <Web3ContextProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/play" element={<Play />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
-          <Route path="/howtoplay" element={<HowToPlay />} />
-          <Route path="/about" element={<About />} />
-        </Routes>
-      </BrowserRouter>
-    </Web3ContextProvider>
+        <TransitionGroup component={null}>
+          <CSSTransition key={location.key} classNames="fade" timeout={500}>
+          <Routes location={location}>
+            <Route path="/" element={<Home />} />
+            <Route path="/play" element={<Play />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/howtoplay" element={<HowToPlay />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+          </CSSTransition>
+        </TransitionGroup>
   );
-};
+}; 
 
 export default App;

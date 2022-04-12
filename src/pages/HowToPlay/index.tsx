@@ -6,7 +6,6 @@ const HowToPlay = (): JSX.Element => {
   return (
     <>
       <div className={styles.backgroundContainer}>
-        <Header />
         <div className={styles.maintText}>
           
           <h1>Welcome to Gotchi Miner</h1>

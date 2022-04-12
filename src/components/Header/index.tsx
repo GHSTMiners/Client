@@ -67,25 +67,33 @@ export const Header = () => {
           </NavLink>
           <NavLink
             to="/"
-            className={styles.navLink}
+            className={({ isActive }) =>
+              isActive ? styles.activeNavLink : styles.navLink
+            }
           >
             Game
           </NavLink>
           <NavLink
             to="/leaderboard"
-            className={styles.navLink}
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
           >
             Leaderboard
           </NavLink>
           <NavLink
             to="/howtoplay"
-            className={styles.navLink}
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
           >
             How to Play
           </NavLink> 
           <NavLink
             to="/about"
-            className={styles.navLink}
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
           >
             About
           </NavLink>
@@ -99,25 +107,34 @@ export const Header = () => {
             <WalletButton />
             <NavLink
               to="/"
-              className={styles.navLink}
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
             >
               Game
             </NavLink>
-            <NavLink
+            <NavLink 
+
               to="/leaderboard"
-              className={styles.navLink}
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
             >
               Leaderboard
             </NavLink>
             <NavLink
               to="/howtoplay"
-              className={styles.navLink}
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
             >
               Settings
             </NavLink>
             <NavLink
               to="/about"
-              className={styles.navLink}
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
             >
               About
             </NavLink>
