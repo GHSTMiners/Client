@@ -32,7 +32,6 @@
   width: 50%; 
   height:100%;
   flex:none;
-  padding-top: 2rem; 
 }
 
 .tableBackground{
@@ -50,6 +49,7 @@
   left: 43%;
   bottom: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .gotchiRank1{
@@ -114,6 +114,7 @@
 .leaderboardHeader{
   width: 100%;
   position: relative;
+  pointer-events: none;
   z-index: 1;
 }
 
@@ -123,8 +124,10 @@
 
 .tableToolbar{
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  padding-top: 2rem;
+  grid-template-columns: 1fr 1fr 1fr 0.8fr;
+  justify-items: center;
+  padding-top: 1rem;
+  padding-left: 1rem;
 }
 
 .selectDropdown{
@@ -132,8 +135,14 @@
   color:white;
   border:none;
   height: 2rem;
-  width: 14rem;
-  align-self: center;
-  text-align: center;
-  margin-left: 2rem;
+  width: 11rem;
+  align-self: space-around;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.leaderboardTag{
+  color: white;
+  text-align: left;
+  font-family: Rocks;
 }

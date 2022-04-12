@@ -10,7 +10,6 @@ import { HighScore } from "types";
 import { Pagination } from 'components/Pagination';
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
 
 
 const Leaderboard = (): JSX.Element => {
@@ -62,29 +61,47 @@ const Leaderboard = (): JSX.Element => {
   const entriesPerPage = 50;
   const totalPages = Math.ceil(highScores.length/entriesPerPage);
 
-  const renderCathegoryElement = ( cathegoryObj:StatisticCategory) => {
-    return <option value={cathegoryObj.id}>{cathegoryObj.name}</option>
+  const renderSelectElement = ( key:string, id: number | string, tag:string) => {
+    return <option key={key} value={id}>{tag}</option>
   }
 
-  const emptyList : JSX.Element[] = [];
-  const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyList);
+  const emptyWorlds : JSX.Element[] = [];
+  const emptyCathegories : JSX.Element[] = [];
+  const emptyGameModes : JSX.Element[] = [];
+  const [leaderboardWorlds,setLeaderboardWorlds] = useState(emptyWorlds);
+  const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyCathegories);
+  //const [leaderboardGameModes,setLeaderboardGameModes] = useState(emptyGameModes); // TO DO
   
+  // Retrieving data from Chisel
   useEffect(()=>{
+
+    const rawWorlds = Client.getInstance().apiInterface.worlds();
+    rawWorlds.then( worlds => {
+         const worldOptions = worlds.map(
+           function(world:Chisel.World) { return renderSelectElement(world.name,world.id,world.name) }
+         ) 
+         if (worldOptions){
+          setLeaderboardWorlds(worldOptions);
+         }
+      })
+
     const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
     rawCathegories.then( cathegoryList => {
          const optionList = cathegoryList.map(
-           function(cathegoryObj) { return renderCathegoryElement(cathegoryObj) }
+           function(cathegoryObj) { return renderSelectElement(cathegoryObj.name,cathegoryObj.id,cathegoryObj.name) }
          ) 
          if (optionList){
           setLeaderboardCathegories(optionList);
          }
       })
+
   },[])
 
   return (
     <div className={styles.backgroundContainer}>
       <Header />
       <div className={styles.leaderboardContainer}>
+        
         <div className={styles.gotchiPodiumContainer}>
           <div className={styles.gotchiRank1}>
             {renderGotchi(20689,true)}
@@ -114,12 +131,24 @@ const Leaderboard = (): JSX.Element => {
           <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
           <div className={styles.tableBackground}>
             <div className={styles.tableToolbar}>
-              <select onChange={()=>{}} className={styles.selectDropdown}>
-                {leaderboardCathegories}
-              </select>
-              <Pagination page={currentPage} 
-                    totalPages={totalPages} 
-                    handlePagination={handlePages} />
+              <div>
+                <div className={styles.leaderboardTag}>World</div>
+                <select onChange={()=>{}} className={styles.selectDropdown}>
+                  {leaderboardWorlds}
+                </select>
+              </div>
+              <div>
+                <div className={styles.leaderboardTag}>Game Mode</div>
+                <select onChange={()=>{}} className={styles.selectDropdown}>
+                  <option key={'Classic'} value={1}>Classic</option>
+                </select>
+              </div>
+              <div>
+                <div className={styles.leaderboardTag}>Cathegory</div>
+                <select onChange={()=>{}} className={styles.selectDropdown}>
+                  {leaderboardCathegories}
+                </select>
+              </div>
               <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)}
                              textLabel={'Only Mine'} />            
             </div>
@@ -131,11 +160,13 @@ const Leaderboard = (): JSX.Element => {
                               onlyMine={showOnlyMine}
                               competition={competition}   />
             </div>
+            <Pagination page={currentPage} 
+                    totalPages={totalPages} 
+                    handlePagination={handlePages} />
           </div>
           <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
         </div> 
       </div>
-       
     </div>
   );  
 };
