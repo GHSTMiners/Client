@@ -1,6 +1,7 @@
 import Home from "pages/Home";
 import Play from "pages/Play";
 import Leaderboard from "pages/Leaderboard";
+import HowToPlay from "pages/HowToPlay";
 import About from "pages/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Web3ContextProvider from "web3/context";
@@ -13,6 +14,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/play" element={<Play />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/howtoplay" element={<HowToPlay />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </BrowserRouter>

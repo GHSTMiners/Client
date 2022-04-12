@@ -66,39 +66,26 @@ export const Header = () => {
             <div className={styles.logo}></div>
           </NavLink>
           <NavLink
-            //onClick={() => playSound('click')}
             to="/"
             className={styles.navLink}
-            /*activeClassName={styles.activeNavLink}
-            isActive={(_, location) => {
-              if (!location) return false;
-              const { pathname } = location;
-              return pathname === "/";
-            }}*/
           >
             Game
           </NavLink>
           <NavLink
-            //onClick={() => playSound('click')}
             to="/leaderboard"
             className={styles.navLink}
-            //activeClassName={styles.activeNavLink}
           >
             Leaderboard
           </NavLink>
-          {/*<NavLink
-            //onClick={() => playSound('click')}
-            to="/settings"
-            className={styles.navLink}
-            activeClassName={styles.activeNavLink}
-          >
-            Settings
-          </NavLink> -*/}
           <NavLink
-            //onClick={() => playSound('click')}
+            to="/howtoplay"
+            className={styles.navLink}
+          >
+            How to Play
+          </NavLink> 
+          <NavLink
             to="/about"
             className={styles.navLink}
-            //activeClassName={styles.activeNavLink}
           >
             About
           </NavLink>
@@ -111,39 +98,26 @@ export const Header = () => {
           <nav>
             <WalletButton />
             <NavLink
-              //onClick={() => playSound('click')}
               to="/"
               className={styles.navLink}
-              /*activeClassName={styles.activeNavLink}
-              isActive={(_, location) => {
-                if (!location) return false;
-                const { pathname } = location;
-                return pathname === "/";
-              }}*/
             >
               Game
             </NavLink>
             <NavLink
-              //onClick={() => playSound('click')}
               to="/leaderboard"
               className={styles.navLink}
-              // activeClassName={styles.activeNavLink}
             >
               Leaderboard
             </NavLink>
             <NavLink
-              //onClick={() => playSound('click')}
-              to="/settings"
+              to="/howtoplay"
               className={styles.navLink}
-              //activeClassName={styles.activeNavLink}
             >
               Settings
             </NavLink>
             <NavLink
-              //onClick={() => playSound('click')}
               to="/about"
               className={styles.navLink}
-              //activeClassName={styles.activeNavLink}
             >
               About
             </NavLink>

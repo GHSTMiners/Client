@@ -86,9 +86,9 @@ const Leaderboard = (): JSX.Element => {
       })
 
     const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
-    rawCathegories.then( cathegoryList => {
-         const optionList = cathegoryList.map(
-           function(cathegoryObj) { return renderSelectElement(cathegoryObj.name,cathegoryObj.id,cathegoryObj.name) }
+    rawCathegories.then( categoryList => {
+         const optionList = categoryList.map(
+           function(categoryObj) { return renderSelectElement(categoryObj.name,categoryObj.id,categoryObj.name) }
          ) 
          if (optionList){
           setLeaderboardCathegories(optionList);
@@ -144,7 +144,7 @@ const Leaderboard = (): JSX.Element => {
                 </select>
               </div>
               <div>
-                <div className={styles.leaderboardTag}>Cathegory</div>
+                <div className={styles.leaderboardTag}>Category</div>
                 <select onChange={()=>{}} className={styles.selectDropdown}>
                   {leaderboardCathegories}
                 </select>
