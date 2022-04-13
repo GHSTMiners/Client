@@ -48,7 +48,7 @@ const About = (): JSX.Element => {
             />
           </div>
         </div>
-      </div>
+        </div>
     </>
   );
 };

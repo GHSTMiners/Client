@@ -10,7 +10,7 @@ body {
 }
 
 body {
-  background-image: url("assets/images/bg3.png");
+  background: url("assets/images/bg3.png") no-repeat center center fixed;
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -35,19 +35,24 @@ code {
 .fade-enter {
   opacity: 0;
   z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 7rem);
 }
 .fade-enter.fade-enter-active {
   opacity: 1;
-
   transition: opacity 250ms ease-out;
   transition-delay: 125ms;
 }
+
 .fade-exit {
   opacity: 1;
-  transform: translate(0, 0);
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 7rem);
 }
 .fade-exit.fade-exit-active {
   opacity: 0;
-
   transition: opacity 250ms ease-out;
 }

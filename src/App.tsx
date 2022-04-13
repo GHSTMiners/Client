@@ -12,7 +12,7 @@ const App = () => {
 
   return (
         <TransitionGroup component={null}>
-          <CSSTransition key={location.key} classNames="fade" timeout={500}>
+          <CSSTransition key={location.key} classNames="fade" timeout={30000}>
           <Routes location={location}>
             <Route path="/" element={<Home />} />
             <Route path="/play" element={<Play />} />

@@ -3,6 +3,7 @@
 .header {
   background-color: transparent;
   height: 7rem;
+  padding-top: 0.5rem;
 }
 
 .logo {

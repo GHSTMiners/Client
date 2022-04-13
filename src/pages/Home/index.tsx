@@ -74,9 +74,7 @@ const Home = (): JSX.Element => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <>
-      <div className={styles.backgroundContainer}>
-        
+    <>        
         <div className={styles.homeContainer}>
           <div className={styles.gotchiMainContainer}>
             <div className={styles.gotchiTraitsContainer}>
@@ -113,7 +111,6 @@ const Home = (): JSX.Element => {
             {/*<RockySelect />*/}
           </div>
         </div>
-      </div>
     </>
   );
 };
