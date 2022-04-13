@@ -11,10 +11,8 @@ body {
 
 body {
   background-image: url("assets/images/bg3.png");
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   background-repeat: no-repeat;
   background-size: cover;
-
 }
 
 

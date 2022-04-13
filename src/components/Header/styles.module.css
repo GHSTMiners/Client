@@ -55,21 +55,10 @@
   padding: 2.5rem 0;
   cursor: default;
   transition: 0.3s;
-
 }
 
 .activeNavLink:hover {
   color: #dddddd;
-}
-
-.activeNavLink::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 4px;
-  bottom: 0;
-  background-color: #cecece;
 }
 
 .walletContainer {
