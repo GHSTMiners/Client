@@ -37,12 +37,18 @@ export default class Play extends React.Component {
   }
 
   render(): React.ReactNode {
-    return (
-      <>
-        <HUD />
-        <div id="phaser-game" />
-      </>
-    );
+    if (Client.getInstance().colyseusRoom) {
+      return (
+        <>
+          <HUD />
+          <div id="phaser-game" />
+        </>
+      );
+    } else {
+      return (
+        <></>
+      )
+    }
   }
   private game!: Phaser.Game;
 }

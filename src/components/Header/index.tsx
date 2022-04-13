@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import globalStyles from "theme/globalStyles.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useWeb3, connectToNetwork } from "web3/context";
 import { smartTrim } from "helpers/functions";
 import { networkIdToName } from "helpers/vars";
@@ -55,9 +55,10 @@ const WalletButton = () => {
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
-    <header className={styles.header}>
+    <header className={styles.header} hidden = {location.pathname === "/play"} >
       <nav
         className={`${globalStyles.container} ${styles.desktopHeaderContent}`}
       >
