@@ -37,7 +37,6 @@ code {
   z-index: 1;
   position: absolute;
   width: 100%;
-  height: calc(100% - 7rem);
 }
 .fade-enter.fade-enter-active {
   opacity: 1;
@@ -50,7 +49,6 @@ code {
   z-index: 1;
   position: absolute;
   width: 100%;
-  height: calc(100% - 7rem);
 }
 .fade-exit.fade-exit-active {
   opacity: 0;
