@@ -139,6 +139,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
           }`}
           onClick={ () => setDisplayExchange(!displayExchange) }
         />
+      <div className={styles.mainPlayerBalance}
+            onClick={ () => setDisplayExchange(!displayExchange) }>
+        <img src={ggemsIcon} className={styles.ggemsIcon} />
+        {playerBalance}
+      </div>
     </>
   );
 };
