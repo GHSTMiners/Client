@@ -28,8 +28,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.FOUR, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.T, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T, true, false))
-        // remove SPACE blockage (set by default)
-        this.scene.input.keyboard.removeCapture('SPACE'); 
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.SPACE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false))
     }
 
     private setGameMode=()=>{
@@ -94,6 +93,9 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.R)?.isDown) {
             this.scene.game.events.emit("open_exchange")
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.SPACE)?.isDown) {
+            this.scene.game.events.emit("change_console_state")
         }
         // Change event handlers when the game goes into chat mode
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.T)?.isDown) {

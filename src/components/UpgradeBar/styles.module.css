@@ -49,8 +49,8 @@
 }
 
 .upgradeBarTitle{
-  justify-self:flex-end;
-  padding-right: 1rem;
+  justify-self:flex-start;
+  padding-left: 1rem;
   font-size: 1.2rem;
 }
 

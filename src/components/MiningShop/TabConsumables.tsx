@@ -22,7 +22,7 @@ const TabConsumables: FC<{}> = () => {
       id: explosive.id, 
       price: explosive.price, 
       pattern: explosive.explosion_coordinates,
-      image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`
+      image: `https://chisel.gotchiminer.rocks/storage/${explosive.inventory_image}`
     })
    })
 

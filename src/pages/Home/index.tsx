@@ -108,7 +108,7 @@ const Home = (): JSX.Element => {
           </div>
           <div className={styles.gameConfigContainer}>
             <GameConfigurator />
-            {/*<RockySelect />*/}
+            
           </div>
         </div>
     </>

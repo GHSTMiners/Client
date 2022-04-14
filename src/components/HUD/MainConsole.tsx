@@ -9,13 +9,16 @@ import { HUDContext, smallButton } from ".";
 
 const MainConsole = () => {
   const bigButton = "5.8rem";
+  const playerConsumables = useContext(HUDContext);
   const [consoleUp, setConsoleUp] = useState(false);
+
+  useEffect(()=>{
+    Client.getInstance().phaserGame.events.once("change_console_state", ()=> setConsoleUp(!consoleUp)  );
+  },[consoleUp])
 
   useEffect(()=>{
     Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{setConsoleUp(false)} );
   },[])
-
-  const playerConsumables = useContext(HUDContext);
 
   // rendering function for each consumable  slot. TO DO: replace by drag-and-drop system to assign shortcuts
   const renderConsumable = (index:number) =>{
@@ -43,7 +46,6 @@ const MainConsole = () => {
       updatedButtons.push( renderConsumable(i) )
     }
     setConsoleButtons( updatedButtons );
-    console.log(updatedButtons)
   }
 
   const [consoleButtons , setConsoleButtons] = useState(shortcutButtons);
