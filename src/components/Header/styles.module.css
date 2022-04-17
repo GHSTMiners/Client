@@ -29,7 +29,7 @@
   text-transform: uppercase;
   text-decoration: none;
   display: block;
-  padding: 2.5rem 0;
+  padding-top: 2.5rem ;
   transition: 0.3s;
 }
 
@@ -37,6 +37,7 @@
   color: #cecece;
   font-family: Rocks;
   opacity: 0.9;
+  border-bottom:3px solid #cecece;
 }
 
 @font-face {
@@ -53,9 +54,10 @@
   text-transform: uppercase;
   text-decoration: none;
   display: block;
-  padding: 2.5rem 0;
+  padding-top: 2.5rem ;
   cursor: default;
   transition: 0.3s;
+  border-bottom:3px solid white;
 }
 
 .activeNavLink:hover {
