@@ -11,11 +11,8 @@ import styles from "./styles.module.css";
 import { GameTraits } from "components/GameTraits";
 import { displayOptions } from "./displayOptions";
 import Client from "matchmaking/Client";
-import * as Chisel from "chisel-api-interface";
 import * as mathjs from "mathjs"
-import { useEffect, useState } from "react";
-import { number } from "mathjs";
-import { setDatasets } from "react-chartjs-2/dist/utils";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   selectedGotchi?: AavegotchiObject;
@@ -25,37 +22,42 @@ interface Props {
 ChartJS.register(RadialLinearScale, ArcElement, Tooltip, Legend);
 
 export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
-  const gotchiGameTraits = GameTraits({
-    gotchi: selectedGotchi,
-    gameWorld: "Classic",
-  });
 
   type gameTraitObj = { label: string; trait : number};
   type displayDataObj = { name: string; label : string};
-
-  const graphDataInfo: displayDataObj[] = []; 
-  const barDataInfo: displayDataObj[] = []; 
-  const graphRecord: Record<string, gameTraitObj>= {};
+  
   // Graph game traits
+  const defaultGraphTraits: Array<number> = [];
+  const graphLabels: Array<string> = [];
+  const graphDataInfo: displayDataObj[] = []; 
   graphDataInfo.push({name:'Cargo', label:'Cargo'});
   graphDataInfo.push({name:'Health', label:'Health'});
   graphDataInfo.push({name:'Fuel', label:'Fuel'});
   graphDataInfo.push({name:'Flying speed', label:'Movement'});
   graphDataInfo.push({name:'Digging speed', label:'Drill'});
-  // Bars game traits
+  graphDataInfo.forEach(entry =>{
+    defaultGraphTraits.push(50);
+    graphLabels.push(entry.label);
+  })
+  const [graphTraits,setGraphTraits ]=useState(defaultGraphTraits);
+  
+  // Bar game traits
+  const defaultBarTraits: Array<number> = [];
+  const barDataInfo: displayDataObj[] = []; 
   barDataInfo.push({name:'Consumable price', label:'Shop prices'});
-  barDataInfo.push({name:'Refinary yield', label:'Refinery'});
-  barDataInfo.push({name:'Upgrade price', label:'Upgrades'});
-
-  const gotchiGameTraitsVec = [gotchiGameTraits[0],gotchiGameTraits[1],gotchiGameTraits[2],gotchiGameTraits[3],gotchiGameTraits[4]];
-  const [graphData,setGraphData ]=useState(gotchiGameTraitsVec);
+  barDataInfo.push({name:'Refinery yield', label:'Refinery'});
+  barDataInfo.push({name:'Moving speed', label:'Upgrades'}); // TO DO: UPDATE WHEN THIS TRAIT IS AVAILABLE IN CHISEL
+  barDataInfo.forEach( entry =>{
+    defaultBarTraits.push(50);
+  })
+  const [barTraits,setBarTraits ]=useState(defaultBarTraits);
 
   let data = {
-    labels: ["Cargo", "Health", "Fuel", "Speed", "Dril"], //"Cargo", "Health", "Fuel", "Movement speed", "Drilling speed"
+    labels: graphLabels, 
     datasets: [
       {
         label: "",
-        data: graphData,
+        data: graphTraits,
         backgroundColor: [
           "rgba(216, 181, 97, 0.7)",
           "rgba(143, 164, 148, 0.7)",
@@ -67,8 +69,8 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
       },
     ],
   };
-  
 
+  const dataRecord: Record<string, gameTraitObj>= {};
 
   useEffect(()=>{
     if (selectedGotchi){
@@ -91,7 +93,7 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
             const normalizedGameTrait = Math.round((rawVital-minVital)/(maxVital-minVital)*100);
             const gameTraitElement =  {label:vital.name, trait:normalizedGameTrait} ;
             gameTraitData.push(gameTraitElement);
-            graphRecord[vital.name] = gameTraitElement;
+            dataRecord[vital.name] = gameTraitElement;
           } catch{}
         })
         world.skills.forEach((skill)=>{
@@ -102,45 +104,40 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
             const normalizedGameTrait = Math.round((rawSkill-minSkill)/(maxSkill-minSkill)*100);
             const gameTraitElement =  {label:skill.name, trait:normalizedGameTrait} ;
             gameTraitData.push( gameTraitElement );
-            graphRecord[skill.name] = gameTraitElement;
+            dataRecord[skill.name] = gameTraitElement;
           } catch{}
         })
         setCustomLabels();
-        overwriteGraphData()
+        // Updating front-end data after receiving all info from Chisel
+        updateStateData(graphTraits,graphDataInfo,setGraphTraits);
+        updateStateData(barTraits,barDataInfo,setBarTraits);
       })
     } 
   },[selectedGotchi])
 
   const setCustomLabels = ()=>{
     graphDataInfo.forEach(  dataEntry =>{
-        const uiTrait = graphRecord[dataEntry.name];
+        const uiTrait = dataRecord[dataEntry.name];
         if (uiTrait){
-            graphRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
+          dataRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
         }
       }
     )
     barDataInfo.forEach(  dataEntry =>{
-        const uiTrait = graphRecord[dataEntry.name];
+        const uiTrait = dataRecord[dataEntry.name];
         if (uiTrait){
-            graphRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
+          dataRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
         }
       }
     )
   }
 
-  const overwriteGraphData = ()=>{
-    let newData = [...graphData];
-    graphDataInfo.forEach( (obj,index) =>{
-      //newData.labels[index] = graphDataInfo[index].label;
-      newData[index] = graphRecord[graphDataInfo[index].name].trait;
+  const updateStateData = (traits:number[],displayObjs:displayDataObj[],setMethod:(value:React.SetStateAction<number[]>)=>void) =>{
+    let newTraits = [...traits];
+    displayObjs.forEach( (obj,index) =>{
+      newTraits[index] = dataRecord[displayObjs[index].name].trait;
     })
-    setGraphData(newData);
-  }
-
-  const polarChart =(dataset:any)=>{
-    return(
-      <PolarArea options={displayOptions} data={dataset} />
-    )
+    setMethod(newTraits);
   }
 
   const renderModifierBar = (
@@ -160,6 +157,10 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
     </div>
   );
 
+  let renderedTraitBars = barDataInfo.map(function (traitObj,index) {
+    return (renderModifierBar(traitObj.label, `${barTraits[index]}%`, ""))
+  });
+
   return (
     <div className={styles.graphContainer}>
       <div className={styles.gotchiName}>
@@ -169,9 +170,7 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
         <PolarArea options={displayOptions} data={data} />
       </div>
       <div className={styles.barsContainer}>
-        {renderModifierBar("Explosives", `${gotchiGameTraits[5]}%`, "")}
-        {renderModifierBar("Crystals", `${gotchiGameTraits[6]}%`, "")}
-        {renderModifierBar("Upgrades", `${gotchiGameTraits[7]}%`, "")}
+        {renderedTraitBars} 
       </div>
     </div>
   );
