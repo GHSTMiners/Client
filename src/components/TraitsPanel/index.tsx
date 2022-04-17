@@ -13,7 +13,9 @@ import { displayOptions } from "./displayOptions";
 import Client from "matchmaking/Client";
 import * as Chisel from "chisel-api-interface";
 import * as mathjs from "mathjs"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { number } from "mathjs";
+import { setDatasets } from "react-chartjs-2/dist/utils";
 
 interface Props {
   selectedGotchi?: AavegotchiObject;
@@ -28,20 +30,32 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
     gameWorld: "Classic",
   });
 
-  type gameTraitObj = { name: string; trait : number};
-  
-  const data = {
+  type gameTraitObj = { label: string; trait : number};
+  type displayDataObj = { name: string; label : string};
+
+  const graphDataInfo: displayDataObj[] = []; 
+  const barDataInfo: displayDataObj[] = []; 
+  const graphRecord: Record<string, gameTraitObj>= {};
+  // Graph game traits
+  graphDataInfo.push({name:'Cargo', label:'Cargo'});
+  graphDataInfo.push({name:'Health', label:'Health'});
+  graphDataInfo.push({name:'Fuel', label:'Fuel'});
+  graphDataInfo.push({name:'Flying speed', label:'Movement'});
+  graphDataInfo.push({name:'Digging speed', label:'Drill'});
+  // Bars game traits
+  barDataInfo.push({name:'Consumable price', label:'Shop prices'});
+  barDataInfo.push({name:'Refinary yield', label:'Refinery'});
+  barDataInfo.push({name:'Upgrade price', label:'Upgrades'});
+
+  const gotchiGameTraitsVec = [gotchiGameTraits[0],gotchiGameTraits[1],gotchiGameTraits[2],gotchiGameTraits[3],gotchiGameTraits[4]];
+  const [graphData,setGraphData ]=useState(gotchiGameTraitsVec);
+
+  let data = {
     labels: ["Cargo", "Health", "Fuel", "Speed", "Dril"], //"Cargo", "Health", "Fuel", "Movement speed", "Drilling speed"
     datasets: [
       {
         label: "",
-        data: [
-          gotchiGameTraits[0],
-          gotchiGameTraits[1],
-          gotchiGameTraits[2],
-          gotchiGameTraits[3],
-          gotchiGameTraits[4],
-        ],
+        data: graphData,
         backgroundColor: [
           "rgba(216, 181, 97, 0.7)",
           "rgba(143, 164, 148, 0.7)",
@@ -53,6 +67,8 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
       },
     ],
   };
+  
+
 
   useEffect(()=>{
     if (selectedGotchi){
@@ -67,32 +83,64 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
       const gameTraitData: gameTraitObj[] = [];
       const selectedWorld = Client.getInstance().apiInterface.world(worldID);
       selectedWorld.then( world => { 
-        const x = world.vitals.forEach((vital)=>{
+        world.vitals.forEach((vital)=>{
           try{
-            let rawVital = mathjs.evaluate(vital.initial, scope);
-            let minVital = mathjs.evaluate(vital.minimum, scope);
-            let maxVital = mathjs.evaluate(vital.maximum, scope);
-            let normalizedGameTrait = Math.round((rawVital-minVital)/(maxVital-minVital)*100);
-            gameTraitData.push( {name:vital.name, trait:normalizedGameTrait} );
+            const rawVital = mathjs.evaluate(vital.initial, scope);
+            const minVital = mathjs.evaluate(vital.minimum, scope);
+            const maxVital = mathjs.evaluate(vital.maximum, scope);
+            const normalizedGameTrait = Math.round((rawVital-minVital)/(maxVital-minVital)*100);
+            const gameTraitElement =  {label:vital.name, trait:normalizedGameTrait} ;
+            gameTraitData.push(gameTraitElement);
+            graphRecord[vital.name] = gameTraitElement;
           } catch{}
         })
-        const y = world.skills.forEach((skill)=>{
+        world.skills.forEach((skill)=>{
           try{
-            let rawSkill = mathjs.evaluate(skill.initial, scope);
-            let minSkill = mathjs.evaluate(skill.minimum, scope);
-            let maxSkill = mathjs.evaluate(skill.maximum, scope);
-            let normalizedGameTrait = Math.round((rawSkill-minSkill)/(maxSkill-minSkill)*100);
-            gameTraitData.push( {name:skill.name, trait:normalizedGameTrait} );
+            const rawSkill = mathjs.evaluate(skill.initial, scope);
+            const minSkill = mathjs.evaluate(skill.minimum, scope);
+            const maxSkill = mathjs.evaluate(skill.maximum, scope);
+            const normalizedGameTrait = Math.round((rawSkill-minSkill)/(maxSkill-minSkill)*100);
+            const gameTraitElement =  {label:skill.name, trait:normalizedGameTrait} ;
+            gameTraitData.push( gameTraitElement );
+            graphRecord[skill.name] = gameTraitElement;
           } catch{}
         })
-        setGraphData(gameTraitData)
+        setCustomLabels();
+        overwriteGraphData()
       })
     } 
   },[selectedGotchi])
 
-  const setGraphData = (gameTraitData:gameTraitObj[])=>{
-    //TO DO: CREATE A MAPPING FUNCTION TO UPDATE THE GRAPHS BY FILTERING THE RAW DATA AND ONLY DISPLAY THE MOST RELEVANT
-    console.log(gameTraitData)
+  const setCustomLabels = ()=>{
+    graphDataInfo.forEach(  dataEntry =>{
+        const uiTrait = graphRecord[dataEntry.name];
+        if (uiTrait){
+            graphRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
+        }
+      }
+    )
+    barDataInfo.forEach(  dataEntry =>{
+        const uiTrait = graphRecord[dataEntry.name];
+        if (uiTrait){
+            graphRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
+        }
+      }
+    )
+  }
+
+  const overwriteGraphData = ()=>{
+    let newData = [...graphData];
+    graphDataInfo.forEach( (obj,index) =>{
+      //newData.labels[index] = graphDataInfo[index].label;
+      newData[index] = graphRecord[graphDataInfo[index].name].trait;
+    })
+    setGraphData(newData);
+  }
+
+  const polarChart =(dataset:any)=>{
+    return(
+      <PolarArea options={displayOptions} data={dataset} />
+    )
   }
 
   const renderModifierBar = (
