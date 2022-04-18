@@ -30,7 +30,8 @@
 }
 
 .rankingData{
-  height: 30rem;
+  height: 27rem;
   overflow-y: scroll;
   scrollbar-width: thin;
+  margin-bottom: 1rem;
 }

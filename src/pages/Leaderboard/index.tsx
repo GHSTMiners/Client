@@ -98,10 +98,10 @@ const Leaderboard = (): JSX.Element => {
   },[])
 
   return (
-    <div className={styles.backgroundContainer}>
-      <div className={styles.leaderboardContainer}>
-        
-        <div className={styles.gotchiPodiumContainer}>
+     <div className={styles.leaderboardContainer}>
+       
+       <div className={styles.gotchiPodiumContainer}>
+         <div className={styles.podiumContent}>
           <div className={styles.gotchiRank1}>
             {renderGotchi(20689,true)}
           </div>
@@ -124,49 +124,51 @@ const Leaderboard = (): JSX.Element => {
             <div style={{color:'#ffffff'}} >101</div>
           </div>
           <img className={styles.gotchiPodium} src={gotchiPodium} />
-        </div>
-
-        <div className={styles.tableContainer}>
-          <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
-          <div className={styles.tableBackground}>
-            <div className={styles.tableToolbar}>
-              <div>
-                <div className={styles.leaderboardTag}>World</div>
-                <select onChange={()=>{}} className={styles.selectDropdown}>
-                  {leaderboardWorlds}
-                </select>
-              </div>
-              <div>
-                <div className={styles.leaderboardTag}>Game Mode</div>
-                <select onChange={()=>{}} className={styles.selectDropdown}>
-                  <option key={'Classic'} value={1}>Classic</option>
-                </select>
-              </div>
-              <div>
-                <div className={styles.leaderboardTag}>Category</div>
-                <select onChange={()=>{}} className={styles.selectDropdown}>
-                  {leaderboardCathegories}
-                </select>
-              </div>
-              <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)}
-                             textLabel={'Only Mine'} />            
-            </div>
-            <div className={styles.leaderboardTableContainer}>
-              <LeaderboardTable pageIndex={currentPage}
-                              entriesPerPage={entriesPerPage}
-                              highscores={highScores}
-                              ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
-                              onlyMine={showOnlyMine}
-                              competition={competition}   />
-            </div>
-            <Pagination page={currentPage} 
-                    totalPages={totalPages} 
-                    handlePagination={handlePages} />
-          </div>
-          <img className={styles.leaderboardFooter} src={LeaderboardFooter} /> 
-        </div> 
-      </div>
-    </div>
+         </div>
+       </div>
+  
+       <div className={styles.tableContainer}>
+         <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
+         <div className={styles.tableBackground}>
+           <div className={styles.tableToolbar}>
+             <div>
+               <div className={styles.leaderboardTag}>World</div>
+               <select onChange={()=>{}} className={styles.selectDropdown}>
+                 {leaderboardWorlds}
+               </select>
+             </div>
+             <div>
+               <div className={styles.leaderboardTag}>Game Mode</div>
+               <select onChange={()=>{}} className={styles.selectDropdown}>
+                 <option key={'Classic'} value={1}>Classic</option>
+               </select>
+             </div>
+             <div>
+               <div className={styles.leaderboardTag}>Category</div>
+               <select onChange={()=>{}} className={styles.selectDropdown}>
+                 {leaderboardCathegories}
+               </select>
+             </div>
+             <RockyCheckbox onClick={()=> setShowOnlyMine(!showOnlyMine)}
+                            textLabel={'Only Mine'} />            
+           </div>
+           <div className={styles.leaderboardTableContainer}>
+             <LeaderboardTable pageIndex={currentPage}
+                             entriesPerPage={entriesPerPage}
+                             highscores={highScores}
+                             ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
+                             onlyMine={showOnlyMine}
+                             competition={competition}   />
+           </div>
+           <Pagination page={currentPage} 
+                   totalPages={totalPages} 
+                   handlePagination={handlePages} />
+            
+         </div>
+         <img className={styles.leaderboardFooter} src={LeaderboardFooter} />
+       </div> 
+     
+     </div>
   );  
 };
 

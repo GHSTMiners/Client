@@ -31,6 +31,7 @@ input[type="checkbox"] {
   background: transparent;
   margin-right: 4px;
   background-image: url("assets/icons/checkbox_frame.svg");
+  background-repeat: no-repeat;
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */

@@ -70,7 +70,6 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
   });
 
   return (
-    <>
       <div className={styles.rankingList}>
         <div className={`${styles.rankingHeader} ${styles.tableRow}`}>
           <div>Rank</div>
@@ -81,7 +80,6 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
           {leaderboardDisplayData}
         </div>
       </div>
-    </>
   );
 };
 
