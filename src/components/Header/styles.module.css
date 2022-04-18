@@ -30,6 +30,7 @@
   text-decoration: none;
   display: block;
   padding-top: 2.5rem ;
+  white-space: nowrap;
   transition: 0.3s;
 }
 

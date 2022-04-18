@@ -1,10 +1,11 @@
 //import myGotchi from "assets/images/gotchi_example.png";
 import styles from "./styles.module.css";
 import GameConfigurator from "components/GameConfigurator";
-import { GotchiSelector, GotchiSVG } from "components";
+import { GotchiSelector, GotchiSVG, LobbyPanel } from "components";
 import { useWeb3, updateAavegotchis } from "web3/context";
 import { useCallback, useEffect, useState } from "react";
 import gotchiLoading from "assets/gifs/loading.gif";
+//import gotchiLoading from "assets/svgs/gotchi_outline.svg"
 import { Header } from "components";
 import { TraitsPanel } from "components/TraitsPanel";
 import RockySelect from "components/RockySelect";
@@ -106,10 +107,15 @@ const Home = (): JSX.Element => {
               />
             </div>
           </div>
+          {/* 
+          <div className={styles.lobbyPanel}>
+                  <LobbyPanel />
+          </div>
+          */}
           <div className={styles.gameConfigContainer}>
             <GameConfigurator />
-            
           </div>
+          
         </div>
     </>
   );

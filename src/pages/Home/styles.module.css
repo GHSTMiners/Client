@@ -1,30 +1,20 @@
 @import "theme/vars.css";
 
-.backgroundContainer {
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  background-position: center;
-}
-
 .homeContainer {
-  padding-top: 2rem;
-  display: flex;
-  flex-direction: row;
+  padding:2rem 5rem 2rem 5rem;
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: repeat(auto-fit,minmax(40rem,0.5fr));
   justify-content: space-around;
-  height: calc(100% - 7rem);
-  align-self: stretch;
-  flex-wrap: wrap;
-  overflow: hidden;
 }
 
 .gotchiMainContainer {
-  min-width: 40%;
+  height: 100%;
+  display: grid;
+  justify-content: center;
 }
 
 .gameConfigContainer {
-  min-width: 40%;
   height: 100%;
   display: grid;
   justify-content: center;

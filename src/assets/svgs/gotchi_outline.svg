@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 34 54" style="enable-background:new 0 0 34 54;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{display:none;}
+	.st2{display:inline;fill:#FFFFFF;}
+	.st3{display:inline;fill:url(#SVGID_1_);filter:url(#Adobe_OpacityMaskFilter);}
+	.st4{display:inline;mask:url(#f_00000161632990210753715400000002639996544868303280_);fill:#F9D792;}
+	.st5{display:inline;fill:#F9D792;}
+	
+		.st6{display:inline;fill:url(#SVGID_00000079475179940261617430000009924785978833384636_);filter:url(#Adobe_OpacityMaskFilter_00000163072187749826474120000000575459254760890032_);}
+	.st7{display:inline;mask:url(#f_00000015340936993720874120000016472147866060528783_);fill:#FFFFFF;}
+	.st8{fill:#6B6B6B;}
+	.st9{opacity:0.25;enable-background:new    ;}
+	.st10{display:inline;}
+	.st11{fill:#FF7D00;}
+	.st12{fill:#F9D792;}
+</style>
+<pattern  x="-15" y="58" width="72" height="72" patternUnits="userSpaceOnUse" id="e" viewBox="0 -72 72 72" style="overflow:visible;">
+	<g>
+		<rect y="-72" class="st0" width="72" height="72"/>
+		<rect x="36" y="-36" width="36" height="36"/>
+		<rect y="-72" width="36" height="36"/>
+	</g>
+</pattern>
+<g class="st1">
+	<path class="st2" d="M-15-6h64v32h-64V-6z"/>
+	<defs>
+		<filter id="Adobe_OpacityMaskFilter" filterUnits="userSpaceOnUse" x="-15" y="-6" width="64" height="32">
+			<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+		</filter>
+	</defs>
+	
+		<mask maskUnits="userSpaceOnUse" x="-15" y="-6" width="64" height="32" id="f_00000161632990210753715400000002639996544868303280_" class="st10">
+		
+			<pattern  id="SVGID_1_" xlink:href="#e" patternTransform="matrix(1 0 0 -1 63 -15335)"  style="filter:url(#Adobe_OpacityMaskFilter);">
+		</pattern>
+		<path style="fill:url(#SVGID_1_);filter:url(#Adobe_OpacityMaskFilter);" d="M-15-6h64v32h-64V-6z"/>
+	</mask>
+	<path class="st4" d="M-15-6h64v32h-64V-6z"/>
+	<path class="st5" d="M-15,26h64v32h-64V26z"/>
+	<defs>
+		
+			<filter id="Adobe_OpacityMaskFilter_00000176734526596008375750000014412890138591159171_" filterUnits="userSpaceOnUse" x="-15" y="26" width="64" height="32">
+			<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+		</filter>
+	</defs>
+	
+		<mask maskUnits="userSpaceOnUse" x="-15" y="26" width="64" height="32" id="f_00000015340936993720874120000016472147866060528783_" class="st10">
+		
+			<pattern  id="SVGID_00000003072786722082518010000005630581866217879716_" xlink:href="#e" patternTransform="matrix(1 0 0 -1 63 -15335)"  style="filter:url(#Adobe_OpacityMaskFilter_00000176734526596008375750000014412890138591159171_);">
+		</pattern>
+		
+			<path style="fill:url(#SVGID_00000003072786722082518010000005630581866217879716_);filter:url(#Adobe_OpacityMaskFilter_00000176734526596008375750000014412890138591159171_);" d="
+			M-15-6h64v32h-64V-6z"/>
+	</mask>
+	<path class="st7" d="M-15,58h64V26h-64V58z"/>
+</g>
+<g>
+	<g>
+		<path class="st8" d="M6,6h2V4H4v2h1H6z"/>
+		<path class="st8" d="M4,8V6H2v2h1H4z M10,4h2V2H8v2h1H10z"/>
+		<path class="st8" d="M14,2h8V0H12v2h1H14z M30,8h2V6h-2v1V8z"/>
+		<path class="st8" d="M33,8h-1v39h-2v2h4V8H33z M22,4h4V2h-4v1V4z"/>
+		<path class="st8" d="M26,6h4V4h-4v1V6z M2,47V8H0v41h4v-2H3H2z"/>
+		<path class="st8" d="M9,45H4v2h5v-1V45z"/>
+		<path class="st8" d="M12,47H9v2h5v-2h-1H12z M30,45h-5v2h5v-1V45z"/>
+		<path class="st8" d="M20,45h-6v2h6v-1V45z"/>
+		<path class="st8" d="M23,47h-3v2h5v-2h-1H23z"/>
+	</g>
+</g>
+<g>
+	<path class="st9" d="M10,52H4v1h1v1h24v-1h1v-1h-1H10z"/>
+</g>
+<g>
+	<g>
+		<path class="st8" d="M4,36h1v1H4V36z M5,30h1v1H5V30z"/>
+		<path class="st8" d="M6,31h1v1H6V31z M11,34v4h1v-4H11z M6,37H5v1h2v-1H6z"/>
+		<path class="st8" d="M9,38H7v1h4v-1h-1H9z M10,33H9v1h2v-1H10z"/>
+		<path class="st8" d="M8,32H7v1h2v-1H8z"/>
+	</g>
+	<g>
+		<path class="st8" d="M4,37h1v1H4V37z M9,39H7v1h4v-1h-1H9z"/>
+		<path class="st8" d="M12,35v3h1v-3H12z M6,38H5v1h2v-1H6z"/>
+		<path class="st8" d="M11,38h1v1h-1V38z M4,35H3v2h1v-1V35z"/>
+	</g>
+	<g>
+		<path class="st8" d="M29,36h1v1h-1V36z M28,30h1v1h-1V30z"/>
+		<path class="st8" d="M27,31h1v1h-1V31z"/>
+		<path class="st8" d="M27,33v-1h-2v1h1H27z M27,37v1h2v-1h-1H27z"/>
+		<path class="st8" d="M25,38h-2v1h4v-1h-1H25z"/>
+		<path class="st8" d="M23,36v-2h-1v4h1v-1V36z"/>
+		<path class="st8" d="M25,34v-1h-2v1h1H25z"/>
+	</g>
+	<g>
+		<path class="st8" d="M27,38v1h2v-1h-1H27z M22,36v-1h-1v3h1v-1V36z"/>
+		<path class="st8" d="M25,39h-2v1h4v-1h-1H25z"/>
+		<path class="st8" d="M22,38h1v1h-1V38z M29,37h1v1h-1V37z"/>
+	</g>
+</g>
+<g class="st1">
+	<g class="st10">
+		<path class="st11" d="M-1,34h1v1h-1V34z M-2,28h1v1h-1V28z"/>
+		<path class="st11" d="M-1,27h1v1h-1V27z M-3,29h1v1h-1V29z M-8,32h1v4h-1V32z M-3,35h2v1h-2V35z"/>
+		<path class="st11" d="M-7,36h4v1h-4V36z M-7,31h2v1h-2V31z"/>
+		<path class="st11" d="M-5,30h2v1h-2V30z"/>
+	</g>
+	<g class="st10">
+		<path class="st12" d="M-1,33h1v1h-1V33z"/>
+		<path class="st12" d="M-3,34h2v1h-2V34z"/>
+		<path class="st12" d="M-7,35h4v1h-4V35z"/>
+	</g>
+	<path class="st2" d="M-7,32v3h4v-1h2v-1h1v-5h-1v1h-1v1h-1v1h-2v1H-7z"/>
+	<g class="st10">
+		<path class="st11" d="M34,34h1v1h-1V34z M35,28h1v1h-1V28z"/>
+		<path class="st11" d="M34,27h1v1h-1V27z M36,29h1v1h-1V29z M41,32h1v4h-1V32z M35,35h2v1h-2V35z"/>
+		<path class="st11" d="M37,36h4v1h-4V36z M39,31h2v1h-2V31z"/>
+		<path class="st11" d="M37,30h2v1h-2V30z"/>
+	</g>
+	<g class="st10">
+		<path class="st12" d="M34,33h1v1h-1V33z"/>
+		<path class="st12" d="M35,34h2v1h-2V34z"/>
+		<path class="st12" d="M37,35h4v1h-4V35z"/>
+	</g>
+	<path class="st2" d="M39,32v-1h-2v-1h-1v-1h-1v-1h-1v5h1v1h2v1h4v-3H39z"/>
+</g>
+<g class="st1">
+	<g class="st10">
+		<path class="st12" d="M35,32h1v1h-1V32z"/>
+		<path class="st12" d="M34,33h1v1h-1V33z M36,31h1v1h-1V31z"/>
+		<path class="st12" d="M37,30h2v1h-2V30z"/>
+		<path class="st12" d="M39,29h2v1h-2V29z"/>
+	</g>
+	<path class="st2" d="M37,26v1h-2v1h-1v5h1v-1h1v-1h1v-1h2v-1h2v-3H37z"/>
+	<g class="st10">
+		<path class="st11" d="M34,27h1v1h-1V27z"/>
+		<path class="st11" d="M35,26h2v1h-2V26z M35,33h1v1h-1V33z"/>
+		<path class="st11" d="M34,34h1v1h-1V34z M36,32h1v1h-1V32z"/>
+		<path class="st11" d="M37,31h2v1h-2V31z M37,25h4v1h-4V25z"/>
+		<path class="st11" d="M41,26h1v4h-1V26z"/>
+		<path class="st11" d="M39,30h2v1h-2V30z"/>
+	</g>
+	<g class="st10">
+		<path class="st12" d="M-2,32h1v1h-1V32z"/>
+		<path class="st12" d="M-1,33h1v1h-1V33z M-3,31h1v1h-1V31z"/>
+		<path class="st12" d="M-5,30h2v1h-2V30z"/>
+		<path class="st12" d="M-7,29h2v1h-2V29z"/>
+	</g>
+	<path class="st2" d="M-7,26v3h2v1h2v1h1v1h1v1h1v-5h-1v-1h-2v-1H-7z"/>
+	<g class="st10">
+		<path class="st11" d="M-1,27h1v1h-1V27z"/>
+		<path class="st11" d="M-3,26h2v1h-2V26z M-2,33h1v1h-1V33z"/>
+		<path class="st11" d="M-1,34h1v1h-1V34z M-3,32h1v1h-1V32z"/>
+		<path class="st11" d="M-5,31h2v1h-2V31z M-7,25h4v1h-4V25z"/>
+		<path class="st11" d="M-8,26h1v4h-1V26z"/>
+		<path class="st11" d="M-7,30h2v1h-2V30z"/>
+	</g>
+</g>
+</svg>
