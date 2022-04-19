@@ -1,7 +1,7 @@
 @import "theme/vars.css";
 
 .homeContainer {
-  padding:2rem 5rem 2rem 5rem;
+  padding:2rem 5rem 0 5rem;
   display: grid;
   gap: 4rem;
   grid-template-columns: repeat(auto-fit,minmax(40rem,0.5fr));
@@ -102,27 +102,6 @@
   line-height: 1.5;
 }
 
-@media only screen and (max-width: 1400px) {
-  .gameConfigContainer {
-    min-width: 80%;
-  }
-
-  .gameConfigContainer > div > div {
-    padding: 5em;
-    padding-top: 2em;
-  }
+.lobbyPanel{
+  height: 30rem;
 }
-
-/*
-@media only screen and (min-width: 768px) {
-  .homeContainer {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    background-repeat: repeat-y;
-    display: flex;
-  }
-
-  .detailsPanelContainer {
-    margin-top: 0;
-  }
-} */

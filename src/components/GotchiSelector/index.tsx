@@ -2,7 +2,7 @@ import { AavegotchiObject } from "types";
 import { click, ArrowLeft, ArrowRight } from "assets";
 import { playSound } from "helpers/hooks/useSound";
 import { useEffect, useState, useCallback } from "react";
-import gotchiLoading from "assets/gifs/loading.gif";
+import gotchiLoading from "assets/gifs/loadingBW.gif";
 import useWindowWidth from "helpers/hooks/windowSize";
 import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";

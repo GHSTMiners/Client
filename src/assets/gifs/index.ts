@@ -1,1 +1,1 @@
-export * as loadingGif from './loading.gif';
+export * as loadingGif from './loadingBW.gif';

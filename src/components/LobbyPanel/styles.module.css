@@ -1,7 +1,6 @@
 .lobbyContainer{
-    background-image: url("assets/svgs/lobby_rock_mockup.svg");
+    background-image: url("assets/svgs/lobby_rock.svg");
     background-position: cover;
     background-repeat: no-repeat;
-    min-width: 41rem;
-    aspect-ratio: 657/748;
+    height: 45rem;
 }

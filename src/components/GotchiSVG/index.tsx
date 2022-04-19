@@ -1,8 +1,7 @@
 import { useWeb3 } from "web3/context";
 import { useEffect, useState } from "react";
 import { callDiamond } from "web3/actions";
-import gotchiLoading from "assets/gifs/loading.gif";
-//import gotchiLoading from "assets/svgs/gotchi_outline.svg"
+import gotchiLoading from "assets/gifs/loadingBW.gif";
 import { Web3Provider } from "@ethersproject/providers";
 import {
   convertInlineSVGToBlobURL,
