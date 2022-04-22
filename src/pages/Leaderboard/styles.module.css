@@ -15,10 +15,6 @@
   z-index: 3;
 }
 
-.podiumContent{
-  position:relative;
-}
-
 .tableContainer{
   height: 100%;
   display: grid;
@@ -41,63 +37,6 @@
   pointer-events: none;
 }
 
-.gotchiRank1{
-  position: absolute;
-  height: 12rem;
-  left: 17.5rem;
-  bottom: 20.5rem;
-  z-index: 100;
-}
-
-.podiumText{
-  position: absolute;
-  color: #4f4f4fff;
-  font-family: Rocks;
-  display: flex;
-  flex-direction: column;
-}
-
-.rank1Text{
-  left: 51.5%;
-  bottom: 13rem;
-  font-size: 1.5rem;
-  align-items: center;
-  transform: translate(-50%,0%);
-  z-index: 100;
-}
-
-.gotchiRank2{
-  position: absolute;
-  height: 11rem;
-  left: 4.5rem;
-  bottom: 18rem;
-  z-index: 100;
-}
-
-.rank2Text{
-  left: 6.5rem;
-  bottom: 15rem;
-  z-index: 100;
-}
-
-.gotchiRank3{
-  position: absolute;
-  height: 10rem;
-  left: 31rem;
-  bottom: 16.5rem;
-  z-index: 100;
-}
-
-.rank3Text{
-  left: 34rem;
-  bottom: 14rem;
-  font-size: 0.9rem;
-  z-index: 100;
-}
-
-.gotchiPodium{
-  width: 45rem;
-}
 
 .leaderboardHeader{
   width: 100%;
