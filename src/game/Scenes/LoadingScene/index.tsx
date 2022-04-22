@@ -40,6 +40,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.spritesheet("explosionAnimation", "assets/images/explosionSprite.png", {frameHeight: 128, frameWidth: 128, startFrame:0, endFrame: 15})
     this.load.spritesheet("jetpackAnimationRear", "assets/sprites/jetpackRear.png", {frameHeight: 337, frameWidth: 296, startFrame:0, endFrame: 24})
     this.load.spritesheet("jetpackAnimationSide", "assets/sprites/jetpackSide.png", {frameHeight: 283, frameWidth: 103, startFrame:0, endFrame: 24})
+    this.load.spritesheet("jackhammerAnimation", "assets/sprites/jackhammer.png", {frameHeight: 83, frameWidth: 112, startFrame:0, endFrame: 10})
 
     let world: Chisel.DetailedWorld | undefined =
       Client.getInstance().chiselWorld;
