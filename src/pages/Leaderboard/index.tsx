@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import { Podium, RockyCheckbox } from "components";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
@@ -9,6 +9,8 @@ import { HighScore } from "types";
 import { Pagination } from 'components/Pagination';
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
+import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
+import { number } from "mathjs";
 
 
 const Leaderboard = (): JSX.Element => {
@@ -59,8 +61,13 @@ const Leaderboard = (): JSX.Element => {
   const emptyWorlds : JSX.Element[] = [];
   const emptyCathegories : JSX.Element[] = [];
   const emptyGameModes : JSX.Element[] = [];
+  const emptyStatisticsCathegory: StatisticCategory[] =[];
+  const emptyCathegory = {} as StatisticCategory;
   const [leaderboardWorlds,setLeaderboardWorlds] = useState(emptyWorlds);
   const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyCathegories);
+  const [statisticsCathegories,setStatisticsCathegories] = useState(emptyStatisticsCathegory);
+  const [activeCathegory,setActiveCathegory] = useState(emptyCathegory);
+
   //const [leaderboardGameModes,setLeaderboardGameModes] = useState(emptyGameModes); // TO DO
   
   // Retrieving data from Chisel
@@ -78,8 +85,9 @@ const Leaderboard = (): JSX.Element => {
 
     const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
     rawCathegories.then( categoryList => {
+      setStatisticsCathegories(categoryList);
          const optionList = categoryList.map(
-           function(categoryObj) { return renderSelectElement(categoryObj.name,categoryObj.id,categoryObj.name) }
+           function(categoryObj) { return renderSelectElement(categoryObj.name as string,categoryObj.id as number,categoryObj.name as string) }
          ) 
          if (optionList){
           setLeaderboardCathegories(optionList);
@@ -87,6 +95,29 @@ const Leaderboard = (): JSX.Element => {
       })
 
   },[])
+
+  const updateCathegory = (event: ChangeEvent<HTMLSelectElement>) => {
+    if (statisticsCathegories){
+      const selectedId = number(event.target.value) as number;
+      const selectedName = statisticsCathegories.find( element => element.id==selectedId)?.name;
+      if (selectedName){
+        const requestedCathegory: StatisticCategory= {id:selectedId, name:selectedName};
+        setActiveCathegory(requestedCathegory)
+        console.log(`Active Leaderboard Cathegory: ${selectedId} - ${selectedName}`); 
+      }
+    }
+  }
+
+  useEffect(()=>{
+    if (activeCathegory){
+      const rawHighScores = Client.getInstance().apiInterface.highscores(activeCathegory)
+      
+      rawHighScores.then( rawScoresData => {
+        console.log(rawScoresData)
+        }
+      )
+    }
+  },[activeCathegory])
 
   return (
      <div className={styles.leaderboardContainer}>
@@ -113,7 +144,7 @@ const Leaderboard = (): JSX.Element => {
              </div>
              <div>
                <div className={styles.leaderboardTag}>Category</div>
-               <select onChange={()=>{}} className={styles.selectDropdown}>
+               <select onChange={(e)=>updateCathegory(e)} className={styles.selectDropdown}>
                  {leaderboardCathegories}
                </select>
              </div>
