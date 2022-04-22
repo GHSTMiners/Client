@@ -22,3 +22,4 @@ export * from "./Chat";
 export * from "./LeaderboardTable"
 export * from "./Pagination"
 export * from "./LobbyPanel"
+export * from "./Podium"

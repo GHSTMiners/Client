@@ -1,6 +1,5 @@
 import styles from "./styles.module.css";
-import { GotchiSVG, Header, RockyCheckbox } from "components";
-import gotchiPodium from "assets/svgs/podium.svg"
+import { Podium, RockyCheckbox } from "components";
 import { useEffect, useState } from "react";
 import LeaderboardTable from "components/LeaderboardTable";
 import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
@@ -49,14 +48,6 @@ const Leaderboard = (): JSX.Element => {
     if (gotchiID == 3935) randomName='Attila'
     highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 300-i })
   }
-
-  const renderGotchi = (id:number, winner:boolean)=>{
-    return(
-      <GotchiSVG tokenId={`${id}`}  
-      options={{ animate: true, removeBg: true, armsUp:winner }}
-      />
-    )
-  }
     
   const entriesPerPage = 50;
   const totalPages = Math.ceil(highScores.length/entriesPerPage);
@@ -101,30 +92,7 @@ const Leaderboard = (): JSX.Element => {
      <div className={styles.leaderboardContainer}>
        
        <div className={styles.gotchiPodiumContainer}>
-         <div className={styles.podiumContent}>
-          <div className={styles.gotchiRank1}>
-            {renderGotchi(20689,true)}
-          </div>
-          <div className={`${styles.podiumText} ${styles.rank1Text}`}>
-            Martens
-            <div style={{color:'#ffffff'}} >420</div>
-          </div>
-          <div className={styles.gotchiRank2}>
-            {renderGotchi(21223,false)}
-          </div>
-          <div className={`${styles.podiumText} ${styles.rank2Text}`}>
-            Corelone
-            <div style={{color:'#ffffff'}} >169</div>
-          </div>
-          <div className={styles.gotchiRank3}>
-            {renderGotchi(3934,false)}
-          </div>
-          <div className={`${styles.podiumText} ${styles.rank3Text}`}>
-            Yoda
-            <div style={{color:'#ffffff'}} >101</div>
-          </div>
-          <img className={styles.gotchiPodium} src={gotchiPodium} />
-         </div>
+         <Podium gotchiIDs={[20689,21223,3934]} />
        </div>
   
        <div className={styles.tableContainer}>

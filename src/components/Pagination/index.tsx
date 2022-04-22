@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './pagination.module.css';
 
-export interface Props {
+interface Props {
   page: number;
   totalPages: number;
   handlePagination: (page: number) => void;
