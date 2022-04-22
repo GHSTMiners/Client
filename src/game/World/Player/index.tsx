@@ -7,13 +7,14 @@ import Client from "matchmaking/Client";
 import { dispatch } from "@svgdotjs/svg.js";
 import MainScene from "game/Scenes/MainScene";
 import Jetpack from "../Jetpack";
+import Jackhammer from "../Jackhammer";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
     super(scene, player.playerState.x, player.playerState.y);
     this.setDepth(40);
 
-    //Add artifacts
+    //Add jetpack
     this.playerJetpack = new Jetpack(scene, this);
     this.add(this.playerJetpack);
 
@@ -26,6 +27,10 @@ export class Player extends Phaser.GameObjects.Container {
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.alphaRefresh = 0.4;
+
+    //Add jackhammer
+    this.playerJackhammer = new Jackhammer(scene, this);
+    this.add(this.playerJackhammer)
 
     //Add messages
     this.playerMessage = this.scene.add.text(0, 0, "Hallo");
@@ -184,6 +189,7 @@ export class Player extends Phaser.GameObjects.Container {
   update(time: number, delta: number): void {
     //Update jetpack
     this.playerJetpack.process();
+    this.playerJackhammer.process();
 
     //Drilling update stuff
     let playerState: PlayerState = this.playerSchema.playerState;
@@ -277,5 +283,6 @@ export class Player extends Phaser.GameObjects.Container {
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
   private playerJetpack: Jetpack;
+  private playerJackhammer : Jackhammer
   private currentBuilding: string;
 }
