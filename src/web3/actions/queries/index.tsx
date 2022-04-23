@@ -4,6 +4,10 @@ export interface AavegotchisOfOwner {
   aavegotchis: Array<AavegotchiContractObject>
 }
 
+export interface AavegotchisNameArray {
+  aavegotchis: Array<{id:string, name:string}>
+}
+
 export const getAllAavegotchisOfOwner = (owner: string) => {
   const query = `
     {
@@ -16,6 +20,18 @@ export const getAllAavegotchisOfOwner = (owner: string) => {
         owner {
           id
         }
+      }
+    }
+  `
+  return query;
+}
+
+export const getAavegotchiNames = (ids: string[]) => {
+  const query = `
+    {
+      aavegotchis(where: { gotchiId_in: [${ids}] }) {
+        id
+        name
       }
     }
   `

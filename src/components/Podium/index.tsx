@@ -2,13 +2,15 @@ import React from 'react';
 import { GotchiSVG} from "components";
 import gotchiPodium from "assets/svgs/podium.svg"
 import styles from './styles.module.css';
+import { HighScore } from 'types';
+import { number } from 'mathjs';
 
 interface Props {
-  gotchiIDs: number[];
+  podiumGotchis : Array<HighScore>;
 }
 
 export const Podium: React.FC<Props> = ({
-    gotchiIDs
+  podiumGotchis
 }) => {
     
     const renderGotchi = (id:number, winner:boolean)=>{
@@ -23,25 +25,25 @@ export const Podium: React.FC<Props> = ({
   return (
     <div className={styles.podiumContent}>
         <div className={styles.gotchiRank1}>
-          {renderGotchi(gotchiIDs[0],true)}
+          {renderGotchi(number(podiumGotchis[0].tokenId) as number,true)}
         </div>
         <div className={`${styles.podiumText} ${styles.rank1Text}`}>
-          Martens
-          <div style={{color:'#ffffff'}} >420</div>
+          {podiumGotchis[0].name}
+          <div style={{color:'#ffffff'}} >{podiumGotchis[0].score}</div>
         </div>
         <div className={styles.gotchiRank2}>
-          {renderGotchi(gotchiIDs[1],false)}
+          {renderGotchi(number(podiumGotchis[1].tokenId) as number,false)}
         </div>
         <div className={`${styles.podiumText} ${styles.rank2Text}`}>
-          Corelone
-          <div style={{color:'#ffffff'}} >169</div>
+          {podiumGotchis[1].name}
+          <div style={{color:'#ffffff'}} >{podiumGotchis[1].score}</div>
         </div>
         <div className={styles.gotchiRank3}>
-          {renderGotchi(gotchiIDs[2],false)}
+          {renderGotchi(number(podiumGotchis[2].tokenId) as number,false)}
         </div>
         <div className={`${styles.podiumText} ${styles.rank3Text}`}>
-          Yoda
-          <div style={{color:'#ffffff'}} >101</div>
+          {podiumGotchis[2].name}
+          <div style={{color:'#ffffff'}} >{podiumGotchis[2].score}</div>
         </div>
         <img className={styles.gotchiPodium} src={gotchiPodium} />
    </div>

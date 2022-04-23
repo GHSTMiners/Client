@@ -10,10 +10,10 @@
 
 .tableRow{
   display: grid;
-  grid-template-columns: 1.5fr 2fr 10fr;
+  grid-template-columns: 1.5fr 10fr 1.5fr;
   width: 100%;
   align-items: center;
-  justify-items: flex-end;
+  justify-items: flex-start;
   padding-right: 3rem;
   padding-bottom: 1rem;
 }

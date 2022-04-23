@@ -11,6 +11,9 @@ import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
 import { number } from "mathjs";
+import { Action } from "web3/context/reducer";
+import { callSubgraph } from "web3/actions";
+import { AavegotchisNameArray, getAavegotchiNames } from "web3/actions/queries";
 
 
 const Leaderboard = (): JSX.Element => {
@@ -43,7 +46,7 @@ const Leaderboard = (): JSX.Element => {
   const competition = { endDate , rewards:getReward };
 
   // Random data
-  for (let i=0; i<20000;i++){
+  for (let i=0; i<50;i++){
     let gotchiID = i+3930;
     let randomName = i.toString(36) //.substring(7);
     if (gotchiID == 3934) randomName='Yoda'
@@ -52,7 +55,7 @@ const Leaderboard = (): JSX.Element => {
   }
     
   const entriesPerPage = 50;
-  const totalPages = Math.ceil(highScores.length/entriesPerPage);
+  const totalPages = 1;// Math.ceil(highScores.length/entriesPerPage);
 
   const renderSelectElement = ( key:string, id: number | string, tag:string) => {
     return <option key={key} value={id}>{tag}</option>
@@ -68,6 +71,7 @@ const Leaderboard = (): JSX.Element => {
   const [statisticsCathegories,setStatisticsCathegories] = useState(emptyStatisticsCathegory);
   const [activeCathegory,setActiveCathegory] = useState(emptyCathegory);
   const [highScoresData,setHighScoresData] = useState(highScores);
+  const [totalDataPages,setTotalDataPages] = useState(totalPages);
 
   //const [leaderboardGameModes,setLeaderboardGameModes] = useState(emptyGameModes); // TO DO
   
@@ -111,6 +115,25 @@ const Leaderboard = (): JSX.Element => {
     }
   }
 
+  // fetching aavegotchi names from highScore data
+  const getHighScoresWithNames = async (gotchiIDs:string[],displayData:HighScore[]): Promise<Array<HighScore>> => {
+    let updateList=[...displayData];
+    try {
+      const res = await callSubgraph<AavegotchisNameArray>(
+        getAavegotchiNames(gotchiIDs)
+      );
+      if (res){
+        res.aavegotchis.map( entry =>{
+          let unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId==entry.id);
+          if (unnamedEntry) unnamedEntry.name = entry.name;
+        })
+        console.log(res)
+      }
+    } catch (err) {
+    }
+    return updateList
+  };
+
   // fetching leaderboard data for the selected cathegory
   useEffect(()=>{
     if (activeCathegory){
@@ -118,14 +141,20 @@ const Leaderboard = (): JSX.Element => {
       rawHighScores.then( rawScoresData => {
         // cleaning dummy data
         let displayData: Array<HighScore> = [];
+        let idArray : Array<string>=[];
         rawScoresData.map( data => {
           const entryId = data.gotchi.gotchi_id.toString();
           const entryScore = data.entry.value;
           const entryName = `${entryId}`;
+          idArray.push(entryId);
           displayData.push({ tokenId: entryId, name: entryName, score: entryScore })
         })
-        const sortedDisplayData = displayData.sort((n1,n2) => n2.score - n1.score);
-        setHighScoresData(sortedDisplayData);
+        const highScoreDataWithNames = getHighScoresWithNames(idArray,displayData);
+        highScoreDataWithNames.then( data => {
+          const sortedDisplayData = data.sort((n1,n2) => n2.score - n1.score);
+          setHighScoresData(sortedDisplayData);
+          setTotalDataPages(Math.ceil(highScoresData.length/entriesPerPage))
+        })
         }
       )
     }
@@ -135,9 +164,9 @@ const Leaderboard = (): JSX.Element => {
      <div className={styles.leaderboardContainer}>
        
        <div className={styles.gotchiPodiumContainer}>
-         <Podium gotchiIDs={[number(highScoresData[0].tokenId) as number,
-                              number(highScoresData[1].tokenId) as number,
-                              number(highScoresData[2].tokenId) as number]} />
+         <Podium podiumGotchis={[(highScoresData[0]) ,
+                              (highScoresData[1]),
+                              (highScoresData[2])]} />
        </div>
   
        <div className={styles.tableContainer}>
@@ -174,9 +203,9 @@ const Leaderboard = (): JSX.Element => {
                              competition={competition}   />
            </div>
            <Pagination page={currentPage} 
-                   totalPages={totalPages} 
+                   totalPages={totalDataPages}
+                   hideElement={totalDataPages==1} 
                    handlePagination={handlePages} />
-            
          </div>
          <img className={styles.leaderboardFooter} src={LeaderboardFooter} />
        </div> 

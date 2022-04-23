@@ -5,16 +5,18 @@ import styles from './pagination.module.css';
 interface Props {
   page: number;
   totalPages: number;
+  hideElement: boolean;
   handlePagination: (page: number) => void;
 }
 
 export const PaginationComponent: React.FC<Props> = ({
   page,
   totalPages,
+  hideElement,
   handlePagination,
 }) => {
   return (
-    <div className={styles.pagination}>
+    <div className={styles.pagination} hidden={hideElement}>
       <div className={styles.paginationWrapper}>
         {page !== 1 && (
           <button
