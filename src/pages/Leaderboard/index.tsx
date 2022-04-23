@@ -43,16 +43,7 @@ const Leaderboard = (): JSX.Element => {
       return ""
     }
   }
-  const competition = { endDate , rewards:getReward };
-
-  // Random data
-  for (let i=0; i<50;i++){
-    let gotchiID = i+3930;
-    let randomName = i.toString(36) //.substring(7);
-    if (gotchiID == 3934) randomName='Yoda'
-    if (gotchiID == 3935) randomName='Attila'
-    highScores.push({ tokenId: `${gotchiID}`, name: randomName, score: 300-i })
-  }
+  const competition = { endDate , rewards:getReward };  
     
   const entriesPerPage = 50;
   const totalPages = 1;// Math.ceil(highScores.length/entriesPerPage);
@@ -164,9 +155,7 @@ const Leaderboard = (): JSX.Element => {
      <div className={styles.leaderboardContainer}>
        
        <div className={styles.gotchiPodiumContainer}>
-         <Podium podiumGotchis={[(highScoresData[0]) ,
-                              (highScoresData[1]),
-                              (highScoresData[2])]} />
+         <Podium podiumGotchis={highScoresData} />
        </div>
   
        <div className={styles.tableContainer}>
