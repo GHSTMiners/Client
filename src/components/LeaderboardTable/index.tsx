@@ -44,7 +44,7 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
 
   // Filtering and setting up on screen the selected dataset
   useEffect(() => {
-    if (onlyMine && ownedGotchis) {
+    if (onlyMine && ownedGotchis && leaderboardData) {
       const myLeaderboardData = [...leaderboardData].filter((score) =>
         ownedGotchis.includes(score.tokenId)
       );
@@ -57,7 +57,7 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
   
   const renderRankingRow = ( rank:number, name:string, score: number) =>{
     return(
-    <div className={styles.tableRow}>
+    <div className={styles.tableRow} key={name}>
       <div> `&#35;` {rank}</div>
       <div>{name}</div>
       <div>{score}</div>
@@ -71,12 +71,12 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
 
   return (
       <div className={styles.rankingList}>
-        <div className={`${styles.rankingHeader} ${styles.tableRow}`}>
+        <div className={`${styles.rankingHeader} ${styles.tableRow}`} key={"leaderboardHeader"}>
           <div>Rank</div>
           <div>Name</div>
           <div>Score</div>
         </div>
-        <div className={styles.rankingData}>
+        <div className={styles.rankingData}  key={"leaderboardDataList"}>
           {leaderboardDisplayData}
         </div>
       </div>

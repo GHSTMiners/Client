@@ -72,7 +72,8 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
 
   const dataRecord: Record<string, gameTraitObj>= {};
 
-  useEffect(()=>{
+  useEffect(() => {
+    let mounted = true; // safety component to avoid leackage if async info arrives when the component is unmounted
     if (selectedGotchi){
       const scope = {
         energy: selectedGotchi.withSetsNumericTraits[0],
@@ -83,36 +84,46 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
         eye_color: selectedGotchi.withSetsNumericTraits[5]
       }
       const gameTraitData: gameTraitObj[] = [];
-      const selectedWorld = Client.getInstance().apiInterface.world(worldID);
-      selectedWorld.then( world => { 
-        world.vitals.forEach((vital)=>{
-          try{
-            const rawVital = mathjs.evaluate(vital.initial, scope);
-            const minVital = mathjs.evaluate(vital.minimum, scope);
-            const maxVital = mathjs.evaluate(vital.maximum, scope);
-            const normalizedGameTrait = Math.round((rawVital-minVital)/(maxVital-minVital)*100);
-            const gameTraitElement =  {label:vital.name, trait:normalizedGameTrait} ;
-            gameTraitData.push(gameTraitElement);
-            dataRecord[vital.name] = gameTraitElement;
-          } catch{}
-        })
-        world.skills.forEach((skill)=>{
-          try{
-            const rawSkill = mathjs.evaluate(skill.initial, scope);
-            const minSkill = mathjs.evaluate(skill.minimum, scope);
-            const maxSkill = mathjs.evaluate(skill.maximum, scope);
-            const normalizedGameTrait = Math.round((rawSkill-minSkill)/(maxSkill-minSkill)*100);
-            const gameTraitElement =  {label:skill.name, trait:normalizedGameTrait} ;
-            gameTraitData.push( gameTraitElement );
-            dataRecord[skill.name] = gameTraitElement;
-          } catch{}
-        })
-        setCustomLabels();
-        // Updating front-end data after receiving all info from Chisel
-        updateStateData(graphTraits,graphDataInfo,setGraphTraits);
-        updateStateData(barTraits,barDataInfo,setBarTraits);
-      })
+      try{
+        
+        const selectedWorld = Client.getInstance().apiInterface.world(worldID);
+          if (mounted){
+          selectedWorld.then( world => { 
+            world.vitals.forEach((vital)=>{
+              try{
+                const rawVital = mathjs.evaluate(vital.initial, scope);
+                const minVital = mathjs.evaluate(vital.minimum, scope);
+                const maxVital = mathjs.evaluate(vital.maximum, scope);
+                const normalizedGameTrait = Math.round((rawVital-minVital)/(maxVital-minVital)*100);
+                const gameTraitElement =  {label:vital.name, trait:normalizedGameTrait} ;
+                gameTraitData.push(gameTraitElement);
+                dataRecord[vital.name] = gameTraitElement;
+              } catch{}
+            })
+            world.skills.forEach((skill)=>{
+              try{
+                const rawSkill = mathjs.evaluate(skill.initial, scope);
+                const minSkill = mathjs.evaluate(skill.minimum, scope);
+                const maxSkill = mathjs.evaluate(skill.maximum, scope);
+                const normalizedGameTrait = Math.round((rawSkill-minSkill)/(maxSkill-minSkill)*100);
+                const gameTraitElement =  {label:skill.name, trait:normalizedGameTrait} ;
+                gameTraitData.push( gameTraitElement );
+                dataRecord[skill.name] = gameTraitElement;
+              } catch{}
+            })
+            setCustomLabels();
+            // Updating front-end data after receiving all info from Chisel
+            if (mounted){
+              updateStateData(graphTraits,graphDataInfo,setGraphTraits);
+              updateStateData(barTraits,barDataInfo,setBarTraits);
+            }
+          })
+        }
+      } catch (err) {
+        console.log(err);
+      }
     } 
+    return () => {mounted = false}; // cleanup function
   },[selectedGotchi])
 
   const setCustomLabels = ()=>{
@@ -145,7 +156,7 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
     percentage: string,
     label: string
   ) => (
-    <div className={styles.modifierRow}>
+    <div className={styles.modifierRow} key={name}>
       <p>{name}</p>
       <div className={styles.modifierMeter}>
         <div className={styles.labelStyles}>

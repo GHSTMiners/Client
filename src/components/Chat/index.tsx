@@ -1,7 +1,6 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 //import { format } from 'fecha';
 
@@ -19,7 +18,7 @@ const Chat : React.FC<Props> = ({ disabled }) => {
      let user = '';
 
     Client.getInstance().colyseusRoom.state.players.forEach( player => {
-      if (player.gotchiID == id){
+      if (player.gotchiID === id){
        messageColor = player.chatColor;
        user = player.name;
        return;
@@ -44,7 +43,7 @@ const Chat : React.FC<Props> = ({ disabled }) => {
 
   const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // prevent the page from reloading
-    const playerName = Client.getInstance().ownPlayer.name;
+    //const playerName = Client.getInstance().ownPlayer.name;
     setChatMessage("");
     //Create message and send
     let message : Protocol.MessageToServer = new Protocol.MessageToServer();
@@ -56,7 +55,7 @@ const Chat : React.FC<Props> = ({ disabled }) => {
   function handleClick (event:any ) {
     // if the user clicks on the background, all open dialogs are closed
     const divID = event.target.getAttribute('id');
-    if (divID == 'chat' || divID == 'chat-history' || divID == 'chat-textbox'){
+    if (divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox'){
       Client.getInstance().phaserGame.events.emit("open_chat");
     }
   }

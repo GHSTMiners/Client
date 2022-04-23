@@ -6,7 +6,6 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
-import MainScene from "game/Scenes/MainScene";
 import * as Schema from "../../matchmaking/Schemas"
 
 interface Props {
@@ -53,7 +52,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
         walletBalance[item.cryptoID] = item.amount;
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
-          if (world.world_crypto_id == item.cryptoID) {
+          if (world.world_crypto_id === item.cryptoID) {
             Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
           }
         };
@@ -101,7 +100,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   let cryptoList = cryptoIdArray.map(function (id) {
-    return id==world.world_crypto_id ? <></> : renderCoinEntry( id );
+    return id===world.world_crypto_id ? <></> : renderCoinEntry( id );
   });
 
   useEffect( () => {

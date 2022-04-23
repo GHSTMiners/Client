@@ -48,38 +48,49 @@ const Leaderboard = (): JSX.Element => {
   
   // Retrieving data from Chisel
   useEffect(()=>{
-    // Getting world options
-    const rawWorlds = Client.getInstance().apiInterface.worlds();
-    rawWorlds.then( worlds => {
-         const worldOptions = worlds.map(
-           function(world:Chisel.World) { return renderSelectElement(world.name,world.id,world.name) }
-         ) 
-         if (worldOptions){
-          setLeaderboardWorlds(worldOptions);
-         }
-      })
-    // Getting statistics cathegories 
-    const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
-    rawCathegories.then( categoryList => {
-      setStatisticsCathegories(categoryList);
-         const optionList = categoryList.map(
-           function(categoryObj) { 
-             return renderSelectElement(categoryObj.name as string,categoryObj.id as number,categoryObj.name as string) 
-            }
-         ) 
-         if (optionList){
-          setLeaderboardCathegories(optionList);
-         }
-      })
-    // Setting default statistic cathegory
-    setActiveCathegory( {id:2, name:"Blocks mined"} );
+    let mounted = true;
+    try{
+      // Getting world options
+      const rawWorlds = Client.getInstance().apiInterface.worlds();
+      if (mounted){
+        rawWorlds.then( worlds => {
+             const worldOptions = worlds.map(
+               function(world:Chisel.World) { return renderSelectElement(world.name,world.id,world.name) }
+             ) 
+             if (worldOptions){
+              setLeaderboardWorlds(worldOptions);
+             }
+          })
+      }
+      // Getting statistics cathegories 
+      const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
+      if (mounted){
+        rawCathegories.then( categoryList => {
+          setStatisticsCathegories(categoryList);
+             const optionList = categoryList.map(
+               function(categoryObj) { 
+                 return renderSelectElement(categoryObj.name as string, categoryObj.id as number, categoryObj.name as string) 
+                }
+             ) 
+             if (optionList && mounted){
+              setLeaderboardCathegories(optionList);
+             }
+          })
+      }
+      // Setting default statistic cathegory
+      setActiveCathegory( {id:2, name:"Blocks mined"} );
+    } catch (err) {
+      console.log(err);
+    }
+
+    return () => {mounted = false}; // cleanup function
   },[])
 
   // Updating component of the drop-down select cathegory element
   const updateCathegory = (event: ChangeEvent<HTMLSelectElement>) => {
     if (statisticsCathegories){
-      const selectedId = number(event.target.value) as number;
-      const selectedName = statisticsCathegories.find( element => element.id==selectedId)?.name;
+      let selectedId = number(event.target.value) as number;
+      let selectedName = statisticsCathegories.find( element => element.id==selectedId)?.name;
       if (selectedName){
         const requestedCathegory: StatisticCategory= {id:selectedId, name:selectedName};
         setActiveCathegory(requestedCathegory);
@@ -89,27 +100,39 @@ const Leaderboard = (): JSX.Element => {
 
   // Fetching leaderboard data for the selected cathegory
   useEffect(()=>{
-    if (activeCathegory){
-      const rawHighScores = Client.getInstance().apiInterface.highscores(activeCathegory)
-      rawHighScores.then( rawScoresData => {
-        const displayData: Array<HighScore> = [];
-        const idArray : Array<string>=[];
-        rawScoresData.map( data => {
-          const entryId = data.gotchi.gotchi_id.toString();
-          const entryScore = data.entry.value;
-          const entryName = `${entryId}`;
-          idArray.push(entryId);
-          displayData.push({ tokenId: entryId, name: entryName, score: entryScore });
-        })
-        const highScoreDataWithNames = getHighScoresWithNames(idArray,displayData);
-        highScoreDataWithNames.then( data => {
-          const sortedDisplayData = data.sort((n1,n2) => n2.score - n1.score);
-          setHighScoresData(sortedDisplayData);
-          setTotalDataPages(Math.ceil(highScoresData.length/entriesPerPage));
-        })
+    let mounted = true;
+    if (activeCathegory && Object.keys(activeCathegory).length !== 0 ){
+      try{
+        const rawHighScores = Client.getInstance().apiInterface.highscores(activeCathegory)
+        if (mounted){
+          rawHighScores.then( rawScoresData => {
+            let displayData: Array<HighScore> = [];
+            let idArray : Array<string>=[];
+            rawScoresData.map( data => {
+              const entryId = data.gotchi.gotchi_id.toString();
+              const entryScore = data.entry.value;
+              const entryName = `${entryId}`;
+              idArray.push(entryId);
+              displayData.push({ tokenId: entryId, name: entryName, score: entryScore });
+            })
+            const highScoreDataWithNames = getHighScoresWithNames(idArray,displayData);
+            if (mounted){
+              highScoreDataWithNames.then( data => {
+                const sortedDisplayData = data.sort((n1,n2) => n2.score - n1.score);
+                if (mounted){
+                  setHighScoresData(sortedDisplayData);
+                  setTotalDataPages(Math.ceil(highScoresData.length/entriesPerPage));
+                }
+              })
+            }
+            }
+          )
         }
-      )
+      } catch (err) {
+        console.log(err);
+      }
     }
+    return () => {mounted = false}; // cleanup function
   },[activeCathegory])
 
   // Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
