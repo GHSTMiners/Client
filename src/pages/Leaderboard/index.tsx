@@ -67,6 +67,7 @@ const Leaderboard = (): JSX.Element => {
   const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyCathegories);
   const [statisticsCathegories,setStatisticsCathegories] = useState(emptyStatisticsCathegory);
   const [activeCathegory,setActiveCathegory] = useState(emptyCathegory);
+  const [highScoresData,setHighScoresData] = useState(highScores);
 
   //const [leaderboardGameModes,setLeaderboardGameModes] = useState(emptyGameModes); // TO DO
   
@@ -94,6 +95,8 @@ const Leaderboard = (): JSX.Element => {
          }
       })
 
+      setActiveCathegory( {id:2, name:"Blocks mined"} );
+
   },[])
 
   const updateCathegory = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -108,12 +111,21 @@ const Leaderboard = (): JSX.Element => {
     }
   }
 
+  // fetching leaderboard data for the selected cathegory
   useEffect(()=>{
     if (activeCathegory){
       const rawHighScores = Client.getInstance().apiInterface.highscores(activeCathegory)
-      
       rawHighScores.then( rawScoresData => {
-        console.log(rawScoresData)
+        // cleaning dummy data
+        let displayData: Array<HighScore> = [];
+        rawScoresData.map( data => {
+          const entryId = data.gotchi.gotchi_id.toString();
+          const entryScore = data.entry.value;
+          const entryName = `${entryId}`;
+          displayData.push({ tokenId: entryId, name: entryName, score: entryScore })
+        })
+        const sortedDisplayData = displayData.sort((n1,n2) => n2.score - n1.score);
+        setHighScoresData(sortedDisplayData);
         }
       )
     }
@@ -123,7 +135,9 @@ const Leaderboard = (): JSX.Element => {
      <div className={styles.leaderboardContainer}>
        
        <div className={styles.gotchiPodiumContainer}>
-         <Podium gotchiIDs={[20689,21223,3934]} />
+         <Podium gotchiIDs={[number(highScoresData[0].tokenId) as number,
+                              number(highScoresData[1].tokenId) as number,
+                              number(highScoresData[2].tokenId) as number]} />
        </div>
   
        <div className={styles.tableContainer}>
@@ -144,7 +158,7 @@ const Leaderboard = (): JSX.Element => {
              </div>
              <div>
                <div className={styles.leaderboardTag}>Category</div>
-               <select onChange={(e)=>updateCathegory(e)} className={styles.selectDropdown}>
+               <select value={activeCathegory.id} onChange={(e)=>updateCathegory(e)} className={styles.selectDropdown}>
                  {leaderboardCathegories}
                </select>
              </div>
@@ -154,7 +168,7 @@ const Leaderboard = (): JSX.Element => {
            <div className={styles.leaderboardTableContainer}>
              <LeaderboardTable pageIndex={currentPage}
                              entriesPerPage={entriesPerPage}
-                             highscores={highScores}
+                             highscores={highScoresData}
                              ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                              onlyMine={showOnlyMine}
                              competition={competition}   />
