@@ -1,107 +1,103 @@
 @import "theme/vars.css";
 
-.homeContainer {
-  padding:2rem 5rem 0 5rem;
+.basicGrid {
+  margin-top: 2rem;
+  padding: 2rem;
   display: grid;
-  gap: 4rem;
-  grid-template-columns: repeat(auto-fit,minmax(40rem,0.5fr));
-  justify-content: space-around;
-}
-
-.gotchiMainContainer {
-  height: 100%;
-  display: grid;
-  justify-content: center;
-}
-
-.gameConfigContainer {
-  height: 100%;
-  display: grid;
-  justify-content: center;
-}
-
-.selectorContainer {
-  display: flex;
-  justify-content: center;
-}
-
-.gotchiTraitsContainer {
-  display: flex;
-  position: relative;
-}
-
-.gotchiContainer {
-  cursor: pointer;
-  width: 40%;
-  position: absolute;
-  padding-left: 4%;
-  top: 25%;
-  left: 5%;
-  aspect-ratio: 1 / 1;
-}
-
-.stoneMenu {
-  background-image: url("assets/icons/menu_stone3.svg");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position-x: center;
-  width: 55%;
-  left: 40%;
-  aspect-ratio: 277 / 364;
-  position: relative;
-}
-
-.highscore {
-  margin: 1.6rem auto 3.2rem;
-  color: white;
-}
-
-.gotchiContainer img {
-  max-height: 33rem;
+  gap: 1rem;
   width: 100%;
-  padding-top: 2rem;
-}
+  grid-template-columns: repeat(5,minmax(100px,1fr));
+  grid-auto-rows: 170px;
+  grid-template-areas:
+  "video  video  frens  blocks  topPlayer "
+  "video  video  games  crystals  topPlayer "
+  "news   news   stats  stats  topPlayer "
+  "news   news   stats  stats  topPlayer ";
+ }
 
-.buttonContainer {
-  display: grid;
-  gap: 1.2rem;
-  grid-template-columns: 15rem 5rem;
-}
-
-.detailsPanelContainer {
-  margin-top: 4rem;
-}
-
-.errorContainer {
+.gridTile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  font-size: 1rem;
   color: white;
-  max-width: 60rem;
-  margin: 5.4rem auto;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 400ms;
 }
 
-.errorContainer h1 {
-  font-size: 5rem;
-  opacity: 0.4;
+.gridTile:hover{
+  box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.05);
 }
 
-.errorContainer p {
-  font-size: 1.6rem;
-  line-height: 1.5;
-}
-.errorContainer .secondaryErrorMessage {
-  margin: 5.4rem 0 2.4rem;
-}
-.errorContainer button {
-  margin-top: 1.6rem;
+.video{
+  grid-area: video; 
 }
 
-.modalContent h1 {
-  font-size: 3.2rem;
-}
-.modalContent p {
-  font-size: 1.4rem;
-  line-height: 1.5;
+.activeFrens{
+  grid-area: frens
+} 
+
+.blocksMined{
+  grid-area: blocks;
+} 
+
+.gamesPlayed{
+  grid-area: games;
+} 
+
+.crystalsCollected{
+  grid-area: crystals;
 }
 
-.lobbyPanel{
-  height: 30rem;
+
+.topPlayers{
+  grid-area:topPlayer;
+}
+
+.alphaNews{
+  grid-area:news;
+}
+
+.myStaats{
+  grid-area:stats;
+}
+
+
+@media all and (min-width: 2500px) {
+  .basicGrid {
+    font-size: 20px;
+    grid-auto-rows: 250px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: repeat(4,minmax(200px,1fr));
+    grid-template-areas:
+    "video  video  frens  blocks"
+    "video  video  games  crystals"
+    "news   news   stats  stats"
+    "news   news   stats  stats"
+    "topPlayer topPlayer topPlayer topPlayer";
+  }
+}
+
+@media all and (max-width: 870px) {
+  .basicGrid {
+    grid-template-columns: repeat(2,minmax(200px,1fr));
+    grid-template-areas:
+    "video  video"
+    "video  video"
+    "frens  blocks"
+    "games  crystals"
+    "news   news"
+    "news   news"
+    "topPlayer topPlayer"
+    "topPlayer topPlayer"
+    "topPlayer topPlayer";
+  }
 }

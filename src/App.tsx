@@ -1,3 +1,4 @@
+import HomeLegacy from "pages/HomeLegacy";
 import Home from "pages/Home";
 import Play from "pages/Play";
 import Leaderboard from "pages/Leaderboard";
@@ -14,7 +15,8 @@ const App = () => {
         <TransitionGroup component={null}>
           <CSSTransition key={location.key} classNames="fade" timeout={375}>
           <Routes location={location}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomeLegacy />} />
+            {/*<Route path="/" element={<Home />} />*/}
             <Route path="/play" element={<Play />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/howtoplay" element={<HowToPlay />} />
