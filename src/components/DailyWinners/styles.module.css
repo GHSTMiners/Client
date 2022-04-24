@@ -1,0 +1,52 @@
+
+.infoPanel{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+}
+
+.infoTitle{
+    white-space: nowrap;
+}
+
+.winnersContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.selectCathegory{
+    background-color: transparent;
+    border-color: white;
+    outline: none;
+    color: white;
+    font-size: 0.9rem;
+    border:none
+}
+
+.playerContainer{
+    
+}
+
+.gotchiContainer{
+    height: 8.5rem;
+}
+.gotchiName{
+    font-size: 1.3rem;
+}
+
+.gotchiScore{
+    font-size: 0.9rem
+}
+
+
+@media all and (max-width: 1200px) {
+    .winnersContainer{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+  }

@@ -26,6 +26,7 @@
   width: 100%;
   border-radius: 4px;
   transition: all 400ms;
+  overflow: hidden;
 }
 
 .gridTile:hover{
@@ -34,7 +35,11 @@
 }
 
 .video{
-  grid-area: video; 
+  grid-area: video;
+}
+
+.iframe{
+ 
 }
 
 .activeFrens{
@@ -82,6 +87,7 @@
     "video  video  games  crystals"
     "news   news   stats  stats"
     "news   news   stats  stats"
+    "topPlayer topPlayer topPlayer topPlayer"
     "topPlayer topPlayer topPlayer topPlayer";
   }
 }
@@ -96,7 +102,8 @@
     "games  crystals"
     "news   news"
     "news   news"
-    "topPlayer topPlayer"
+    "stats  stats"
+    "stats  stats"
     "topPlayer topPlayer"
     "topPlayer topPlayer";
   }

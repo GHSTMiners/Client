@@ -1,0 +1,15 @@
+
+.infoPanel{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+}
+
+.infoTitle{
+    white-space: nowrap;
+}
+
+.infoQuantity{
+    font-size: 2.5rem;
+}
