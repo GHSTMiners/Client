@@ -1,0 +1,26 @@
+
+.newsPanel{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.newsEntry{
+    
+}
+
+.newsTitle{
+    white-space: nowrap;
+    text-transform: uppercase ;
+}
+
+.newsDescription{
+    font-size: 1rem;
+    text-align: justify;
+    text-justify: inter-word;
+}

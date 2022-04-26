@@ -1,10 +1,9 @@
-import { InfoPanel } from "components";
+import { InfoPanel, NewsPanel } from "components";
 import demoVideo from "assets/videos/demo.mp4"
 import styles from "./styles.module.css";
 import { DailyWinners } from "components/DailyWinners";
 
 const Home = (): JSX.Element => {
-
 
   return (
     <>
@@ -42,7 +41,11 @@ const Home = (): JSX.Element => {
       <div className={`${styles.gridTile} ${styles.topPlayers}`} >
         <DailyWinners />
       </div>
-      <div className={`${styles.gridTile} ${styles.alphaNews}`} >Alpha News</div>
+
+      <div className={`${styles.gridTile} ${styles.alphaNews}`} >
+        <NewsPanel />
+      </div>
+
       <div className={`${styles.gridTile} ${styles.myStaats}`} >My Staats</div>
 
       </div>        

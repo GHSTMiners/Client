@@ -4523,9 +4523,9 @@
     "functional-red-black-tree" "^1.0.1"
 
 "chisel-api-interface@^1.8.0":
-  "integrity" "sha512-4naVSXjFUR/ViO0tQ6/9gyRKMM3fYDU9morWOshrdbP8Rr2+vVvhGz6fK4NcaPGeb5JpYFkBSyPNQk/mUQsusQ=="
-  "resolved" "https://registry.npmjs.org/chisel-api-interface/-/chisel-api-interface-1.16.0.tgz"
-  "version" "1.16.0"
+  "integrity" "sha512-uh/LlEBW8VQLJKZIU4RB2d87YkJUDhbluEstQJjx4PrnydhABuQrPHxOjhLk674tPGgn2A8VngmE96MSeKhiww=="
+  "resolved" "https://registry.npmjs.org/chisel-api-interface/-/chisel-api-interface-1.17.0.tgz"
+  "version" "1.17.0"
   dependencies:
     "axios" "^0.24.0"
 
