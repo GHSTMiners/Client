@@ -14,14 +14,14 @@ import { Header } from "components";
 ReactDOM.render(
 
   
-  //<React.StrictMode>
+  <React.StrictMode>
     <Web3ContextProvider>
     <BrowserRouter>
     <Header />
       <App />
     </BrowserRouter>
     </Web3ContextProvider>,
-  //</React.StrictMode>,
+  </React.StrictMode>,
   document.getElementById("root")
 );
 
