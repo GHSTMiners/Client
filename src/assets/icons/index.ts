@@ -11,3 +11,7 @@ export { ReactComponent as StoneMenu } from "assets/icons/menu_stone.svg";
 export { ReactComponent as RingSelected } from "assets/icons/ring_selected.svg";
 export { ReactComponent as RingDeselected } from "assets/icons/ring_deselected.svg";
 export { ReactComponent as StoneCheckboxTick } from "assets/icons/dropdown_arrow.svg";
+export { ReactComponent as BlocksMinedIcon } from "assets/icons/blocks_mined.svg"
+export { ReactComponent as CrystalsCollectedIcon } from "assets/icons/crystals_collected.svg"
+export { ReactComponent as GamesPlayedIcon } from "assets/icons/games_played.svg"
+export { ReactComponent as TopPlayersIcon } from "assets/icons/top_players.svg"

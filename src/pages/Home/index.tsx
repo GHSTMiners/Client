@@ -2,6 +2,10 @@ import { InfoPanel, NewsPanel, StatsPanel } from "components";
 import demoVideo from "assets/videos/demo.mp4"
 import styles from "./styles.module.css";
 import { DailyWinners } from "components/DailyWinners";
+import ActiveFrensIcon from "assets/icons/active_frens.svg"
+import BlocksMinedIcon from "assets/icons/blocks_mined.svg"
+import GamesPlayedIcon from "assets/icons/games_played.svg"
+import CrystalsCollectedIcon from "assets/icons/crystals_collected.svg"
 
 const Home = (): JSX.Element => {
 
@@ -23,19 +27,19 @@ const Home = (): JSX.Element => {
       </div>
 
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>
-        <InfoPanel title="Active Frens" quantity='9000' icon={"iconURL"} />
+        <InfoPanel title="Active Frens" quantity='9000' icon={ActiveFrensIcon} />
       </div> 
 
       <div className={`${styles.gridTile} ${styles.blocksMined}`} >
-        <InfoPanel title="Blocks Mined" quantity='164K' icon={"iconURL"} />
+        <InfoPanel title="Blocks Mined" quantity='164K' icon={BlocksMinedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.gamesPlayed}`} >
-        <InfoPanel title="Games Played" quantity='589' icon={"iconURL"} />
+        <InfoPanel title="Games Played" quantity='589' icon={GamesPlayedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.crystalsCollected}`} >
-        <InfoPanel title="Crystals Collected" quantity='436K' icon={"iconURL"} />
+        <InfoPanel title="Crystals Collected" quantity='436K' icon={CrystalsCollectedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.topPlayers}`} >

@@ -7,6 +7,7 @@ import About from "pages/About";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Web3ContextProvider from "web3/context";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import Lobby from "pages/Lobby";
 
 const App = () => {
   const location = useLocation();
@@ -15,8 +16,9 @@ const App = () => {
         <TransitionGroup component={null}>
           <CSSTransition key={location.key} classNames="fade" timeout={375}>
           <Routes location={location}>
-            <Route path="/" element={<HomeLegacy />} />
-            {/*<Route path="/" element={<Home />} />*/}
+            <Route path="/" element={<Home />} />
+            <Route path="/lobby" element={<Lobby />} />
+            <Route path="/game" element={<HomeLegacy />} /> // TO BE DELETED, FOR DEBUGGING ONLY
             <Route path="/play" element={<Play />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/howtoplay" element={<HowToPlay />} />

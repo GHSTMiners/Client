@@ -83,12 +83,12 @@
   .basicGrid {
     grid-template-columns: repeat(4,minmax(200px,1fr));
     grid-template-areas:
+    "topPlayer topPlayer topPlayer topPlayer"
+    "topPlayer topPlayer topPlayer topPlayer"
     "video  video  frens  blocks"
     "video  video  games  crystals"
     "news   news   stats  stats"
-    "news   news   stats  stats"
-    "topPlayer topPlayer topPlayer topPlayer"
-    "topPlayer topPlayer topPlayer topPlayer";
+    "news   news   stats  stats";
   }
 }
 
@@ -96,6 +96,8 @@
   .basicGrid {
     grid-template-columns: repeat(2,minmax(200px,1fr));
     grid-template-areas:
+    "topPlayer topPlayer"
+    "topPlayer topPlayer"
     "video  video"
     "video  video"
     "frens  blocks"
@@ -103,8 +105,6 @@
     "news   news"
     "news   news"
     "stats  stats"
-    "stats  stats"
-    "topPlayer topPlayer"
-    "topPlayer topPlayer";
+    "stats  stats";
   }
 }

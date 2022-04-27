@@ -72,6 +72,22 @@ export const Header = () => {
               isActive ? styles.activeNavLink : styles.navLink
             }
           >
+            Home
+          </NavLink>
+          <NavLink
+            to="/lobby"
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
+          >
+            Lobby
+          </NavLink>
+          <NavLink
+            to="/game"
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
+          >
             Game
           </NavLink>
           <NavLink
@@ -112,8 +128,25 @@ export const Header = () => {
                 isActive ? styles.activeNavLink : styles.navLink
               }
             >
-              Game
+              Home
             </NavLink>
+            <NavLink 
+
+              to="/lobby"
+              className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
+            >
+              Lobby
+            </NavLink>
+            <NavLink
+            to="/game"
+            className={({ isActive }) =>
+                isActive ? styles.activeNavLink : styles.navLink
+              }
+          >
+            Game
+          </NavLink>
             <NavLink 
 
               to="/leaderboard"

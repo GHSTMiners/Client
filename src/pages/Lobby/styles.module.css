@@ -1,0 +1,49 @@
+.basicGrid {
+  margin-top: 2rem;
+  padding: 2rem;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: 5fr 3fr 2fr;
+  grid-auto-rows: 170px;
+  grid-template-areas:
+  "gotchi  map   players"
+  "gotchi  chat  chat"
+  "gotchi  chat  chat"
+  "gotchi  chat  chat"
+ }
+
+ .gridTile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  font-size: 1rem;
+  color: white;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 400ms;
+  overflow: hidden;
+}
+
+.gridTile:hover{
+  box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.05);
+}
+
+.gotchiSelection{
+  grid-area: gotchi;
+} 
+
+.mapSelection{
+  grid-area: map;
+} 
+
+.availablePlayers{
+  grid-area: players;
+} 
+
+.chat{
+  grid-area: chat;
+} 

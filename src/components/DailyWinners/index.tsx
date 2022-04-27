@@ -3,10 +3,12 @@ import styles from "./styles.module.css";
 
 interface Props {
   title?: string;
+  icon?: string; 
 }
 
 export const DailyWinners = ({
     title="Daily Top Players",
+    icon
   }: Props) => {
 
     const renderGotchi = (tokenId:string,name:string,score:number)=>{
