@@ -17,13 +17,10 @@ export const InfoPanel = ({
       <div className={styles.infoPanel}>
           <div className={styles.tileHeader}>
             <div className={styles.infoTitle}> {title} </div>
-            <div className={styles.iconContainer}> 
-              { icon? <img src={icon} className={styles.tileIcon}/> : ''}
-            </div>
+            { icon? <img src={icon} className={styles.tileIcon}/> : ''}
           </div>
           <div className={styles.infoQuantity}> {quantity} </div>
           <div className={styles.infoTitle} > </div>
-
       </div>
     );
   };

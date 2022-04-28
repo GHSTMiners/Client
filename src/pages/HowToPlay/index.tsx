@@ -29,7 +29,6 @@ const HowToPlay = (): JSX.Element => {
           There are also several explosives available during your mission. 
           During the beta testing phase of the game we have made them unlimited for all players, 
           press the numeric keys from 1 to 4 to experiment using different types of explosives, time have a blast!
-    
         </div>
 
       </div>

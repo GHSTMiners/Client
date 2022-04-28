@@ -23,3 +23,15 @@
     text-align: justify;
     text-justify: inter-word;
 }
+
+
+.tileIcon{
+    width: 2rem;
+    height: 2rem;
+}
+
+.tileHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

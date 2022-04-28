@@ -36,6 +36,10 @@ export const NewsPanel = () => {
 
     return (
       <div className={styles.newsPanel}>
+        {/*<div className={styles.tileHeader}>
+          <div className={styles.infoTitle}> News </div>
+          <img src={TopPlayersIcon2} className={styles.tileIcon}/> 
+        </div>*/}
         {renderedNews}
       </div>
     );

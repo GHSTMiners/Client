@@ -1,5 +1,6 @@
 import { GotchiSVG } from "components/GotchiSVG";
 import styles from "./styles.module.css";
+import TopPlayersIcon2 from "assets/icons/top_players.svg"
 
 interface Props {
   title?: string;
@@ -26,7 +27,10 @@ export const DailyWinners = ({
 
     return (
       <div className={styles.infoPanel}>
-          <div className={styles.infoTitle}> {title} </div>
+          <div className={styles.tileHeader}>
+            <div className={styles.infoTitle}> {title} </div>
+            <img src={TopPlayersIcon2} className={styles.tileIcon}/> 
+          </div>
           <select className={styles.selectCathegory}> 
             <option>Blocks Mined</option>
           </select>
