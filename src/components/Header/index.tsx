@@ -9,6 +9,7 @@ import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
+import GreenButton from "components/GreenButton";
 
 
 const WalletButton = () => {
@@ -56,6 +57,10 @@ const WalletButton = () => {
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  
+  const routeToLobby = () => {
+    window.location.href='/lobby'
+   }
 
   return (
     <header className={styles.header} hidden = {location.pathname === "/play"} >
@@ -115,7 +120,10 @@ export const Header = () => {
             About
           </NavLink>
         </ul>
-        <WalletButton />
+        {/*<WalletButton />*/}
+        <div className={styles.playButtonContainer}>
+          <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
+        </div>
       </nav>
       <div className={styles.mobileHeaderContent}>
         <Hamburger onClick={() => setMenuOpen((prevState) => !prevState)} />

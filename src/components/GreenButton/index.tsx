@@ -6,13 +6,15 @@ interface Props {
   children?: React.ReactNode;
   onClick?: () => void;
   width?: string;
+  fontSize?: string;
   disabled?: boolean;
 }
 
 const GreenButton: React.FC<Props> = ({
   children,
   onClick,
-  width,
+  width='8rem',
+  fontSize='1.2rem',
   disabled,
 }) => {
   return (
@@ -21,7 +23,7 @@ const GreenButton: React.FC<Props> = ({
       className={styles.greenButton}
       disabled={disabled}
     >
-      <div className={styles.buttonText}>{children}</div>
+      <div className={styles.buttonText} style={{ width: width, fontSize: fontSize}}>{children}</div>
     </button>
   );
 };

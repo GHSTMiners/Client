@@ -12,15 +12,25 @@
   font-family: Rocks;
   font-size: 1.2em;
   color: rgba(42, 42, 42);
-  min-width: 8em;
-  height: 2.8em;
-  border: 0px solid red;
+  /*width: 8em;
+  height: 2.8em;*/
+  aspect-ratio: 2;
+  border: 0px solid cyan;
   outline: 0;
   margin: auto;
   -moz-outline-style: none;
   box-shadow: 0;
   -webkit-transition : box-shadow ease-in .3s;
   transition : box-shadow ease-in .3s;
+}
+
+.buttonText{
+  margin-left: 1rem;
+  margin-right: 1rem;
+  height: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonText:hover {
