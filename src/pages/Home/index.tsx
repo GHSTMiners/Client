@@ -51,7 +51,7 @@ const Home = (): JSX.Element => {
       </div>
 
       <div className={`${styles.gridTile} ${styles.myStaats}`} >
-      <StatsPanel />
+        <StatsPanel />
       </div>
 
       </div>        

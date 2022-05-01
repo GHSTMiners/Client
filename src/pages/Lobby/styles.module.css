@@ -29,12 +29,49 @@
 
 .gridTile:hover{
   box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
-  transform: translateY(-3px) scale(1.05);
 }
 
 .gotchiSelection{
   grid-area: gotchi;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-rows: 4fr 1fr;
+  grid-template-areas:
+  "selection preview traits"
+  "readyup readyup readyup"
 } 
+
+.gotchiSelection > div{
+  height: 100%;
+  border:1px solid white;
+}
+
+.gotchiSelectionBar{
+  grid-area:selection;
+  justify-items: center;
+}
+
+.gotchiPreview{
+  grid-area:preview;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  border:1px solid blue;
+}
+
+.gotchiContainer{
+  width: 70%;
+}
+
+.gotchiTraitsContainer{
+  grid-area:traits;
+}
+
+.readyUpContainer{
+  grid-area:readyup;
+}
 
 .mapSelection{
   grid-area: map;

@@ -1,6 +1,5 @@
 export * from "./DetailsPanel";
 export * from "./ErrorModal";
-export * from "./GotchiSelector";
 export * from "./GotchiSVG";
 export * from "./Hamburger";
 export * from "./Header";
@@ -16,6 +15,7 @@ export * from "./RockyCheckbox";
 export * from "./HUD";
 export * from "./GreenButton";
 export * from "./GotchiSelector";
+export * from "./GotchiSelectorVertical";
 export * from "./Tabs";
 export * from "./UpgradeBar";
 export * from "./Chat";
