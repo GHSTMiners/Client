@@ -77,8 +77,7 @@ const HomeLegacy = (): JSX.Element => {
                 <TraitsPanel
                   selectedGotchi={usersAavegotchis?.find(
                     (gotchi) => gotchi.id === selectedAavegotchiId
-                  )}
-                />
+                  )} />
               </div>
               <div className={styles.gotchiContainer} onClick={rotateGotchi}>
                 {selectedAavegotchiId ? (

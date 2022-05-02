@@ -11,6 +11,7 @@ export * from "./SortToggle";
 export * from "./Sidetray";
 export * from "./FlipCard";
 export * from "./TraitsPanel";
+export * from "./TraitsTile";
 export * from "./RockyCheckbox";
 export * from "./HUD";
 export * from "./GreenButton";

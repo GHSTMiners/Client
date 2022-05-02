@@ -34,7 +34,7 @@
 .gotchiSelection{
   grid-area: gotchi;
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-columns: 1fr 1.5fr 2fr;
   grid-template-rows: 4fr 1fr;
   grid-template-areas:
   "selection preview traits"
@@ -43,7 +43,7 @@
 
 .gotchiSelection > div{
   height: 100%;
-  border:1px solid white;
+  /*border:1px solid white;*/
 }
 
 .gotchiSelectionBar{
@@ -58,7 +58,6 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  border:1px solid blue;
 }
 
 .gotchiContainer{
@@ -67,10 +66,14 @@
 
 .gotchiTraitsContainer{
   grid-area:traits;
+  padding-top: 2rem;
 }
 
 .readyUpContainer{
   grid-area:readyup;
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
 
 .mapSelection{
@@ -84,3 +87,21 @@
 .chat{
   grid-area: chat;
 } 
+
+.readyUpButton{
+  width: 90%;
+  height:5rem;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border:2px solid white;
+}
+
+.gotchiName {
+  color: white;
+  font-size: 1.7rem;
+  font-family: Rocks;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin-top: 2.5rem;
+}

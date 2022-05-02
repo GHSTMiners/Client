@@ -1,9 +1,11 @@
 import styles from "./styles.module.css";
-import { GotchiSVG } from "components";
+import { GotchiSVG, TraitsPanel, TraitsTile } from "components";
 import { useCallback, useEffect, useState } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
+import { Button } from "react-bootstrap";
+import { AavegotchiObject } from "types";
 
 
 const Lobby = (): JSX.Element => {
@@ -12,12 +14,14 @@ const Lobby = (): JSX.Element => {
     dispatch,
   } = useWeb3();
 
+  const emptyGotchi = {} as AavegotchiObject;
+  const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
 
   /**
    * Updates global state with selected gotchi
    */
   const handleSelect = useCallback(
-    (gotchiId: string) => {
+    (gotchiId: string) => {    
       dispatch({
         type: "SET_SELECTED_AAVEGOTCHI",
         selectedAavegotchiId: gotchiId,
@@ -25,6 +29,14 @@ const Lobby = (): JSX.Element => {
     },
     [dispatch]
   );
+
+  // Updating the current selected aavegotchi
+  useEffect(()=>{
+    if (usersAavegotchis){
+      const gotchiSelected = usersAavegotchis.find( (gotchi) => gotchi.id === selectedAavegotchiId );
+      if (gotchiSelected) setSelectedGotchi(gotchiSelected)
+    }
+  },[selectedAavegotchiId])
 
   const [gotchiSide, setGotchiSide] = useState<0 | 1 | 2 | 3>(0);
   const rotateGotchi = () => {
@@ -68,6 +80,9 @@ const Lobby = (): JSX.Element => {
                 />
           </div>
           <div className={styles.gotchiPreview}>
+            <div className={styles.gotchiName}>
+              {selectedGotchi ? `${selectedGotchi?.name}` : "..."}
+            </div>
             <div className={styles.gotchiContainer} onClick={rotateGotchi}>
                   {selectedAavegotchiId ? (
                     <GotchiSVG
@@ -80,8 +95,15 @@ const Lobby = (): JSX.Element => {
                   )}
                 </div>
           </div>
-          <div className={styles.gotchiTraitsContainer}>Gotchi Traits</div>
-          <div className={styles.readyUpContainer}>Ready up button</div>
+          <div className={styles.gotchiTraitsContainer}>
+            <TraitsTile
+                    selectedGotchi={usersAavegotchis?.find(
+                      (gotchi) => gotchi.id === selectedAavegotchiId
+                    )} />
+          </div>
+          <div className={styles.readyUpContainer}>
+            <Button className={styles.readyUpButton}>SELECT</Button>
+          </div>
         </div>
         <div className={`${styles.mapSelection} ${styles.gridTile}`}> Map Selection</div>
         <div className={`${styles.availablePlayers} ${styles.gridTile}`}> Player Available</div>
