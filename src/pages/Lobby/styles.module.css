@@ -1,6 +1,6 @@
 .basicGrid {
   margin-top: 2rem;
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   display: grid;
   gap: 1rem;
   width: 100%;
@@ -38,7 +38,7 @@
   grid-template-rows: 4fr 1fr;
   grid-template-areas:
   "selection preview traits"
-  "readyup readyup readyup"
+  "selection readyup readyup"
 } 
 
 .gotchiSelection > div{
@@ -48,6 +48,7 @@
 
 .gotchiSelectionBar{
   grid-area:selection;
+  margin-top: 6rem;
   justify-items: center;
 }
 
@@ -55,7 +56,7 @@
   grid-area:preview;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 17rem;
   justify-content: center;
   align-items: center;
 }
@@ -82,6 +83,7 @@
 
 .availablePlayers{
   grid-area: players;
+  justify-content: flex-start;
 } 
 
 .chat{
@@ -104,4 +106,41 @@
   align-self: center;
   justify-content: center;
   margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.tileTitle{
+  align-self: flex-start;
+  font-size: 1.3rem;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.mapSelectionContainer{
+  width: 100%;
+  height: 15rem;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  justify-self: center;
+  justify-items: center;
+  padding: 0rem 3rem ;
+}
+
+.mapSelectionContainer > *{
+}
+
+.arrowLeft,
+.arrowRight {
+  transform: rotate(180deg) ;
+  padding:1.5rem;
+  opacity: 0.3;
+}
+
+.arrowRight{
+  transform: rotate(0deg);
+}
+
+.mapThumbnail{
+  height: 7rem;
 }

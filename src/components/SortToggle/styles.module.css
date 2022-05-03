@@ -5,12 +5,12 @@
   background-color: transparent;
   height: 4.2rem;
   width: 4.2rem;
-  border-radius: 2.3rem;
+  border-radius: 1rem;
   transition: all 200ms ease;
 }
 .inputContainer.open {
   width: 25rem;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 .inputContainer.open .sortOptions {
   padding-left: 4.4rem;
@@ -28,6 +28,7 @@
   cursor: pointer;
   border: none;
   z-index: 2;
+
 }
 
 .sortOptions {
@@ -38,6 +39,8 @@
   font-size: 1.6rem;
   opacity: 1;
   transition: all 400ms ease;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 1rem;
   overflow: hidden;
 }
 
@@ -46,7 +49,7 @@
   align-items: center;
   margin-left: 0.6rem;
   cursor: pointer;
-  color: white;
+  color: white; /* give colooor*/
 }
 .sortOptions p {
   margin: 0;
@@ -69,4 +72,8 @@
 .asc {
   transform: rotate(180deg);
   color: white;
+}
+
+.iconContainer{
+  z-index: 3;
 }

@@ -5,8 +5,8 @@ export const displayOptions = {
       position: "bottom" as const,
       labels: {
         color: "#cecece",
-        boxWidth: 10,
-        padding: 10,
+        boxWidth: 15,
+        padding: 13,
         font: {
           size: 16,
         },

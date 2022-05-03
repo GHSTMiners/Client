@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 
 interface Props {
   title: string;
-  quantity: string;
+  quantity?: string;
   icon?:string; 
   description?: string;
 }
@@ -19,8 +19,7 @@ export const InfoPanel = ({
             <div className={styles.infoTitle}> {title} </div>
             { icon? <img src={icon} className={styles.tileIcon}/> : ''}
           </div>
-          <div className={styles.infoQuantity}> {quantity} </div>
-          <div className={styles.infoTitle} > </div>
+          <div className={styles.infoQuantity}> {quantity? quantity: ''} </div>
       </div>
     );
   };

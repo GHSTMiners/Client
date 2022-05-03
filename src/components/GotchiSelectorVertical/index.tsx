@@ -1,5 +1,5 @@
 import { AavegotchiObject } from "types";
-import { click, ArrowLeft, ArrowRight } from "assets";
+import { click, ArrowLeft, ArrowRight, Arrow } from "assets";
 import { playSound } from "helpers/hooks/useSound";
 import { useEffect, useState, useCallback } from "react";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
@@ -175,8 +175,8 @@ export const GotchiSelectorVertical = ({
         />
       </div>
       <div className={styles.selectorContainer}>
-        <ArrowLeft
-          width={72}
+        <Arrow
+          width={64}
           className={`${styles.chevron} ${styles.up} ${
             currentIteration === 0 ? styles.disabled : styles.enabled
           }`}
@@ -227,8 +227,8 @@ export const GotchiSelectorVertical = ({
                 })}
           </div>
         </div>
-        <ArrowRight
-          width={72}
+        <Arrow
+          width={64}
           className={`${styles.chevron} ${styles.down} ${
             currentIteration === maxIterations
               ? styles.disabled

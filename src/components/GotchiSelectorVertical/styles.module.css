@@ -34,6 +34,11 @@
 
 .chevron.up,
 .chevron.down {
+  transform: rotate(-90deg) ;
+  padding:1.5rem;  
+}
+
+.chevron.down{
   transform: rotate(90deg);
 }
 

@@ -41,39 +41,42 @@ export const SortToggle = ({
       }`}
     >
       <button className={styles.toggle} onClick={handleToggle}>
-        <SortIcon width={64} height={64} />
+        <SortIcon width={64} height={64} style={{padding: "0.5rem"}} className={styles.iconContainer}/>
       </button>
+      
       <div className={styles.sortOptions}>
-        {options.map((option) => {
-          const active = option.value === selected.val;
-          const direction = active ? selected.dir : "asc";
-
-          return (
-            <div
-              key={option.value}
-              className={`${styles.option} ${
-                active ? styles.active : styles.inactive
-              }`}
-              onClick={() =>
-                onSelect({
-                  val: option.value,
-                  dir: active
-                    ? direction === "asc"
-                      ? "desc"
-                      : "asc"
-                    : direction,
-                })
-              }
-            >
-              <p>{option.name}</p>
-              <DropdownIcon
-                fill="#ffffff"
-                width={32}
-                className={styles[direction]}
-              />
-            </div>
-          );
-        })}
+        {open?
+          options.map((option) => {
+            const active = option.value === selected.val;
+            const direction = active ? selected.dir : "asc";
+          
+            return (
+              <div
+                key={option.value}
+                className={`${styles.option} ${
+                  active ? styles.active : styles.inactive
+                }`}
+                onClick={() =>
+                  onSelect({
+                    val: option.value,
+                    dir: active
+                      ? direction === "asc"
+                        ? "desc"
+                        : "asc"
+                      : direction,
+                  })
+                }
+              >
+                <p>{option.name}</p>
+                <DropdownIcon
+                  fill="#ffffff"
+                  width={32}
+                  className={styles[direction]}
+                />
+              </div>
+            );
+          })
+        :''}
       </div>
     </div>
   );
