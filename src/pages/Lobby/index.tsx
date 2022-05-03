@@ -8,6 +8,8 @@ import { Button } from "react-bootstrap";
 import { AavegotchiObject } from "types";
 import { Arrow, ChevronDown, ChevronUp } from "assets";
 import mapImage from "assets/images/desert_thumbnail.png";
+import { PlayerCounter } from "components/PlayerCounter";
+import Chat from "components/Chat";
 
 
 const Lobby = (): JSX.Element => {
@@ -118,9 +120,27 @@ const Lobby = (): JSX.Element => {
           </div>
         </div>
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
-          <div className={styles.tileTitle}>Players Available</div>
+          <div className={styles.tileTitle}>Room Frens</div>
+          <PlayerCounter playersInRoom={4} totalPlayers={5} playersReady={0} />
         </div>
-        <div className={`${styles.chat} ${styles.gridTile}`}> Chat</div>
+        <div className={`${styles.gridTile} ${styles.chat}`}>
+          <div className={styles.tileTitle}>Lobby Chat</div>
+          <div className={styles.chatContainer}>
+            <div className={styles.chatText}>
+              <p>[Yoda] Testing message</p>
+              <p>[Voyager] This chat is so faaake</p>
+              <p>[Yoda] It's just for the looks! :p</p>
+              <p>[Corleone] I don't know if I like it...</p>
+              </div>
+            <div className={styles.chatInputContainer}>
+              <input className={styles.chatInput}>
+              </input>
+              <button type="submit" className={styles.chatButton}>
+              SEND
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

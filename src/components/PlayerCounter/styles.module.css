@@ -1,0 +1,19 @@
+
+.playerCounter{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+.playerElement{
+    
+}
+
+.playerIcon{
+    height: 3rem;
+}
+
