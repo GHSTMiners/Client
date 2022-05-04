@@ -109,14 +109,12 @@ const Lobby = (): JSX.Element => {
             <Button className={styles.readyUpButton}>SELECT</Button>
           </div>
         </div>
-        <div className={`${styles.mapSelection} ${styles.gridTile}`}> 
-          <div className={styles.tileTitle}>Map Selection</div>
+        <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
-            <Arrow width={64} className={styles.arrowLeft}/>
-            <div>
-              <img src={mapImage} className={styles.mapThumbnail}/>
-            </div>
-            <Arrow width={64} className={styles.arrowRight}/>
+            <img src={mapImage} className={styles.mapThumbnail} />
+            <Arrow width={'4rem'} className={styles.arrowLeft}/>
+            <div className={styles.mapTitle}>DESERT</div>
+            <Arrow width={'4rem'} className={styles.arrowRight}/>
           </div>
         </div>
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>

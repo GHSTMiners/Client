@@ -176,7 +176,7 @@ export const GotchiSelectorVertical = ({
       </div>
       <div className={styles.selectorContainer}>
         <Arrow
-          width={64}
+          width={'4rem'}
           className={`${styles.chevron} ${styles.up} ${
             currentIteration === 0 ? styles.disabled : styles.enabled
           }`}
@@ -228,7 +228,7 @@ export const GotchiSelectorVertical = ({
           </div>
         </div>
         <Arrow
-          width={64}
+          width={'4rem'}
           className={`${styles.chevron} ${styles.down} ${
             currentIteration === maxIterations
               ? styles.disabled

@@ -4,7 +4,7 @@
   display: grid;
   gap: 1rem;
   width: 100%;
-  grid-template-columns: 5fr 3fr 2fr;
+  grid-template-columns: minmax(48rem,5fr) minmax(20rem,2.5fr) minmax(15rem,2.5fr);
   grid-auto-rows: 170px;
   grid-template-areas:
   "gotchi  map   players"
@@ -81,6 +81,10 @@
   grid-area: map;
 } 
 
+.mapSelection:after{
+  opacity: 1;
+}
+
 .availablePlayers{
   grid-area: players;
   justify-content: flex-start;
@@ -126,9 +130,7 @@
   justify-self: center;
   justify-items: center;
   padding: 0rem 3rem ;
-}
-
-.mapSelectionContainer > *{
+  position: relative;
 }
 
 .arrowLeft,
@@ -142,8 +144,15 @@
   transform: rotate(0deg);
 }
 
+.mapTitle{
+  font-family: Rocks;
+  font-size: 1.5rem;
+}
+
 .mapThumbnail{
-  height: 7rem;
+  position: absolute;
+  opacity: 0.6;
+  width: 100%;
 }
 
 .chatContainer{
@@ -185,4 +194,16 @@
   border: 1px solid white;
 }
 
+@media all and (min-width: 2000px) {
+  .basicGrid {
+    font-size: 18px;
+    grid-auto-rows: 200px;
+  }
+}
 
+@media all and (min-width: 2500px) {
+  .basicGrid {
+    font-size: 20px;
+    grid-auto-rows: 250px;
+  }
+}
