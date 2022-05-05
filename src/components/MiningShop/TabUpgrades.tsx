@@ -1,11 +1,9 @@
-import React, { FC, Fragment, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import drillIcon from "assets/hud/drill.png";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import UpgradeBar from "components/UpgradeBar";
-import PlayerRenderer from "game/Rendering/PlayerRenderer";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 
 const TabUpgrades: FC<{}> = () => {
@@ -17,35 +15,42 @@ const TabUpgrades: FC<{}> = () => {
 
   type upgradeLabel = "Movement" | "Health" | "Inventory" | "Fuell" | "Drill";
   type upgradesRecord = Record<upgradeLabel, number>; // ( upgrade label , level }
+  type upgradePrice = {cryptoID:number, }
 
-  // TO DO: retrieve this list from Chisel
-  let upgradeLabels: String[] = [];
-  upgradeLabels.push('Movement')
-  upgradeLabels.push('Health')
-  upgradeLabels.push('Inventory')
-  upgradeLabels.push('Fuell')
-  upgradeLabels.push('Drill')
+  // Retrieving upgrading list from Chisel
+  let upgradeLabels: string[] = [];
+  
+  world.upgrades.forEach( upgrade => {
+    upgradeLabels.push(upgrade.name);
+    /*
+    upgrade.prices.forEach( priceEntry => {
+      priceEntry.id;
+      priceEntry.tier_1
+    })*/
+  } )
 
   let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );
 
   useEffect(()=>{
+    // Fetching Aavegotchi preview to display in console as background
     aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
       setGotchiSVG(convertInlineSVGToBlobURL(svg)); 
     });
   },[]);
 
-  
-  //  const gotchiURL = URL.createObjectURL(blob);
+  const renderUpgradeElement = ( name:string) => {
+    return  <UpgradeBar text={name}   />
+  }
+
+  const upgradesArray = upgradeLabels.map( function(entry) {
+    return( renderUpgradeElement(entry) )
+  })
 
   return (
     <div className={styles.contentContainer}>
       <div className={styles.galleryPanel}>
         <div className={styles.upgradesList}>
-          <UpgradeBar text='Movement Speed'   />
-          <UpgradeBar text='Health'  />
-          <UpgradeBar text='Inventory'   />
-          <UpgradeBar text='Fuel'  />
-          <UpgradeBar text='Drill Speed'  />
+          {upgradesArray}
         </div>
         <img src={gotchiSVG} className={styles.gotchiPreview}></img>
       </div>
