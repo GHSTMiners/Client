@@ -12,22 +12,60 @@ const TabUpgrades: FC<{}> = () => {
   //let gotchiURL : string = '';
   const [gotchiSVG,setGotchiSVG]=useState('');
 
-
-  type upgradeLabel = "Movement" | "Health" | "Inventory" | "Fuell" | "Drill";
-  type upgradesRecord = Record<upgradeLabel, number>; // ( upgrade label , level }
-  type upgradePrice = {cryptoID:number, }
+  // Defining all the data types required to store all the price per tier info
+  type PricePair = { crypto_id:number, cost:number };
+  type TierCost = { tier:string, priceList:PricePair[] };
+  type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[] }
+  type upgradesRecord = Record< number, upgradePriceObject >;
 
   // Retrieving upgrading list from Chisel
   let upgradeLabels: string[] = [];
-  
+  const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
+  const upgradeObjectArray : upgradePriceObject[] = [];
+
   world.upgrades.forEach( upgrade => {
+   
     upgradeLabels.push(upgrade.name);
-    /*
-    upgrade.prices.forEach( priceEntry => {
-      priceEntry.id;
-      priceEntry.tier_1
-    })*/
+
+    // Looking for the prices of each tier
+    let multiTierCost: TierCost[] = [];
+    upgradeTiers.forEach( tier => {
+      let tierPriceList: PricePair[]  = [];
+      let coinsPerTier: TierCost = { tier:tier , priceList: tierPriceList };
+
+      upgrade.prices.forEach( ( priceEntry: Chisel.UpgradePrice ) => {
+        let id = priceEntry.crypto_id
+        let price = 0;
+        switch(tier){
+          case 'tier_1':
+            price = priceEntry.tier_1;
+            break;
+          case 'tier_2':
+            price = priceEntry.tier_2;
+            break;
+          case 'tier_3':
+            price = priceEntry.tier_3;
+            break;
+          case 'tier_4':
+            price = priceEntry.tier_4;
+            break;
+          case 'tier_5':
+            price = priceEntry.tier_5;
+            break;
+        }
+        if (price>0){
+          const coinEntry:PricePair = { crypto_id: priceEntry.crypto_id , cost: price } ;
+          tierPriceList.push(coinEntry);
+        }
+      })
+      multiTierCost.push(coinsPerTier);
+    })
+    let newObject = {id:upgrade.id, name:upgrade.name, costPerTier: multiTierCost};
+    upgradeObjectArray.push(newObject);
   } )
+  console.log(upgradeObjectArray)
+
+
 
   let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );
 
