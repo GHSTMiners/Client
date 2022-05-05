@@ -27,9 +27,9 @@ export const PlayerCounter = ({
       playerArray.push({id:i,inRoom:isInRoom,ready:isReady});
     }
     
-    const renderPlayerArray = playerArray.map( function (player) {
+    const renderPlayerArray = playerArray.map( function (player,index) {
       return( 
-        <div className={styles.playerElement}>
+        <div className={styles.playerElement} id={`player${index}`}>
           { (player.inRoom)? 
               <img src={ActiveFrensIcon} className={styles.playerIcon}></img> 
             : <img src={InactiveFrensIcon} className={styles.playerIcon}></img> 

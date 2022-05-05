@@ -80,7 +80,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   const updatePlayerBalance = (quantity:number) =>{
-    setPlayerBalance(quantity);
+    setPlayerBalance(Math.round(quantity*10)/10);
   }
 
   const renderCoinEntry = ( id: number ) => {
@@ -90,7 +90,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       <div className={styles.coinContainer}>
         <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
         <div className={`${styles.exchangeRowText} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
-          <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGMS</div>
+          <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
           <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
         </div>
         <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}

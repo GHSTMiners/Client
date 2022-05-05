@@ -81,10 +81,6 @@
   grid-area: map;
 } 
 
-.mapSelection:after{
-  opacity: 1;
-}
-
 .availablePlayers{
   grid-area: players;
   justify-content: flex-start;
@@ -147,6 +143,8 @@
 .mapTitle{
   font-family: Rocks;
   font-size: 1.5rem;
+  color: rgba(255,255,255,1);
+  z-index: 2;
 }
 
 .mapThumbnail{
@@ -194,6 +192,9 @@
   border: 1px solid white;
 }
 
+
+
+
 @media all and (min-width: 2000px) {
   .basicGrid {
     font-size: 18px;
@@ -205,5 +206,48 @@
   .basicGrid {
     font-size: 20px;
     grid-auto-rows: 250px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: repeat(2,minmax(160px,1fr));
+    grid-template-areas:
+    "gotchi gotchi"
+    "gotchi gotchi"
+    "gotchi  gotchi"
+    "gotchi  gotchi"
+    "gotchi  gotchi"
+    "map  players"
+    "chat  chat"
+    "chat  chat"
+    "chat   chat";
+  }
+  .gotchiSelection{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1.5fr;
+    grid-template-areas:
+    "selection traits"
+    "selection readyup"
+  }
+  .gotchiPreview{
+    display: none;
+  }
+}
+
+@media all and (max-width: 800px) {
+  html{
+    font-size:10px;
+  }
+  .basicGrid {
+    padding: 0;
+    grid-template-areas:
+    "gotchi gotchi"
+    "gotchi gotchi"
+    "gotchi  gotchi"
+    "map  players"
+    "chat  chat"
+    "chat  chat"
+    "chat   chat";
   }
 }

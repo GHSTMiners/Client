@@ -52,7 +52,7 @@ export default class Jackhammer extends Phaser.GameObjects.Container {
             }
             this.jackhammerSpriteRear.anims.play('running_rear', true)
             this.jackhammerSpriteSide.anims.play('running_side', true)
-            console.log(this.player.playerSchema.playerState.movementDirection)
+            //console.log(this.player.playerSchema.playerState.movementDirection)
         } else {
             this.jackhammerSpriteRear.setVisible(false)
             this.jackhammerSpriteSide.setVisible(false)  

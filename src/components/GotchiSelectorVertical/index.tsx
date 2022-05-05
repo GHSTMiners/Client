@@ -77,7 +77,7 @@ export const GotchiSelectorVertical = ({
   const [activeToggle, setActiveToggle] = useState<"search" | "sort" | undefined>();
 
   const width = useWindowWidth();
-  const isMobile = width < 768;
+  const isMobile = false; //width < 768;
 
   const handleSelect = useCallback(
     (id: string) => {
