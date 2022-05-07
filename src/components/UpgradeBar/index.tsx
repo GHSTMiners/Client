@@ -1,17 +1,18 @@
 import { PricePair } from "components/MiningShop/TabUpgrades";
-import { hexConcat } from "ethers/lib/utils";
 import React, { useState } from "react";
 import styles from "./styles.module.css";
+import * as Chisel from "chisel-api-interface";
+import Client from "matchmaking/Client";
 
 interface Props {
-  text?: string;
+  upgradeLabel?: string;
   initialLevel?:number;
   upgradeCost?:PricePair[];
   onUpgrade?: () => void;
 }
 
 const UpgradeBar: React.FC<Props> = ({
-  text,
+  upgradeLabel,
   initialLevel = 0,
   upgradeCost= [] as PricePair[],
   onUpgrade
@@ -21,6 +22,7 @@ const UpgradeBar: React.FC<Props> = ({
 
   // Defining the tags and colors of all possible upgrade levels
   const [ upgradeLevel, setUpgradeLevel ]=useState(initialLevel);
+  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   let upgradeLevelArray: upgradeObj[] = [];
   upgradeLevelArray.push({name:'common', color:'#7f63ff'});
@@ -52,18 +54,22 @@ const UpgradeBar: React.FC<Props> = ({
 
   // rendering function of the total upgrading cost
  const renderedCostArray= upgradeCost.map( entry => {
-   return(
-     <>
-        {entry.cost} x ID:{entry.cryptoId} ;   
-     </>
-   )
+
+  const entryImage = world.crypto.find( coin => coin.id == entry.cryptoId);
+
+  return(
+    <div>
+       {entry.cost} x
+       <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} className={styles.exchangeCoin} />   
+    </div>
+  )
  })
 
   return (
-    <div className={styles.upgradeRowContainer} id={text} >
+    <div className={styles.upgradeRowContainer} id={upgradeLabel} >
       
       <div className={styles.upgradeBarTitle}>
-        {text}
+        {upgradeLabel}
       </div>
 
       <div className={styles.costContainer}>

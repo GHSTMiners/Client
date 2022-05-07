@@ -278,3 +278,18 @@
   height: 16rem;
   margin-top:2.5rem;
 }
+
+.upgradesContainer{
+  box-shadow: 0;
+  -webkit-transition : all ease-in-out .2s;
+  transition : all ease-in-out .2s;
+}
+
+.upgradesContainer:hover {
+  border-width: 1px;
+    background-color: rgba(0,255,255,0.3);
+    border-color: #a4ffff;
+  -webkit-transition : all ease-in-out .2s;
+  transition : all ease-in-out .2s;
+}
+

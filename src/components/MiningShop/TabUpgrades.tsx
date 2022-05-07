@@ -26,9 +26,6 @@ const TabUpgrades: FC<{}> = () => {
   const upgradeObjectArray : upgradePriceObject[] = [];
   const upgradeLevelIni: upgradeLevels[] =[];
 
-  console.log('-----')
-  console.log(world.upgrades)
-  console.log('-----')
   world.upgrades.forEach( upgrade => {
     upgradeLabels.push(upgrade.name);
     // Looking for the prices of each tier
@@ -65,10 +62,9 @@ const TabUpgrades: FC<{}> = () => {
     })
     let newObject = {id:upgrade.id, name:upgrade.name, costPerTier: multiTierCost};
     upgradeObjectArray.push(newObject);
-      // Player current tier (TO DO: fetch from Schemas)
+    // Player current tier (TO DO: fetch from Schemas)
     upgradeLevelIni.push({upgradeId: upgrade.id, tier:1});// Storing
   } )
-  console.log(upgradeObjectArray)
   const [currentTiers,setCurrentTiers]=useState(upgradeLevelIni);
 
 
@@ -89,13 +85,9 @@ const TabUpgrades: FC<{}> = () => {
     const tierTag = `tier_${playerState?.tier}`;
     const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==tierTag);
     const upgradeCost = upgradeTierInfo?.priceList; 
-    console.log(`UPGRADE COST of ${obj.name}; TIER:${tierTag}`)
-    console.log(upgradeCost)
-    console.log(obj)
-
     return  (
       <div className={styles.upgradesContainer}>
-        <UpgradeBar text={obj.name} upgradeCost={upgradeCost}  />
+        <UpgradeBar upgradeLabel={obj.name} upgradeCost={upgradeCost}  />
       </div>
     )
   }
@@ -114,7 +106,6 @@ const TabUpgrades: FC<{}> = () => {
       </div>
       <div className={styles.detailsPanel}>
         Selected item details
-        {/*<img src={drillIcon} className={styles.drillIcon}></img>*/}
       </div>
     </div>
   );
