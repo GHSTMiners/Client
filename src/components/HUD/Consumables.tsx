@@ -14,7 +14,8 @@ const Consumables = () => {
     return (
     <SquareButton size={smallButton} 
                   quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
-                  disabled={ isFilled ? false : true}>
+                  disabled={ isFilled ? false : true}
+                  key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>
         <img src={ isFilled ? playerConsumables[index-1].image : ''} />
       </div>

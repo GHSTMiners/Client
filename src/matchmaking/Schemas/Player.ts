@@ -12,6 +12,7 @@ import { Skill } from './Skill'
 import { CargoEntry } from './CargoEntry'
 import { WalletEntry } from './WalletEntry'
 import { ExplosiveEntry } from './ExplosiveEntry';
+import { Upgrade } from './Upgrade';
 
 export class Player extends Schema {
     @type("string") public name!: string;
@@ -19,6 +20,7 @@ export class Player extends Schema {
     @type("number") public gotchiID!: number;
     @type("string") public chatColor!: string;
     @type(PlayerState) public playerState: PlayerState = new PlayerState();
+    @type([ Upgrade ]) public upgrades: ArraySchema<Upgrade> = new ArraySchema<Upgrade>();
     @type([ Vital ]) public vitals: ArraySchema<Vital> = new ArraySchema<Vital>();
     @type([ Skill ]) public skills: ArraySchema<Skill> = new ArraySchema<Skill>();
     @type({ map: CargoEntry }) public cargo: MapSchema<CargoEntry> = new MapSchema<CargoEntry>();

@@ -4,8 +4,7 @@ import Play from "pages/Play";
 import Leaderboard from "pages/Leaderboard";
 import HowToPlay from "pages/HowToPlay";
 import About from "pages/About";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Web3ContextProvider from "web3/context";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Lobby from "pages/Lobby";
 

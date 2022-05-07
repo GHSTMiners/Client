@@ -19,7 +19,7 @@ export const NewsPanel = () => {
  
    const renderNewsEntry = ( news : newsEntry) => {
      return(
-       <div className={styles.newsEntry}>
+       <div className={styles.newsEntry} key={news.title}>
           <div className={styles.newsTitle}>
             {news.title}
           </div>

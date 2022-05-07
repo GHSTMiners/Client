@@ -29,7 +29,7 @@ export const DailyWinners = ({
       <div className={styles.infoPanel}>
           <div className={styles.tileHeader}>
             <div className={styles.infoTitle}> {title} </div>
-            <img src={TopPlayersIcon2} className={styles.tileIcon}/> 
+            <img src={TopPlayersIcon2} className={styles.tileIcon} alt={'Daily Winers Icon'}/> 
           </div>
           <select className={styles.selectCathegory}> 
             <option>Blocks Mined</option>

@@ -87,7 +87,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     const quantity = walletBalance[id];
     const hasCoins = quantity>0;
     return(
-      <div className={styles.coinContainer}>
+      <div className={styles.coinContainer} key={`coinEntry${id}`}>
         <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
         <div className={`${styles.exchangeRowText} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
           <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
@@ -100,7 +100,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   let cryptoList = cryptoIdArray.map(function (id) {
-    return id===world.world_crypto_id ? <></> : renderCoinEntry( id );
+    return id===world.world_crypto_id ? '' : renderCoinEntry( id );
   });
 
   useEffect( () => {
@@ -118,7 +118,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                        ${displayExchange? styles.displayOn:styles.displayOff }`}>
           <div>
             <div className={styles.exchangeDisplayContainer}>
-              <div className={styles.exchangeHeader}>
+              <div className={styles.exchangeHeader} key={'exchangeHeader'}>
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
                   <img src={ggemsIcon} className={styles.ggemsIcon} />

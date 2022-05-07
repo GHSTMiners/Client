@@ -43,11 +43,12 @@ const TabConsumables: FC<{}> = () => {
 
   const [explosionPattern, setExplosionPattern] = useState<patternElement[]>(patternArray);
 
-  let renderExplosivePattern = explosionPattern.map( function(element) {
+  let renderExplosivePattern = explosionPattern.map( function(element,index) {
     return (
       <div className={`${styles.patternElement} 
         ${ (element.styleTag=='explosionElement') ? styles.explosionElement : '' }
-        ${ (element.styleTag=='detonationElement') ? styles.detonationElement : '' } `}>
+        ${ (element.styleTag=='detonationElement') ? styles.detonationElement : '' } `}
+        key={`explosivePattern${index}`}>
       </div> )
   }
   );
@@ -90,7 +91,8 @@ const TabConsumables: FC<{}> = () => {
   const renderShopItem = (item: shopItem) => (
   <div className={`${styles.itemContainer}
                   ${playerDoekoes>=item.price? styles.enabledContainer : styles.disabledContainer }`} 
-       onClick={()=>{ displaySelectedItem(item); }}>
+       onClick={()=>{ displaySelectedItem(item); }}
+       key={item.name}>
       <img src={item.image} className={styles.itemImage} />
       <div className={styles.itemText}>
         {item.name} : {item.price} GHST

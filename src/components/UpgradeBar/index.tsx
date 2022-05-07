@@ -40,15 +40,15 @@ const UpgradeBar: React.FC<Props> = ({
   }
 
   // creatng definition of each of the upgradable levels
-  const renderUpgradeLevel = (name: string, color: string, disabled: boolean) => (
-    <div className={styles.levelElement} style={{backgroundColor:color}} >
+  const renderUpgradeLevel = (name: string, color: string, disabled: boolean, index:number) => (
+    <div className={styles.levelElement} style={{backgroundColor:color}} key={`upgradeTier${index}`}>
     </div>
   );
 
   // rendering the array of level elements and storing into one variable
   const upgradeLevels = upgradeLevelArray.map( (upgradeElement , index) => {
     return(  
-      ( index<=upgradeLevel ? renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false ) : '')  
+      ( index<=upgradeLevel ? renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false , index) : '')  
       );
   });
 
@@ -58,7 +58,7 @@ const UpgradeBar: React.FC<Props> = ({
   const entryImage = world.crypto.find( coin => coin.id == entry.cryptoId);
 
   return(
-    <div>
+    <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
        <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} className={styles.exchangeCoin} />   
     </div>
@@ -66,7 +66,7 @@ const UpgradeBar: React.FC<Props> = ({
  })
 
   return (
-    <div className={styles.upgradeRowContainer} id={upgradeLabel} >
+    <div className={styles.upgradeRowContainer} key={`${upgradeLabel}_bar`} >
       
       <div className={styles.upgradeBarTitle}>
         {upgradeLabel}

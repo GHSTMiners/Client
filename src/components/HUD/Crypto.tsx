@@ -46,7 +46,7 @@ const Crypto = () => {
 
 
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
-    <div className={styles.crystalContainer}>
+    <div className={styles.crystalContainer} key={`inventory${tag}`}>
       <img src={image} className={`${styles.crystalIcon} 
                                    ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`} />
       <div className={`${styles.crystalTag}

@@ -6,7 +6,7 @@ const Artifacts = () => {
   const artifactList = [];
 
   for (let i = 1; i < 5; i++) {
-    artifactList.push(<SquareButton size={smallButton} quantity={-1} ></SquareButton>);
+    artifactList.push(<SquareButton size={smallButton} quantity={-1} key={`artifact${i}`}></SquareButton>);
   }
 
   return (
