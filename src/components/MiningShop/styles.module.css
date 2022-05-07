@@ -112,11 +112,25 @@
   position:relative;
 }
 
+.upgradePanel {
+  height: 22rem;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #6db9aeff #a4ffff;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  position:relative;
+}
+
 .upgradesList{
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  
 }
  
 .itemContainer {
@@ -258,7 +272,7 @@
 }
 
 .gotchiPreview{
-  opacity: 50%;
+  opacity: 20%;
   position: absolute;
   right:-8rem;
   height: 16rem;

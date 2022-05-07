@@ -1,3 +1,4 @@
+import { PricePair } from "components/MiningShop/TabUpgrades";
 import { hexConcat } from "ethers/lib/utils";
 import React, { useState } from "react";
 import styles from "./styles.module.css";
@@ -5,12 +6,14 @@ import styles from "./styles.module.css";
 interface Props {
   text?: string;
   initialLevel?:number;
+  upgradeCost?:PricePair[];
   onUpgrade?: () => void;
 }
 
 const UpgradeBar: React.FC<Props> = ({
   text,
   initialLevel = 0,
+  upgradeCost= [] as PricePair[],
   onUpgrade
 }) => {
 
@@ -47,22 +50,37 @@ const UpgradeBar: React.FC<Props> = ({
       );
   });
 
+  // rendering function of the total upgrading cost
+ const renderedCostArray= upgradeCost.map( entry => {
+   return(
+     <>
+        {entry.cost} x ID:{entry.cryptoId} ;   
+     </>
+   )
+ })
+
   return (
-    <div className={styles.upgradeBarContainer} >
+    <div className={styles.upgradeRowContainer} id={text} >
       
       <div className={styles.upgradeBarTitle}>
         {text}
       </div>
-       
-      <button className={styles.upgradeButton}
-              onClick={purchaseUpgrade} >
-        <div className={styles.upgradeButtonText}>+</div>        
-      </button>  
-      
-      <div className={styles.levelContainer}>
-        {upgradeLevels}
+
+      <div className={styles.costContainer}>
+        {renderedCostArray}
       </div>
-      
+    
+      <div className={styles.upgradeBarContainer}>
+        <button className={styles.upgradeButton}
+                onClick={purchaseUpgrade} >
+          <div className={styles.upgradeButtonText}>UPGRADE</div>        
+        </button>  
+
+        <div className={styles.levelContainer}>
+          {upgradeLevels}
+        </div>
+      </div>
+     
     </div>
   );
 };
