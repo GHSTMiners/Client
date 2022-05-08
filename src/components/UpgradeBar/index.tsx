@@ -8,14 +8,14 @@ interface Props {
   upgradeLabel?: string;
   initialLevel?:number;
   upgradeCost?:PricePair[];
-  onUpgrade?: () => void;
+  purchaseCallback?: () => void;
 }
 
 const UpgradeBar: React.FC<Props> = ({
   upgradeLabel,
   initialLevel = 0,
   upgradeCost= [] as PricePair[],
-  onUpgrade
+  purchaseCallback,
 }) => {
 
   type upgradeObj = { name: string; color: string };
@@ -36,6 +36,9 @@ const UpgradeBar: React.FC<Props> = ({
   const purchaseUpgrade = ()=>{
     if (upgradeLevel<upgradeLevelArray.length-1) {
       setUpgradeLevel(upgradeLevel+1); // TO DO: replace this with an upgrade message to the server if funds are available
+      if (purchaseCallback){
+        purchaseCallback(); // executes external routine
+      }
     }
   }
 
