@@ -50,11 +50,15 @@
   margin-left: 0rem;
 }
 
-.levelElement{
+.enabledElement, .disabledElement{
   width: 0.75rem;
   height: 1.5rem;
   margin-right: 0.2rem;
   transform: skew(-18deg);
+}
+
+.disabledElement{
+  border:1px solid #cecece;
 }
 
 .upgradeBarTitle{
@@ -80,4 +84,17 @@
   padding: 0.5rem;
   padding-left: 0;
   margin-bottom: 0.2rem;
+}
+
+.upgradeUnavailable{
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
+.buttonUnavailable{
+  background-color: #a4ffff ;
+  filter:grayscale(0.4);
+  opacity: 0.4;
+  z-index: 50;
+  clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
 }

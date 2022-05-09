@@ -96,7 +96,7 @@
 .contentContainer{
   display:flex;
   padding-top: 1rem;
-  padding-right: 1rem;
+  padding-right: 0rem;
 }
 
 .galleryPanel {
@@ -181,10 +181,13 @@
 .detailsPanel{
   width: 30%;
   padding-left: 1rem;
+  padding-right: 1rem;
   border-left:1px solid #a4ffff;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  position:relative;
+  overflow-x: hidden;
 }
 
 

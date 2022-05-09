@@ -1,8 +1,9 @@
 import { PricePair } from "components/MiningShop/TabUpgrades";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
+import { ShopContext } from "components/MiningShop";
 
 interface Props {
   upgradeLabel?: string;
@@ -25,6 +26,7 @@ const UpgradeBar: React.FC<Props> = ({
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   let upgradeLevelArray: upgradeObj[] = [];
+  const playerDoekoes = useContext(ShopContext);
   upgradeLevelArray.push({name:'common', color:'#7f63ff'});
   upgradeLevelArray.push({name:'uncommon', color:'#33bacc'});
   upgradeLevelArray.push({name:'rare', color:'#59bcff'});
@@ -44,16 +46,28 @@ const UpgradeBar: React.FC<Props> = ({
 
   // creatng definition of each of the upgradable levels
   const renderUpgradeLevel = (name: string, color: string, disabled: boolean, index:number) => (
-    <div className={styles.levelElement} style={{backgroundColor:color}} key={`upgradeTier${index}`}>
+    <div className={ disabled? styles.disabledElement: styles.enabledElement} 
+         style={{backgroundColor:color}} 
+         key={`upgradeTier${index}`}>
     </div>
   );
 
   // rendering the array of level elements and storing into one variable
   const upgradeLevels = upgradeLevelArray.map( (upgradeElement , index) => {
     return(  
-      ( index<=upgradeLevel ? renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false , index) : '')  
+      ( index<=upgradeLevel ? 
+          renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false , index) 
+          : renderUpgradeLevel( upgradeElement.name, 'transparent', true , index) )  
       );
   });
+
+  // checking if the player has funds available for the upgrade, hacky shit, TO DO: consider all coins balance properly
+  let upgradeAvailable = false;
+  upgradeCost.forEach(entry => {
+    if (entry.cryptoId==13) {
+      if (entry.cost<= playerDoekoes) upgradeAvailable = true;
+    }
+  })
 
   // rendering function of the total upgrading cost
  const renderedCostArray= upgradeCost.map( entry => {
@@ -63,7 +77,9 @@ const UpgradeBar: React.FC<Props> = ({
   return(
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
-       <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} className={styles.exchangeCoin} />   
+       <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} 
+       className={`${styles.exchangeCoin}
+                   ${upgradeAvailable? styles.upgradeAvailable: styles.upgradeUnavailable}`} />   
     </div>
   )
  })
@@ -80,7 +96,8 @@ const UpgradeBar: React.FC<Props> = ({
       </div>
     
       <div className={styles.upgradeBarContainer}>
-        <button className={styles.upgradeButton}
+        <button className={`${styles.upgradeButton}
+                          ${upgradeAvailable? '' : styles.buttonUnavailable}`}
                 onClick={purchaseUpgrade} >
           <div className={styles.upgradeButtonText}>UPGRADE</div>        
         </button>  

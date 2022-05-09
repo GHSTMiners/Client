@@ -99,7 +99,7 @@ const TabUpgrades: FC<{}> = () => {
   const renderUpgradeElement = ( obj:upgradePriceObject) => {
     // Finding the current player tier
     let playerState = currentTiers.find(entry => entry.upgradeId==obj.id);
-    let nextTier = 0;
+    let nextTier = 1;
     let upgradeCost:PricePair[] = [];
     if (playerState){
       console.log('playerState found!')
@@ -137,10 +137,11 @@ const TabUpgrades: FC<{}> = () => {
         <div className={styles.upgradesList}>
           {upgradesArray}
         </div>
-        <img src={gotchiSVG} className={styles.gotchiPreview}></img>
+        
       </div>
       <div className={styles.detailsPanel}>
         Selected item details
+        <img src={gotchiSVG} className={styles.gotchiPreview}></img>
       </div>
     </div>
   );
