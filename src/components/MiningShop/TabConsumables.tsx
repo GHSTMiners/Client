@@ -29,7 +29,8 @@ const TabConsumables: FC<{}> = () => {
    const [selectedItem, setSelectedItem] = useState<shopItem | any>([]);
    const [itemQuantity, setItemQuantity] = useState<number>(1);
    const [multipleItemPrice, setmultipleItemPrice] = useState<number>(shopItemArray[0].price);
-   const playerDoekoes = useContext(ShopContext);
+   const contextObj = useContext(ShopContext);
+   const playerDoekoes = contextObj.currencyBalance;
 
   // Initializing empty explosive pattern (double definition to avoid pointer problems)
   let emptyPatternArrray: patternElement[] = [];

@@ -29,13 +29,16 @@ const tabs: TabsType = [
   }
 ];
 
-export const ShopContext = createContext(0);
+export type CryptoEntry = {id: number, quantity: number};
+export const ShopContext = createContext({currencyBalance:0 ,walletCrypto:[] as CryptoEntry[]});
 
 const MiningShop = () => {
   
+
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const [displayShop, setDisplayShop] = useState<boolean>(false);
   const [playerDoekoes, setPlayerDoekoes] = useState<number>(0);
+  const [playerCrypto, setPlayerCrypto] = useState<CryptoEntry[]>([]);
 
   const openShop = () => {
     setDisplayShop(true);
@@ -49,7 +52,25 @@ const MiningShop = () => {
 
 
   const updatePlayerBalance = (quantity:number) =>{
-    setPlayerDoekoes(quantity);
+    setPlayerDoekoes(Math.round(quantity*10)/10);
+  }
+
+  const addCryptoToWallet = (cryptoId:number, amount:number) => {
+    let cryptoEntry = {id:cryptoId,quantity:amount};
+    playerCrypto.push(cryptoEntry);
+  }
+
+  const updateWalletBalance = (id:number, quantity:number) => {
+    if (playerCrypto){
+      let cryptoEntry = playerCrypto.find( entry => entry.id == id);
+      if (cryptoEntry){
+        cryptoEntry.quantity = quantity;
+      } else {
+        addCryptoToWallet(id,quantity);
+      }
+    } else {
+      addCryptoToWallet(id,quantity);
+    }
   }
 
   useEffect( () => {
@@ -58,6 +79,8 @@ const MiningShop = () => {
     Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{closeShop('Bazaar')} );
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
+      Client.getInstance().phaserGame.events.on("added crypto", addCryptoToWallet )
+      Client.getInstance().phaserGame.events.on("updated wallet", updateWalletBalance )
     });
   },[]);
 
@@ -65,7 +88,7 @@ const MiningShop = () => {
   return (
     <div className={`${styles.shopContainer} ${displayShop ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
-        <ShopContext.Provider value={playerDoekoes}>
+        <ShopContext.Provider value={{ currencyBalance: playerDoekoes , walletCrypto: playerCrypto }}>
           <div className={styles.playerDoekoes}>{playerDoekoes} GGEMS</div>
           <button className={styles.closeButton} onClick={()=>closeShop('Bazaar')}>X</button>
             <div className={styles.shopTabs}>

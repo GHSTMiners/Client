@@ -26,7 +26,8 @@ const UpgradeBar: React.FC<Props> = ({
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   let upgradeLevelArray: upgradeObj[] = [];
-  const playerDoekoes = useContext(ShopContext);
+  const contextObj = useContext(ShopContext);
+  const playerDoekoes = contextObj.currencyBalance;
   upgradeLevelArray.push({name:'common', color:'#7f63ff'});
   upgradeLevelArray.push({name:'uncommon', color:'#33bacc'});
   upgradeLevelArray.push({name:'rare', color:'#59bcff'});

@@ -50,8 +50,10 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       // WALLET
       Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
         walletBalance[item.cryptoID] = item.amount;
+        Client.getInstance().phaserGame.events.emit("added crypto", item.cryptoID, item.amount);
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
+          Client.getInstance().phaserGame.events.emit("updated wallet", item.cryptoID, item.amount);
           if (world.world_crypto_id === item.cryptoID) {
             Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
           }
