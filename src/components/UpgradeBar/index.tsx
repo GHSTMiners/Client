@@ -1,5 +1,5 @@
 import { PricePair } from "components/MiningShop/TabUpgrades";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
@@ -28,6 +28,7 @@ const UpgradeBar: React.FC<Props> = ({
   let upgradeLevelArray: upgradeObj[] = [];
   const contextObj = useContext(ShopContext);
   const playerDoekoes = contextObj.currencyBalance;
+  const playerCrypto = contextObj.walletCrypto;
   upgradeLevelArray.push({name:'common', color:'#7f63ff'});
   upgradeLevelArray.push({name:'uncommon', color:'#33bacc'});
   upgradeLevelArray.push({name:'rare', color:'#59bcff'});
@@ -62,25 +63,37 @@ const UpgradeBar: React.FC<Props> = ({
       );
   });
 
-  // checking if the player has funds available for the upgrade, hacky shit, TO DO: consider all coins balance properly
+  // checking if the player has funds available for the upgrade
   let upgradeAvailable = false;
-  upgradeCost.forEach(entry => {
-    if (entry.cryptoId==13) {
-      if (entry.cost<= playerDoekoes) upgradeAvailable = true;
-    }
-  })
+  const coinsRequired = upgradeCost.length;
+  let coinsAvailable = 0;
+  // Making sure that the player has all the coins required
+  upgradeCost.forEach( costEntry => {
+    let walletCoin = playerCrypto.find( walletEntry => walletEntry.id == costEntry.cryptoId);
+    if (walletCoin){
+      if (walletCoin.quantity>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
+    }        
+  });
+  if (coinsAvailable==coinsRequired) upgradeAvailable=true;
+
 
   // rendering function of the total upgrading cost
  const renderedCostArray= upgradeCost.map( entry => {
 
   const entryImage = world.crypto.find( coin => coin.id == entry.cryptoId);
+  let canBuy = false;
+  playerCrypto.forEach( walletEntry => {
+    if (walletEntry.id == entry.cryptoId) {
+      if (walletEntry.quantity>=entry.cost) canBuy = true; 
+    }
+  }) 
 
   return(
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
        <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} 
        className={`${styles.exchangeCoin}
-                   ${upgradeAvailable? styles.upgradeAvailable: styles.upgradeUnavailable}`} />   
+                   ${canBuy? styles.upgradeAvailable: styles.upgradeUnavailable}`} />   
     </div>
   )
  })

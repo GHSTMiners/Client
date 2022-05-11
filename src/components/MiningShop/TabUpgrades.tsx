@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
@@ -7,6 +7,7 @@ import UpgradeBar from "components/UpgradeBar";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 import { Upgrade } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import { ShopContext } from ".";
 
 export type PricePair = { cryptoId:number, cost:number };
   
@@ -28,6 +29,8 @@ const TabUpgrades: FC<{}> = () => {
   const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
   const upgradeObjectArray : upgradePriceObject[] = [];
   const upgradeLevelIni: upgradeLevels[] =[];
+  const contextObj = useContext(ShopContext);
+  const playerCrypto = contextObj.walletCrypto;
 
   world.upgrades.forEach( upgrade => {
     upgradeLabels.push(upgrade.name);
@@ -100,6 +103,7 @@ const TabUpgrades: FC<{}> = () => {
     // Finding the current player tier
     let playerState = currentTiers.find(entry => entry.upgradeId==obj.id);
     let nextTier = 1;
+    let upgradeAvailable = false;
     let upgradeCost:PricePair[] = [];
     if (playerState){
       console.log('playerState found!')
@@ -107,7 +111,7 @@ const TabUpgrades: FC<{}> = () => {
       const nextTierTag = `tier_${nextTier}`;
       const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
       if (upgradeTierInfo){ 
-        upgradeCost = upgradeTierInfo.priceList;  
+        upgradeCost = upgradeTierInfo.priceList;
       }
     }    
     return  (
