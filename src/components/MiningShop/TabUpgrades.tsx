@@ -7,14 +7,11 @@ import UpgradeBar from "components/UpgradeBar";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 import { Upgrade } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import { ShopContext } from ".";
 
 export type PricePair = { cryptoId:number, cost:number };
   
 const TabUpgrades: FC<{}> = () => {
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  //const playerSprite = `gotchi_${Client.getInstance().ownPlayer.gotchiID}`;
-  //let gotchiURL : string = '';
   const [gotchiSVG,setGotchiSVG]=useState('');
 
   // Defining all the data types required to store all the price per tier info
@@ -29,8 +26,6 @@ const TabUpgrades: FC<{}> = () => {
   const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
   const upgradeObjectArray : upgradePriceObject[] = [];
   const upgradeLevelIni: upgradeLevels[] =[];
-  const contextObj = useContext(ShopContext);
-  const playerCrypto = contextObj.walletCrypto;
 
   world.upgrades.forEach( upgrade => {
     upgradeLabels.push(upgrade.name);
@@ -79,6 +74,15 @@ const TabUpgrades: FC<{}> = () => {
 
   let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );
 
+  const upgradePlayerTier = (upgradeId:number, tier:number) =>{
+    let tiers = [...currentTiers];
+    let upgradedTier = tiers.find( entry => entry.upgradeId == upgradeId);
+    if (upgradedTier){
+      upgradedTier.tier = tier;
+    }
+    setCurrentTiers(tiers);
+  }
+
   useEffect(()=>{
     // Fetching Aavegotchi preview to display in console as background
     aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
@@ -86,27 +90,20 @@ const TabUpgrades: FC<{}> = () => {
     });
 
     // Hooking listeners to player tier schemas
-    // METHOD 1
-    Client.getInstance().ownPlayer.upgrades.onChange = (upgrade: Upgrade) =>{
-      console.log(`upgraded ID:${upgrade.id} to tier ${upgrade.tier}`)
-    }
-    /*
-    //METHOD 2
     Client.getInstance().ownPlayer.upgrades.forEach( upgrade => {
       upgrade.onChange = () =>{
-        console.log(`upgraded ID:${upgrade.id} to tier ${upgrade.tier}`)
+        upgradePlayerTier(upgrade.id,upgrade.tier);
+        Client.getInstance().phaserGame.events.emit("upgraded tier", upgrade.id, upgrade.tier);
       }
-    })*/
+    })
   },[]);
 
   const renderUpgradeElement = ( obj:upgradePriceObject) => {
     // Finding the current player tier
     let playerState = currentTiers.find(entry => entry.upgradeId==obj.id);
     let nextTier = 1;
-    let upgradeAvailable = false;
     let upgradeCost:PricePair[] = [];
     if (playerState){
-      console.log('playerState found!')
       const nextTier = playerState.tier + 1;
       const nextTierTag = `tier_${nextTier}`;
       const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
@@ -116,8 +113,10 @@ const TabUpgrades: FC<{}> = () => {
     }    
     return  (
       <div className={styles.upgradesContainer} key={`${obj.name}_container`}>
-        <UpgradeBar upgradeLabel={obj.name} 
+        <UpgradeBar upgradeId={obj.id}
+                    upgradeLabel={obj.name} 
                     upgradeCost={upgradeCost} 
+                    currentTier={nextTier-1}
                     purchaseCallback={ ()=>{ buyUpgrade(obj.id,nextTier); console.log(`>>>>>>>>>>> Purchase Upgrade [${obj.name}] Message sent to server to buy tier ${nextTier}! `) } }/>
       </div>
     )

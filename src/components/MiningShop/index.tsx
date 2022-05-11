@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState, useContext } from "react";
-import ReactDOM from "react-dom";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
-import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 
 // Tabs Components
