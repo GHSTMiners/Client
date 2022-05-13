@@ -3,6 +3,7 @@ import gameFlow from "assets/images/gameflow.png"
 import explosivesFlow from "assets/images/explosivesflow.png"
 import upgradesFlow from "assets/images/upgradesflow.png"
 import vitalsHowTo from "assets/svgs/vitals_howto.svg"
+import consoleHowTo from "assets/svgs/console_howto.svg"
 import numericInfoKey from "assets/svgs/infoKeys/1234.svg"
 import eKey from "assets/svgs/infoKeys/e.svg"
 import qKey from "assets/svgs/infoKeys/q.svg"
@@ -11,6 +12,18 @@ import wasdKeys from "assets/svgs/infoKeys/wasd.svg"
 
 
 const HowToPlay = (): JSX.Element => {
+
+  const renderControlItem = ( keyIcon: string , description: string, styleClass : string ) =>{
+    return(
+      <div className={styles.controlKeyContainer}>
+        <img src={keyIcon} className={styles.singleKey}/>
+        <div className={styles.controlDescription}>
+          {description}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <>
       <div className={styles.basicGrid}>
@@ -24,12 +37,11 @@ const HowToPlay = (): JSX.Element => {
         </div> 
 
         <div className={`${styles.gridTile} ${styles.controlsTile}`}>
-          Controls
-          <img src={wasdKeys} className={styles.wasdKeys}/>
-          <img src={spaceKey} className={styles.singleKey}/>
-          <img src={eKey} className={styles.singleKey}/>
-          <img src={qKey} className={styles.singleKey}/>
-          <img src={numericInfoKey} className={styles.singleKey}/>
+          {renderControlItem(wasdKeys,'movement keys','styles.wasdKeys')}
+          {renderControlItem(spaceKey,'open/close console','styles.singleKey')}
+          {renderControlItem(eKey,'interact with building','styles.singleKey')}
+          {renderControlItem(qKey,'open/close wallet','singleKey')}
+          {renderControlItem(numericInfoKey,'use explosives','singleKey')}
           
         </div>
 
@@ -55,7 +67,7 @@ const HowToPlay = (): JSX.Element => {
         </div>
 
         <div className={`${styles.gridTile} ${styles.consoleTile}`}>
-          Console
+          <img src={consoleHowTo} className={styles.flowImage}/>
         </div>
       </div>
     </>

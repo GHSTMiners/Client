@@ -70,3 +70,12 @@
 .wasdKeys{
   height: 5rem;
 }
+
+.controlKeyContainer{
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  grid-template-columns: repeat(2,1fr);
+  align-items: center;
+  justify-content: space-around;
+}
