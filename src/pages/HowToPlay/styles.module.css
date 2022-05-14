@@ -1,5 +1,9 @@
 @import "theme/vars.css";
 
+h3{
+  padding-bottom: 0.5rem;
+}
+
 .basicGrid {
   margin-top: 2rem;
   padding: 2rem 2rem 0 2rem;
@@ -60,22 +64,34 @@
 
 .flowImage{
   padding: 0.5rem 0rem;
-  width: 24rem;
-}
-
-.singleKey{
-  height: 2.5rem;
-}
-
-.wasdKeys{
-  height: 5rem;
+  width: 20rem;
 }
 
 .controlKeyContainer{
-  display: flex;
+  display: grid;
   width: 100%;
   flex-direction: row;
   grid-template-columns: repeat(2,1fr);
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+}
+
+.controlKeyContainer>*{
+  width: 100%;
+}
+
+.traitIcon{
+  height: 2rem;
+  padding-right: 1rem;
+}
+
+.traitList{
+  margin-top: 0.3rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.traitElement{
+  display: flex;
+  flex-direction: row;
 }

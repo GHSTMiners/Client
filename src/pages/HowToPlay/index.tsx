@@ -9,14 +9,18 @@ import eKey from "assets/svgs/infoKeys/e.svg"
 import qKey from "assets/svgs/infoKeys/q.svg"
 import spaceKey from "assets/svgs/infoKeys/space.svg"
 import wasdKeys from "assets/svgs/infoKeys/wasd.svg"
+import nrg from "assets/images/nrg.png"
+import agg from "assets/images/agg.png"
+import spk from "assets/images/spk.png"
+import brn from "assets/images/brn.png"
 
 
 const HowToPlay = (): JSX.Element => {
 
-  const renderControlItem = ( keyIcon: string , description: string, styleClass : string ) =>{
+  const renderControlItem = ( keyIcon: string , description: string, iconHeight : number ) =>{
     return(
       <div className={styles.controlKeyContainer}>
-        <img src={keyIcon} className={styles.singleKey}/>
+        <img src={keyIcon} style={{height:`${iconHeight}rem`}}/>
         <div className={styles.controlDescription}>
           {description}
         </div>
@@ -37,36 +41,54 @@ const HowToPlay = (): JSX.Element => {
         </div> 
 
         <div className={`${styles.gridTile} ${styles.controlsTile}`}>
-          {renderControlItem(wasdKeys,'movement keys','styles.wasdKeys')}
-          {renderControlItem(spaceKey,'open/close console','styles.singleKey')}
-          {renderControlItem(eKey,'interact with building','styles.singleKey')}
-          {renderControlItem(qKey,'open/close wallet','singleKey')}
-          {renderControlItem(numericInfoKey,'use explosives','singleKey')}
+          <h4>Controls</h4>
+          {renderControlItem(wasdKeys,'Movement Keys', 5)}
+          {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
+          {renderControlItem(eKey,'Interact with Buildings',2.5)}
+          {renderControlItem(qKey,'Open/Close Wallet',2.5)}
+          {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
           
         </div>
 
         <div className={`${styles.gridTile} ${styles.gameflowTile}`}>
-          GameFlow
+          <h4>GameFlow</h4>
+          <div className={styles.flowTitle}>Leaderboard grinding</div>
           <img src={gameFlow} className={styles.flowImage}/>
+          <div className={styles.flowTitle}>Upgrading your gear</div>
           <img src={upgradesFlow} className={styles.flowImage}/>
+          <div className={styles.flowTitle}>Purchasing explosives</div>
           <img src={explosivesFlow} className={styles.flowImage}/>
         </div>
 
         <div className={`${styles.gridTile} ${styles.traitsTile}`}>
-        The unique traits of your companion have a great impact on the game:
-          <ul>
-            <li> Turnt gotchis move very fast through the DeFi desert, however Zen gotchis make better use of their fuel. </li> 
-            <li> Based aggressiveness allows drilling faster. Nonviolent gotchis spend more time breaking down every little crystal, effectively expanding their total cargo space.</li>
-            <li> Ghastly creatures can usually survive greater damage. Cuddly gotchis benefit from their cute aspect, enjoying cheaper upgrades.</li>
-            <li> Galaxy brain gotchis are the best at finding good deals trading crypto crystals. People selling explosives have an affinity with smol brain gotchis, selling cheaper items to frens.</li>
-          </ul>
+          <h4>Gotchi Traits</h4>
+          <div className={styles.traitList}>
+            <div className={styles.traitElement}> 
+              <img src={nrg} className={styles.traitIcon}/>
+              Turnt gotchis move very fast, Zen gotchis make better use of their fuel. 
+            </div> 
+            <div className={styles.traitElement}> 
+              <img src={agg} className={styles.traitIcon}/>
+              Based gotchis drill faster. Nonviolent gotchis use their cargo more effectively. 
+            </div> 
+            <div className={styles.traitElement}> 
+              <img src={spk} className={styles.traitIcon}/>
+              Ghastly creatures can survive greater damage. Cuddly gotchis enjoy cheaper upgrades.
+            </div> 
+            <div className={styles.traitElement}> 
+              <img src={brn} className={styles.traitIcon}/>
+              Galaxy brains are great trading crypto crystals. Smol brain gotchis get discounts on explosives.
+            </div> 
+          </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.vitalsTile}`}>
+          <h4>Vitals</h4>
           <img src={vitalsHowTo} className={styles.flowImage}/>
         </div>
 
         <div className={`${styles.gridTile} ${styles.consoleTile}`}>
+          <h4>Console</h4>
           <img src={consoleHowTo} className={styles.flowImage}/>
         </div>
       </div>
