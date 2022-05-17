@@ -33,63 +33,74 @@ const HowToPlay = (): JSX.Element => {
       <div className={styles.basicGrid}>
 
         <div className={`${styles.gridTile} ${styles.welcomeTile}`}>
-          <h3>Welcome to Gotchi Miner</h3>
-            <p>There is a special place in the Gotchiverse where great treasures hide under the surface. 
-              Ancient civilizations flourished in the DeFi Desert by extracting buried Crypto Crystals. 
-              Come and join the search Fren, the deeper you go, the higher the risk and juicier the rewards! 
-              Don't forget to collect Gotchus Alchemica for upgrading your tools and speeding up your work.</p>
+          <div className={styles.tileTitle}>Welcome to Gotchi Miner</div>
+          <div className={styles.tileContent}>
+            There is a special place in the Gotchiverse where great treasures hide under the surface. 
+            Ancient civilizations flourished in the DeFi Desert by extracting buried Crypto Crystals. 
+            Come and join the search Fren, the deeper you go, the higher the risk and juicier the rewards! 
+            Don't forget to buy some upgrades to enhance your tools and speed up your work.
+          </div>
         </div> 
 
         <div className={`${styles.gridTile} ${styles.controlsTile}`}>
-          <h4>Controls</h4>
-          {renderControlItem(wasdKeys,'Movement Keys', 5)}
-          {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
-          {renderControlItem(eKey,'Interact with Buildings',2.5)}
-          {renderControlItem(qKey,'Open/Close Wallet',2.5)}
-          {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
-          
+          <div className={styles.tileTitle}>Controls</div>
+          <div className={styles.tileContent}>
+            {renderControlItem(wasdKeys,'Movement Keys', 5)}
+            {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
+            {renderControlItem(eKey,'Interact with Buildings',2.5)}
+            {renderControlItem(qKey,'Open/Close Wallet',2.5)}
+            {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
+          </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.gameflowTile}`}>
-          <h4>GameFlow</h4>
-          <div className={styles.flowTitle}>Leaderboard grinding</div>
-          <img src={gameFlow} className={styles.flowImage}/>
-          <div className={styles.flowTitle}>Upgrading your gear</div>
-          <img src={upgradesFlow} className={styles.flowImage}/>
-          <div className={styles.flowTitle}>Purchasing explosives</div>
-          <img src={explosivesFlow} className={styles.flowImage}/>
+          <div className={styles.tileTitle}>GameFlow</div>
+          <div className={styles.tileContent}>
+            <div className={styles.flowTitle}>Leaderboard grinding</div>
+            <img src={gameFlow} className={styles.flowImage}/>
+            <div className={styles.flowTitle}>Upgrading your gear</div>
+            <img src={upgradesFlow} className={styles.flowImage}/>
+            <div className={styles.flowTitle}>Purchasing explosives</div>
+            <img src={explosivesFlow} className={styles.flowImage}/>
+          </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.traitsTile}`}>
-          <h4>Gotchi Traits</h4>
-          <div className={styles.traitList}>
-            <div className={styles.traitElement}> 
-              <img src={nrg} className={styles.traitIcon}/>
-              Turnt gotchis move very fast, Zen gotchis make better use of their fuel. 
-            </div> 
-            <div className={styles.traitElement}> 
-              <img src={agg} className={styles.traitIcon}/>
-              Based gotchis drill faster. Nonviolent gotchis use their cargo more effectively. 
-            </div> 
-            <div className={styles.traitElement}> 
-              <img src={spk} className={styles.traitIcon}/>
-              Ghastly creatures can survive greater damage. Cuddly gotchis enjoy cheaper upgrades.
-            </div> 
-            <div className={styles.traitElement}> 
-              <img src={brn} className={styles.traitIcon}/>
-              Galaxy brains are great trading crypto crystals. Smol brain gotchis get discounts on explosives.
-            </div> 
+          <div className={styles.tileTitle}>Gotchi Traits</div>
+          <div className={styles.tileContent}>
+            <div className={styles.traitList}>
+              <div className={styles.traitElement}> 
+                <img src={nrg} className={styles.traitIcon}/>
+                Turnt gotchis move very fast, Zen gotchis make better use of their fuel. 
+              </div> 
+              <div className={styles.traitElement}> 
+                <img src={agg} className={styles.traitIcon}/>
+                Based gotchis drill faster. Nonviolent gotchis use their cargo more effectively. 
+              </div> 
+              <div className={styles.traitElement}> 
+                <img src={spk} className={styles.traitIcon}/>
+                Ghastly creatures can survive greater damage. Cuddly gotchis enjoy cheaper upgrades.
+              </div> 
+              <div className={styles.traitElement}> 
+                <img src={brn} className={styles.traitIcon}/>
+                Galaxy brains are great trading crypto crystals. Smol brain gotchis get discounts on explosives.
+              </div> 
+            </div>
           </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.vitalsTile}`}>
-          <h4>Vitals</h4>
-          <img src={vitalsHowTo} className={styles.flowImage}/>
+          <div className={styles.tileTitle}>Vitals</div>
+          <div className={styles.tileContent}>
+            <img src={vitalsHowTo} className={styles.flowImage}/>
+          </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.consoleTile}`}>
-          <h4>Console</h4>
-          <img src={consoleHowTo} className={styles.flowImage}/>
+          <div className={styles.tileTitle}>Console</div>
+          <div className={styles.tileContent}>
+            <img src={consoleHowTo} className={styles.flowImage}/>
+          </div>
         </div>
       </div>
     </>

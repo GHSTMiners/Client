@@ -11,7 +11,7 @@ h3{
   gap: 1rem;
   width: 100%;
   grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr) minmax(25rem,3fr);
-  grid-auto-rows: 230px;
+  grid-auto-rows: 240px;
   grid-template-areas:
   "welcome controls flow"
   "traits  controls flow"
@@ -21,19 +21,29 @@ h3{
 .gridTile {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   background-color: rgba(0,0,0,0.3);
   font-size: 1rem;
-  padding: 1rem;
+  padding: 0.5rem 1.5rem;
   color: white;
   border-radius: 4px;
-  transition: all 400ms;
 }
 
 .gridTile:hover{
   box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
   transform: translateY(-3px) scale(1.05);
+}
+
+.tileTitle{
+  font-size: 1.4rem;
+}
+
+.tileContent{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .welcomeTile{
@@ -64,7 +74,8 @@ h3{
 
 .flowImage{
   padding: 0.5rem 0rem;
-  width: 20rem;
+  width: 22rem;
+  align-self: center;
 }
 
 .controlKeyContainer{
