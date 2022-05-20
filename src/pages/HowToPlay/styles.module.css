@@ -11,7 +11,7 @@ h3{
   gap: 1rem;
   width: 100%;
   grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr) minmax(25rem,3fr);
-  grid-auto-rows: 240px;
+  grid-auto-rows: 15rem; /*240px;*/
   grid-template-areas:
   "welcome controls flow"
   "traits  controls flow"
@@ -105,4 +105,40 @@ h3{
 .traitElement{
   display: flex;
   flex-direction: row;
+}
+
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr);
+    grid-auto-rows: 240px;
+    grid-template-areas:
+    "welcome controls"
+    "traits  controls"
+    "vitals  console"
+    "flow flow"
+    "flow flow"
+    "flow flow";
+  }
+
+  .flowTitle{
+    align-self: center;
+  }
+}
+
+
+@media all and (max-width: 870px) {
+  .basicGrid {
+    grid-template-columns: minmax(30rem,1fr);
+    grid-template-areas:
+    "welcome"
+    "traits"
+    "controls"
+    "controls"
+    "console"
+    "vitals"
+    "flow"
+    "flow"
+    "flow";
+  }
 }

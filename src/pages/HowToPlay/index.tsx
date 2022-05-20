@@ -36,7 +36,7 @@ const HowToPlay = (): JSX.Element => {
           <div className={styles.tileTitle}>Welcome to Gotchi Miner</div>
           <div className={styles.tileContent}>
             There is a special place in the Gotchiverse where great treasures hide under the surface. 
-            Ancient civilizations flourished in the DeFi Desert by extracting buried Crypto Crystals. 
+            Ancient civilizations flourished in the Gotchiverse by extracting buried Crypto Crystals. 
             Come and join the search Fren, the deeper you go, the higher the risk and juicier the rewards! 
             Don't forget to buy some upgrades to enhance your tools and speed up your work.
           </div>
@@ -71,19 +71,19 @@ const HowToPlay = (): JSX.Element => {
             <div className={styles.traitList}>
               <div className={styles.traitElement}> 
                 <img src={nrg} className={styles.traitIcon}/>
-                Turnt gotchis move very fast, Zen gotchis make better use of their fuel. 
+                Turnt gotchis move very fast, Zen gotchis are more fuel efficient. 
               </div> 
               <div className={styles.traitElement}> 
                 <img src={agg} className={styles.traitIcon}/>
-                Based gotchis drill faster. Nonviolent gotchis use their cargo more effectively. 
+                Based gotchis are the best at drilling. Nonviolent gotchis have better cargo. 
               </div> 
               <div className={styles.traitElement}> 
                 <img src={spk} className={styles.traitIcon}/>
-                Ghastly creatures can survive greater damage. Cuddly gotchis enjoy cheaper upgrades.
+                Ghastly creatures can survive greater damage. Cuddly ones enjoy cheaper upgrades.
               </div> 
               <div className={styles.traitElement}> 
                 <img src={brn} className={styles.traitIcon}/>
-                Galaxy brains are great trading crypto crystals. Smol brain gotchis get discounts on explosives.
+                Galaxy brains are great at trading crypto. Smol brains get discounts on explosives.
               </div> 
             </div>
           </div>
