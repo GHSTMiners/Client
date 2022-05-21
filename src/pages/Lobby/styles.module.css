@@ -35,8 +35,9 @@
   grid-area: gotchi;
   display: grid;
   grid-template-columns: 1fr 1.5fr 2fr;
-  grid-template-rows: 4fr 1fr;
+  grid-template-rows: 0.6fr 4fr 1fr;
   grid-template-areas:
+  "selection countdown countdown"
   "selection preview traits"
   "selection readyup readyup"
 } 
@@ -67,7 +68,15 @@
 
 .gotchiTraitsContainer{
   grid-area:traits;
-  padding-top: 2rem;
+  padding-top: 1rem;
+}
+
+.countdownContainer{
+  grid-area: countdown;
+  display: grid;
+  justify-content: center;
+  align-content: flex-end;
+  font-size: 2rem;
 }
 
 .readyUpContainer{
@@ -76,6 +85,8 @@
   align-items: center;
   justify-items: center;
 }
+
+
 
 .mapSelection{
   grid-area: map;
@@ -106,8 +117,7 @@
   display: flex;
   align-self: center;
   justify-content: center;
-  margin-top: 5rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .tileTitle{

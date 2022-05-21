@@ -10,6 +10,7 @@ import { Arrow, ChevronDown, ChevronUp } from "assets";
 import mapImage from "assets/images/desert_thumbnail.png";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
+import Countdown from 'react-countdown';
 
 
 const Lobby = (): JSX.Element => {
@@ -20,6 +21,7 @@ const Lobby = (): JSX.Element => {
 
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
+  const [playerReady,setPlayerReady]= useState(false);
 
   /**
    * Updates global state with selected gotchi
@@ -105,8 +107,12 @@ const Lobby = (): JSX.Element => {
                       (gotchi) => gotchi.id === selectedAavegotchiId
                     )} />
           </div>
+          <div className={styles.countdownContainer}>
+            { (playerReady)? <Countdown date={Date.now() + 300000} daysInHours={true} />: ''}
+          </div>
+
           <div className={styles.readyUpContainer}>
-            <Button className={styles.readyUpButton}>SELECT</Button>
+            <Button className={styles.readyUpButton} onClick={()=>{ setPlayerReady(true) }}>SELECT</Button>
           </div>
         </div>
         <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
