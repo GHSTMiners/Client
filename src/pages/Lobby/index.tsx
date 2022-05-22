@@ -127,8 +127,12 @@ const Lobby = (): JSX.Element => {
           <div className={styles.tileTitle}>Room Frens</div>
           <PlayerCounter playersInRoom={4} totalPlayers={5} playersReady={0} />
         </div>
+        
+         
         <div className={`${styles.gridTile} ${styles.chat}`}>
           <div className={styles.tileTitle}>Lobby Chat</div>
+          <Chat  disabled={false}/>
+          {/*
           <div className={styles.chatContainer}>
             <div className={styles.chatText}>
               <p>[Yoda] Testing message</p>
@@ -143,8 +147,9 @@ const Lobby = (): JSX.Element => {
               SEND
               </button>
             </div>
-          </div>
+          </div>*/}
         </div>
+                    
       </div>
     </>
   );

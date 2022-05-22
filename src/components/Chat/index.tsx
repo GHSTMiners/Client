@@ -12,18 +12,22 @@ interface Props {
 const Chat : React.FC<Props> = ({ disabled }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
+  const myPhaserGame = Client.getInstance().phaserGame;
+  const myColyseusRoom = Client.getInstance().colyseusRoom;
 
   const renderMessage = (id: number, text: string) => {
      let messageColor = '#ffffff';
      let user = '';
 
-    Client.getInstance().colyseusRoom.state.players.forEach( player => {
-      if (player.gotchiID === id){
-       messageColor = player.chatColor;
-       user = player.name;
-       return;
-      }
-    })
+     if (myColyseusRoom){
+       myColyseusRoom.state.players.forEach( player => {
+        if (player.gotchiID === id){
+         messageColor = player.chatColor;
+         user = player.name;
+         return;
+        }
+      })
+    }
 
     return (
       <div className={styles.chatMessage}>
@@ -49,26 +53,35 @@ const Chat : React.FC<Props> = ({ disabled }) => {
     let message : Protocol.MessageToServer = new Protocol.MessageToServer();
     message.msg = chatMessage;
     let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    if (myColyseusRoom){
+      myColyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    }
   };
 
   function handleClick (event:any ) {
     // if the user clicks on the background, all open dialogs are closed
     const divID = event.target.getAttribute('id');
     if (divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox'){
-      Client.getInstance().phaserGame.events.emit("open_chat");
+      if (myPhaserGame){
+        myPhaserGame.events.emit("open_chat");
+      }
     }
   }
 
   useEffect(()=>{
-    Client.getInstance().phaserGame.events.once('chat_message',(notification: Protocol.MessageFromServer)=>{
-      setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
-    })
-    Client.getInstance().phaserGame.events.once('system_message',(notification: Protocol.MessageFromServer)=>{
-      if (notification.msg) {
-        setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
-      }
-    })
+    if (myPhaserGame) {
+       //Wait until the player was admitted to the server
+       myPhaserGame.events.on("joined_game", () => {
+        myPhaserGame.events.once('chat_message',(notification: Protocol.MessageFromServer)=>{
+          setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
+        })
+        myPhaserGame.events.once('system_message',(notification: Protocol.MessageFromServer)=>{
+          if (notification.msg) {
+            setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
+          }
+        })
+      });
+    }
   },[chatHistory]);
 
   return (

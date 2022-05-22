@@ -39,7 +39,7 @@ export const PlayerCounter = ({
     })
 
     return (
-      <div className={styles.playerCounter}>
+      <div className={styles.playerCounter} id={'playerCounter'}>
         {renderPlayerArray}
       </div>
     );
