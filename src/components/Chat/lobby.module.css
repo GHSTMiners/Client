@@ -1,0 +1,74 @@
+/*.chatContainer {
+  width: 30rem;
+  bottom: 10rem;
+  position: absolute;
+}*/
+
+.chatContainer{
+  height: 100%;
+  width: 100%;
+  padding: 1rem 2rem 2rem 2rem;
+  display: grid;
+  grid-template-rows: auto 3rem;
+  margin: auto;
+}
+/*
+.chatText{
+  background-color: rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-bottom: 2px solid white;
+}
+*/
+/*
+.largeContainer{
+  height: 20rem;
+  background-color: rgba(61, 77, 66, 0.5);
+}
+
+.chatHistory {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  margin: 1rem;
+  padding-left: 0.5rem;
+}*/
+
+.chatHistory{
+  background-color: rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-bottom: 2px solid white;
+}
+
+/*
+.largeHistory{
+  height: 12rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(61, 77, 66);
+}*/
+
+.textBoxContainer {
+  margin: 2rem;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.textBox {
+  width: 80%;
+  justify-content: flex-start;
+  color: white;
+  padding-left: 0.5rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.chatButton {
+  width: 20%;
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  outline: none;
+  -moz-outline-style: none;
+  border: none;
+}

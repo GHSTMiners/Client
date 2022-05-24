@@ -140,7 +140,7 @@ export const HUD = () => {
         <HUDContext.Provider value={playerConsumables}>
           <VitalsConsole />
           <MainConsole />
-          <Chat disabled={!chatMode} />
+          <Chat disabled={!chatMode} gameMode={true} />
           <MiningShop />
           <Exchange hidden={true} />
         </HUDContext.Provider>

@@ -131,7 +131,7 @@ const Lobby = (): JSX.Element => {
          
         <div className={`${styles.gridTile} ${styles.chat}`}>
           <div className={styles.tileTitle}>Lobby Chat</div>
-          <Chat  disabled={false}/>
+          <Chat  disabled={false} gameMode={false}/>
           {/*
           <div className={styles.chatContainer}>
             <div className={styles.chatText}>

@@ -1,4 +1,6 @@
 import styles from "./styles.module.css";
+import gameStyle from "./game.module.css";
+import lobbySyle from "./lobby.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
@@ -7,20 +9,19 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 interface Props {
   disabled?: boolean;
+  gameMode: boolean;
 }
 
-const Chat : React.FC<Props> = ({ disabled }) => {
+const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
-  const myPhaserGame = Client.getInstance().phaserGame;
-  const myColyseusRoom = Client.getInstance().colyseusRoom;
 
   const renderMessage = (id: number, text: string) => {
      let messageColor = '#ffffff';
      let user = '';
 
-     if (myColyseusRoom){
-       myColyseusRoom.state.players.forEach( player => {
+     if ( Client.getInstance().colyseusRoom){
+      Client.getInstance().colyseusRoom.state.players.forEach( player => {
         if (player.gotchiID === id){
          messageColor = player.chatColor;
          user = player.name;
@@ -53,8 +54,8 @@ const Chat : React.FC<Props> = ({ disabled }) => {
     let message : Protocol.MessageToServer = new Protocol.MessageToServer();
     message.msg = chatMessage;
     let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    if (myColyseusRoom){
-      myColyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    if ( Client.getInstance().colyseusRoom){
+      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
     }
   };
 
@@ -62,36 +63,34 @@ const Chat : React.FC<Props> = ({ disabled }) => {
     // if the user clicks on the background, all open dialogs are closed
     const divID = event.target.getAttribute('id');
     if (divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox'){
-      if (myPhaserGame){
-        myPhaserGame.events.emit("open_chat");
+      if (Client.getInstance().phaserGame){
+        Client.getInstance().phaserGame.events.emit("open_chat");
       }
     }
   }
 
   useEffect(()=>{
-    if (myPhaserGame) {
-       //Wait until the player was admitted to the server
-       myPhaserGame.events.on("joined_game", () => {
-        myPhaserGame.events.once('chat_message',(notification: Protocol.MessageFromServer)=>{
+    if (gameMode) {
+        Client.getInstance().phaserGame.events.on('chat_message',(notification: Protocol.MessageFromServer)=>{
           setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
         })
-        myPhaserGame.events.once('system_message',(notification: Protocol.MessageFromServer)=>{
+        Client.getInstance().phaserGame.events.on('system_message',(notification: Protocol.MessageFromServer)=>{
           if (notification.msg) {
             setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
           }
         })
-      });
     }
   },[chatHistory]);
 
+
   return (
     <div  id="chat" 
-          className={`${styles.chatContainer}
-                     ${disabled? styles.smallContainer: styles.largeContainer }`}
+          className={`${ gameMode? gameStyle.chatContainer: lobbySyle.chatContainer }
+                     ${disabled? (gameMode? styles.smallContainer: ''): (gameMode? styles.largeContainer: '') }`}
            onClick={(e)=>handleClick(e)}>
       <div  id="chat-history"
-            className={`${styles.chatHistory}
-                     ${disabled? styles.smallHistory : styles.largeHistory }`}>
+            className={`${ gameMode? gameStyle.chatHistory: lobbySyle.chatHistory }
+                     ${disabled? (gameMode? styles.smallHistory : ''): (gameMode? styles.largeHistory: '') }`}>
                        {chatHistory}</div>
       <div className={styles.textBoxContainer}>
         <form onSubmit={submitMessage}>
