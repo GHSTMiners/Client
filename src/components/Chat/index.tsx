@@ -86,14 +86,14 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
   return (
     <div  id="chat" 
           className={`${ gameMode? gameStyle.chatContainer: lobbySyle.chatContainer }
-                     ${disabled? (gameMode? styles.smallContainer: ''): (gameMode? styles.largeContainer: '') }`}
+                     ${disabled? (gameMode? gameStyle.smallContainer: ''): (gameMode? gameStyle.largeContainer: '') }`}
            onClick={(e)=>handleClick(e)}>
       <div  id="chat-history"
             className={`${ gameMode? gameStyle.chatHistory: lobbySyle.chatHistory }
-                     ${disabled? (gameMode? styles.smallHistory : ''): (gameMode? styles.largeHistory: '') }`}>
+                     ${disabled? (gameMode? gameStyle.smallHistory : ''): (gameMode? gameStyle.largeHistory: '') }`}>
                        {chatHistory}</div>
-      <div className={styles.textBoxContainer}>
-        <form onSubmit={submitMessage}>
+      <div className={ gameMode? gameStyle.textBoxContainer: lobbySyle.textBoxContainer  }>
+        <form onSubmit={submitMessage} className={gameMode? '': lobbySyle.formContainer }>
           <input
             id="chat-textbox"
             className={styles.textBox}
@@ -102,7 +102,7 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
             onChange={(e) => setChatMessage(e.target.value)}
             value={chatMessage}
           ></input>
-          <button type="submit" className={styles.chatButton}>
+          <button type="submit" className={gameMode? gameStyle.chatButton: lobbySyle.chatButton}>
             SEND
           </button>
         </form>

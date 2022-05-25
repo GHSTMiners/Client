@@ -132,22 +132,6 @@ const Lobby = (): JSX.Element => {
         <div className={`${styles.gridTile} ${styles.chat}`}>
           <div className={styles.tileTitle}>Lobby Chat</div>
           <Chat  disabled={false} gameMode={false}/>
-          {/*
-          <div className={styles.chatContainer}>
-            <div className={styles.chatText}>
-              <p>[Yoda] Testing message</p>
-              <p>[Voyager] This chat is so faaake</p>
-              <p>[Yoda] It's just for the looks! :p</p>
-              <p>[Corleone] I don't know if I like it...</p>
-              </div>
-            <div className={styles.chatInputContainer}>
-              <input className={styles.chatInput}>
-              </input>
-              <button type="submit" className={styles.chatButton}>
-              SEND
-              </button>
-            </div>
-          </div>*/}
         </div>
                     
       </div>
