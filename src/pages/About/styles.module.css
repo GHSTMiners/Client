@@ -1,126 +1,67 @@
-@import "theme/vars.css";
 
-.homeContainer {
+.basicGrid {
+  margin-top: 2rem;
+  padding: 2rem 2rem 0 2rem;
   display: grid;
-  gap: 3.2rem;
-  padding: 5.4rem 0;
-}
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: repeat(5,minmax(10rem,1fr)) ;
+  grid-auto-rows: 22rem; /*240px;*/
+  grid-template-areas:
+  "intro smokey gotchinomics fabio machete"
+  "guild  smokey gotchinomics fabio machete";
+ }
 
-.backgroundContainer {
-  background-repeat: no-repeat;
-  background-size: cover;
+.gridTile {
   display: flex;
   flex-direction: column;
-  background-position: center;
-}
-
-.buttonContainer {
-  display: grid;
-  gap: 1.2rem;
-  grid-template-columns: 15rem 5rem;
-}
-
-.detailsPanelContainer {
-  margin-top: 4rem;
-}
-
-/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
-.flipCard {
-  background-color: transparent;
-  width: 300px;
-  height: 300px;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
-}
-
-/* This container is needed to position the front and back side */
-.flipCardInner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-}
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-.flipCard:hover .flipCardInner {
-  transform: rotateY(180deg);
-}
-
-/* Position the front and back side */
-.flipCardFront,
-.flipCardBack {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden; /* Safari */
-  backface-visibility: hidden;
-}
-
-/* Style the front side (fallback if image is missing) */
-.flipCardFront {
-  background-color: #bbb;
-  color: black;
-}
-
-/* Style the back side */
-.flipCardBack {
-  background-color: dodgerblue;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
   color: white;
-  transform: rotateY(180deg);
+  border-radius: 4px;
 }
 
-.about {
-  margin: auto;
-  width: 80%;
-  color: #cecece;
-  padding: 4rem;
-  font-size: 1.5em;
-  margin-top: 3rem;
+.gridTile:hover{
+  box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
+  transform: translateY(-3px) scale(1.05);
 }
 
-.container {
-  display: flex;
-  margin-top: 2rem;
-}
-
-.errorContainer {
-  color: white;
-  max-width: 60rem;
-  margin: 5.4rem auto;
-}
-
-.errorContainer h1 {
-  font-size: 5rem;
-  opacity: 0.4;
-}
-
-.errorContainer p {
-  font-size: 1.6rem;
-  line-height: 1.5;
-}
-.errorContainer .secondaryErrorMessage {
-  margin: 5.4rem 0 2.4rem;
-}
-.errorContainer button {
-  margin-top: 1.6rem;
-}
-
-.modalContent h1 {
-  font-size: 3.2rem;
-}
-.modalContent p {
+.tileTitle{
   font-size: 1.4rem;
-  line-height: 1.5;
+  margin-bottom: 2rem;
 }
 
-@media only screen and (min-width: 768px) {
-  .homeContainer {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-  }
-
-  .detailsPanelContainer {
-    margin-top: 0;
-  }
+.tileContent{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
+
+.gaameJaam{
+  grid-area: intro;
+} 
+
+.ghostSquad{
+    grid-area: guild;
+}
+
+.smokey{
+    grid-area:smokey;
+}
+
+.gotchinomics{
+    grid-area: gotchinomics;
+}
+
+.fabio{
+    grid-area: fabio;
+}
+
+.machete{
+    grid-area: machete;
+}
+  
