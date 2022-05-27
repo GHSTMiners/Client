@@ -1,14 +1,17 @@
 import styles from "./styles.module.css";
-import { GotchiSVG, Header } from "components";
-import SmokeyIm from "assets/images/smokeytheybandit.png";
-import FabioIm from "assets/images/corleone.jpg";
-import MacheteIm from "assets/images/machete.jpg";
-import GotchinomicsIm from "assets/images/gotchinomics.png";
-import { FlipCard } from "components";
+import { GotchiSVG } from "components";
 import { FaTwitter, FaYoutube } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
+import { useEffect } from "react";
+import { updateAavegotchis, useWeb3 } from "web3/context";
 
 const About = (): JSX.Element => {
+
+    // Initializing web3 hook
+    const { state: { usersAavegotchis, address },dispatch } = useWeb3();
+    useEffect(() => {
+      if (address)  updateAavegotchis(dispatch, address);
+    }, [address]);
 
   const renderGotchiTile = (name: string, twitter:string, discord:string, role:string, gotchiID:string , aboutme:string ,description?:string) =>{
     return(
@@ -93,7 +96,7 @@ const About = (): JSX.Element => {
                           'Machete#9873',
                           'Sound Designer & Tester',
                           '23492',
-                          '[Personal description goes here]',
+                          'Machete, aka KEK Lord, outperforms smart contracts and bots by perfectioning the art of a well-timed F5 press.',
                           'MACHETE is one of the strongest gotchis of the Ghost Squad, always ready to protect his frens.')}
       </div>
 
