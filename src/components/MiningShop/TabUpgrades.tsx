@@ -98,19 +98,15 @@ const TabUpgrades: FC<{}> = () => {
     })
   },[]);
 
-  const renderUpgradeElement = ( obj:upgradePriceObject) => {
-    // Finding the current player tier
-    let playerState = currentTiers.find(entry => entry.upgradeId==obj.id);
-    let nextTier = 1;
+  const renderUpgradeElement = ( obj:upgradePriceObject , upgradeTierObj: upgradeLevels) => {
     let upgradeCost:PricePair[] = [];
-    if (playerState){
-      const nextTier = playerState.tier + 1;
-      const nextTierTag = `tier_${nextTier}`;
-      const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
-      if (upgradeTierInfo){ 
-        upgradeCost = upgradeTierInfo.priceList;
-      }
-    }    
+    const nextTier = upgradeTierObj.tier + 1;
+    const nextTierTag = `tier_${nextTier}`;
+    const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
+    if (upgradeTierInfo){ 
+      upgradeCost = upgradeTierInfo.priceList;
+    }
+        
     return  (
       <div className={styles.upgradesContainer} key={`${obj.name}_container`}>
         <UpgradeBar upgradeId={obj.id}
@@ -123,7 +119,11 @@ const TabUpgrades: FC<{}> = () => {
   }
 
   const upgradesArray = upgradeObjectArray.map( function(entry) {
-    return( renderUpgradeElement(entry) )
+    // Finding the current player tier
+    let upgradeTierObj = currentTiers.find(upgradeObj => upgradeObj.upgradeId==entry.id);
+    return( 
+        upgradeTierObj? renderUpgradeElement(entry,upgradeTierObj) : ''
+      )
   })
 
   const buyUpgrade = ( upgradeId:number , tier:number ) =>{

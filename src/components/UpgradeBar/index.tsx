@@ -65,7 +65,7 @@ const UpgradeBar: React.FC<Props> = ({
       if (walletCoin.quantity>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
     }        
   });
-  if (coinsAvailable==coinsRequired) upgradeAvailable=true;
+  if (coinsAvailable==coinsRequired && upgradeLevel<upgradeLevelArray.length-1 ) upgradeAvailable=true;
 
   // Purchased function executed 
   const purchaseUpgrade = ()=>{
