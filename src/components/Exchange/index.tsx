@@ -17,6 +17,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
 
   const [displayExchange, setDisplayExchange] = useState<boolean>(!hidden);
   const [playerBalance, setPlayerBalance] = useState<number>(0);
+  const [tokenQuantity, setTokenQuantity] = useState<number>(0);
   let tempWalletBalance: BalanceData = [];
   
   // Setting world currency
@@ -85,16 +86,30 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     setPlayerBalance(Math.round(quantity*10)/10);
   }
 
+  const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement> ) => {
+    if (+event.target.value>=1){
+     setTokenQuantity(+event.target.value);
+    }
+ } 
+
   const renderCoinEntry = ( id: number ) => {
     const quantity = walletBalance[id];
     const hasCoins = quantity>0;
     return(
       <div className={styles.coinContainer} key={`coinEntry${id}`}>
         <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
-        <div className={`${styles.exchangeRowText} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
-          <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
-          <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
+        <div className={`${styles.coinRowContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
+          <div className={styles.exchangeRowText}>
+            <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
+            <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
+          </div>
+          <input className={styles.inputQuantity} 
+                 type="number" 
+                 value={tokenQuantity} 
+                 onChange={(e)=>{handleInputChange(e)}
+                 }/>
         </div>
+        
         <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}
                 onClick={ () => sellCrypto(id,quantity) } > SELL </button> 
       </div>
