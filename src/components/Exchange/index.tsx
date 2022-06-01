@@ -19,7 +19,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   const [playerBalance, setPlayerBalance] = useState<number>(0);
   const [tokenQuantity, setTokenQuantity] = useState<number>(0);
   let tempWalletBalance: BalanceData = [];
-  
+
   // Setting world currency
   const schema: Schema.World = Client.getInstance().colyseusRoom.state;
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
@@ -28,6 +28,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
 
   let cryptoIdArray: number[] = [];
   let cryptoRecord : Record<number,CryptoObj> = [];
+  const initialInputValues : Record<number,number> = [];
   
   // inializing cargo & wallet ballances to 0
   for (let i = 0; i < world.crypto.length; i++) {
@@ -41,8 +42,10 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     cryptoIdArray.push( world.crypto[i].id );
     tempWalletBalance[world.crypto[i].id] = 0;
     cryptoRecord[world.crypto[i].id] = newCrypto;
+    initialInputValues[world.crypto[i].id] = 0;
   }
   
+  const [inputValues , setInputValues] = useState({...initialInputValues});
   const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
 
   useEffect(() => {
@@ -79,6 +82,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   const closeExchange = () => {
+    setInputValues(initialInputValues);
     setDisplayExchange(false); 
   }
 
@@ -86,9 +90,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     setPlayerBalance(Math.round(quantity*10)/10);
   }
 
-  const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement> ) => {
-    if (+event.target.value>=1){
-     setTokenQuantity(+event.target.value);
+  const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
+    if (+event.target.value>=0){
+      inputValues[id] = +event.target.value;
+      let newValues = {...inputValues};
+      setInputValues(newValues);
     }
  } 
 
@@ -103,15 +109,15 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
             <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
             <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
           </div>
-          <input className={styles.inputQuantity} 
+          <input className={`${styles.inputQuantity} ${inputValues[id]>0? '': styles.emptyInput }`} 
                  type="number" 
-                 value={tokenQuantity} 
-                 onChange={(e)=>{handleInputChange(e)}
+                 value={inputValues[id]} 
+                 onChange={(e)=>{handleInputChange(e,id)}
                  }/>
         </div>
         
         <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}
-                onClick={ () => sellCrypto(id,quantity) } > SELL </button> 
+                onClick={ () => sellCrypto(id,inputValues[id]) } > SELL </button> 
       </div>
     )
   }
