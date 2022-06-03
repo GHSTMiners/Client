@@ -183,13 +183,13 @@
 }
 
 .ggemsValue{
-  font-size: 1.4rem;
-  line-height: 1.5rem;
+  font-size: 0.7rem;
+  vertical-align: top;
 }
 
 .tokenValue{
-  font-size: 0.7rem;
-  vertical-align: top;
+  font-size: 1.4rem;
+  line-height: 1.5rem;
 }
 
 .mainPlayerBalance{

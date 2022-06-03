@@ -45,8 +45,9 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     initialInputValues[world.crypto[i].id] = 0;
   }
   
-  const [inputValues , setInputValues] = useState({...initialInputValues});
+ 
   const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
+  const [inputValues , setInputValues] = useState({...walletBalance});
 
   useEffect(() => {
     //Wait until the player was admitted to the server
@@ -54,9 +55,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       // WALLET
       Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
         walletBalance[item.cryptoID] = item.amount;
+        inputValues[item.cryptoID] = item.amount;
         Client.getInstance().phaserGame.events.emit("added crypto", item.cryptoID, item.amount);
         item.onChange = () => {
           walletBalance[item.cryptoID] = item.amount;
+          inputValues[item.cryptoID] = item.amount;
           Client.getInstance().phaserGame.events.emit("updated wallet", item.cryptoID, item.amount);
           if (world.world_crypto_id === item.cryptoID) {
             Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
@@ -72,8 +75,8 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     message.sourceCryptoId = cryptoID;
     message.targetCryptoId = world.world_crypto_id;
     message.amount = amount;
-    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message);
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data);
   };
   
 
@@ -82,12 +85,14 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   const closeExchange = () => {
-    setInputValues(initialInputValues);
+    //setInputValues(initialInputValues);
     setDisplayExchange(false); 
   }
 
   const updatePlayerBalance = (quantity:number) =>{
     setPlayerBalance(Math.round(quantity*10)/10);
+    setInputValues({...walletBalance});
+    
   }
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
@@ -101,23 +106,24 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   const renderCoinEntry = ( id: number ) => {
     const quantity = walletBalance[id];
     const hasCoins = quantity>0;
+    const inputTokens = inputValues[id];
     return(
       <div className={styles.coinContainer} key={`coinEntry${id}`}>
         <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
         <div className={`${styles.coinRowContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
           <div className={styles.exchangeRowText}>
-            <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
             <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
+            <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
           </div>
           <input className={`${styles.inputQuantity} ${inputValues[id]>0? '': styles.emptyInput }`} 
                  type="number" 
-                 value={inputValues[id]} 
+                 value={inputTokens} 
                  onChange={(e)=>{handleInputChange(e,id)}
                  }/>
         </div>
         
         <button className={`${styles.sellButton} ${hasCoins? styles.enabledButton: styles.disabledButton}`}
-                onClick={ () => sellCrypto(id,inputValues[id]) } > SELL </button> 
+                onClick={ () => sellCrypto(id,inputTokens) } > SELL </button> 
       </div>
     )
   }
