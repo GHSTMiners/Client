@@ -8,6 +8,6 @@
 import { Schema, type } from "@colyseus/schema"
 
 export class ExchangeEntry extends Schema {
-    @type ("int32") public crypto_id!: number;
+    @type ("float32") public crypto_id!: number;
     @type ("int32") public usd_value!: number;
 }

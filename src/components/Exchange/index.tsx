@@ -45,11 +45,12 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     initialInputValues[world.crypto[i].id] = 0;
   }
   
- 
   const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
   const [inputValues , setInputValues] = useState({...walletBalance});
 
   useEffect(() => {
+    Client.getInstance().phaserGame.events.on("open_exchange", openExchange );
+    Client.getInstance().phaserGame.events.on("close_dialogs", closeExchange);
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       // WALLET
@@ -66,6 +67,8 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
           }
         };
       };
+      // Update balance
+      Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
     });
   }, []);
 
@@ -81,11 +84,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   
 
   const openExchange = () => {
+    setInputValues({...walletBalance})
     setDisplayExchange(true);
   }
 
   const closeExchange = () => {
-    //setInputValues(initialInputValues);
     setDisplayExchange(false); 
   }
 
@@ -96,7 +99,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   }
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
-    if (+event.target.value>=0){
+    if (+event.target.value>=0 && +event.target.value<=walletBalance[id] ){
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
       setInputValues(newValues);
@@ -113,7 +116,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
         <div className={`${styles.coinRowContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
           <div className={styles.exchangeRowText}>
             <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
-            <div  className={styles.ggemsValue}>{cryptoRecord[id].price*quantity} GGEMS</div>
+            <div  className={styles.ggemsValue}>{Math.round(cryptoRecord[id].price*quantity*10)/10} GGEMS</div>
           </div>
           <input className={`${styles.inputQuantity} ${inputValues[id]>0? '': styles.emptyInput }`} 
                  type="number" 
@@ -132,13 +135,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     return id===world.world_crypto_id ? '' : renderCoinEntry( id );
   });
 
-  useEffect( () => {
-    Client.getInstance().phaserGame.events.on("open_exchange", openExchange );
-    Client.getInstance().phaserGame.events.on("close_dialogs", closeExchange);
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
-      Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
-    });
-  },[]);
 
   return (
     <>
