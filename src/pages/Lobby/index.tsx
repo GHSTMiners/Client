@@ -11,6 +11,7 @@ import mapImage from "assets/images/desert_thumbnail.png";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
 import Countdown from 'react-countdown';
+import MapSelector from "components/MapSelector";
 
 
 const Lobby = (): JSX.Element => {
@@ -117,10 +118,7 @@ const Lobby = (): JSX.Element => {
         </div>
         <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
-            <img src={mapImage} className={styles.mapThumbnail} />
-            <Arrow width={'4rem'} className={styles.arrowLeft}/>
-            <div className={styles.mapTitle}>DESERT</div>
-            <Arrow width={'4rem'} className={styles.arrowRight}/>
+            <MapSelector />
           </div>
         </div>
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
