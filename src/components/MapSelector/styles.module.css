@@ -30,6 +30,30 @@
 
 .mapThumbnail{
   position: absolute;
-  opacity: 0.6;
+  opacity: 0.9;
   width: 100%;
+}
+
+.thumbnailGallery{
+  width: 100%;
+  bottom: 0.5rem;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.thumbnailGalleryitem{
+  width: 2.5rem;
+  opacity: 0.9;
+  z-index: 10;
+}
+
+.thumbnailGalleryitem:hover{
+  border:1px solid white;
+}
+
+.selectedThumbnail{
+  border:2px solid white;
 }

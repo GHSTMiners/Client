@@ -32,15 +32,38 @@ const MapSelector: React.FC<Props> = ({
   // temporary solution to include thumbnail images. TO DO: get from Chisel
   const emptyThumbnails: string[] = [];
   const [worldThumbnails,setWorldThumbnails] = useState(emptyThumbnails);
-  worldThumbnails.push(forestImage);
-  worldThumbnails.push(desertImage);
+  useEffect(()=>{
+    worldThumbnails.push(forestImage);
+    worldThumbnails.push(desertImage);
+  },[]);
 
+  const handleArrowClick = (positionShift : number)=>{
+    const newPosition = mapSelection + positionShift;
+    if ( newPosition >= 0 && newPosition < worldThumbnails.length){
+      setMapSelection(newPosition);
+    }
+  }
+
+  const thumbnailGallery = worldThumbnails.map(function (image,index) {
+    return(
+      <div key={`mapThumbnail${index}`}>
+        <img src={image} className={`${styles.thumbnailGalleryitem} ${(index==mapSelection)? styles.selectedThumbnail :''}`} 
+             
+             onClick={()=>setMapSelection(index)}/>
+      </div>
+    );
+  });
+
+  
   return (
     <>
       <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} />
-      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={()=>setMapSelection(0)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
-      <Arrow width={'4rem'} className={`${styles.arrowRight} ${mapSelection==1? styles.disabledIcon: ''}`} onClick={()=>setMapSelection(1)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowRight} ${mapSelection==1? styles.disabledIcon: ''}`} onClick={()=>handleArrowClick(+1)}/>
+      <div className={styles.thumbnailGallery}>
+        {thumbnailGallery}
+      </div>
     </>
   );
 };
