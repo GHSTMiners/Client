@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import globalStyles from "theme/globalStyles.module.css";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useWeb3, connectToNetwork } from "web3/context";
 import { smartTrim } from "helpers/functions";
 import { networkIdToName } from "helpers/vars";
@@ -10,6 +10,7 @@ import { Hamburger, SideTray } from "components";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import GreenButton from "components/GreenButton";
+import RedButton from "components/RedButton";
 
 
 const WalletButton = () => {
@@ -57,13 +58,18 @@ const WalletButton = () => {
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigator = useNavigate();
   
   const routeToLobby = () => {
-    window.location.href='/lobby'
+    navigator('/lobby')
+   }
+
+   const routeToHome = () => {
+    navigator('/')
    }
 
   return (
-    <header className={styles.header} hidden = {location.pathname === "/play"} >
+    <header className={styles.header} hidden = {location.pathname === "/play"  } >
       <nav
         className={`${globalStyles.container} ${styles.desktopHeaderContent}`}
       >
@@ -71,7 +77,8 @@ export const Header = () => {
           <NavLink to="/">
             <div className={styles.logo}></div>
           </NavLink>
-          <NavLink
+
+          <NavLink hidden = {location.pathname === "/lobby"}
             to="/"
             className={({ isActive }) =>
               isActive ? styles.activeNavLink : styles.navLink
@@ -79,15 +86,8 @@ export const Header = () => {
           >
             Home
           </NavLink>
-          <NavLink
-            to="/lobby"
-            className={({ isActive }) =>
-                isActive ? styles.activeNavLink : styles.navLink
-              }
-          >
-            Lobby
-          </NavLink>
-          <NavLink
+          
+          <NavLink hidden = {location.pathname === "/lobby"}
             to="/game"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -95,7 +95,7 @@ export const Header = () => {
           >
             Game
           </NavLink>
-          <NavLink
+          <NavLink hidden = {location.pathname === "/lobby"}
             to="/leaderboard"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -103,7 +103,7 @@ export const Header = () => {
           >
             Leaderboard
           </NavLink>
-          <NavLink
+          <NavLink hidden = {location.pathname === "/lobby"}
             to="/howtoplay"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -111,7 +111,7 @@ export const Header = () => {
           >
             How to Play
           </NavLink> 
-          <NavLink
+          <NavLink hidden = {location.pathname === "/lobby"}
             to="/about"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -119,12 +119,18 @@ export const Header = () => {
           >
             About
           </NavLink>
+          
         </ul>
         {/*<WalletButton />*/}
-        <div className={styles.playButtonContainer}>
+        <div className={styles.playButtonContainer} hidden = {location.pathname === "/lobby"}> 
           <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
         </div>
+
+        <div className={styles.playButtonContainer} hidden = {location.pathname !== "/lobby"}> 
+          <RedButton width={'15rem'} fontSize={'2rem'} onClick={routeToHome}>EXIT</RedButton>
+        </div>
       </nav>
+        
       <div className={styles.mobileHeaderContent}>
         <Hamburger onClick={() => setMenuOpen((prevState) => !prevState)} />
         <SideTray open={menuOpen}>
@@ -137,15 +143,6 @@ export const Header = () => {
               }
             >
               Home
-            </NavLink>
-            <NavLink 
-
-              to="/lobby"
-              className={({ isActive }) =>
-                isActive ? styles.activeNavLink : styles.navLink
-              }
-            >
-              Lobby
             </NavLink>
             <NavLink
             to="/game"
@@ -183,6 +180,7 @@ export const Header = () => {
           </nav>
         </SideTray>
       </div>
+      : ''
     </header>
   );
 };
