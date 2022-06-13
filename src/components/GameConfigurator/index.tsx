@@ -59,7 +59,7 @@ const CreateGameForm = (): JSX.Element => {
             
             // @ts-ignore: Unreachable code error
             // prettier-ignore
-            Client.getInstance().colyseusClient.create<World>(`${world.name}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
+            Client.getInstance().colyseusClient.create<World>(`${world.id}_${event.target.gameMode.value}`, Client.getInstance().authenticationInfo).then(room => {
                 room.onStateChange.once((state) => {
                     Client.getInstance().colyseusRoom = room;
                     navigate("/play", {replace: false});
