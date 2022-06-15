@@ -6,12 +6,17 @@ import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import { Button } from "react-bootstrap";
 import { AavegotchiObject } from "types";
-import { Arrow, ChevronDown, ChevronUp } from "assets";
 import mapImage from "assets/images/desert_thumbnail.png";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
 import Countdown from 'react-countdown';
 import MapSelector from "components/MapSelector";
+import * as Chisel from "chisel-api-interface";
+import * as Colyseus from "colyseus.js";
+import Config from "config";
+import Client from "matchmaking/Client";
+import * as Schema from "matchmaking/Schemas";
+
 
 
 const Lobby = (): JSX.Element => {
@@ -36,6 +41,23 @@ const Lobby = (): JSX.Element => {
     },
     [dispatch]
   );
+
+
+  /**
+   * 
+   */
+  useEffect(() => {
+    try{
+      Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
+          Client.getInstance().lobbyRoom = room 
+      }).catch(exception => {
+        alert('Failed to create a lobby, maybe we\'re having server issues?')
+      })
+    } catch(exception : any) {
+      alert('Failed to create a lobby, maybe we\'re having server issues?')
+    }
+  }, []);
+
 
   // Updating the current selected aavegotchi
   useEffect(()=>{

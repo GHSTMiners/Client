@@ -6,6 +6,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol";
 import Phaser from "phaser";
 import * as Schema from "matchmaking/Schemas";
 import Authenticator from "matchmaking/Authenticator";
+import { Lobby } from "matchmaking/Schemas/Lobby";
 
 export default class Client {
   private static instance: Client;
@@ -15,6 +16,7 @@ export default class Client {
   public apiInterface: Chisel.APIInterface = new Chisel.APIInterface(
     Config.apiURL
   );
+  public lobbyRoom!: Colyseus.Room<Lobby>;
   public colyseusRoom!: Colyseus.Room<World>;
   public chiselWorld!: Chisel.DetailedWorld;
   public authenticationInfo: Protocol.AuthenticationInfo;
