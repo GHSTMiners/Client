@@ -99,6 +99,7 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
             className={styles.textBox}
             type="text"
             placeholder="Write your message here..."
+            autoComplete="off"
             onChange={(e) => setChatMessage(e.target.value)}
             value={chatMessage}
           ></input>
