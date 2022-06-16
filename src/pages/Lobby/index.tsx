@@ -11,11 +11,10 @@ import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
 import Countdown from 'react-countdown';
 import MapSelector from "components/MapSelector";
-import * as Chisel from "chisel-api-interface";
-import * as Colyseus from "colyseus.js";
 import Config from "config";
 import Client from "matchmaking/Client";
 import * as Schema from "matchmaking/Schemas";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -28,6 +27,7 @@ const Lobby = (): JSX.Element => {
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
   const [playerReady,setPlayerReady]= useState(false);
+  const navigate = useNavigate();
 
   /**
    * Updates global state with selected gotchi
@@ -47,14 +47,43 @@ const Lobby = (): JSX.Element => {
    * 
    */
   useEffect(() => {
+
     try{
       Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
+
           Client.getInstance().lobbyRoom = room 
+           //Register message handlers
+          Client.getInstance().lobbyRoom.onMessage("*", (type, message) => {
+            //prettier-ignore
+            Client.getInstance().lobbyMessageRouter.processRawMessage( type as string, message);
+          });
+
+          room.state.onChange = () => { 
+            if(room.state.state == Schema.LobbyState.Started) {
+              Client.getInstance().apiInterface.world(room.state.map_id).then(world =>{
+                Client.getInstance().chiselWorld = world;
+                Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
+                Client.getInstance().authenticationInfo.walletAddress = Client.getInstance().authenticator.currentAccount()
+                Client.getInstance().authenticationInfo.authenticationToken = Client.getInstance().authenticator.token()
+
+                Client.getInstance().colyseusClient.joinById<Schema.World>(room.state.game_id, Client.getInstance().authenticationInfo).then(room => {
+                    room.onStateChange.once((state) => {
+
+                        Client.getInstance().colyseusRoom = room;
+                        navigate("/play", {replace: false});
+                    });
+                }).catch(e =>{
+                    alert(`Failed to create game! Reason: ${e.message}`)
+                })
+            })
+          }
+          }
+          
       }).catch(exception => {
-        alert('Failed to create a lobby, maybe we\'re having server issues?')
+        alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
       })
     } catch(exception : any) {
-      alert('Failed to create a lobby, maybe we\'re having server issues?')
+      alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
     }
   }, []);
 

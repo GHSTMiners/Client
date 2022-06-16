@@ -21,6 +21,7 @@ export default class Client {
   public chiselWorld!: Chisel.DetailedWorld;
   public authenticationInfo: Protocol.AuthenticationInfo;
   public messageRouter : Protocol.MessageRouter
+  public lobbyMessageRouter : Protocol.MessageRouter
   public authenticator : Authenticator
   public phaserGame!: Phaser.Game;
   public ownPlayer!: Schema.Player;
@@ -32,6 +33,8 @@ export default class Client {
     this.authenticator = new Authenticator();
     this.authenticationInfo = new Protocol.AuthenticationInfo();
     this.messageRouter = new Protocol.MessageRouter()
+    this.lobbyMessageRouter
+     = new Protocol.MessageRouter()
   }
 
   /**

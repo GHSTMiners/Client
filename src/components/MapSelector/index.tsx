@@ -4,6 +4,8 @@ import { Arrow } from "assets";
 import desertImage from "assets/images/desert_thumbnail.png";
 import forestImage from "assets/images/forest_thumbnail.png";
 import * as Chisel from "chisel-api-interface";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
+
 import Client from "matchmaking/Client";
 
 interface Props {
@@ -26,8 +28,27 @@ const MapSelector: React.FC<Props> = ({
   // fetching map info from Chisel
   const rawWorlds = Client.getInstance().apiInterface.worlds();
   rawWorlds.then( worlds => {
-         worlds.forEach( world => worldArray.push(world));
+    worlds.forEach( world => worldArray.push(world));
+    let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
+    message.worldId = worldArray[0].id
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+    if ( Client.getInstance().lobbyRoom){
+      Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+    }
   })
+
+
+
+  useEffect(() => {
+    if(worldArray.length > 0) {
+      let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
+      message.worldId = worldArray[mapSelection].id
+      let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+      if ( Client.getInstance().lobbyRoom){
+        Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+      }
+    }
+  }, [mapSelection])
 
   // temporary solution to include thumbnail images. TO DO: get from Chisel
   const emptyThumbnails: string[] = [];

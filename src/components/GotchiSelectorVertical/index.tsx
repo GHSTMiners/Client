@@ -11,6 +11,7 @@ import { SortToggle, Sort } from "components/SortToggle";
 import ringDeselected from "assets/icons/ring_deselected3.svg";
 import ringSelected from "assets/icons/ring_selected3.svg";
 import Client from "matchmaking/Client";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 const sortOptions = [
   {
@@ -85,9 +86,23 @@ export const GotchiSelectorVertical = ({
 
       setSelected(id);
       selectGotchi(id);
+
+    
     },
     [gotchis, selectGotchi, selected]
   );
+
+  useEffect(()=>{
+    if(selected) {
+      let message : Protocol.ChangeSelectedGotchi = new Protocol.ChangeSelectedGotchi();
+      message.gotchiId = parseInt(selected)
+      Client.getInstance().authenticationInfo.gotchiId = parseInt(selected)
+      let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+      if ( Client.getInstance().lobbyRoom){
+        Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+      }
+    }
+  }, [selected])
 
   const handleScroll = (i: number) => {
     const nextIteration = currentIteration + i;
