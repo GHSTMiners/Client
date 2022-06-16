@@ -79,6 +79,10 @@
   font-size: 2rem;
 }
 
+.countdownLocked{
+  color:red;
+}
+
 .readyUpContainer{
   grid-area:readyup;
   display: grid;
