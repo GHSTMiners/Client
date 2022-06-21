@@ -88,3 +88,5 @@ export interface HighScore {
 export interface CustomError extends Error {
   status?: number;
 }
+
+export type IndexedArray = {[key: string]: number};

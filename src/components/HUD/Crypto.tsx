@@ -4,10 +4,11 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import { useEffect, useState } from "react";
 import { CargoEntry } from "matchmaking/Schemas";
+import { IndexedArray } from "types";
 
 const Crypto = () => {  
   type CryptoArray = { cryptoID: number; name: string; image: string };
-  type IndexedArray = {[key: string]: number};
+  
   
   let crystalsArray: CryptoArray[] = [];
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
