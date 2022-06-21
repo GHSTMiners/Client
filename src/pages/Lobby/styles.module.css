@@ -7,7 +7,7 @@
   grid-template-columns: minmax(48rem,5fr) minmax(20rem,2.5fr) minmax(15rem,2.5fr);
   grid-auto-rows: 170px;
   grid-template-areas:
-  "gotchi  map   players"
+  "map  players counter"
   "gotchi  chat  chat"
   "gotchi  chat  chat"
   "gotchi  chat  chat"
@@ -35,11 +35,8 @@
   grid-area: gotchi;
   display: grid;
   grid-template-columns: 1fr 1.5fr 2fr;
-  grid-template-rows: 0.6fr 4fr 1fr;
   grid-template-areas:
-  "selection countdown countdown"
   "selection preview traits"
-  "selection readyup readyup"
 } 
 
 .gotchiSelection > div{
@@ -48,8 +45,8 @@
 }
 
 .gotchiSelectionBar{
+  padding-top: 0.5rem;
   grid-area:selection;
-  margin-top: 6rem;
   justify-items: center;
 }
 
@@ -68,7 +65,6 @@
 
 .gotchiTraitsContainer{
   grid-area:traits;
-  padding-top: 1rem;
 }
 
 .countdownContainer{
@@ -85,11 +81,11 @@
 
 .readyUpContainer{
   grid-area:readyup;
+  width: 15rem;
   display: grid;
   align-items: center;
   justify-items: center;
 }
-
 
 
 .mapSelection{
@@ -108,7 +104,7 @@
 
 .readyUpButton{
   width: 90%;
-  height:5rem;
+  height:6rem;
   font-size: 1.5rem;
   background-color: transparent;
   border:2px solid white;
@@ -165,6 +161,12 @@
   position: absolute;
   opacity: 0.6;
   width: 100%;
+}
+
+.timeCounter{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .chatContainer{
