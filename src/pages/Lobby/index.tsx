@@ -70,6 +70,7 @@ const Lobby = (): JSX.Element => {
                     room.onStateChange.once((state) => {
 
                         Client.getInstance().colyseusRoom = room;
+                        Client.getInstance().lobbyRoom.connection.close()
                         navigate("/play", {replace: false});
                     });
                 }).catch(e =>{
