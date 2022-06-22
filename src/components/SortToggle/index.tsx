@@ -41,7 +41,7 @@ export const SortToggle = ({
       }`}
     >
       <button className={styles.toggle} onClick={handleToggle}>
-        <SortIcon width={64} height={64} style={{padding: "0.5rem"}} className={styles.iconContainer}/>
+        <SortIcon width={'2.8rem'} height={'2.8rem'} style={{padding: "0.5rem"}} className={styles.iconContainer}/>
       </button>
       
       <div className={styles.sortOptions}>

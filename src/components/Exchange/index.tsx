@@ -7,47 +7,42 @@ import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
 import * as Schema from "../../matchmaking/Schemas"
+import { IndexedArray } from "types";
 
 interface Props {
   hidden: boolean;
 }
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
-  type BalanceData = Record<number, number>; // ( cryptoID , quantity }
+  type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
+  type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
   const [displayExchange, setDisplayExchange] = useState<boolean>(!hidden);
   const [playerBalance, setPlayerBalance] = useState<number>(0);
-  const [tokenQuantity, setTokenQuantity] = useState<number>(0);
-  let tempWalletBalance: BalanceData = [];
+  const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
+  const [cryptoRecord, setCryptoRecord] = useState<IndexedCrypto>({});
+  const [inputValues , setInputValues] = useState<IndexedArray>({});
 
   // Setting world currency
   const schema: Schema.World = Client.getInstance().colyseusRoom.state;
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  
-  type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
 
-  let cryptoIdArray: number[] = [];
-  let cryptoRecord : Record<number,CryptoObj> = [];
-  const initialInputValues : Record<number,number> = [];
-  
-  // inializing cargo & wallet ballances to 0
-  for (let i = 0; i < world.crypto.length; i++) {
-    const cryptoPrice = schema.exchange.get(world.crypto[i].id.toString());
-    const newCrypto = {
-      cryptoID: world.crypto[i].id,
-      name: `${world.crypto[i].shortcode}`,
-      image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
-      price: (cryptoPrice? cryptoPrice.usd_value : 1)
+  // inializing cargo & wallet ballances to 0 and fetching the list of crypto from Chisel
+  useEffect(()=>{
+    for (let i = 0; i < world.crypto.length; i++) {
+      const cryptoPrice = schema.exchange.get(world.crypto[i].id.toString());
+      const id = world.crypto[i].id;
+      const newCrypto = {
+        cryptoID: id,
+        name: `${world.crypto[i].shortcode}`,
+        image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
+        price: (cryptoPrice? cryptoPrice.usd_value : 1)
+      }
+      updateWalletBalance(id,0);
+      updateCryptoRecord(id,newCrypto);
     }
-    cryptoIdArray.push( world.crypto[i].id );
-    tempWalletBalance[world.crypto[i].id] = 0;
-    cryptoRecord[world.crypto[i].id] = newCrypto;
-    initialInputValues[world.crypto[i].id] = 0;
-  }
+  },[])
   
-  const [walletBalance, setWalletBalance] = useState(tempWalletBalance);
-  const [inputValues , setInputValues] = useState({...walletBalance});
-
   useEffect(() => {
     Client.getInstance().phaserGame.events.on("open_exchange", openExchange );
     Client.getInstance().phaserGame.events.on("close_dialogs", closeExchange);
@@ -55,12 +50,10 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       // WALLET
       Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
-        walletBalance[item.cryptoID] = item.amount;
-        inputValues[item.cryptoID] = item.amount;
+        updateWalletBalance(item.cryptoID,item.amount);
         Client.getInstance().phaserGame.events.emit("added crypto", item.cryptoID, item.amount);
         item.onChange = () => {
-          walletBalance[item.cryptoID] = item.amount;
-          inputValues[item.cryptoID] = item.amount;
+          updateWalletBalance(item.cryptoID,item.amount);
           Client.getInstance().phaserGame.events.emit("updated wallet", item.cryptoID, item.amount);
           if (world.world_crypto_id === item.cryptoID) {
             Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
@@ -72,7 +65,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     });
   }, []);
 
-  
   const sellCrypto = (cryptoID : number, amount: number) => {
     let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
     message.sourceCryptoId = cryptoID;
@@ -82,7 +74,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data);
   };
   
-
   const openExchange = () => {
     setInputValues({...walletBalance})
     setDisplayExchange(true);
@@ -91,11 +82,20 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   const closeExchange = () => {
     setDisplayExchange(false); 
   }
+  
+  function updateWalletBalance (id:number, value:number){
+    walletBalance[id]= value;
+    setWalletBalance({...walletBalance});
+    setInputValues({...walletBalance});
+  }
 
+  function updateCryptoRecord (id:number, entry:CryptoObj){
+    cryptoRecord[id]= entry;
+    setCryptoRecord({...cryptoRecord});
+  }
   const updatePlayerBalance = (quantity:number) =>{
     setPlayerBalance(Math.round(quantity*10)/10);
     setInputValues({...walletBalance});
-    
   }
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
@@ -104,7 +104,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       let newValues = {...inputValues};
       setInputValues(newValues);
     }
- } 
+  } 
 
   const renderCoinEntry = ( id: number ) => {
     const quantity = walletBalance[id];
@@ -131,10 +131,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     )
   }
 
-  let cryptoList = cryptoIdArray.map(function (id) {
-    return id===world.world_crypto_id ? '' : renderCoinEntry( id );
+  // List of coins to be displayed in the UI
+  const cryptoIds = Object.keys(cryptoRecord)
+  let cryptoList = cryptoIds.map(function (id) {
+    return +id===world.world_crypto_id ? '' : renderCoinEntry( +id );
   });
-
 
   return (
     <>

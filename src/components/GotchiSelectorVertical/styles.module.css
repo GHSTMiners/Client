@@ -7,7 +7,7 @@
 .selectorContainer {
   display: flex;
   flex-direction: column;
-  padding-top: 9rem;
+  padding-top: 4rem;
   align-items: center;
 }
 
@@ -80,12 +80,14 @@
 
 .filterOptions {
   position: absolute;
-  display: revert;
-  left: 30%;
+  display: flex;
+  flex-direction: row;
+  gap:2rem;
+  left: 2rem;
   top: 0;
   margin-bottom: 1.6rem;
 }
 .filterOptions > * + * {
   margin-left:0rem;
-  margin-top: 0.5rem;
+  
 }

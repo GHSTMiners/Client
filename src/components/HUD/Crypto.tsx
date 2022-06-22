@@ -2,48 +2,57 @@ import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
-import { useContext, useEffect, useState } from "react";
-import { CargoEntry, ExplosiveEntry, WalletEntry } from "matchmaking/Schemas";
-import VitalsConsole from "./VitalsConsole";
-import Explosive from "game/World/Explosive";
+import { useEffect, useState } from "react";
+import { CargoEntry } from "matchmaking/Schemas";
+import { IndexedArray } from "types";
 
-const Crypto = () => {
-  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-
+const Crypto = () => {  
   type CryptoArray = { cryptoID: number; name: string; image: string };
-  type BalanceData = Record<number, number>; // ( cryptoID , quantity }
-
+  
+  
   let crystalsArray: CryptoArray[] = [];
-  let tempCargoBalance: BalanceData = [];
+  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
+  const [cargoBalance, setCargoBalance] = useState<IndexedArray>({});
+  const [cryptoCrystals, setCrytoCrystals] = useState<CryptoArray[]>([]);
 
-  // inializing cargo & wallet ballances to 0
-  for (let i = 0; i < world.crypto.length; i++) {
-    crystalsArray.push({
-      cryptoID: world.crypto[i].id,
-      name: `${world.crypto[i].shortcode}`,
-      image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
-    });
-    tempCargoBalance[world.crypto[i].id] = 0;
-  }
+  function updateCargoBalance ( id:number , value:number ) {
+    // updating/adding array
+    cargoBalance[id]=value;
+    // refreshing the UI
+    setCargoBalance({...cargoBalance});
+  }  
 
-  const [cargoBalance, setCargoBalance] = useState(tempCargoBalance);
+  // inializing cargo & wallet ballances to 0 and fetching images from Chisel
+  useEffect(()=>{
+    for (let i = 0; i < world.crypto.length; i++) {
+      if (world.crypto[i].shortcode!='GGEMS'){
+        crystalsArray.push({
+          cryptoID: world.crypto[i].id,
+          name: `${world.crypto[i].shortcode}`,
+          image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
+        });
+        updateCargoBalance(world.crypto[i].id,0);
+      }
+    }
+  },[])
 
   useEffect(() => {
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
+      //Define cargo after fetching from Chisel on mount
+      setCrytoCrystals(crystalsArray)
       // CARGO
       Client.getInstance().ownPlayer.cargo.onAdd = (item: CargoEntry) => {
-        cargoBalance[item.cryptoID] = item.amount;
+        updateCargoBalance(item.cryptoID,item.amount);
         item.onChange = () => {
-          cargoBalance[item.cryptoID] = item.amount;
+          updateCargoBalance(item.cryptoID,item.amount);
         };
       };
       Client.getInstance().ownPlayer.cargo.onRemove = (item: CargoEntry) => {
-        cargoBalance[item.cryptoID] = 0;
+        updateCargoBalance(item.cryptoID,0);
       }
     });
   }, []);
-
 
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
@@ -56,7 +65,7 @@ const Crypto = () => {
     </div>
   );
 
-  let cryptoInventoryList = crystalsArray.map(function (crypto) {
+  let cryptoInventoryList = cryptoCrystals.map(function (crypto) {
     return inventoryCrystal(
       crypto.name,
       cargoBalance[crypto.cryptoID],

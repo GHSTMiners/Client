@@ -3,8 +3,8 @@
 .inputContainer {
   position: relative;
   background-color: transparent;
-  height: 4.2rem;
-  width: 4.2rem;
+  height: 3rem;
+  width: 3rem;
   border-radius: 1rem;
   transition: all 200ms ease;
 }
@@ -20,8 +20,8 @@
 .toggle {
   position: absolute;
   background-color: transparent;
-  height: 4.2rem;
-  width: 4.2rem;
+  height: 3rem;
+  width: 3rem;
   border-radius: 2.3rem;
   display: grid;
   place-items: center;

@@ -41,6 +41,8 @@ interface Props {
    * Maximum gotchis visible in selector per scroll
    */
   maxVisible?: number;
+
+  hidden?: boolean;
   /**
    * Callback function that triggers on gotchi select
    * @param {number} gotchiIndex - Aavegotchi index selected
@@ -53,6 +55,7 @@ export const GotchiSelectorVertical = ({
   selectGotchi,
   initialGotchiId,
   maxVisible = 3,
+  hidden = false,
 }: Props) => {
 
   const [selected, setSelected] = useState<string>();
@@ -174,7 +177,7 @@ export const GotchiSelectorVertical = ({
   }, [gotchis, initialGotchiId, handleSelect]);
 
   return (
-    <div className={styles.gotchiSelector}>
+    <div className={styles.gotchiSelector} hidden={hidden}>
       <div className={styles.filterOptions}>
         <SearchToggle
           onToggle={() => activeToggle !== "search" ? setActiveToggle("search") :  setActiveToggle(undefined)}

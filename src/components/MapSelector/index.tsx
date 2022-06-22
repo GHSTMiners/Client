@@ -26,16 +26,21 @@ const MapSelector: React.FC<Props> = ({
   const [mapSelection,setMapSelection]=useState(0);
 
   // fetching map info from Chisel
-  const rawWorlds = Client.getInstance().apiInterface.worlds();
-  rawWorlds.then( worlds => {
-    worlds.forEach( world => worldArray.push(world));
-    let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
-    message.worldId = worldArray[0].id
-    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    if ( Client.getInstance().lobbyRoom){
-      Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+  useEffect(()=>{
+    if(worldArray.length <= 0 ){
+      const rawWorlds = Client.getInstance().apiInterface.worlds();
+      rawWorlds.then( worlds => {
+        worlds.forEach( world => worldArray.push(world));
+        let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
+        message.worldId = worldArray[0].id
+        let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
+        if ( Client.getInstance().lobbyRoom){
+          Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+        }
+      })
     }
-  })
+  },[])
+
 
 
 

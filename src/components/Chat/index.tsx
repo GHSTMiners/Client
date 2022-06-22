@@ -20,15 +20,27 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
      let messageColor = '#ffffff';
      let user = '';
 
-     if ( Client.getInstance().colyseusRoom){
-      Client.getInstance().colyseusRoom.state.players.forEach( player => {
-        if (player.gotchiID === id){
-         messageColor = player.chatColor;
-         user = player.name;
-         return;
-        }
-      })
-    }
+     if (gameMode){
+      if ( Client.getInstance().colyseusRoom){
+        Client.getInstance().colyseusRoom.state.players.forEach( player => {
+          if (player.gotchiID === id){
+           messageColor = player.chatColor;
+           user = player.name;
+           return;
+          }
+        })
+      }
+     } else{
+      if ( Client.getInstance().lobbyRoom){
+        Client.getInstance().lobbyRoom.state.player_seats.forEach( player => {
+          if (player.gotchi_id === id){
+            player.ready? messageColor='#00ff00' : messageColor='#ffffff';
+           user = `${player.gotchi_id}`;
+           return;
+          }
+        })
+      }
+     }
 
     return (
       <div className={styles.chatMessage}>
@@ -54,9 +66,16 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
     let message : Protocol.MessageToServer = new Protocol.MessageToServer();
     message.msg = chatMessage;
     let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    if ( Client.getInstance().colyseusRoom){
-      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+    if (gameMode){
+      if ( Client.getInstance().colyseusRoom){
+        Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+      }
+    } else {
+      if ( Client.getInstance().lobbyRoom){
+        Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
+      }
     }
+    
   };
 
   function handleClick (event:any ) {

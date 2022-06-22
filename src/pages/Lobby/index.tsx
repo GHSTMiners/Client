@@ -27,6 +27,8 @@ const Lobby = (): JSX.Element => {
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
   const [playerReady,setPlayerReady]= useState(false);
+  const [playersInLobby,setPlayersInLobby] = useState(0);
+  const [lobbyCountdown,setLobbyCountdown]= useState(0);
   const navigate = useNavigate();
 
   /**
@@ -59,7 +61,14 @@ const Lobby = (): JSX.Element => {
           });
 
           room.state.onChange = () => { 
-            if(room.state.state == Schema.LobbyState.Started) {
+            
+            if (room.state.player_seats.length!=playersInLobby){
+              setPlayersInLobby(room.state.player_seats.length)              
+            }
+            
+            setLobbyCountdown(room.state.countdown)
+            
+            if(room.state.state == Schema.LobbyState.Started) {  
               Client.getInstance().apiInterface.world(room.state.map_id).then(world =>{
                 Client.getInstance().chiselWorld = world;
                 Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
@@ -136,6 +145,7 @@ const Lobby = (): JSX.Element => {
                   initialGotchiId={selectedAavegotchiId}
                   gotchis={usersAavegotchis}
                   selectGotchi={handleSelect}
+                  hidden={playerReady}
                 />
           </div>
           <div className={styles.gotchiPreview}>
@@ -160,22 +170,26 @@ const Lobby = (): JSX.Element => {
                       (gotchi) => gotchi.id === selectedAavegotchiId
                     )} />
           </div>
-          <div className={styles.countdownContainer}>
-            { (playerReady)? <Countdown date={Date.now() + 300000} daysInHours={true} />: ''}
-          </div>
-
-          <div className={styles.readyUpContainer}>
-            <Button className={styles.readyUpButton} onClick={()=>{ setPlayerReady(true) }}>SELECT</Button>
-          </div>
         </div>
+
         <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
             <MapSelector />
           </div>
         </div>
+
+        <div className={`${styles.gridTile} ${styles.timeCounter}`}>
+          <div className={`${styles.countdownContainer} ${(lobbyCountdown<15 && lobbyCountdown>0)?styles.countdownLocked:''} `}>
+            {lobbyCountdown>0? `${lobbyCountdown}s` : 'HERE WE GO FRENS!' }
+          </div>
+          <div className={styles.readyUpContainer}>
+            <Button className={styles.readyUpButton} onClick={()=>{ setPlayerReady(true) }}>READY</Button>
+          </div>
+        </div>
+
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
           <div className={styles.tileTitle}>Room Frens</div>
-          <PlayerCounter playersInRoom={4} totalPlayers={5} playersReady={0} />
+          <PlayerCounter playersInRoom={playersInLobby} totalPlayers={5} playersReady={1} />
         </div>
         
          
