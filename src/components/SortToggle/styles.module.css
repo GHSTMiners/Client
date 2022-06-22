@@ -14,7 +14,7 @@
 }
 .inputContainer.open .sortOptions {
   padding-left: 4.4rem;
-  opacity: 1;
+  opacity: 100%;
 }
 
 .toggle {
@@ -37,7 +37,7 @@
   width: 100%;
   padding: 0.4rem;
   font-size: 1.6rem;
-  opacity: 1;
+  opacity: 100%;
   transition: all 400ms ease;
   background-color: rgba(255,255,255,0.1);
   border-radius: 1rem;
@@ -62,11 +62,11 @@
   z-index: 2;
 }
 .option.inactive p {
-  opacity: 0.5;
+  opacity: 50%;
   z-index: 1;
 }
 .option.inactive svg {
-  opacity: 0;
+  opacity: 0%;
 }
 
 .asc {

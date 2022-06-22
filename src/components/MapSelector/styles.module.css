@@ -10,15 +10,15 @@
 }
 
 .arrowLeft:hover, .arrowRight:hover{
-  opacity: 0.9;
+  opacity: 90%;
 }
 
 .disabledIcon{
-  opacity: 0.2;
+  opacity: 20%;
 }
 
 .disabledIcon:hover{
-  opacity: 0.2;
+  opacity: 20%;
 }
 
 .mapTitle{
@@ -30,7 +30,7 @@
 
 .mapThumbnail{
   position: absolute;
-  opacity: 0.9;
+  opacity: 90%;
   width: 100%;
   padding-bottom: 30rem;
 }
@@ -47,7 +47,7 @@
 
 .thumbnailGalleryitem{
   width: 3.5rem;
-  opacity: 0.9;
+  opacity: 90%;
   z-index: 10;
 }
 

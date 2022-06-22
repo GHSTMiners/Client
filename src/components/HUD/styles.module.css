@@ -56,13 +56,13 @@ body {
 
 .hidden {
   visibility: hidden;
-  opacity: 0;
+  opacity: 0%;
   transition: visibility 0s 1.5s, opacity 1.5s linear;
 }
 
 .reveal {
   visibility: visible;
-  opacity: 1;
+  opacity: 100%;
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
@@ -136,7 +136,7 @@ body {
   text-align: center;
   top: 0.7rem;
   position: absolute;
-  opacity: 1;
+  opacity: 100%;
   z-index: 2;
   text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
     0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
@@ -329,7 +329,7 @@ body {
 .crystalIcon {
   height: 3rem;
   width: 3rem;
-  opacity: 0.9;
+  opacity: 90%;
   margin-left: 0.5rem;
 }
 

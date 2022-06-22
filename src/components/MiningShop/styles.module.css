@@ -146,7 +146,7 @@
 .itemImage {
   height: auto;
   width: 4rem;
-  opacity: 0.9;
+  opacity: 90%;
 }
 
 .itemText {
@@ -215,7 +215,7 @@
 
 .titleImage {
   height: 3rem;
-  opacity: 0.9;
+  opacity: 90%;
 }
 
 .detailsBody{
@@ -266,7 +266,7 @@
 
 .detonationElement{
   background-color: red;
-  opacity: 0.9;
+  opacity: 90%;
 }
 
 .totalPrice{

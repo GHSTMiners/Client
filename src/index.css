@@ -33,24 +33,24 @@ code {
 }
 
 .fade-enter {
-  opacity: 0;
+  opacity: 0%;
   z-index: 1;
   position: absolute;
   width: 100%;
 }
 .fade-enter.fade-enter-active {
-  opacity: 1;
+  opacity: 100%;
   transition: opacity 250ms ease-out;
   transition-delay: 125ms;
 }
 
 .fade-exit {
-  opacity: 1;
+  opacity: 100%;
   z-index: 1;
   position: absolute;
   width: 100%;
 }
 .fade-exit.fade-exit-active {
-  opacity: 0;
+  opacity: 0%;
   transition: opacity 250ms ease-out;
 }

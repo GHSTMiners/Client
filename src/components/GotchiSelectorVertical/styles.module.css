@@ -45,7 +45,7 @@
   cursor: pointer;
 }
 .chevron.disabled {
-  opacity: 0.3;
+  opacity: 30%;
 }
 
 .loadingContainer,
