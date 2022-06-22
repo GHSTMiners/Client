@@ -188,8 +188,8 @@ export default class Authenticator {
         this.m_web3 = new Web3(provider);
         //Check if we are on the right chain (Polygon or Ethereum)
         this.m_chainId = await this.m_web3.eth.getChainId();
-        if (!((this.m_chainId === 1) || (this.m_chainId === 137)) ) {
-          alert('This game only works with Aavegotchis on the Polygon or Ethereum network.' )
+        if (!(this.m_chainId === 137)) {
+          alert('This game only works with Aavegotchis on the Polygon network.' )
           return;
         }
         //Get accounts and sign message using first account

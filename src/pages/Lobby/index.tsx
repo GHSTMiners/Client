@@ -71,6 +71,7 @@ const Lobby = (): JSX.Element => {
             if(room.state.state == Schema.LobbyState.Started) {  
               Client.getInstance().apiInterface.world(room.state.map_id).then(world =>{
                 Client.getInstance().chiselWorld = world;
+                Client.getInstance().authenticationInfo.password = room.state.password;
                 Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
                 Client.getInstance().authenticationInfo.walletAddress = Client.getInstance().authenticator.currentAccount()
                 Client.getInstance().authenticationInfo.authenticationToken = Client.getInstance().authenticator.token()
