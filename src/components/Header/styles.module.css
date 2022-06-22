@@ -24,7 +24,7 @@
   text-align: right;
   color: #cecece;
   font-family: Rocks;
-  opacity: 60%;
+  opacity: 0.6;
   font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
@@ -37,7 +37,7 @@
 .navLink:hover {
   color: #cecece;
   font-family: Rocks;
-  opacity: 90%;
+  opacity: 0.9;
   border-bottom:3px solid #cecece;
 }
 
@@ -51,7 +51,7 @@
   text-align: right;
   color: #dddddd;
   font-family: Rocks;
-  opacity: 100%;
+  opacity: 1;
   font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
@@ -88,7 +88,7 @@
 .walletContainer:hover {
   background-image: url("assets/icons/wallet_connect2_hover.svg");
   transition: all 500ms ease;
-  opacity: 100%;
+  opacity: 1;
 }
 */
 .walletContainer:disabled {

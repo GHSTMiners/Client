@@ -146,7 +146,7 @@
 .itemImage {
   height: auto;
   width: 4rem;
-  opacity: 90%;
+  opacity: 0.9;
 }
 
 .itemText {
@@ -170,7 +170,7 @@
   background-color: transparent;
   border: 1px solid #a4ffff;
   color: #a4ffff;
-  opacity: 70%;
+  opacity: 0.7;
   cursor:auto;
 }
 
@@ -193,7 +193,7 @@
 
 
 .drillIcon{
-  opacity: 50%;
+  opacity: 0.5;
   position: absolute;
   right:0rem;
   height: 12rem;
@@ -215,7 +215,7 @@
 
 .titleImage {
   height: 3rem;
-  opacity: 90%;
+  opacity: 0.9;
 }
 
 .detailsBody{
@@ -255,18 +255,18 @@
 .patternElement{
   width: 0.9rem;
   height: 0.9rem;
-  opacity: 10%;
+  opacity: 0.1;
   background-color: #a4ffff;
 }
 
 .explosionElement{
-  opacity: 50%;
+  opacity: 0.5;
   background-color: red;
 }
 
 .detonationElement{
   background-color: red;
-  opacity: 90%;
+  opacity: 0.9;
 }
 
 .totalPrice{
@@ -275,7 +275,7 @@
 }
 
 .gotchiPreview{
-  opacity: 20%;
+  opacity: 0.2;
   position: absolute;
   right:-8rem;
   height: 16rem;

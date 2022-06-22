@@ -136,17 +136,17 @@
   background-color: transparent;
   border: 1px solid #a4ffff;
   color: #a4ffff;
-  opacity: 70%;
+  opacity: 0.7;
   cursor:auto;
 }
 
 .iconSelected {
-  opacity: 100%;
+  opacity: 1;
   transition: all 500ms ease-in-out;
 }
 
 .iconDeselected {
-  opacity: 80%;
+  opacity: 0.8;
   transition: all 500ms ease-in-out;
 }
 
@@ -159,7 +159,7 @@
 
 .itemDisabled {
   filter: grayscale(0.5);
-  opacity: 30%;
+  opacity: 0.3;
   transition: all 400ms ease-in-out;
 }
 

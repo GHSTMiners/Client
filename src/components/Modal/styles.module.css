@@ -16,14 +16,14 @@
   right: 0;
   left:0;
   bottom: 0;
-  opacity: 50%;
+  opacity: 0.5;
   z-index: -1;
   background-color: var(--color-dark_0);
 }
 
 .panel {
   position: relative;
-  opacity: 100%;
+  opacity: 1;
   background-color: var(--color-dark_1);
   border: 5px solid var(--color-dark_2);
   max-width: 60rem;

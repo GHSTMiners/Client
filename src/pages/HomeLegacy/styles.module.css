@@ -80,7 +80,7 @@
 
 .errorContainer h1 {
   font-size: 5rem;
-  opacity: 40%;
+  opacity: 0.4;
 }
 
 .errorContainer p {

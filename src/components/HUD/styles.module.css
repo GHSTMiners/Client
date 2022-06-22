@@ -56,13 +56,13 @@ body {
 
 .hidden {
   visibility: hidden;
-  opacity: 0%;
+  opacity: 0;
   transition: visibility 0s 1.5s, opacity 1.5s linear;
 }
 
 .reveal {
   visibility: visible;
-  opacity: 100%;
+  opacity: 1;
   transition: visibility 0s 0.5s, opacity 0.5s linear;
 }
 
@@ -136,7 +136,7 @@ body {
   text-align: center;
   top: 0.7rem;
   position: absolute;
-  opacity: 100%;
+  opacity: 1;
   z-index: 2;
   text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
     0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
@@ -297,12 +297,12 @@ body {
 }
 
 .iconSelected {
-  opacity: 100%;
+  opacity: 1;
   transition: all 500ms ease-in-out;
 }
 
 .iconDeselected {
-  opacity: 40%;
+  opacity: 0.4;
   transition: all 500ms ease-in-out;
 }
 
@@ -329,13 +329,13 @@ body {
 .crystalIcon {
   height: 3rem;
   width: 3rem;
-  opacity: 90%;
+  opacity: 0.9;
   margin-left: 0.5rem;
 }
 
 .itemDisabled {
   filter: grayscale(1);
-  opacity: 30%;
+  opacity: 0.3;
   transition: all 400ms ease-in-out;
 }
 
