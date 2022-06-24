@@ -3,6 +3,7 @@ import { PlayerSeatState } from "./PlayerSeatState";
 
 export class Lobby extends Schema {
     @type ("string") game_id !: string ;
+    @type ("string") password !: string;
     @type ("number") map_id !: number ;
     @type ("number") countdown !: number ;
     @type ("number") state !: LobbyState ;

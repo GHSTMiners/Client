@@ -297,12 +297,12 @@ body {
 }
 
 .iconSelected {
-  opacity: 100%;
+  opacity: 1;
   transition: all 500ms ease-in-out;
 }
 
 .iconDeselected {
-  opacity: 40%;
+  opacity: 0.4;
   transition: all 500ms ease-in-out;
 }
 
@@ -335,7 +335,7 @@ body {
 
 .itemDisabled {
   filter: grayscale(1);
-  opacity: 30%;
+  opacity: 0.3;
   transition: all 400ms ease-in-out;
 }
 

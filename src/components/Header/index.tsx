@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import GreenButton from "components/GreenButton";
 import RedButton from "components/RedButton";
+import * as Schema from "matchmaking/Schemas";
 
 
 const WalletButton = () => {
@@ -61,10 +62,18 @@ export const Header = () => {
   const navigator = useNavigate();
   
   const routeToLobby = () => {
-    navigator('/lobby')
+    Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
+      Client.getInstance().lobbyRoom = room 
+      navigator('/lobby')
+    }).catch(exception => {
+      alert(`Failed to join a lobby, maybe we're having server issues ?`)
+    })
    }
 
    const routeToHome = () => {
+    if(Client.getInstance().lobbyRoom) {
+      Client.getInstance().lobbyRoom.leave(true)
+    }
     navigator('/')
    }
 

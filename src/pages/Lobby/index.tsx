@@ -51,34 +51,33 @@ const Lobby = (): JSX.Element => {
   useEffect(() => {
 
     try{
-      Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
-
-          Client.getInstance().lobbyRoom = room 
            //Register message handlers
           Client.getInstance().lobbyRoom.onMessage("*", (type, message) => {
             //prettier-ignore
             Client.getInstance().lobbyMessageRouter.processRawMessage( type as string, message);
           });
 
-          room.state.onChange = () => { 
+          Client.getInstance().lobbyRoom.state.onChange = () => { 
             
-            if (room.state.player_seats.length!=playersInLobby){
-              setPlayersInLobby(room.state.player_seats.length)              
+            if (Client.getInstance().lobbyRoom.state.player_seats.length!=playersInLobby){
+              setPlayersInLobby(Client.getInstance().lobbyRoom.state.player_seats.length)              
             }
             
-            setLobbyCountdown(room.state.countdown)
+            setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
             
-            if(room.state.state == Schema.LobbyState.Started) {  
-              Client.getInstance().apiInterface.world(room.state.map_id).then(world =>{
+            if(Client.getInstance().lobbyRoom.state.state == Schema.LobbyState.Started) {  
+              Client.getInstance().apiInterface.world(Client.getInstance().lobbyRoom.state.map_id).then(world =>{
                 Client.getInstance().chiselWorld = world;
+                Client.getInstance().authenticationInfo.password = Client.getInstance().lobbyRoom.state.password;
                 Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()
                 Client.getInstance().authenticationInfo.walletAddress = Client.getInstance().authenticator.currentAccount()
                 Client.getInstance().authenticationInfo.authenticationToken = Client.getInstance().authenticator.token()
 
-                Client.getInstance().colyseusClient.joinById<Schema.World>(room.state.game_id, Client.getInstance().authenticationInfo).then(room => {
+                Client.getInstance().colyseusClient.joinById<Schema.World>(Client.getInstance().lobbyRoom.state.game_id, Client.getInstance().authenticationInfo).then(room => {
                     room.onStateChange.once((state) => {
 
                         Client.getInstance().colyseusRoom = room;
+                        Client.getInstance().lobbyRoom.connection.close()
                         navigate("/play", {replace: false});
                     });
                 }).catch(e =>{
@@ -87,10 +86,6 @@ const Lobby = (): JSX.Element => {
             })
           }
           }
-          
-      }).catch(exception => {
-        alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
-      })
     } catch(exception : any) {
       alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
     }
