@@ -5,16 +5,18 @@ import desertImage from "assets/images/desert_thumbnail.png";
 import forestImage from "assets/images/forest_thumbnail.png";
 import * as Chisel from "chisel-api-interface";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-
 import Client from "matchmaking/Client";
+import { IndexedArray } from "types";
 
 interface Props {
+  mapVotes: IndexedArray;
   children?: React.ReactNode;
   onClick?: () => void;
   disabled?: boolean;
 }
 
 const MapSelector: React.FC<Props> = ({
+  mapVotes,
   children,
   onClick,
   disabled,
@@ -22,6 +24,8 @@ const MapSelector: React.FC<Props> = ({
 
   // state variables to handle user map selection
   const emptyWorlds: Chisel.World[] = [] ;
+  const emptyThumbnails: string[] = [];
+  const [worldThumbnails,setWorldThumbnails] = useState(emptyThumbnails);
   const [worldArray,setWorldArray] = useState(emptyWorlds);
   const [mapSelection,setMapSelection]=useState(0);
 
@@ -41,6 +45,11 @@ const MapSelector: React.FC<Props> = ({
     }
   },[])
 
+  // temporary solution to include thumbnail images. TO DO: get from Chisel
+  useEffect(()=>{
+    worldThumbnails.push(forestImage);
+    worldThumbnails.push(desertImage);
+  },[])
 
   useEffect(() => {
     if(worldArray.length > 0) {
@@ -53,14 +62,6 @@ const MapSelector: React.FC<Props> = ({
     }
   }, [mapSelection])
 
-  // temporary solution to include thumbnail images. TO DO: get from Chisel
-  const emptyThumbnails: string[] = [];
-  const [worldThumbnails,setWorldThumbnails] = useState(emptyThumbnails);
-  useEffect(()=>{
-    worldThumbnails.push(forestImage);
-    worldThumbnails.push(desertImage);
-  },[]);
-
   const handleArrowClick = (positionShift : number)=>{
     const newPosition = mapSelection + positionShift;
     if ( newPosition >= 0 && newPosition < worldThumbnails.length){
@@ -68,12 +69,13 @@ const MapSelector: React.FC<Props> = ({
     }
   }
 
-  const thumbnailGallery = worldThumbnails.map(function (image,index) {
+  const thumbnailGallery = worldArray.map(function (world,index) {
+    let numberOfVotes = mapVotes[world.id] ;
+    if (numberOfVotes == undefined) numberOfVotes = 0;
     return(
-      <div key={`mapThumbnail${index}`}>
-        <img src={image} className={`${styles.thumbnailGalleryitem} ${(index==mapSelection)? styles.selectedThumbnail :''}`} 
-             
-             onClick={disabled? ()=>{} :()=>setMapSelection(index)}/>
+      <div className={styles.thumbnailContainer} onClick={disabled? ()=>{} :()=>setMapSelection(index)} key={`mapThumbnail${index}`} >         
+        <img src={worldThumbnails[index]} className={`${styles.thumbnailGalleryitem} ${(index==mapSelection)? styles.selectedThumbnail :''}`} />
+        <div className={styles.voteContainer}>{numberOfVotes}</div> 
       </div>
     );
   });
