@@ -42,8 +42,6 @@ const MapSelector: React.FC<Props> = ({
   },[])
 
 
-
-
   useEffect(() => {
     if(worldArray.length > 0) {
       let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
@@ -75,7 +73,7 @@ const MapSelector: React.FC<Props> = ({
       <div key={`mapThumbnail${index}`}>
         <img src={image} className={`${styles.thumbnailGalleryitem} ${(index==mapSelection)? styles.selectedThumbnail :''}`} 
              
-             onClick={()=>setMapSelection(index)}/>
+             onClick={disabled? ()=>{} :()=>setMapSelection(index)}/>
       </div>
     );
   });
@@ -84,9 +82,9 @@ const MapSelector: React.FC<Props> = ({
   return (
     <>
       <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} />
-      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={()=>handleArrowClick(-1)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
-      <Arrow width={'4rem'} className={`${styles.arrowRight} ${mapSelection==1? styles.disabledIcon: ''}`} onClick={()=>handleArrowClick(+1)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowRight} ${mapSelection==1? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
       <div className={styles.thumbnailGallery}>
         {thumbnailGallery}
       </div>

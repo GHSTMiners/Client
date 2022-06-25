@@ -192,7 +192,7 @@ const Lobby = (): JSX.Element => {
 
         <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
-            <MapSelector />
+            <MapSelector disabled={playerReady}/>
           </div>
         </div>
 
