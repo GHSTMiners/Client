@@ -1,20 +1,18 @@
 import styles from "./styles.module.css";
-import { GotchiSVG, InfoPanel, TraitsPanel, TraitsTile } from "components";
+import { GotchiSVG, TraitsTile } from "components";
 import { useCallback, useEffect, useState } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import { Button } from "react-bootstrap";
 import { AavegotchiObject } from "types";
-import mapImage from "assets/images/desert_thumbnail.png";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
-import Countdown from 'react-countdown';
 import MapSelector from "components/MapSelector";
-import Config from "config";
 import Client from "matchmaking/Client";
 import * as Schema from "matchmaking/Schemas";
 import { useNavigate } from "react-router-dom";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 
 
@@ -24,11 +22,14 @@ const Lobby = (): JSX.Element => {
     dispatch,
   } = useWeb3();
 
+  type IndexedArray = {[key: string]: boolean};
+
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
   const [playerReady,setPlayerReady]= useState(false);
   const [playersInLobby,setPlayersInLobby] = useState(0);
   const [lobbyCountdown,setLobbyCountdown]= useState(0);
+  const [playerSeats,setPlayerSeats]= useState<IndexedArray>({});
   const navigate = useNavigate();
 
   /**
@@ -59,10 +60,16 @@ const Lobby = (): JSX.Element => {
 
           Client.getInstance().lobbyRoom.state.onChange = () => { 
             
+            // updating player counter
             if (Client.getInstance().lobbyRoom.state.player_seats.length!=playersInLobby){
               setPlayersInLobby(Client.getInstance().lobbyRoom.state.player_seats.length)              
             }
-            
+
+            // updating player seats
+            Client.getInstance().lobbyRoom.state.player_seats.forEach( seat => {
+              playerSeats[seat.gotchi_id] = seat.ready;
+            })            
+            setPlayerSeats({...playerSeats})
             setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
             
             if(Client.getInstance().lobbyRoom.state.state == Schema.LobbyState.Started) {  
@@ -90,6 +97,15 @@ const Lobby = (): JSX.Element => {
       alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
     }
   }, []);
+
+  // Updating player ready state 
+  useEffect(()=>{
+    if (selectedAavegotchiId){
+      if (playerSeats[selectedAavegotchiId]){
+        setPlayerReady(true);
+      }
+    }
+  },[playerSeats])
 
 
   // Updating the current selected aavegotchi
@@ -129,6 +145,14 @@ const Lobby = (): JSX.Element => {
       updateAavegotchis(dispatch, address);
     }
   }, [address]);
+
+  const handlePlayerReady = ()=>{
+    // sending message to server    
+    let readyUpMessage : Protocol.ChangePlayerReady = new Protocol.ChangePlayerReady;
+    readyUpMessage.ready = true;
+    const serializedMessage = Protocol.MessageSerializer.serialize(readyUpMessage);
+    Client.getInstance().lobbyRoom.send(serializedMessage.name,serializedMessage.data);
+  }
 
   return (
     <>
@@ -177,7 +201,7 @@ const Lobby = (): JSX.Element => {
             {lobbyCountdown>0? `${lobbyCountdown}s` : 'HERE WE GO FRENS!' }
           </div>
           <div className={styles.readyUpContainer}>
-            <Button className={styles.readyUpButton} onClick={()=>{ setPlayerReady(true) }}>READY</Button>
+            <Button className={styles.readyUpButton} onClick={ handlePlayerReady }>READY</Button>
           </div>
         </div>
 
