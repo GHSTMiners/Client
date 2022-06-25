@@ -13,6 +13,7 @@ import Client from "matchmaking/Client";
 import * as Schema from "matchmaking/Schemas";
 import { useNavigate } from "react-router-dom";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import { IndexedBooleanArray } from "types";
 
 
 
@@ -22,14 +23,14 @@ const Lobby = (): JSX.Element => {
     dispatch,
   } = useWeb3();
 
-  type IndexedArray = {[key: string]: boolean};
+  
 
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
   const [playerReady,setPlayerReady]= useState(false);
   const [playersInLobby,setPlayersInLobby] = useState(0);
   const [lobbyCountdown,setLobbyCountdown]= useState(0);
-  const [playerSeats,setPlayerSeats]= useState<IndexedArray>({});
+  const [playerSeats,setPlayerSeats]= useState<IndexedBooleanArray>({});
   const navigate = useNavigate();
 
   /**
@@ -66,10 +67,12 @@ const Lobby = (): JSX.Element => {
             }
 
             // updating player seats
+            
+            let currentPlayers= {} as IndexedBooleanArray;
             Client.getInstance().lobbyRoom.state.player_seats.forEach( seat => {
-              playerSeats[seat.gotchi_id] = seat.ready;
+              currentPlayers[seat.gotchi_id] = seat.ready;
             })            
-            setPlayerSeats({...playerSeats})
+            setPlayerSeats(currentPlayers)
             setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
             
             if(Client.getInstance().lobbyRoom.state.state == Schema.LobbyState.Started) {  
@@ -207,7 +210,7 @@ const Lobby = (): JSX.Element => {
 
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
           <div className={styles.tileTitle}>Room Frens</div>
-          <PlayerCounter playersInRoom={playersInLobby} totalPlayers={5} playersReady={1} />
+          <PlayerCounter playerSeats={playerSeats} totalPlayers={5} />
         </div>
         
          

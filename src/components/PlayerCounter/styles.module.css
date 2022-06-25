@@ -6,14 +6,26 @@
     font-size: 1.3rem;
     position: relative;
     display: flex;
+    gap: 1rem;
+    justify-content: center;
     flex-direction: row;
 }
 
 .playerElement{
-    
+    display: flex;
+    flex-direction: column;
+    font-size:0.9rem;
+    align-items: center;
+    justify-content: flex-start;
+    height: 4rem;
+    margin-bottom: 1rem;
 }
 
 .playerIcon{
+    margin-top: 0.5rem;
     height: 3rem;
 }
 
+.gotchiPreviewContainer{
+    height: 4rem;
+}

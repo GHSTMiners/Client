@@ -1,37 +1,44 @@
-import { AavegotchiObject } from "types";
 import styles from "./styles.module.css";
-import ActiveFrensIcon from "assets/icons/active_frens.svg"
 import InactiveFrensIcon from "assets/icons/inactive_frens.svg"
+import { IndexedBooleanArray } from "types";
+import { useEffect, useState } from "react";
+import { GotchiSVG } from "components/GotchiSVG";
 
 interface Props {
-  playersInRoom: number;
-  playersReady: number;
+  playerSeats: IndexedBooleanArray;
   totalPlayers: number;
-  players?: AavegotchiObject[];
 }
 
 export const PlayerCounter = ({
-    playersInRoom,
-    playersReady,
+    playerSeats,
     totalPlayers
-  }: Props) => {
+  }: Props) => {   
 
-    // Dirty logic to play around, to be fetch from Chisel properly
-    type LobbyPlayer = { id: number, inRoom : boolean, ready: boolean };
-    let playerArray : LobbyPlayer[] = []; 
-    let isInRoom = false;
-    let isReady = false;
-    for (let i = 0; i<totalPlayers ; i++) {
-      (i<playersInRoom)? isInRoom=true : isInRoom=false;
-      (i<playersReady)? isReady=true : isReady=false;
-      playerArray.push({id:i,inRoom:isInRoom,ready:isReady});
-    }
+    const [playerArray, setPlayerArray] = useState<(number|undefined)[]>([]);
+
+    useEffect(()=>{
+      let currentPlayers = [];
+      const playerIds = Object.keys(playerSeats);
+      for (let i = 0; i<totalPlayers ; i++) {
+        (i<playerIds.length)? currentPlayers.push(+playerIds[i]) : currentPlayers.push(undefined);
+      }
+      setPlayerArray(currentPlayers)
+    },[playerSeats])
     
-    const renderPlayerArray = playerArray.map( function (player,index) {
+    const renderPlayerArray = playerArray.map( function (id,index) {
       return( 
-        <div className={styles.playerElement} id={`player${index}`}>
-          { (player.inRoom)? 
-              <img src={ActiveFrensIcon} className={styles.playerIcon}></img> 
+        <div className={styles.playerElement} key={`playerIndex${index}`}>
+          { (id)? 
+              <>
+              <div className={styles.gotchiPreviewContainer}>
+                <GotchiSVG
+                        side={0}
+                        tokenId={id.toString()}
+                        options={{ animate: false, removeBg: true }}
+                      />
+                </div>
+                {(playerSeats[id])? 'READY' : ''}    
+              </> 
             : <img src={InactiveFrensIcon} className={styles.playerIcon}></img> 
           }
         </div>
@@ -39,7 +46,7 @@ export const PlayerCounter = ({
     })
 
     return (
-      <div className={styles.playerCounter} id={'playerCounter'}>
+      <div className={styles.playerCounter} key={'playerCounter'}>
         {renderPlayerArray}
       </div>
     );

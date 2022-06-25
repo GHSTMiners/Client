@@ -90,3 +90,5 @@ export interface CustomError extends Error {
 }
 
 export type IndexedArray = {[key: string]: number};
+
+export type IndexedBooleanArray = {[key: string]: boolean};
