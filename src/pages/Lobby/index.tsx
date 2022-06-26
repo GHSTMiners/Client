@@ -5,7 +5,7 @@ import { updateAavegotchis, useWeb3 } from "web3/context";
 import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import { Button } from "react-bootstrap";
-import { AavegotchiObject } from "types";
+import { AavegotchiObject, IndexedArray } from "types";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
 import MapSelector from "components/MapSelector";
@@ -31,6 +31,7 @@ const Lobby = (): JSX.Element => {
   const [playersInLobby,setPlayersInLobby] = useState(0);
   const [lobbyCountdown,setLobbyCountdown]= useState(0);
   const [playerSeats,setPlayerSeats]= useState<IndexedBooleanArray>({});
+  const [mapVoting,setMapVoting]= useState<IndexedArray>({});
   const navigate = useNavigate();
 
   /**
@@ -67,12 +68,18 @@ const Lobby = (): JSX.Element => {
             }
 
             // updating player seats
-            
             let currentPlayers= {} as IndexedBooleanArray;
+            let currentMapVotes = {} as IndexedArray;
             Client.getInstance().lobbyRoom.state.player_seats.forEach( seat => {
               currentPlayers[seat.gotchi_id] = seat.ready;
+              if (seat.map_vote>0){
+                let newVotedMap = Object.hasOwn( currentMapVotes, seat.map_vote);
+                (newVotedMap)? currentMapVotes[seat.map_vote] += 1 : currentMapVotes[seat.map_vote]=1; 
+              }
             })            
+            console.log(currentMapVotes)
             setPlayerSeats(currentPlayers)
+            setMapVoting(currentMapVotes)
             setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
             
             if(Client.getInstance().lobbyRoom.state.state == Schema.LobbyState.Started) {  
@@ -195,7 +202,7 @@ const Lobby = (): JSX.Element => {
 
         <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
-            <MapSelector disabled={playerReady}/>
+            <MapSelector mapVotes={mapVoting} disabled={playerReady}/>
           </div>
         </div>
 
@@ -203,7 +210,7 @@ const Lobby = (): JSX.Element => {
           <div className={`${styles.countdownContainer} ${(lobbyCountdown<15 && lobbyCountdown>0)?styles.countdownLocked:''} `}>
             {lobbyCountdown>0? `${lobbyCountdown}s` : 'HERE WE GO FRENS!' }
           </div>
-          <div className={styles.readyUpContainer}>
+          <div className={styles.readyUpContainer} hidden={ playerReady }>
             <Button className={styles.readyUpButton} onClick={ handlePlayerReady }>READY</Button>
           </div>
         </div>
