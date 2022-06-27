@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
-import { Button } from "react-bootstrap";
+import { Button, ProgressBar } from "react-bootstrap";
 import { AavegotchiObject, IndexedArray } from "types";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
@@ -111,9 +111,7 @@ const Lobby = (): JSX.Element => {
   // Updating player ready state 
   useEffect(()=>{
     if (selectedAavegotchiId){
-      if (playerSeats[selectedAavegotchiId]){
-        setPlayerReady(true);
-      }
+      setPlayerReady(playerSeats[selectedAavegotchiId]);
     }
   },[playerSeats])
 
@@ -159,7 +157,7 @@ const Lobby = (): JSX.Element => {
   const handlePlayerReady = ()=>{
     // sending message to server    
     let readyUpMessage : Protocol.ChangePlayerReady = new Protocol.ChangePlayerReady;
-    readyUpMessage.ready = true;
+    readyUpMessage.ready = !playerReady;
     const serializedMessage = Protocol.MessageSerializer.serialize(readyUpMessage);
     Client.getInstance().lobbyRoom.send(serializedMessage.name,serializedMessage.data);
   }
@@ -207,22 +205,29 @@ const Lobby = (): JSX.Element => {
         </div>
 
         <div className={`${styles.gridTile} ${styles.timeCounter}`}>
-          <div className={`${styles.countdownContainer} ${(lobbyCountdown<15 && lobbyCountdown>0)?styles.countdownLocked:''} `}>
-            {lobbyCountdown>0? `${lobbyCountdown}s` : 'HERE WE GO FRENS!' }
-          </div>
-          <div className={styles.readyUpContainer} hidden={ playerReady }>
-            <Button className={styles.readyUpButton} onClick={ handlePlayerReady }>READY</Button>
+          
+          <div className={styles.readyUpContainer} >
+            <button className={`${styles.readyUpButton} `} onClick={ handlePlayerReady }>
+              {playerReady? 'UNREADY' : 'READY'}
+            </button>
+            <div className={`${styles.countdownContainer} ${(lobbyCountdown<15 && lobbyCountdown>0)?styles.countdownLocked:''} `}>
+              {/*lobbyCountdown>0? `${lobbyCountdown}s` : '' */}
+              <div className={styles.progressBarContainer}>
+                <ProgressBar className={styles.progressBar} variant="danger" animated now={lobbyCountdown/300*100}/>
+                <div className={styles.progressBarLabel}>
+                  {lobbyCountdown}s
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
-          <div className={styles.tileTitle}>Room Frens</div>
           <PlayerCounter playerSeats={playerSeats} totalPlayers={5} />
         </div>
         
          
         <div className={`${styles.gridTile} ${styles.chat}`}>
-          <div className={styles.tileTitle}>Lobby Chat</div>
           <Chat  disabled={false} gameMode={false}/>
         </div>
                     
