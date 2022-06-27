@@ -77,7 +77,6 @@ const Lobby = (): JSX.Element => {
                 (newVotedMap)? currentMapVotes[seat.map_vote] += 1 : currentMapVotes[seat.map_vote]=1; 
               }
             })            
-            console.log(currentMapVotes)
             setPlayerSeats(currentPlayers)
             setMapVoting(currentMapVotes)
             setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)

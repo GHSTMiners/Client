@@ -97,14 +97,6 @@ export const Header = () => {
           </NavLink>
           
           <NavLink hidden = {location.pathname === "/lobby"}
-            to="/game"
-            className={({ isActive }) =>
-                isActive ? styles.activeNavLink : styles.navLink
-              }
-          >
-            Game
-          </NavLink>
-          <NavLink hidden = {location.pathname === "/lobby"}
             to="/leaderboard"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -153,14 +145,6 @@ export const Header = () => {
             >
               Home
             </NavLink>
-            <NavLink
-            to="/game"
-            className={({ isActive }) =>
-                isActive ? styles.activeNavLink : styles.navLink
-              }
-          >
-            Game
-          </NavLink>
             <NavLink 
 
               to="/leaderboard"

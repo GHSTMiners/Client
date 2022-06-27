@@ -79,7 +79,6 @@ const MapSelector: React.FC<Props> = ({
       </div>
     );
   });
-
   
   return (
     <>

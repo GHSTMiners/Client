@@ -11,6 +11,7 @@
 
 .arrowLeft:hover, .arrowRight:hover{
   opacity: 0.9;
+  transition: all 400ms ease;
 }
 
 .disabledIcon{
@@ -32,6 +33,7 @@
   position: absolute;
   opacity: 0.9;
   width: 100%;
+  transition: all 400ms ease;
 }
 
 .thumbnailGallery{
@@ -72,4 +74,5 @@
   padding-top: 1rem;
   font-size: 1.2rem;
   z-index: 15;
+  transition: all 400ms ease;
 }
