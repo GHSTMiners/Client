@@ -54,7 +54,7 @@ export const GotchiSelectorVertical = ({
   gotchis,
   selectGotchi,
   initialGotchiId,
-  maxVisible = 3,
+  maxVisible = 4,
   hidden = false,
 }: Props) => {
 

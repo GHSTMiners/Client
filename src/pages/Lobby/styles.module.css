@@ -7,10 +7,10 @@
   grid-template-columns: minmax(20rem,2.5fr)  minmax(48rem,5fr) minmax(15rem,2.5fr);
   grid-auto-rows: 160px;
   grid-template-areas:
-  "chat gotchi    players"
-  "chat gotchi    map"
-  "chat gotchi    map"
-  "chat gotchi    counter"
+  "chat gotchi  players"
+  "chat gotchi  map"
+  "chat gotchi  map"
+  "chat gotchi  counter"
  }
 
  .gridTile {
@@ -112,6 +112,8 @@
   text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
   border:none;
   background-color: rgba(210,210,210,0.5);
   transition: all 400ms ease;
