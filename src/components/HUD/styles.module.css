@@ -112,6 +112,24 @@ body {
   top: 2.6rem;
 }
 
+.lowFuelBar{
+  color: red;
+}
+
+.lowFuelIndicator {
+  position: absolute;
+  top: 2.5rem;
+  left: 11.8rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  z-index: 100;
+  background-color: rgba(255, 0, 0, 0.3);
+  webkit-box-shadow: 0px 0px 1.5rem 0px red;
+  -moz-box-shadow: 0px 0px 1.5rem 0px red;
+  box-shadow: 0px 0px 1.5rem 0px red;
+}
+
 .healthBar {
   top: 5.4rem;
 }

@@ -12,6 +12,7 @@ const VitalsConsole = () => {
   const [cargo, setCargo] = useState("14rem");
   const [health, setHealth] = useState("14rem");
   const [depth, setDepth] = useState(0);
+  const [lowFuel , setLowFuel] = useState(false);
   
   useEffect(() => {
     //Wait until the player was admitted to the server
@@ -22,6 +23,7 @@ const VitalsConsole = () => {
           vital.onChange = () => {
             let remFuelValue: number =
               (vital.currentValue / vital.filledValue) * 14;
+            (remFuelValue<2)? setLowFuel(true) : setLowFuel(false);
             setFuel(`${remFuelValue}rem`);
           };
         } else if (vital.name == "Health") {
@@ -52,9 +54,10 @@ const VitalsConsole = () => {
 
   return (
     <div className={styles.vitalsConsole}>
-      <div className={styles.fuelBar} style={{ width: fuel }}>
-        <img src={fuelBar} className={styles.vitalBar} />
+      <div className={`${styles.fuelBar} ${lowFuel? styles.lowFuelBar: ''}`} style={{ width: fuel }}>
+        <img src={fuelBar} className={styles.vitalBar} /> 
       </div>
+      { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
       <div className={styles.healthBar} style={{ width: health }}>
         <img src={healthBar} className={styles.vitalBar} />
       </div>
