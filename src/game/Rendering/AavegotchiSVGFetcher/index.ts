@@ -9,7 +9,7 @@ import { Tuple } from "types";
 export default class AavegotchiSVGFetcher {
   constructor(aavegotchiID: number) {
     //Initialize web3 using polygon rpc
-    this.web3 = new Web3("https://polygon-rpc.com/");
+    this.web3 = new Web3("https://rpc.ankr.com/polygon");
     this.aavegotchiID = aavegotchiID;
     //Load our smart contract
     const diamondAddress = "0x86935F11C86623deC8a25696E1C19a8659CbF95d";

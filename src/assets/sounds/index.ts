@@ -6,3 +6,4 @@ export * as portalOpened from './portalOpened.mp3';
 export * as send from './send.mp3';
 export * as sending from './sending.mp3';
 export * as success from './success.mp3';
+export * as lowFuelWarning from './lowFuelWarning.mp3';

@@ -15,6 +15,8 @@ const VitalsConsole = () => {
   const [lowFuel , setLowFuel] = useState(false);
   
   useEffect(() => {
+    // Declaring local state variable, since useState does not update when called from inside an event listener
+    let lowFuelHookState = false;
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       //Update the health, fuel and cargo bar
@@ -23,7 +25,16 @@ const VitalsConsole = () => {
           vital.onChange = () => {
             let remFuelValue: number =
               (vital.currentValue / vital.filledValue) * 14;
-            (remFuelValue<2)? setLowFuel(true) : setLowFuel(false);
+            if (remFuelValue<2 && lowFuelHookState==false){ 
+              Client.getInstance().phaserGame.events.emit('LowFuelWarning')
+              lowFuelHookState = true;
+              setLowFuel(true);
+            } else{
+              if (remFuelValue>2 && lowFuelHookState==true){ 
+                lowFuelHookState = false;
+                setLowFuel(false);
+              }
+            }  
             setFuel(`${remFuelValue}rem`);
           };
         } else if (vital.name == "Health") {
