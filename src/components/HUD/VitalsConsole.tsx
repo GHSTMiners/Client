@@ -49,6 +49,9 @@ const VitalsConsole = () => {
               (1 - vital.currentValue / vital.filledValue) * 14;
             setCargo(`${remFuelValue}rem`);
           };
+          vital.onRemove = ()=>{
+            setCargo('0rem');
+          };
         }
       });
       // Updating depth
