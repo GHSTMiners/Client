@@ -45,7 +45,12 @@ export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
             this.scene.add.existing(explosionSprite) 
         })
 
-        this.scene.sound.play(`explosive_${notification.bombId}`, {})
+        // Playing explosive sound if loaded correctly from Chisel
+        if (this.scene.sound.get(`explosive_${notification.bombId}`)==null){
+            this.scene.sound.play('explosion', {})
+        } else {
+            this.scene.sound.play(`explosive_${notification.bombId}`, {})
+        }  
     }
 
     private explosives :  Map<Schema.Explosive, Explosive>

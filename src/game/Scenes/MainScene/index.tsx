@@ -6,6 +6,7 @@ import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
+import SoundFXManager from "game/Management/SoundFXManager";
 
 var controls;
 
@@ -25,6 +26,7 @@ export default class MainScene extends Phaser.Scene {
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this);
+    this.soundFXManager = new SoundFXManager(this);
     this.game.events.emit("mainscene_ready");
     this.sound.pauseOnBlur = false
     this.cameras.main.zoom = 0.75
@@ -37,6 +39,7 @@ export default class MainScene extends Phaser.Scene {
   }
   private chatManager? : ChatManager
   private musicManager?: MusicManager;
+  private soundFXManager?: SoundFXManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
   private excavationManager?: ExcavationManager;

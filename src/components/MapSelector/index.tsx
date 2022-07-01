@@ -47,8 +47,8 @@ const MapSelector: React.FC<Props> = ({
 
   // temporary solution to include thumbnail images. TO DO: get from Chisel
   useEffect(()=>{
-    worldThumbnails.push(forestImage);
     worldThumbnails.push(desertImage);
+    worldThumbnails.push(forestImage);
   },[])
 
   useEffect(() => {
@@ -79,7 +79,6 @@ const MapSelector: React.FC<Props> = ({
       </div>
     );
   });
-
   
   return (
     <>

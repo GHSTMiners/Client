@@ -12,8 +12,11 @@ const VitalsConsole = () => {
   const [cargo, setCargo] = useState("14rem");
   const [health, setHealth] = useState("14rem");
   const [depth, setDepth] = useState(0);
+  const [lowFuel , setLowFuel] = useState(false);
   
   useEffect(() => {
+    // Declaring local state variable, since useState does not update when called from inside an event listener
+    let lowFuelHookState = false;
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       //Update the health, fuel and cargo bar
@@ -22,6 +25,16 @@ const VitalsConsole = () => {
           vital.onChange = () => {
             let remFuelValue: number =
               (vital.currentValue / vital.filledValue) * 14;
+            if (remFuelValue<2 && lowFuelHookState==false){ 
+              Client.getInstance().phaserGame.events.emit('LowFuelWarning')
+              lowFuelHookState = true;
+              setLowFuel(true);
+            } else{
+              if (remFuelValue>2 && lowFuelHookState==true){ 
+                lowFuelHookState = false;
+                setLowFuel(false);
+              }
+            }  
             setFuel(`${remFuelValue}rem`);
           };
         } else if (vital.name == "Health") {
@@ -35,6 +48,9 @@ const VitalsConsole = () => {
             let remFuelValue: number =
               (1 - vital.currentValue / vital.filledValue) * 14;
             setCargo(`${remFuelValue}rem`);
+          };
+          vital.onRemove = ()=>{
+            setCargo('0rem');
           };
         }
       });
@@ -52,9 +68,10 @@ const VitalsConsole = () => {
 
   return (
     <div className={styles.vitalsConsole}>
-      <div className={styles.fuelBar} style={{ width: fuel }}>
-        <img src={fuelBar} className={styles.vitalBar} />
+      <div className={`${styles.fuelBar} ${lowFuel? styles.lowFuelBar: ''}`} style={{ width: fuel }}>
+        <img src={fuelBar} className={styles.vitalBar} /> 
       </div>
+      { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
       <div className={styles.healthBar} style={{ width: health }}>
         <img src={healthBar} className={styles.vitalBar} />
       </div>

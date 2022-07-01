@@ -4,6 +4,7 @@ import { FaTwitter, FaYoutube } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { useEffect } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
+import { sinDependencies } from "mathjs";
 
 const About = (): JSX.Element => {
 
@@ -69,7 +70,7 @@ const About = (): JSX.Element => {
                           'smokeythebandit#9941',
                           'Full Stack Developer',
                           '22536',
-                          '[Personal description goes here]',
+                          'Security speciallist, embedded software developer and full-stack beast. Computers fear him, he has been coding since he was 8, has not stopped since',
                           'VOYAGER was carefully named after a product created by Smokey in real life.')}
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.gotchinomics}`}>
@@ -78,7 +79,7 @@ const About = (): JSX.Element => {
                           'Gotchinomics#4936',
                           'Front-End Developer',
                           '3934',
-                          'Data scientist fascinated by Aavegotchi and the Gotchiverse Realm. Felt down the rabbit hole of web3 development after doing an [aawesome] Aavegotchi mini-game tutorial.',
+                          'Data scientist fascinated by Aavegotchi and the Gotchiverse Realm. He went from MatLab and spreadsheets, to web3 development after doing an [aawesome] Aavegotchi mini-game tutorial.',
                           'YODA is one of the first gotchis ever summoned')}
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.fabio}`}>
@@ -87,7 +88,7 @@ const About = (): JSX.Element => {
                           'ItsaMeFabio#4252',
                           'Multi-Media Designer',
                           '21223',
-                          '[Personal description goes here]',
+                          'Multimedia specialist (game) designer and animator. Blessed by the VRF gods, he has proven to be able to defy unlikely odds in every raffle.',
                           'CORLEONE was borned as a result of the profits achieved from Baazaar trading, GMB auctions and Raffles.')}
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.machete}`}>

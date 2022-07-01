@@ -54,7 +54,6 @@ export const HUD = () => {
   }
 
   const useShortcut = (index:number) =>{
-    console.log(playerConsumables)
     if (playerConsumables.length >= index){
       let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
       requestDropExplosive.explosiveID = playerConsumables[index-1].id;
