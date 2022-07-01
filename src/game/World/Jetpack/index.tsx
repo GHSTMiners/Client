@@ -1,7 +1,7 @@
 import { Player } from "../Player"
 import * as Schema from "matchmaking/Schemas";
 import { PlayerState } from "matchmaking/Schemas";
-
+import { Howl } from "howler";
 
 export default class Jetpack extends Phaser.GameObjects.Container {
     constructor(scene : Phaser.Scene, player: Player) {
@@ -12,6 +12,18 @@ export default class Jetpack extends Phaser.GameObjects.Container {
 
         this.jetpackSpriteRear.setScale(0.40)
         this.jetpackSpriteSide.setScale(0.45)
+
+        this.thrusterSound = new Howl({
+            src : ['assets/audio/thrusters.wav'],
+            loop: true,
+            autoplay: true,
+            html5: true
+        })
+        var self = this;
+        setInterval(function() { 
+            // Move listen source 
+            self.thrusterSound.pos(self.player.playerSchema.playerState.x, self.player.playerSchema.playerState.y, 0)
+        }, 200)
 
         this.jetpackSpriteRear.anims.create({
             key: 'idle_rear',
@@ -61,16 +73,25 @@ export default class Jetpack extends Phaser.GameObjects.Container {
                 this.jetpackSpriteSide.setVisible(false)  
         }
         //Process animation
-        if(this.player.playerSchema.playerState.movementState == Schema.MovementState.Flying) {
+        let flying : boolean = this.player.playerSchema.playerState.movementState == Schema.MovementState.Flying
+        if(flying) {
             this.jetpackSpriteRear.anims.play('running_rear', true)
             this.jetpackSpriteSide.anims.play('running_side', true)
         } else {
             this.jetpackSpriteRear.anims.play('idle_rear', true)
             this.jetpackSpriteSide.anims.play('idle_side', true)
         }
+
+        //Process sound
+        
+        // this.thrusterSound.pos(this.player.playerSchema.playerState.x, this.player.playerSchema.playerState.y, 1)
+        if(this.thrusterSound.playing() != flying) {
+            flying ? this.thrusterSound.play() : this.thrusterSound.stop()
+        }
     }
 
     protected player : Player 
+    protected thrusterSound : Howl
     protected jetpackSpriteRear : Phaser.GameObjects.Sprite
     protected jetpackSpriteSide : Phaser.GameObjects.Sprite
 

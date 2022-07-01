@@ -60,7 +60,6 @@ export class Player extends Phaser.GameObjects.Container {
     });
     //Add sound
     this.jackHammerSound = scene.sound.add("jackHammer")
-    this.thrustersSound = scene.sound.add("thrusters")
     this.dirtParticleEmitter.stop()
     this.dirtParticleEmitter.startFollow(this);
     // enabling physics to act as a natural interpolator
@@ -196,9 +195,6 @@ export class Player extends Phaser.GameObjects.Container {
     if ((playerState.movementState == Schema.MovementState.Drilling) != this.jackHammerSound.isPlaying) {
       if((playerState.movementState == Schema.MovementState.Drilling)) this.jackHammerSound.play()
       else this.jackHammerSound.pause()
-    } else if ((playerState.movementState == Schema.MovementState.Flying) != this.thrustersSound.isPlaying) {
-      if((playerState.movementState == Schema.MovementState.Flying)) this.thrustersSound.play()
-      else this.thrustersSound.pause()
     }
     
     //Process drilling particles
@@ -276,7 +272,6 @@ export class Player extends Phaser.GameObjects.Container {
       else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
     }
   }
-  private thrustersSound : Phaser.Sound.BaseSound
   private jackHammerSound : Phaser.Sound.BaseSound
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
