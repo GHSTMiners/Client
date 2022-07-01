@@ -5,7 +5,8 @@ import { AavegotchiGameObject } from "types";
 import AavegotchiSVGFetcher from "../AavegotchiSVGFetcher";
 import { constructSpritesheet } from "game/helpers/spritesheet";
 import { customiseSvg } from "helpers/aavegotchi";
-
+import * as howler from "howler"
+import MainPlayer from "game/World/MainPlayer";
 
 export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
   constructor(scene: Phaser.Scene) {
@@ -49,17 +50,19 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         this.loadInGotchiSpritesheet(playerGotchi);
         
         this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
-          let newPlayer: Player = new Player(this.scene, player);
-          this.playerSprites.set(player.gotchiID, newPlayer);
-          
-          this.scene.add.existing(newPlayer);
+
           //Check if self sprite belong to me
-          if (
-            player.playerSessionID == Client.getInstance().colyseusRoom.sessionId
-          ) {
+          if (player.playerSessionID == Client.getInstance().colyseusRoom.sessionId) {
+            let newPlayer: MainPlayer = new MainPlayer(this.scene, player);
+            this.playerSprites.set(player.gotchiID, newPlayer);
+            this.scene.add.existing(newPlayer);
             this.scene.cameras.main.startFollow(newPlayer, true, 0.15, 0.15);
             Client.getInstance().ownPlayer = player;
             this.scene.game.events.emit("joined_game", player, newPlayer);
+          } else {
+            let newPlayer: Player = new Player(this.scene, player);
+            this.playerSprites.set(player.gotchiID, newPlayer);
+            this.scene.add.existing(newPlayer);
           }
         });
       });

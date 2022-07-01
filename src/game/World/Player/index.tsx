@@ -142,7 +142,6 @@ export class Player extends Phaser.GameObjects.Container {
   public hideMessage() {
     this.playerMessage.setVisible(false)
     this.scene.game.events.emit("exit_building",this.currentBuilding) // to close shop window automatically
-    //console.log(`Exiting ${this.currentBuilding}`)
     this.currentBuilding = '';
   }
 
@@ -150,7 +149,6 @@ export class Player extends Phaser.GameObjects.Container {
     this.scene.sound.play(`metalThud`)
     this.scene.cameras.main.flash();
   }
-
 
   private handleLavaMined(message : Protocol.NotifyPlayerMinedLava) {
     this.scene.sound.play(`metalThud`)
