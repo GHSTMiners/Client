@@ -72,7 +72,6 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  filter: drop-shadow(10px 10px 2px rgba(0, 0, 0, 0.4));
 }
 
 .vitalsConsole {
@@ -84,6 +83,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   position: relative;
+  filter: drop-shadow(10px 10px 2px rgba(0, 0, 0, 0.4));
 }
 
 .vitalsBarsCovers {
@@ -180,6 +180,7 @@ body {
   margin-top: 10rem;
   overflow: hidden;
   z-index: 10;
+  filter: drop-shadow(10px 10px 2px rgba(0, 0, 0, 0.4));
 }
 
 .mainConsoleDown {
@@ -377,4 +378,104 @@ body {
 
 .inventoryConsumable > img {
   height: 1.5rem;
+}
+
+.playerMenuBarContainer{
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  width: 25rem;
+  height: 4rem;
+  background-color: rgba(0.3,0.3,0.3,0.5);
+  border-bottom-left-radius: 4px;
+}
+
+.playerMenuBar{
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mainPlayerBalance{
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items: center;
+  min-width: 8rem;
+  height: 3.5rem;
+  color:#a4ffff;
+  font-size: 1.5rem;
+  box-shadow: 0;
+}
+
+.ggemsIcon{
+  height: 2rem;
+  padding-right: 1rem;
+}
+
+.walletIcon {
+  height: 2.5em;
+}
+
+.walletIconContainer{
+}
+
+.menuButton{
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Pixelar;
+  font-size: 1.5rem;
+  height: 3rem;
+  width: 6rem;
+  background-color: rgba(0.3,0.3,0.3,0.5);
+  border-radius: 4px;
+}
+
+.gameVignette{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  transition: all 1s ease-in-out;
+}
+
+.underground{
+  background: radial-gradient( circle, transparent 30%, black 150%), transparent;
+  opacity: 1;
+}
+
+.aboveground{
+  background: radial-gradient( circle, transparent 30%, black 150%), transparent;
+  opacity: 0;
+}
+
+.fullScreenMenu{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  top:0;
+  z-index: 101;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.menuDialogContainer{
+  height: 30rem;
+  width: 20rem;
+  color: white;
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  justify-content: space-around;
+  border-radius: 4px;
+  background-color: rgba(0,0,0,0.7);
 }

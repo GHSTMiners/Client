@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import React, { useState, useEffect, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import VitalsConsole from "./VitalsConsole";
 import MainConsole from "./MainConsole";
 import MiningShop from "../MiningShop";
@@ -9,6 +9,7 @@ import { ExplosiveEntry } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Chat from "components/Chat";
 import Exchange from "components/Exchange";
+import GameMenu from "./GameMenu";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -142,6 +143,7 @@ export const HUD = () => {
           <Chat disabled={!chatMode} gameMode={true} />
           <MiningShop />
           <Exchange hidden={true} />
+          <GameMenu />
         </HUDContext.Provider>
       </div> 
     </>
