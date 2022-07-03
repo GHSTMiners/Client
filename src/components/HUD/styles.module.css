@@ -441,7 +441,7 @@ body {
   height: 100%;
   position: absolute;
   z-index: 0;
-  transition: all 1s ease-in-out;
+  transition: all 2s ease-in-out;
 }
 
 .underground{
@@ -467,6 +467,7 @@ body {
 }
 
 .menuDialogContainer{
+  position: relative;
   height: 30rem;
   width: 20rem;
   color: white;
@@ -478,4 +479,55 @@ body {
   justify-content: space-around;
   border-radius: 4px;
   background-color: rgba(0,0,0,0.7);
+}
+
+
+.closeButton{
+  position: absolute;
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  right: 0.5rem;
+  top: 0.4rem;
+  color:rgba(255,255,255,0.8);
+  outline: 0;
+  margin: auto;
+  -moz-outline-style: none;
+  box-shadow: 0;
+  border: 1px solid rgba(255,255,255,0.5);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border: 1px solid white;
+  color: white;
+  background-color: rgba(255,255,255,0.5);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.volumeSlider{
+  width: 10rem;
+}
+
+.menuEntryTitle{
+  font-size: 1.5rem;
+}
+
+.leaveButton{
+  background-color: rgba(255,0,0,0.5);
+  outline: 0;
+  width: 10rem;
+  height: 3rem;
+  color:white;
+  font-size: 1.5rem;
+  -moz-outline-style: none;
+  border-radius: 4px;
+
+}
+
+.leaveButton:hover {
+  background-color: rgba(255,0,0,0.8);
+  
 }

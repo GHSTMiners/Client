@@ -204,7 +204,6 @@ const Lobby = (): JSX.Element => {
         </div>
 
         <div className={`${styles.gridTile} ${styles.timeCounter}`}>
-          
           <div className={styles.readyUpContainer} >
             <button className={`${styles.readyUpButton} `} onClick={ handlePlayerReady }>
               {playerReady? 'UNREADY' : 'READY'}
