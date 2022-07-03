@@ -529,5 +529,12 @@ body {
 
 .leaveButton:hover {
   background-color: rgba(255,0,0,0.8);
-  
+}
+
+.marquee{
+  background-color: transparent;
+}
+
+.songTitle{
+  margin-left: 0.5rem;
 }

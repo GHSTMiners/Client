@@ -19,6 +19,7 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
             if (!this.currentSound.isPlaying) this.currentSound.play()
         } else {
             console.log(`Now playing: ${this.music[this.currentSong].name}`)
+            this.scene.game.events.emit("newSong", this.music[this.currentSong].name );
             this.currentSound = this.scene.sound.add(`music_${this.music[this.currentSong].name}`,
             { 
                 loop : false

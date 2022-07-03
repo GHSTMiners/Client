@@ -6,12 +6,15 @@ import ggemsIcon from "assets/icons/ggems_icon.svg";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
+import Marquee from "react-fast-marquee";
+import MainScene from "game/Scenes/MainScene";
 
 const GameMenu = () => {
   
   const [displayExchange, setDisplayExchange] = useState<boolean>(false);
   const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
   const [showMenu, setShowMenu] = useState(false);
+  const [currentSong , setCurrentSong] = useState<string>('');
   const navigator = useNavigate();
   
 
@@ -19,7 +22,12 @@ const GameMenu = () => {
     setPlayerGGEMS(Math.round(quantity*10)/10);
   }
 
+  const updateMusicTrack = (songName:string)=>{
+    setCurrentSong(songName);
+  }
+
   const leaveGame = () => {
+    Client.getInstance().colyseusRoom.leave();
     if(Client.getInstance().phaserGame) {
       Client.getInstance().phaserGame.destroy(true);
     }
@@ -27,6 +35,7 @@ const GameMenu = () => {
    }
 
   useEffect( () => {
+    Client.getInstance().phaserGame.events.on("newSong", updateMusicTrack)
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
     });
@@ -46,6 +55,9 @@ const GameMenu = () => {
           </div>
           <div className={styles.menuButton} onClick={()=> setShowMenu(true)}>MENU</div>
         </div>
+        <Marquee className={styles.marquee} gradient={false} >
+           Playing <span className={styles.songTitle}>{currentSong}</span>
+        </Marquee>
       </div>
       <div className={styles.fullScreenMenu} onClick={()=> setShowMenu(false)} hidden={!showMenu}>
         <div className={styles.menuDialogContainer}>
