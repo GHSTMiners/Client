@@ -3,7 +3,7 @@ import * as APIInterface from "chisel-api-interface"
 
 export default class MusicManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
-        super(scene, "MovementManager")
+        super(scene, "MusicManager")
         this.music = []
         this.currentSong = 0
         this.volume = 1
