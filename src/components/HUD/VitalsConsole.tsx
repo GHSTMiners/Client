@@ -67,22 +67,25 @@ const VitalsConsole = () => {
   }, []);
 
   return (
-    <div className={styles.vitalsConsole}>
-      <div className={`${styles.fuelBar} ${lowFuel? styles.lowFuelBar: ''}`} style={{ width: fuel }}>
-        <img src={fuelBar} className={styles.vitalBar} /> 
+    <>
+      <div className={(depth>8)? `${styles.gameVignette} ${styles.underground}` : `${styles.gameVignette} ${styles.aboveground}`}></div>
+      <div className={styles.vitalsConsole}>
+        <div className={`${styles.fuelBar} ${lowFuel? styles.lowFuelBar: ''}`} style={{ width: fuel }}>
+          <img src={fuelBar} className={styles.vitalBar} /> 
+        </div>
+        { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
+        <div className={styles.healthBar} style={{ width: health }}>
+          <img src={healthBar} className={styles.vitalBar} />
+        </div>
+        <div className={styles.cargoBar} style={{ width: cargo }}>
+          <img src={cargoBar} className={styles.vitalBar} />
+        </div>
+        <div className={styles.vitalsBarsCovers}></div>
+        <div className={styles.depthTag}>
+          Depth:<br /> {depth}
+        </div>
       </div>
-      { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
-      <div className={styles.healthBar} style={{ width: health }}>
-        <img src={healthBar} className={styles.vitalBar} />
-      </div>
-      <div className={styles.cargoBar} style={{ width: cargo }}>
-        <img src={cargoBar} className={styles.vitalBar} />
-      </div>
-      <div className={styles.vitalsBarsCovers}></div>
-      <div className={styles.depthTag}>
-        Depth:<br /> {depth}
-      </div>
-    </div>
+    </>
   );
 };
 

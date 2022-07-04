@@ -158,17 +158,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
             </div>
           </div>
       </div>
-      <img src={walletIcon}
-          className={`${styles.walletIcon} ${
-            displayExchange ? styles.iconSelected : styles.iconDeselected
-          }`}
-          onClick={ () => setDisplayExchange(!displayExchange) }
-        />
-      <div className={styles.mainPlayerBalance}
-            onClick={ () => setDisplayExchange(!displayExchange) }>
-        <img src={ggemsIcon} className={styles.ggemsIcon} />
-        {playerBalance}
-      </div>
     </>
   );
 };
