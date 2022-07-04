@@ -6,9 +6,12 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         super(scene, "MovementManager")
         this.music = []
         this.currentSong = 0
+        this.volume = 1
         Client.getInstance().chiselWorld.music.forEach(music => {
             this.music.push(music)
         })
+        this.scene.game.events.on('next song',this.next.bind(this) );
+        this.scene.game.events.on('music volume',this.setVolume.bind(this) );
         this.play();
 
     }
@@ -18,13 +21,12 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         if(this.currentSound) {
             if (!this.currentSound.isPlaying) this.currentSound.play()
         } else {
-            console.log(`Now playing: ${this.music[this.currentSong].name}`)
             this.scene.game.events.emit("newSong", this.music[this.currentSong].name );
             this.currentSound = this.scene.sound.add(`music_${this.music[this.currentSong].name}`,
             { 
                 loop : false
             });
-            this.currentSound.play()
+            this.currentSound.play( {volume:this.volume} )
             this.currentSound.once(Phaser.Sound.Events.COMPLETE, this.next.bind(this))
         }
     }
@@ -53,7 +55,12 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         return this.music[this.currentSong].name;
     }
 
+    public setVolume(newVolume:number) {
+        this.volume = newVolume;
+        (this.currentSound as Phaser.Sound.HTML5AudioSound).setVolume(newVolume);
+    }
 
+    private volume : number 
     private music : APIInterface.Music[]
     private currentSound : Phaser.Sound.BaseSound | undefined
     private currentSong : number
