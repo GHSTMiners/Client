@@ -44,8 +44,7 @@ const About = (): JSX.Element => {
         <div className={styles.tileTitle}>Gaame Jaam</div>
         <div>
            A demo version of this game was developed for the first Aavegotchi
-          Gaame Jaam by the team GHSTMiners, winning the first prize in the
-          competition. PixelCraft further sponsored the development of the first
+          Gaame Jaam, winning the first prize in the competition. PixelCraft further sponsored the development of the first
           server-secured version of the game.
         </div>
       </div>
@@ -62,6 +61,13 @@ const About = (): JSX.Element => {
             <span> <FaYoutube /> <a href="https://www.youtube.com/channel/UCcL-0-x85GiDRl7_udQaQhg" rel="noreferrer"> YOUTUBE </a> </span>
           </div>
           </div>
+        </div>
+      </div>
+      <div className={`${styles.gridTile} ${styles.donations}`}>
+        <div className={styles.tileTitle}>Donations</div>
+        <div>
+          If you would like to support this game, feel free to send a donation {` `}
+          <a href="https://polygonscan.com/address/0x3B9b1E6aD616faEAa9957Ebd2a05B3b50C83efCA" rel="noreferrer">here </a>
         </div>
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.smokey}`}>
