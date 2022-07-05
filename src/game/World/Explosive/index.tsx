@@ -10,7 +10,7 @@ export default class Explosive extends Phaser.GameObjects.Image {
         this.setDepth(40);
         this.setOrigin(0, 0)
         this.fuseSound = new Howl({
-            src: ['assets/audio/fuse.wav'],
+            src: ['assets/audio/fuse.webm', 'assets/audio/fuse.mp3'],
             volume: 1,
             preload: true
             
@@ -19,16 +19,16 @@ export default class Explosive extends Phaser.GameObjects.Image {
             coneInnerAngle: 360,
             coneOuterAngle: 360,
             coneOuterGain: 1,
-            maxDistance: Config.blockWidth * 8,
+            maxDistance: Config.blockWidth * 100,
             refDistance: 1,
-            distanceModel: 'linear',
+            distanceModel: 'inverse',
             rolloffFactor: 1,
             panningModel: 'HRTF'
         })
         this.fuseSound.play()
 
         this.explosiveSound = new Howl({
-            src: 'assets/audio/explosion.mp3',
+            src: ['assets/audio/explosion.webm', 'assets/audio/explosion.mp3'],
             volume: 1,
             preload: true
         })
@@ -38,8 +38,6 @@ export default class Explosive extends Phaser.GameObjects.Image {
         this.setPosition(this.schema.x, this.schema.y)
         this.fuseSound.pos(this.schema.x, this.schema.y, 0)
         this.explosiveSound.pos(this.schema.x, this.schema.y, 0)
-        this.explosiveSound.pos(this.schema.x, this.schema.y, 0)
-
     }
 
     public explode() {
@@ -48,9 +46,9 @@ export default class Explosive extends Phaser.GameObjects.Image {
             coneInnerAngle: 360,
             coneOuterAngle: 360,
             coneOuterGain: 1,
-            maxDistance: Config.blockWidth * 20,
+            maxDistance: Config.blockWidth * 100,
             refDistance: 1,
-            distanceModel: 'linear',
+            distanceModel: 'inverse',
             rolloffFactor: 1,
             panningModel: 'HRTF'
         })

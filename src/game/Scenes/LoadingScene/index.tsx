@@ -32,7 +32,7 @@ export default class LoadingScene extends Phaser.Scene {
 
     //Static images and audio files
     this.load.image("dirtParticle", "assets/images/stone.png");
-    this.load.audio("jackHammer", "assets/audio/jackHammer.wav");
+    this.load.audio("jackHammer", "assets/audio/jackHammer.webm");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
     this.load.audio("explosion", "assets/audio/explosion.mp3");
     this.load.audio("lowFuelWarning","assets/audio/lowFuelWarning.mp3")
