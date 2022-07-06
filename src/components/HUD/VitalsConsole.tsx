@@ -9,7 +9,7 @@ import cargoBar from "assets/hud/cargo_bar.svg";
 
 const VitalsConsole = () => {
   const [fuel, setFuel] = useState("14rem");
-  const [cargo, setCargo] = useState("14rem");
+  const [cargo, setCargo] = useState("0rem");
   const [health, setHealth] = useState("14rem");
   const [depth, setDepth] = useState(0);
   const [lowFuel , setLowFuel] = useState(false);
