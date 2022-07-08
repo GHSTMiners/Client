@@ -16,12 +16,14 @@ const TabUpgrades: FC<{}> = () => {
 
   // Defining all the data types required to store all the price per tier info
   type TierCost = { tierLabel:string, priceList:PricePair[] };
-  type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[] };
+  type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
   type upgradeLevels = {upgradeId:number, tier:number};
 
   // Retrieving upgrading list from Chisel
   const playerUpgradesIni: Upgrade[] = Client.getInstance().ownPlayer.upgrades;
   const [playerUpgrades, setPlayerUpgrades] = useState(playerUpgradesIni);
+  const [hoverUpgrade , setHoverUpgrade] = useState({} as upgradePriceObject);
+  const [selectedUpgrade , setSelectedUpgrade] = useState({} as upgradePriceObject);
   let upgradeLabels: string[] = [];
   const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
   const upgradeObjectArray : upgradePriceObject[] = [];
@@ -61,7 +63,10 @@ const TabUpgrades: FC<{}> = () => {
       })
       multiTierCost.push(coinsPerTier);
     })
-    let newObject = {id:upgrade.id, name:upgrade.name, costPerTier: multiTierCost};
+    let newObject = { id:upgrade.id, 
+                      name:upgrade.name, 
+                      costPerTier: multiTierCost,
+                      description: upgrade.description };
     upgradeObjectArray.push(newObject);
     // Defining default tier
     let upgradeTier: number = 5; 
@@ -100,6 +105,7 @@ const TabUpgrades: FC<{}> = () => {
 
   const renderUpgradeElement = ( obj:upgradePriceObject , upgradeTierObj: upgradeLevels) => {
     let upgradeCost:PricePair[] = [];
+    const isSelected = (obj.id == selectedUpgrade.id);
     const nextTier = upgradeTierObj.tier + 1;
     const nextTierTag = `tier_${nextTier}`;
     const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
@@ -108,7 +114,11 @@ const TabUpgrades: FC<{}> = () => {
     }
         
     return  (
-      <div className={styles.upgradesContainer} key={`${obj.name}_container`}>
+      <div className={`${styles.upgradesContainer} ${isSelected? styles.selectedUpgrade : '' }`} 
+            key={`${obj.name}_container`}
+            onMouseEnter={()=>setHoverUpgrade(obj)}
+            onMouseLeave={()=>setHoverUpgrade(obj)}>
+              {/* onClick={()=>setSelectedUpgrade(obj)} */}
         <UpgradeBar upgradeId={obj.id}
                     upgradeLabel={obj.name} 
                     upgradeCost={upgradeCost} 
@@ -143,7 +153,7 @@ const TabUpgrades: FC<{}> = () => {
         
       </div>
       <div className={styles.detailsPanel}>
-        Selected item details
+        {hoverUpgrade? hoverUpgrade.description: selectedUpgrade.description}
         <img src={gotchiSVG} className={styles.gotchiPreview}></img>
       </div>
     </div>

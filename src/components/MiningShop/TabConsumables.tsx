@@ -21,11 +21,14 @@ const TabConsumables: FC<{}> = () => {
 
   // state hooks
   const [ shopItemArray, setShopItemArray ] = useState<indexedShopItem>({});
-  const [ selectedItem, setSelectedItem] = useState<shopItem | any>([]);
+  const [ selectedItem, setSelectedItem] = useState<shopItem>({} as shopItem);
+  const [ hoverItem, setHoverItem] = useState<shopItem >({} as shopItem);
+  const [ detailsItem , setDetailsItem] = useState<shopItem>({} as shopItem)
   const [ itemQuantity, setItemQuantity] = useState<number>(1);
   const [ multipleItemPrice, setmultipleItemPrice] = useState<number>(0);
   const [ emptyPattern , setEmptyPattern] = useState<patternElement[]>([]);
   const [ explosionPattern, setExplosionPattern] = useState<patternElement[]>([]);
+  
   
   useEffect(()=>{
    // extracting info from Chisel about all possible explosives
@@ -50,8 +53,8 @@ const TabConsumables: FC<{}> = () => {
   
   // Updating UI every time the item (quantity or selection) changes
   useEffect(()=>{ 
-    setmultipleItemPrice(itemQuantity*selectedItem.price)}
-   ,[itemQuantity,selectedItem])
+    setmultipleItemPrice(itemQuantity*detailsItem.price)}
+   ,[itemQuantity,detailsItem])
 
   // rending explosive pattern
   let renderExplosivePattern = explosionPattern.map( function(element,index) {
@@ -69,10 +72,9 @@ const TabConsumables: FC<{}> = () => {
     }
   } 
 
-  const displaySelectedItem = (item : shopItem) => {
-   // updating the item selected
-   setSelectedItem(item)
-   // deep cloning the empty pattern
+  const renderSelectedPattern = (item : shopItem) => {
+    setDetailsItem(item)
+    // deep cloning the empty pattern
    let selectedPattern = emptyPattern.map(x => Object.assign({}, x));
    // replicating the stored pattern overwriting every cell
    item.pattern.forEach((explosionCoodinate:Chisel.ExplosionCoordinate)=>{  
@@ -89,6 +91,12 @@ const TabConsumables: FC<{}> = () => {
    setExplosionPattern(selectedPattern);
   }
 
+  const displaySelectedItem = (item : shopItem) => {
+   // updating the item selected
+   setSelectedItem(item)
+   renderSelectedPattern(item)
+  }
+
   const buyItem = ( id:number , quantity:number) =>{
    let purchaseMessage : Protocol.PurchaseExplosive = new Protocol.PurchaseExplosive;
    purchaseMessage.id = id;
@@ -100,14 +108,18 @@ const TabConsumables: FC<{}> = () => {
   // Rendering shop item list
   const renderShopItem = (id: number) => {
     const item = shopItemArray[id];
+    const isSelected = selectedItem.id ==id;
     return(
       <div className={`${styles.itemContainer}
-                      ${playerDoekoes>=item.price? styles.enabledContainer : styles.disabledContainer }`} 
-           onClick={()=>{ displaySelectedItem(item); }}
-           key={item.name}>
+                      ${playerDoekoes>=item.price? styles.enabledContainer : styles.disabledContainer }
+                      ${isSelected? styles.selectedContainer : ''} `} 
+           onClick={()=>displaySelectedItem(item)}
+           key={item.name}
+           onMouseEnter={()=>setHoverItem(item)}
+           onMouseLeave={()=>setHoverItem({} as shopItem)}>
           <img src={item.image} className={styles.itemImage} />
           <div className={styles.itemText}>
-            {item.name} : {item.price} GHST
+            {item.name} : {item.price} GGEMS
           </div>
           <button className={`${styles.buyButton} 
                               ${playerDoekoes>=item.price? styles.enabledButton : styles.disabledButton }`} 
@@ -124,12 +136,26 @@ const TabConsumables: FC<{}> = () => {
     return renderShopItem( +id );
   });
 
+
+ 
+  useEffect(()=>{
+    if (selectedItem.id) {
+      //setDetailsItem(selectedItem)
+      renderSelectedPattern(selectedItem)
+    } else {
+      // if there is no selection but there is a hover item, display hover on details panel
+      if (hoverItem.id){
+        renderSelectedPattern(hoverItem)
+      }
+    }
+  },[hoverItem,selectedItem])
+
   const detailsPanel = () => {
     return(
     <>
       <div className={styles.detailsTitle}>
-        <div>{selectedItem.name}</div>
-        <img src={selectedItem.image} className={styles.titleImage} />
+        <div>{detailsItem.name}</div>
+        <img src={detailsItem.image} className={styles.titleImage} />
       </div>
       <div className={styles.detailsBody}>
         <div className={styles.explosivePattern}>
@@ -143,7 +169,7 @@ const TabConsumables: FC<{}> = () => {
                  }/>
           <button className={`${styles.buyManyButton} 
                             ${playerDoekoes>=multipleItemPrice? styles.enabledButton : styles.disabledButton }` }
-                  onClick={ ()=>{ buyItem(selectedItem.id,itemQuantity)} }
+                  onClick={ ()=>{ buyItem(detailsItem.id,itemQuantity)} }
                   disabled={playerDoekoes>=multipleItemPrice? false: true }>
                   BUY
           </button>
@@ -162,7 +188,7 @@ const TabConsumables: FC<{}> = () => {
         {shopInventory}
       </div>
       <div className={styles.detailsPanel}>
-        {selectedItem.name ? detailsPanel() : ''}
+        {detailsItem.name ? detailsPanel() : ''}
       </div>
     </div>
   );
