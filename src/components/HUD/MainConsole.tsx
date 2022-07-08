@@ -27,7 +27,8 @@ const MainConsole = () => {
     <SquareButton size={smallButton} 
                   quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}
-                  key={`squareButton${index}`}>
+                  key={`squareButton${index}`}
+                  onClick={()=> Client.getInstance().phaserGame.events.emit("shortcut",index)}>
       <div className={styles.inventoryConsumable}>
         <img src={ isFilled ? playerConsumables[index-1].image : ''} />
       </div>
