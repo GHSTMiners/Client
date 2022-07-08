@@ -42,6 +42,7 @@ export default class Explosive extends Phaser.GameObjects.Image {
 
     public explode() {
         var self = this;
+        self.visible = false; // hide bomb as soon as the explosion starts
         this.explosiveSound.pannerAttr({
             coneInnerAngle: 360,
             coneOuterAngle: 360,
