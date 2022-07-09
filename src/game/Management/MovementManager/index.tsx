@@ -21,7 +21,8 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.R, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.Q, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.TAB, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ONE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false))
@@ -88,10 +89,16 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown) {
             this.scene.game.events.emit("shortcut",4)
         }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isDown) {
+            this.scene.game.events.emit("show_leaderboard")
+        }
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isUp) {
+            this.scene.game.events.emit("close_leaderboard")
+        }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
             this.scene.game.events.emit("close_dialogs")
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.R)?.isDown) {
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.Q)?.isDown) {
             this.scene.game.events.emit("open_exchange")
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.SPACE)?.isDown) {

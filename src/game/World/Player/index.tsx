@@ -4,8 +4,6 @@ import Config from "config";
 import { PlayerState } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
-import { dispatch } from "@svgdotjs/svg.js";
-import MainScene from "game/Scenes/MainScene";
 import Jetpack from "../Jetpack";
 import Jackhammer from "../Jackhammer";
 
