@@ -1,6 +1,5 @@
 export default class Config {
-  //public static colyseusURL: string = "wss://server.gotchiminer.rocks";
-  public static colyseusURL: string = "ws://localhost:2567";
+  public static colyseusURL: string = (process.env.NODE_ENV === 'production') ? "wss://server.gotchiminer.rocks" : "ws://localhost:2567";
   public static apiURL: string = "https://chisel.gotchiminer.rocks/api";
   public static blockWidth: number = 128;
   public static blockHeight: number = 128;
