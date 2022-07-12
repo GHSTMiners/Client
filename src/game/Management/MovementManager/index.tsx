@@ -90,7 +90,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
             this.scene.game.events.emit("shortcut",4)
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isDown) {
-            this.scene.game.events.emit("show_leaderboard")
+            this.scene.game.events.emit("open_leaderboard")
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isUp) {
             this.scene.game.events.emit("close_leaderboard")
