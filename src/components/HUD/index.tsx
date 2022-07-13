@@ -10,6 +10,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Chat from "components/Chat";
 import Exchange from "components/Exchange";
 import GameMenu from "./GameMenu";
+import GameLeaderboard from "components/GameLeaderboard";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -144,6 +145,7 @@ export const HUD = () => {
           <MiningShop />
           <Exchange hidden={true} />
           <GameMenu />
+          <GameLeaderboard hidden={true} />
         </HUDContext.Provider>
       </div> 
     </>

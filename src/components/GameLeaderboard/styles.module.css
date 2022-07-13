@@ -1,0 +1,21 @@
+.leaderboardContainer {
+  background-color: rgba(0,0,0,0.3);
+  color: white;
+  position: absolute;
+  width: 55rem;
+  height: 45rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.displayOn{
+  top: 0rem;
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -100rem;
+  transition: all 400ms ease;
+}
