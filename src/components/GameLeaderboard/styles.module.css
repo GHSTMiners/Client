@@ -1,21 +1,43 @@
 .leaderboardContainer {
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.5);
   color: white;
   position: absolute;
-  width: 55rem;
-  height: 45rem;
+  width: 50rem;
+  height: 20rem;
   left: 50%;
-  transform: translate(-50%, 0%);
+  transform: translate(-45%, 0%);
   overflow: hidden;
   z-index: 10;
+  padding: 2rem;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 .displayOn{
-  top: 0rem;
+  top: 50vh;
+  transform: translate( -50%, -50%);
   transition: all 400ms ease;
 }
 
 .displayOff{
   top: -100rem;
   transition: all 400ms ease;
+}
+
+.playerEntry{
+  display: grid;
+  grid-template-columns: repeat(5, 10rem);
+  grid-template-rows: 3rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1.2rem;
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 4px;
+}
+
+.playerEntry>div {
+
 }
