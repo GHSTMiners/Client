@@ -7,6 +7,7 @@ import Client from "matchmaking/Client";
 import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";
+import DiagnosticsManager from "game/Management/DiagnosticsManager";
 
 var controls;
 
@@ -27,9 +28,14 @@ export default class MainScene extends Phaser.Scene {
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this);
     this.soundFXManager = new SoundFXManager(this);
+    this.diagnosticsManager = new DiagnosticsManager(this);
     this.game.events.emit("mainscene_ready");
     this.sound.pauseOnBlur = false
     this.cameras.main.zoom = 0.75
+
+    setInterval(() => {
+      this.diagnosticsManager?.requestPong()
+    }, 2000)
   }
 
   update(time: number, delta: number): void {
@@ -42,5 +48,6 @@ export default class MainScene extends Phaser.Scene {
   public soundFXManager?: SoundFXManager;
   private globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
+  public diagnosticsManager? : DiagnosticsManager
   private excavationManager?: ExcavationManager;
 }
