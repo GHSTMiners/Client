@@ -16,6 +16,8 @@ export class World extends Schema {
     @type("number") public width!: number;
     @type("number") public height!: number;
     @type("number") public gravity!: number;
+    @type("number") public gameStartUTC!: number;
+    @type("number") public gameEndUTC!: number;
     @type("boolean") public ready!: boolean;
     @type ({map : ExchangeEntry}) public exchange = new MapSchema<ExchangeEntry>()
     @type([ Explosive ]) public explosives: ArraySchema<Explosive> = new ArraySchema<Explosive>();
