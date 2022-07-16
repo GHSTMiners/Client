@@ -3,7 +3,7 @@
   color: white;
   position: absolute;
   width: 50rem;
-  height: 20rem;
+  height: 40rem;
   left: 50%;
   transform: translate(-45%, 0%);
   overflow: hidden;
@@ -24,10 +24,22 @@
   transition: all 400ms ease;
 }
 
+.tableHeader{
+  display: grid;
+  grid-template-columns: repeat(4, 10rem);
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1.2rem;
+  color: white;
+  border-bottom: 2px solid white;
+  margin-bottom: 1rem;
+}
+
 .playerEntry{
   display: grid;
-  grid-template-columns: repeat(5, 10rem);
-  grid-template-rows: 3rem;
+  grid-template-columns: repeat(4, 10rem);
+  grid-template-rows: 6rem;
   margin-bottom: 1rem;
   justify-content: center;
   align-items: center;
@@ -40,4 +52,12 @@
 
 .playerEntry>div {
 
+}
+
+.gotchi{
+  text-align: center;
+}
+
+.gotchiPreviewContainer{
+  height: 4rem;
 }
