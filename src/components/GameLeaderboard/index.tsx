@@ -48,9 +48,9 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             })
             const sortedData = unsortedData.sort((entry1,entry2)=> entry2.ggems - entry1.ggems)
             const sortedIds = sortedData.map( entry => entry.playerId);
-            setSortedPlayers(sortedIds);
+            setSortedPlayers([...sortedIds]);
         }
-    },[players])
+    },[displayLeaderboard])
 
 
     const renderPlayerInfo = (id:number) => {
@@ -88,17 +88,14 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     return(
     <div className={`${styles.leaderboardContainer} ${displayLeaderboard? styles.displayOn:styles.displayOff}`}>
        
-       <div className={styles.tableHeader}>
-        <div>Rank</div>
-        <div>Gotchi</div>
-        <div>GGEMS</div>
-        <div>Upgrades</div>
-       </div>
+        <div className={styles.tableHeader}>
+            <div>Rank</div>
+            <div>Gotchi</div>
+            <div>GGEMS</div>
+            <div>Upgrades</div>
+        </div>
 
-        {   playerIDs.map( (id) => { 
-            return( renderPlayerInfo(+id)) }
-            )
-        }
+        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id)) }
 
     </div>
     )
