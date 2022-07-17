@@ -1,7 +1,6 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
-import { IndexedArray } from "types";
 import { Player } from "matchmaking/Schemas/Player";
 import { GotchiSVG } from "components/GotchiSVG";
 
@@ -20,22 +19,18 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     const [sortedPlayers, setSortedPlayers] = useState<number[]>([]);
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
-
     useEffect(()=>{
         Client.getInstance().phaserGame.events.on( "open_leaderboard", ()=> {setDisplayLeaderboard(true); console.log('opening leaderboard')});
         Client.getInstance().phaserGame.events.on("close_leaderboard", ()=> {setDisplayLeaderboard(false); console.log('closing leaderboard') });
         if ( Client.getInstance().colyseusRoom){
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
-            Client.getInstance().colyseusRoom.state.players.onChange = (modPlayer , key )=>{ players[modPlayer.gotchiID]=modPlayer } }
+            Client.getInstance().colyseusRoom.state.players.onChange = (modPlayer , key )=>{ players[modPlayer.gotchiID]=modPlayer } 
+        }
     },[])
-
-    
-      // List of players to be displayed in the UI
-      const playerIDs = Object.keys(players)
 
     // Hook to sort players depending on their score
     useEffect(()=>{
-        //const sortedDisplayData = data.sort((n1,n2) => n2.score - n1.score);
+        // Sorting players ids based on their GGEMS balance
         if (players){
             const unsortedkeys = Object.keys(players);
             let unsortedData: playerObj[] = [];
@@ -52,13 +47,32 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
         }
     },[displayLeaderboard])
 
+    // Upgrade color array for all the defined tiers
+    let upgradeColors: string[] = [];
+    upgradeColors.push('#7f63ff');
+    upgradeColors.push('#33bacc');
+    upgradeColors.push('#59bcff');
+    upgradeColors.push('#ffc36b');
+    upgradeColors.push('#ff96ff');
+    upgradeColors.push('#51ffa8');
+
+    function renderUpgradeElement(tier: number, index: number) {
+        return (
+            <div className={styles.upgradeElement}
+                 style={{ backgroundColor: upgradeColors[tier] }}
+                 key={`upgradeTier${index}`}>
+            </div>
+        );
+    }
 
     const renderPlayerInfo = (id:number) => {
-
-        let playerGGEMS = players[id].wallet.get(worldCryptoId)?.amount;
-        const playerRank = sortedPlayers.findIndex( element => element===id) +1 ;        
+        let playerGGEMS = Math.round(players[id].wallet.get(worldCryptoId)?.amount as number);
+        const playerRank = sortedPlayers.findIndex( element => element===id) +1 ;
+        const playerUpgrades = players[id].upgrades;
+        let upgradesBar: JSX.Element[] = [];
+        playerUpgrades.forEach( (upgrade,index) => upgradesBar.push(renderUpgradeElement(upgrade.tier,index)) ) ;
+    
         return(
-        <>
         <div className={styles.playerEntry} key={id}>
             <div>
                 {playerRank}
@@ -77,11 +91,10 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             <div>
                 {playerGGEMS? playerGGEMS: 0 } 
             </div>
-            <div>
-                
+            <div className={styles.upgradeBar}>
+                {upgradesBar}
             </div>
         </div>
-        </>
         )
     }
 
