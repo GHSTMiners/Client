@@ -417,7 +417,8 @@ body {
 }
 
 .walletIcon {
-  height: 2.5em;
+  margin: 1rem;
+  height: 2.5rem;
 }
 
 .walletIconContainer{

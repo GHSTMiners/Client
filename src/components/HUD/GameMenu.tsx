@@ -7,11 +7,10 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-import MainScene from "game/Scenes/MainScene";
+import CountdownTimer  from "components/CountdownTimer";
 
 const GameMenu = () => {
   
-  const [displayExchange, setDisplayExchange] = useState<boolean>(false);
   const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
   const [showMenu, setShowMenu] = useState(false);
   const [currentSong , setCurrentSong] = useState<string>('');
@@ -59,13 +58,16 @@ const GameMenu = () => {
       <div className={styles.playerMenuBarContainer}>
         <div className={styles.playerMenuBar}>
           <div className={styles.mainPlayerBalance}
-                onClick={ () => setDisplayExchange(!displayExchange) }>
+                onClick={ () => Client.getInstance().phaserGame.events.emit("open_exchange")  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} />
             {playerGGEMS}
           </div>
+          <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
+          {/* 
           <div className={styles.walletIconContainer} onClick={ () => Client.getInstance().phaserGame.events.emit("open_exchange") }>
             <img src={walletIcon} className={styles.walletIcon}  />
           </div>
+          */}
           <div className={styles.menuButton} onClick={()=> setShowMenu(true)}>MENU</div>
         </div>
         <div onClick={nextSong}>
