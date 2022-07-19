@@ -78,7 +78,7 @@ const Leaderboard = (): JSX.Element => {
           })
       }
       // Setting default statistic cathegory
-      setActiveCathegory( {id:2, name:"Blocks mined"} );
+      setActiveCathegory( {id:3, name:"Endgame crypto"} );
     } catch (err) {
       console.log(err);
     }

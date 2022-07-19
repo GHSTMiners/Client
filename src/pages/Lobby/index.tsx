@@ -161,6 +161,16 @@ const Lobby = (): JSX.Element => {
     Client.getInstance().lobbyRoom.send(serializedMessage.name,serializedMessage.data);
   }
 
+  const renderCountdown = (time:number)=>{
+    const minutes = Math.floor(time/60);
+    const seconds = time - (minutes*60);
+    return(
+      <>
+        {minutes} : {(seconds<10)? `0${seconds}`: seconds}
+      </>
+    )
+  }
+
   return (
     <>
       <div className={styles.basicGrid}>
@@ -213,7 +223,7 @@ const Lobby = (): JSX.Element => {
               <div className={styles.progressBarContainer}>
                 <ProgressBar className={styles.progressBar} variant="danger" animated now={lobbyCountdown/300*100}/>
                 <div className={styles.progressBarLabel}>
-                  {lobbyCountdown}s
+                  {renderCountdown(lobbyCountdown)}
                 </div>
               </div>
             </div>

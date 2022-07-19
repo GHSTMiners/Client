@@ -63,9 +63,11 @@ const MapSelector: React.FC<Props> = ({
   }, [mapSelection])
 
   const handleArrowClick = (positionShift : number)=>{
-    const newPosition = mapSelection + positionShift;
-    if ( newPosition >= 0 && newPosition < worldThumbnails.length){
-      setMapSelection(newPosition);
+    if(worldArray.length > 1) {
+      const newPosition = mapSelection + positionShift;
+      if ( newPosition >= 0 && newPosition < worldThumbnails.length){
+        setMapSelection(newPosition);
+      }
     }
   }
 
@@ -85,7 +87,7 @@ const MapSelector: React.FC<Props> = ({
       <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} />
       <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
-      <Arrow width={'4rem'} className={`${styles.arrowRight} ${mapSelection==1? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowRight} ${( mapSelection == (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
       <div className={styles.thumbnailGallery}>
         {thumbnailGallery}
       </div>

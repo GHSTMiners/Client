@@ -86,7 +86,7 @@ const About = (): JSX.Element => {
                           'Front-End Developer',
                           '3934',
                           'Data scientist fascinated by Aavegotchi and the Gotchiverse Realm. He went from MatLab and spreadsheets, to web3 development after doing an [aawesome] Aavegotchi mini-game tutorial.',
-                          'YODA is one of the first gotchis ever summoned')}
+                          'YODA is a gotchi politician, involved in several DAO proposals.')}
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.fabio}`}>
         {renderGotchiTile('ItsaMeFabio',
@@ -95,7 +95,7 @@ const About = (): JSX.Element => {
                           'Multi-Media Designer',
                           '21223',
                           'Multimedia specialist (game) designer and animator. Blessed by the VRF gods, he has proven to be able to defy unlikely odds in every raffle.',
-                          'CORLEONE was borned as a result of the profits achieved from Baazaar trading, GMB auctions and Raffles.')}
+                          'CORLEONE was born as a result of the profits achieved from Baazaar trading, GMB auctions and Raffles.')}
       </div>
       <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.machete}`}>
         {renderGotchiTile('Machete',
