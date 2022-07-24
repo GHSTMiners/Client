@@ -11,6 +11,7 @@ import Chat from "components/Chat";
 import Exchange from "components/Exchange";
 import GameMenu from "./GameMenu";
 import GameLeaderboard from "components/GameLeaderboard";
+import Diagnostics from "components/Diagnostics";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
@@ -146,6 +147,7 @@ export const HUD = () => {
           <Exchange hidden={true} />
           <GameMenu />
           <GameLeaderboard hidden={true} />
+          <Diagnostics hidden={false} />
         </HUDContext.Provider>
       </div> 
     </>

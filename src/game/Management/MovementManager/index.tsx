@@ -30,6 +30,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.T, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.SPACE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.F3, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F3, true, false))
     }
 
     private setGameMode=()=>{
@@ -104,7 +105,9 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.SPACE)?.isDown) {
             this.scene.game.events.emit("change_console_state")
         }
-        // Change event handlers when the game goes into chat mode
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.F3)?.isDown) {
+            this.scene.game.events.emit("open_diagnostics")
+        }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.T)?.isDown) {
             this.scene.game.events.emit("open_chat")
         }

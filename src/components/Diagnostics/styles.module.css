@@ -1,0 +1,17 @@
+.diagnosticsContainer{
+    padding: 0.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+}
+
+.displayOn{
+    bottom: 0rem;
+    transition: all 400ms ease;
+  }
+  
+.displayOff{
+  bottom: -50rem;
+  transition: all 400ms ease;
+}

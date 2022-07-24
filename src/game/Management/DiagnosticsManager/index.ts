@@ -7,6 +7,8 @@ export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
         this.lastLatency = 0
         this.lastPongRequest = new Date()
         Client.getInstance().messageRouter.addRoute(Protocol.Pong, this.handleMessage.bind(this))
+        Client.getInstance().phaserGame.events.on('start_polling',this.startPolling.bind(this))
+        Client.getInstance().phaserGame.events.on('stop_polling',this.stopPolling.bind(this))
     }
 
     public requestPong() {
@@ -17,7 +19,7 @@ export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
     }
 
     public startPolling() {
-        this.intervalHandle = setInterval(this.requestPong, 1000)
+        this.intervalHandle = setInterval(this.requestPong, 5000)
     }
 
     public stopPolling() {
@@ -25,8 +27,9 @@ export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
     }
 
     private handleMessage(notification : Protocol.Pong) {
-        this.lastLatency = (new Date()).getTime() - this.lastPongRequest.getTime()
-        this.emit(DiagnosticsManager.NEW_LATENCY, this.lastLatency)
+        this.lastLatency = (new Date()).getTime() - this.lastPongRequest.getTime() 
+        Client.getInstance().phaserGame.events.emit('new_latency', this.lastLatency)
+        //this.emit(DiagnosticsManager.NEW_LATENCY, this.lastLatency) // issues accessing the class symbol state before initiating the class, to be changed when REDUX is implemented
     }
 
     static readonly NEW_LATENCY: unique symbol = Symbol();
