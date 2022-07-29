@@ -60,12 +60,12 @@ const UpgradeBar: React.FC<Props> = ({
   let coinsAvailable = 0;
   // Making sure that the player has all the coins required
   upgradeCost.forEach( costEntry => {
-    let walletCoin = playerCrypto.find( walletEntry => walletEntry.id == costEntry.cryptoId);
+    let walletCoin = playerCrypto.find( walletEntry => walletEntry.id === costEntry.cryptoId);
     if (walletCoin){
       if (walletCoin.quantity>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
     }        
   });
-  if (coinsAvailable==coinsRequired && upgradeLevel<upgradeLevelArray.length-1 ) upgradeAvailable=true;
+  if (coinsAvailable === coinsRequired && upgradeLevel<upgradeLevelArray.length-1 ) upgradeAvailable=true;
 
   // Purchased function executed 
   const purchaseUpgrade = ()=>{
@@ -79,10 +79,10 @@ const UpgradeBar: React.FC<Props> = ({
 
   // rendering function of the total upgrading cost
  const renderedCostArray= upgradeCost.map( entry => {
-  const entryImage = world.crypto.find( coin => coin.id == entry.cryptoId);
+  const entryImage = world.crypto.find( coin => coin.id === entry.cryptoId);
   let canBuy = false;
   playerCrypto.forEach( walletEntry => {
-    if (walletEntry.id == entry.cryptoId) {
+    if (walletEntry.id === entry.cryptoId) {
       if (walletEntry.quantity>=entry.cost) canBuy = true; 
     }
   }) 
@@ -90,8 +90,10 @@ const UpgradeBar: React.FC<Props> = ({
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
        <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} 
-       className={`${styles.exchangeCoin}
-                   ${canBuy? styles.upgradeAvailable: styles.upgradeUnavailable}`} />   
+            alt={`${entryImage?.name}`}
+            className={`${styles.exchangeCoin}
+                   ${canBuy? styles.upgradeAvailable: styles.upgradeUnavailable}`}
+       />   
     </div>
   )
  })

@@ -5,7 +5,6 @@ import { AavegotchiGameObject } from "types";
 import AavegotchiSVGFetcher from "../AavegotchiSVGFetcher";
 import { constructSpritesheet } from "game/helpers/spritesheet";
 import { customiseSvg } from "helpers/aavegotchi";
-import * as howler from "howler"
 import MainPlayer from "game/World/MainPlayer";
 
 export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
@@ -52,7 +51,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
 
           //Check if self sprite belong to me
-          if (player.playerSessionID == Client.getInstance().colyseusRoom.sessionId) {
+          if (player.playerSessionID === Client.getInstance().colyseusRoom.sessionId) {
             let newPlayer: MainPlayer = new MainPlayer(this.scene, player);
             this.playerSprites.set(player.gotchiID, newPlayer);
             this.scene.add.existing(newPlayer);

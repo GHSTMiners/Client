@@ -25,8 +25,8 @@ const MapSelector: React.FC<Props> = ({
   // state variables to handle user map selection
   const emptyWorlds: Chisel.World[] = [] ;
   const emptyThumbnails: string[] = [];
-  const [worldThumbnails,setWorldThumbnails] = useState(emptyThumbnails);
-  const [worldArray,setWorldArray] = useState(emptyWorlds);
+  const [worldThumbnails] = useState(emptyThumbnails);
+  const [worldArray] = useState(emptyWorlds);
   const [mapSelection,setMapSelection]=useState(0);
 
   // fetching map info from Chisel
@@ -73,10 +73,12 @@ const MapSelector: React.FC<Props> = ({
 
   const thumbnailGallery = worldArray.map(function (world,index) {
     let numberOfVotes = mapVotes[world.id] ;
-    if (numberOfVotes == undefined) numberOfVotes = 0;
+    if (numberOfVotes === undefined) numberOfVotes = 0;
     return(
       <div className={styles.thumbnailContainer} onClick={disabled? ()=>{} :()=>setMapSelection(index)} key={`mapThumbnail${index}`} >         
-        <img src={worldThumbnails[index]} className={`${styles.thumbnailGalleryitem} ${(index==mapSelection)? styles.selectedThumbnail :''}`} />
+        <img src={worldThumbnails[index]} 
+             className={`${styles.thumbnailGalleryitem} ${(index === mapSelection)? styles.selectedThumbnail :''}`} 
+             alt={`Mining World ${worldThumbnails[index]}`}/>
         <div className={styles.voteContainer}>{numberOfVotes}</div> 
       </div>
     );
@@ -84,10 +86,10 @@ const MapSelector: React.FC<Props> = ({
   
   return (
     <>
-      <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} />
-      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection==0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
+      <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} alt={`Selected World ${mapSelection}`}/>
+      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection === 0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
-      <Arrow width={'4rem'} className={`${styles.arrowRight} ${( mapSelection == (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
+      <Arrow width={'4rem'} className={`${styles.arrowRight} ${( mapSelection === (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
       <div className={styles.thumbnailGallery}>
         {thumbnailGallery}
       </div>

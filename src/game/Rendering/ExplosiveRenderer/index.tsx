@@ -3,7 +3,6 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Schema from "matchmaking/Schemas";
 import Explosive from "game/World/Explosive";
 import { ExplosionAnimation } from "game/World/ExplosionAnimation";
-import { Howl } from "howler";
 
 export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {

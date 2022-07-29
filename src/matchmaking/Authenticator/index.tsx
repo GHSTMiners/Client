@@ -19,7 +19,7 @@ export default class Authenticator {
     }
 
     public authenticate(dispatch?: React.Dispatch<Action>) {
-      if(this.m_state == AuthenticatorState.Start) {
+      if(this.m_state === AuthenticatorState.Start) {
         try{
           this.m_dispatch = dispatch
           this.runStateMachine()
@@ -46,7 +46,7 @@ export default class Authenticator {
     }
 
     public signOut() {
-      if(this.m_state == AuthenticatorState.Authenticated) {
+      if(this.m_state === AuthenticatorState.Authenticated) {
         Cookies.remove(`token_${this.m_chainId}_${this.m_currentAccount}`)
       } else console.log('You need to be authenticated to sign out')
     }
@@ -111,7 +111,7 @@ export default class Authenticator {
 
     private async validateSignature() {
       var self = this;
-      var jqxhr = $.post( "https://chisel.gotchiminer.rocks/api/wallet/validate", { wallet_address: this.m_currentAccount, chain_id: this.m_chainId, challenge: this.m_challenge, signature: this.m_signedChallenge } , async function(data, succes ) {
+      $.post( "https://chisel.gotchiminer.rocks/api/wallet/validate", { wallet_address: this.m_currentAccount, chain_id: this.m_chainId, challenge: this.m_challenge, signature: this.m_signedChallenge } , async function(data, succes ) {
         if(succes) {
           Cookies.set(`token_${self.m_chainId}_${self.m_currentAccount}`, data.token, {expires : 356})
           self.m_token = data.token

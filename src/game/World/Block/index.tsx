@@ -1,4 +1,3 @@
-import * as Schema from "matchmaking/Schemas";
 import * as APIInterface from "chisel-api-interface"
 import { SpawnType } from "chisel-api-interface";
 import { BlockInterface } from "game/helpers/BlockSchemaWrapper";
@@ -47,7 +46,7 @@ export default class Block extends Phaser.GameObjects.Container {
     }
 
     private blockUpdated() {
-        if(this.blockInfo?.spawnType == SpawnType.None && this.backgroundSprite ) {
+        if(this.blockInfo?.spawnType === SpawnType.None && this.backgroundSprite ) {
             this.backgroundSprite.setAlpha(0.5)
             //Remove foreground sprite too if it exists
             if(this.itemSprite) {

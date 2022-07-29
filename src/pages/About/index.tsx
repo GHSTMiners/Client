@@ -4,7 +4,6 @@ import { FaTwitter, FaYoutube } from "react-icons/fa";
 import { FaDiscord } from "react-icons/fa";
 import { useEffect } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
-import { sinDependencies } from "mathjs";
 
 const About = (): JSX.Element => {
 

@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 //import Button from 'react-bootstrap/Button';
 //import Cookies from "js-cookie";
-import Web3ContextProvider, { useWeb3, connectToNetwork } from "web3/context";
+import Web3ContextProvider from "web3/context";
 import { BrowserRouter } from "react-router-dom";
 import { Header } from "components";
 

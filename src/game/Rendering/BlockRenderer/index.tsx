@@ -1,6 +1,5 @@
 import Config from "config";
 import Block, { SoilType } from "game/World/Block"
-import * as Schema from "matchmaking/Schemas";
 import Client from "matchmaking/Client"
 import { Soil } from "chisel-api-interface";
 import { BlockSchemaWrapper } from "game/helpers/BlockSchemaWrapper";

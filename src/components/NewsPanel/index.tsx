@@ -1,4 +1,3 @@
-import { render } from "@testing-library/react";
 import styles from "./styles.module.css";
 
 

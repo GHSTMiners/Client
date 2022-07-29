@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
@@ -21,9 +21,9 @@ const TabUpgrades: FC<{}> = () => {
 
   // Retrieving upgrading list from Chisel
   const playerUpgradesIni: Upgrade[] = Client.getInstance().ownPlayer.upgrades;
-  const [playerUpgrades, setPlayerUpgrades] = useState(playerUpgradesIni);
+  const [playerUpgrades ] = useState(playerUpgradesIni);
   const [hoverUpgrade , setHoverUpgrade] = useState({} as upgradePriceObject);
-  const [selectedUpgrade , setSelectedUpgrade] = useState({} as upgradePriceObject);
+  const [selectedUpgrade ] = useState({} as upgradePriceObject);
   let upgradeLabels: string[] = [];
   const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
   const upgradeObjectArray : upgradePriceObject[] = [];
@@ -37,7 +37,6 @@ const TabUpgrades: FC<{}> = () => {
       let tierPriceList: PricePair[]  = [];
       let coinsPerTier: TierCost = { tierLabel:tier , priceList: tierPriceList };
       upgrade.prices.forEach( ( priceEntry: Chisel.UpgradePrice ) => {
-        let id = priceEntry.crypto_id
         let price = 0;
         switch(tier){
           case 'tier_1':
@@ -71,7 +70,7 @@ const TabUpgrades: FC<{}> = () => {
     // Defining default tier
     let upgradeTier: number = 5; 
     // Fetching tier info from Schemas (if found)
-    playerUpgrades.forEach( upgradeEntry => { if( upgradeEntry.id==upgrade.id) upgradeTier=upgradeEntry.tier }) 
+    playerUpgrades.forEach( upgradeEntry => { if( upgradeEntry.id === upgrade.id) upgradeTier=upgradeEntry.tier }) 
     // Storing data
     upgradeLevelIni.push({upgradeId: upgrade.id, tier: upgradeTier });
   } )
@@ -81,7 +80,7 @@ const TabUpgrades: FC<{}> = () => {
 
   const upgradePlayerTier = (upgradeId:number, tier:number) =>{
     let tiers = [...currentTiers];
-    let upgradedTier = tiers.find( entry => entry.upgradeId == upgradeId);
+    let upgradedTier = tiers.find( entry => entry.upgradeId === upgradeId);
     if (upgradedTier){
       upgradedTier.tier = tier;
     }
@@ -105,10 +104,10 @@ const TabUpgrades: FC<{}> = () => {
 
   const renderUpgradeElement = ( obj:upgradePriceObject , upgradeTierObj: upgradeLevels) => {
     let upgradeCost:PricePair[] = [];
-    const isSelected = (obj.id == selectedUpgrade.id);
+    const isSelected = (obj.id === selectedUpgrade.id);
     const nextTier = upgradeTierObj.tier + 1;
     const nextTierTag = `tier_${nextTier}`;
-    const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel==nextTierTag);
+    const upgradeTierInfo = obj.costPerTier.find(entry => entry.tierLabel === nextTierTag);
     if (upgradeTierInfo){ 
       upgradeCost = upgradeTierInfo.priceList;
     }
@@ -130,14 +129,14 @@ const TabUpgrades: FC<{}> = () => {
 
   const upgradesArray = upgradeObjectArray.map( function(entry) {
     // Finding the current player tier
-    let upgradeTierObj = currentTiers.find(upgradeObj => upgradeObj.upgradeId==entry.id);
+    let upgradeTierObj = currentTiers.find(upgradeObj => upgradeObj.upgradeId === entry.id);
     return( 
         upgradeTierObj? renderUpgradeElement(entry,upgradeTierObj) : ''
       )
   })
 
   const buyUpgrade = ( upgradeId:number , tier:number ) =>{
-    let purchaseMessage : Protocol.PurchaseUpgrade = new Protocol.PurchaseUpgrade;
+    let purchaseMessage : Protocol.PurchaseUpgrade = new Protocol.PurchaseUpgrade();
     purchaseMessage.id = upgradeId;
     purchaseMessage.tier = tier;
     const serializedMessage = Protocol.MessageSerializer.serialize(purchaseMessage);
@@ -154,7 +153,7 @@ const TabUpgrades: FC<{}> = () => {
       </div>
       <div className={styles.detailsPanel}>
         {hoverUpgrade? hoverUpgrade.description: selectedUpgrade.description}
-        <img src={gotchiSVG} className={styles.gotchiPreview}></img>
+        <img src={gotchiSVG} className={styles.gotchiPreview} alt={'My Gotchi'}></img>
       </div>
     </div>
   );

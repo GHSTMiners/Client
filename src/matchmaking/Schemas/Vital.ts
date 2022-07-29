@@ -5,7 +5,7 @@
 // GENERATED USING @colyseus/schema 2.0.3
 // 
 
-import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
+import { Schema, type } from '@colyseus/schema';
 
 
 export class Vital extends Schema {

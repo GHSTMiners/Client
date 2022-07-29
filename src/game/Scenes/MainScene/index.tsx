@@ -1,4 +1,3 @@
-import Config from "config";
 import MovementManager from "game/Management/MovementManager";
 import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
@@ -8,8 +7,6 @@ import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";
 import DiagnosticsManager from "game/Management/DiagnosticsManager";
-
-var controls;
 
 export default class MainScene extends Phaser.Scene {
   constructor() {

@@ -40,6 +40,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       updateWalletBalance(id,0);
       updateCryptoRecord(id,newCrypto);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
   useEffect(() => {
@@ -62,6 +63,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       // Update balance
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sellCrypto = (cryptoID : number, amount: number) => {

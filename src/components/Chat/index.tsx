@@ -99,6 +99,7 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
           }
         })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[chatHistory,gameMode]);
 
 

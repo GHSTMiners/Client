@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
 import Client from "matchmaking/Client";
@@ -36,14 +36,14 @@ const MiningShop = () => {
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const [displayShop, setDisplayShop] = useState<boolean>(false);
   const [playerDoekoes, setPlayerDoekoes] = useState<number>(0);
-  const [playerCrypto, setPlayerCrypto] = useState<CryptoEntry[]>([]);
+  const [playerCrypto ] = useState<CryptoEntry[]>([]);
 
   const openShop = () => {
     setDisplayShop(true);
   }
 
   const closeShop = (buildingName:string) => {
-    if (buildingName == 'Bazaar'){
+    if (buildingName === 'Bazaar'){
       setDisplayShop(false);
     } 
   }
@@ -60,7 +60,7 @@ const MiningShop = () => {
 
   const updateWalletBalance = (id:number, quantity:number) => {
     if (playerCrypto){
-      let cryptoEntry = playerCrypto.find( entry => entry.id == id);
+      let cryptoEntry = playerCrypto.find( entry => entry.id === id);
       if (cryptoEntry){
         cryptoEntry.quantity = quantity;
       } else {

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { GotchiSelectorVertical } from "components";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
-import { Button, ProgressBar } from "react-bootstrap";
+import { ProgressBar } from "react-bootstrap";
 import { AavegotchiObject, IndexedArray } from "types";
 import { PlayerCounter } from "components/PlayerCounter";
 import Chat from "components/Chat";
@@ -63,7 +63,7 @@ const Lobby = (): JSX.Element => {
           Client.getInstance().lobbyRoom.state.onChange = () => { 
             
             // updating player counter
-            if (Client.getInstance().lobbyRoom.state.player_seats.length!=playersInLobby){
+            if (Client.getInstance().lobbyRoom.state.player_seats.length !== playersInLobby){
               setPlayersInLobby(Client.getInstance().lobbyRoom.state.player_seats.length)              
             }
 
@@ -81,7 +81,7 @@ const Lobby = (): JSX.Element => {
             setMapVoting(currentMapVotes)
             setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
             
-            if(Client.getInstance().lobbyRoom.state.state == Schema.LobbyState.Started) {  
+            if(Client.getInstance().lobbyRoom.state.state === Schema.LobbyState.Started) {  
               Client.getInstance().apiInterface.world(Client.getInstance().lobbyRoom.state.map_id).then(world =>{
                 Client.getInstance().chiselWorld = world;
                 Client.getInstance().authenticationInfo.password = Client.getInstance().lobbyRoom.state.password;
@@ -103,7 +103,7 @@ const Lobby = (): JSX.Element => {
           }
           }
     } catch(exception : any) {
-      alert(`Failed to create a lobby, maybe we\'re having server issues?, ${exception}`)
+      alert(`Failed to create a lobby, maybe we are having server issues?, ${exception}`)
     }
   }, []);
 
@@ -155,7 +155,7 @@ const Lobby = (): JSX.Element => {
 
   const handlePlayerReady = ()=>{
     // sending message to server    
-    let readyUpMessage : Protocol.ChangePlayerReady = new Protocol.ChangePlayerReady;
+    let readyUpMessage : Protocol.ChangePlayerReady = new Protocol.ChangePlayerReady();
     readyUpMessage.ready = !playerReady;
     const serializedMessage = Protocol.MessageSerializer.serialize(readyUpMessage);
     Client.getInstance().lobbyRoom.send(serializedMessage.name,serializedMessage.data);

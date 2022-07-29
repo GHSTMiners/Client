@@ -79,6 +79,7 @@ const MainConsole = () => {
               onClick={() => {
                 setConsoleUp(!consoleUp);
               }}
+              alt={'Show/Hide Full Console'}
             />
           </div>
         </div>

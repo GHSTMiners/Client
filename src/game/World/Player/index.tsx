@@ -161,7 +161,7 @@ export class Player extends Phaser.GameObjects.Container {
     let newPosition = currentPosition;
     let newVelocity = velocity;
 
-    if (targetPosition != currentPosition) {
+    if (targetPosition !== currentPosition) {
       const diffPosition = targetPosition - currentPosition;
       newVelocity =
         (1 - this.alphaRefresh) * velocity +
@@ -190,22 +190,22 @@ export class Player extends Phaser.GameObjects.Container {
     let playerState: PlayerState = this.playerSchema.playerState;
   
     //Process sound
-    if ((playerState.movementState == Schema.MovementState.Drilling) != this.jackHammerSound.isPlaying) {
-      if((playerState.movementState == Schema.MovementState.Drilling)) this.jackHammerSound.play()
+    if ((playerState.movementState === Schema.MovementState.Drilling) !== this.jackHammerSound.isPlaying) {
+      if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play()
       else this.jackHammerSound.pause()
     }
     
     //Process drilling particles
     if (
-      playerState.movementState != Schema.MovementState.Drilling &&
+      playerState.movementState !== Schema.MovementState.Drilling &&
       this.dirtParticleEmitter.on
     ) {this.dirtParticleEmitter.stop();}
     else if (
-      playerState.movementState == Schema.MovementState.Drilling &&
+      playerState.movementState === Schema.MovementState.Drilling &&
       !this.dirtParticleEmitter.on
     ) {this.dirtParticleEmitter.start();}
 
-    if (playerState.x != this.x || playerState.y != this.y) {
+    if (playerState.x !== this.x || playerState.y !== this.y) {
       let [xSmooth, vxSmooth] = this.smoothMove(
         playerState.x,
         this.x,
@@ -266,7 +266,7 @@ export class Player extends Phaser.GameObjects.Container {
           }
       }
 
-      if(this.playerSchema.playerState.movementState != Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
+      if(this.playerSchema.playerState.movementState !== Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
       else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
     }
   }

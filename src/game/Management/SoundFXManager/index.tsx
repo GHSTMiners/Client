@@ -1,6 +1,3 @@
-import Client from "matchmaking/Client"
-import * as APIInterface from "chisel-api-interface"
-
 export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "SoundFXManager")

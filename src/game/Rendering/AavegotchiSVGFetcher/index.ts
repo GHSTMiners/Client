@@ -2,7 +2,6 @@ import Web3 from "web3";
 import { AbiItem } from "web3-utils/types";
 import { Contract } from "web3-eth-contract";
 import diamondABI from "../../../web3/abi/diamond.json";
-import * as svgjs from "@svgdotjs/svg.js";
 import Config from "config";
 import { Tuple } from "types";
 

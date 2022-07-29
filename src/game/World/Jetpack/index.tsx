@@ -1,6 +1,5 @@
 import { Player } from "../Player"
 import * as Schema from "matchmaking/Schemas";
-import { PlayerState } from "matchmaking/Schemas";
 import { Howl } from "howler";
 import Config from "config";
 
@@ -79,7 +78,7 @@ export default class Jetpack extends Phaser.GameObjects.Container {
                 this.jetpackSpriteSide.setVisible(false)  
         }
         //Process animation
-        let flying : boolean = this.player.playerSchema.playerState.movementState == Schema.MovementState.Flying
+        let flying : boolean = this.player.playerSchema.playerState.movementState === Schema.MovementState.Flying
         if(flying) {
             this.jetpackSpriteRear.anims.play('running_rear', true)
             this.jetpackSpriteSide.anims.play('running_side', true)
@@ -91,7 +90,7 @@ export default class Jetpack extends Phaser.GameObjects.Container {
         //Process sound
         
         this.thrusterSound.pos(this.player.playerSchema.playerState.x, this.player.playerSchema.playerState.y, 0)
-        if(this.thrusterSound.playing() != flying) {
+        if(this.thrusterSound.playing() !== flying) {
             flying ? this.thrusterSound.play() : this.thrusterSound.pause()
         }
     }

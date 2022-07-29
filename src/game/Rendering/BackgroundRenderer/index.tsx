@@ -19,7 +19,7 @@ export default class BackgroundRenderer extends Phaser.GameObjects.GameObject {
     }
 
     public update() {
-        let layersInView : [number, number] = this.layersInView()
+        //let layersInView : [number, number] = this.layersInView()
     }
 
     private layerToYCoordinate(layer : number) {

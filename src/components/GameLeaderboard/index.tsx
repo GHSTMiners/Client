@@ -26,6 +26,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
             Client.getInstance().colyseusRoom.state.players.onChange = (modPlayer , key )=>{ players[modPlayer.gotchiID]=modPlayer } 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     // Hook to sort players depending on their score
@@ -45,7 +46,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             const sortedIds = sortedData.map( entry => entry.playerId);
             setSortedPlayers([...sortedIds]);
         }
-    },[displayLeaderboard,players])
+    },[displayLeaderboard,players,worldCryptoId])
 
     // Upgrade color array for all the defined tiers
     let upgradeColors: string[] = [];

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import globalStyles from "theme/globalStyles.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useWeb3, connectToNetwork } from "web3/context";
+import { useWeb3 } from "web3/context";
 import { smartTrim } from "helpers/functions";
 import { networkIdToName } from "helpers/vars";
 //import Jazzicon, { jsNumberForAddress } from "react-jazzicon";

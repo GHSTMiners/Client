@@ -6,9 +6,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { PolarArea, Radar } from "react-chartjs-2";
+import { PolarArea } from "react-chartjs-2";
 import styles from "./styles.module.css";
-import { GameTraits } from "components/GameTraits";
 import { displayOptions } from "./displayOptions";
 import Client from "matchmaking/Client";
 import * as mathjs from "mathjs"

@@ -5,7 +5,7 @@
 // GENERATED USING @colyseus/schema 2.0.3l
 // 
 
-import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
+import { Schema, type, ArraySchema, MapSchema } from '@colyseus/schema';
 import { PlayerState } from './PlayerState'
 import { Vital } from './Vital'
 import { Skill } from './Skill'

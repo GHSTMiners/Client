@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useReducer } from "react";
-import $ from "jquery";
 import { ethers } from "ethers";
 import { Action, reducer } from "./reducer";
 import { initialState, State } from "./initialState";

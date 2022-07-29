@@ -4,7 +4,6 @@ import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { ShopContext } from ".";
-import { IndexedArray } from "types";
 
 
 const TabConsumables: FC<{}> = () => {
@@ -26,7 +25,7 @@ const TabConsumables: FC<{}> = () => {
   const [ detailsItem , setDetailsItem] = useState<shopItem>({} as shopItem)
   const [ itemQuantity, setItemQuantity] = useState<number>(1);
   const [ multipleItemPrice, setmultipleItemPrice] = useState<number>(0);
-  const [ emptyPattern , setEmptyPattern] = useState<patternElement[]>([]);
+  const [ emptyPattern ] = useState<patternElement[]>([]);
   const [ explosionPattern, setExplosionPattern] = useState<patternElement[]>([]);
   
   
@@ -60,8 +59,8 @@ const TabConsumables: FC<{}> = () => {
   let renderExplosivePattern = explosionPattern.map( function(element,index) {
     return (
       <div className={`${styles.patternElement} 
-        ${ (element.styleTag=='explosionElement') ? styles.explosionElement : '' }
-        ${ (element.styleTag=='detonationElement') ? styles.detonationElement : '' } `}
+        ${ (element.styleTag === 'explosionElement') ? styles.explosionElement : '' }
+        ${ (element.styleTag ==='detonationElement') ? styles.detonationElement : '' } `}
         key={`explosivePattern${index}`}>
       </div> )
   });
@@ -79,10 +78,10 @@ const TabConsumables: FC<{}> = () => {
    // replicating the stored pattern overwriting every cell
    item.pattern.forEach((explosionCoodinate:Chisel.ExplosionCoordinate)=>{  
      selectedPattern.forEach((element:patternElement)=>{
-       if (element.x == explosionCoodinate.x && element.y == explosionCoodinate.y ){
+       if (element.x === explosionCoodinate.x && element.y === explosionCoodinate.y ){
          element.styleTag = 'explosionElement';
        }
-       if (element.x == 0 && element.y==0){
+       if (element.x === 0 && element.y === 0){
          element.styleTag = 'detonationElement';
        }
      })
@@ -98,7 +97,7 @@ const TabConsumables: FC<{}> = () => {
   }
 
   const buyItem = ( id:number , quantity:number) =>{
-   let purchaseMessage : Protocol.PurchaseExplosive = new Protocol.PurchaseExplosive;
+   let purchaseMessage : Protocol.PurchaseExplosive = new Protocol.PurchaseExplosive();
    purchaseMessage.id = id;
    purchaseMessage.quantity = quantity;
    const serializedMessage = Protocol.MessageSerializer.serialize(purchaseMessage);
@@ -108,7 +107,7 @@ const TabConsumables: FC<{}> = () => {
   // Rendering shop item list
   const renderShopItem = (id: number) => {
     const item = shopItemArray[id];
-    const isSelected = selectedItem.id ==id;
+    const isSelected = selectedItem.id === id;
     return(
       <div className={`${styles.itemContainer}
                       ${playerDoekoes>=item.price? styles.enabledContainer : styles.disabledContainer }
@@ -117,7 +116,7 @@ const TabConsumables: FC<{}> = () => {
            key={item.name}
            onMouseEnter={()=>setHoverItem(item)}
            onMouseLeave={()=>setHoverItem({} as shopItem)}>
-          <img src={item.image} className={styles.itemImage} />
+          <img src={item.image} className={styles.itemImage} alt={item.name}/>
           <div className={styles.itemText}>
             {item.name} : {item.price} GGEMS
           </div>
@@ -155,7 +154,7 @@ const TabConsumables: FC<{}> = () => {
     <>
       <div className={styles.detailsTitle}>
         <div>{detailsItem.name}</div>
-        <img src={detailsItem.image} className={styles.titleImage} />
+        <img src={detailsItem.image} className={styles.titleImage} alt={detailsItem.name}/>
       </div>
       <div className={styles.detailsBody}>
         <div className={styles.explosivePattern}>

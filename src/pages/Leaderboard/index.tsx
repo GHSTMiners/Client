@@ -90,7 +90,7 @@ const Leaderboard = (): JSX.Element => {
   const updateCathegory = (event: ChangeEvent<HTMLSelectElement>) => {
     if (statisticsCathegories){
       let selectedId = number(event.target.value) as number;
-      let selectedName = statisticsCathegories.find( element => element.id==selectedId)?.name;
+      let selectedName = statisticsCathegories.find( element => element.id === selectedId)?.name;
       if (selectedName){
         const requestedCathegory: StatisticCategory= {id:selectedId, name:selectedName};
         setActiveCathegory(requestedCathegory);
@@ -144,7 +144,7 @@ const Leaderboard = (): JSX.Element => {
       );
       if (res){
         res.aavegotchis.map( entry =>{
-          const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId==entry.id);
+          const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId === entry.id);
           if (unnamedEntry) unnamedEntry.name = entry.name;
         })
       }
@@ -157,7 +157,7 @@ const Leaderboard = (): JSX.Element => {
   // Competition parameters [Please don't puke, it's just an example of the data format :P ]. TO DO: get this from Chisel
   const endDate = new Date('June 15, 2022 16:00:00 UTC+2') ;
   const getReward = (position : number , score?:  number) => {
-    if (position == 1) {
+    if (position === 1) {
       return "1 x MYTHICAL TICKET"
     } else if (position <= 3 ) {
       return "1 x LEGENDARY TICKET"

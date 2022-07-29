@@ -1,7 +1,5 @@
 import { Player } from "../Player"
 import * as Schema from "matchmaking/Schemas";
-import { PlayerState } from "matchmaking/Schemas";
-
 
 export default class Jackhammer extends Phaser.GameObjects.Container {
     constructor(scene : Phaser.Scene, player: Player) {
@@ -29,7 +27,7 @@ export default class Jackhammer extends Phaser.GameObjects.Container {
     }
 
     process() {
-        if(this.player.playerSchema.playerState.movementState == Schema.MovementState.Drilling){
+        if(this.player.playerSchema.playerState.movementState === Schema.MovementState.Drilling){
             //Process direction
             switch(this.player.playerSchema.playerState.movementDirection) {
                 case Schema.MovementDirection.Left:

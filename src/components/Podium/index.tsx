@@ -49,7 +49,7 @@ export const Podium: React.FC<Props> = ({
           </div>
         </>
         : ''}
-        <img className={styles.gotchiPodium} src={gotchiPodium} />
+        <img className={styles.gotchiPodium} src={gotchiPodium} alt={'Gotchi Podium'}/>
    </div>
   );
 };

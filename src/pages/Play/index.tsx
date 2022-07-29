@@ -1,11 +1,8 @@
-import $ from "jquery";
 import * as React from "react";
 import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import LoadingScene from "game/Scenes/LoadingScene";
 import MainScene from "game/Scenes/MainScene";
-import { useNavigate } from "react-router-dom";
-import styles from "./styles.module.css";
 import { HUD } from "components";
 
 export default class Play extends React.Component {

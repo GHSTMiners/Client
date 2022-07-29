@@ -2,7 +2,6 @@ import { AavegotchiObject } from "types";
 import { Arrow } from "assets";
 import { useEffect, useState, useCallback } from "react";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
-import useWindowWidth from "helpers/hooks/windowSize";
 import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
@@ -77,7 +76,7 @@ export const GotchiSelectorVertical = ({
   });
   const [activeToggle, setActiveToggle] = useState<"search" | "sort" | undefined>();
 
-  const width = useWindowWidth();
+  //const width = useWindowWidth();
   const isMobile = false; //width < 768;
 
   const handleSelect = useCallback(
@@ -89,7 +88,7 @@ export const GotchiSelectorVertical = ({
 
     
     },
-    [gotchis, selectGotchi, selected]
+    [selectGotchi, selected]
   );
 
   useEffect(()=>{
@@ -171,7 +170,7 @@ export const GotchiSelectorVertical = ({
       setInitGotchis(gotchis);
       handleSelect(initialGotchiId || gotchis[0].id);
     }
-  }, [gotchis, initialGotchiId, handleSelect]);
+  }, [gotchis, initialGotchiId, handleSelect,initGotchis]);
 
   return (
     <div className={styles.gotchiSelector} hidden={hidden}>

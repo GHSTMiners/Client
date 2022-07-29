@@ -39,7 +39,7 @@ export const PlayerCounter = ({
                 </div>
                 {(playerSeats[id])? 'READY' : ''}    
               </> 
-            : <img src={InactiveFrensIcon} className={styles.playerIcon}></img> 
+            : <img src={InactiveFrensIcon} className={styles.playerIcon} alt={'Inactive Frens'}/> 
           }
         </div>
       )

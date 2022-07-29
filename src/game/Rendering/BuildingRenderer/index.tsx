@@ -4,7 +4,6 @@ import * as Schema from "matchmaking/Schemas";
 import Building from "../../World/Building"
 import { Player } from ".././../World/Player";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import { act } from "react-dom/test-utils";
 
 export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -29,7 +28,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
             activateBuildingMessage.id = this.currentBuilding.id
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(activateBuildingMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-            if (this.currentBuilding.type == 'Bazaar'){
+            if (this.currentBuilding.type === 'Bazaar'){
                 this.scene.game.events.emit("show_shop")
             }
         }
@@ -54,7 +53,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
             this.buildings.forEach(building => {
                 if(Phaser.Geom.Intersects.RectangleToRectangle(building.getBounds(), this.player!.getBounds())) {
                     this.playerAtBuilding = true;
-                    if( this.currentBuilding != building.buildingInfo){
+                    if( this.currentBuilding !== building.buildingInfo){
                         this.player?.setPlayerAtBuilding(building.buildingInfo.type)
                         this.player?.displayMessage(building.buildingInfo.activation_message,  10)
                         this.currentBuilding = building.buildingInfo
@@ -63,7 +62,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
                 } 
             })
 
-            if (this.playerAtBuilding == false){
+            if (this.playerAtBuilding === false){
                 if (this.currentBuilding){
                     this.player?.hideMessage()
                     this.currentBuilding = undefined;
