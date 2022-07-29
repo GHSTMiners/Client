@@ -74,7 +74,7 @@ export const HUD = () => {
   function handleClick (event:any ) {
     // if the user clicks on the background, all open dialogs are closed
     const divID = event.target.getAttribute('id');
-    if (divID == 'game-background'){
+    if (divID === 'game-background'){
       Client.getInstance().phaserGame.events.emit("close_chat");
       Client.getInstance().phaserGame.events.emit("close_dialogs");
     }
@@ -88,7 +88,7 @@ export const HUD = () => {
   function updateExplosives (item:ExplosiveEntry) {
     let currentExplosives = [...playerConsumables]; ;
     currentExplosives.forEach( consumable => {
-      if (consumable.id ==item.explosiveID){
+      if (consumable.id === item.explosiveID){
         consumable.quantity = item.amount;
       }
     });
@@ -147,7 +147,7 @@ export const HUD = () => {
           <Exchange hidden={true} />
           <GameMenu />
           <GameLeaderboard hidden={true} />
-          <Diagnostics hidden={false} />
+          <Diagnostics hidden={true} />
         </HUDContext.Provider>
       </div> 
     </>

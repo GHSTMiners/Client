@@ -3,7 +3,6 @@ import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
 import * as Schema from "../../matchmaking/Schemas"
@@ -112,7 +111,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     const inputTokens = inputValues[id];
     return(
       <div className={styles.coinContainer} key={`coinEntry${id}`}>
-        <img src={cryptoRecord[id].image}  className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
+        <img src={cryptoRecord[id].image}  alt={cryptoRecord[id].name} className={`${styles.exchangeCoin} ${hasCoins? styles.itemEnabled : styles.itemDisabled}`} />
         <div className={`${styles.coinRowContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
           <div className={styles.exchangeRowText}>
             <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
@@ -147,7 +146,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
               <div className={styles.exchangeHeader} key={'exchangeHeader'}>
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
-                  <img src={ggemsIcon} className={styles.ggemsIcon} />
+                  <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
                   {playerBalance} x GGEMS
                 </div>
                 <button className={styles.closeButton} onClick={closeExchange}>X</button>

@@ -18,7 +18,6 @@
   border: 0px solid cyan;
   outline: 0;
   margin: auto;
-  -moz-outline-style: none;
   box-shadow: 0;
   -webkit-transition : box-shadow ease-in .3s;
   transition : box-shadow ease-in .3s;

@@ -125,8 +125,6 @@ body {
   border-radius: 50%;
   z-index: 100;
   background-color: rgba(255, 0, 0, 0.3);
-  webkit-box-shadow: 0px 0px 1.5rem 0px red;
-  -moz-box-shadow: 0px 0px 1.5rem 0px red;
   box-shadow: 0px 0px 1.5rem 0px red;
   animation-name: lowFuelAnimation;
   animation-duration: 1s;
@@ -493,7 +491,6 @@ body {
   color:rgba(255,255,255,0.8);
   outline: 0;
   margin: auto;
-  -moz-outline-style: none;
   box-shadow: 0;
   border: 1px solid rgba(255,255,255,0.5);
   -webkit-transition : box-shadow ease-in .3s;
@@ -523,7 +520,6 @@ body {
   height: 3rem;
   color:white;
   font-size: 1.5rem;
-  -moz-outline-style: none;
   border-radius: 4px;
 
 }

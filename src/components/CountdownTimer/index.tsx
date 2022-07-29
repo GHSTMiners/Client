@@ -1,6 +1,5 @@
 import React from 'react';
 import { useCountdown } from 'hooks/useCountdown';
-import { number } from 'mathjs';
 import styles from './styles.module.css'
 
 
@@ -9,7 +8,7 @@ interface Props{
 }
 
 const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
-  const [days, hours, minutes, seconds] = useCountdown(targetDate);
+  const [ minutes, seconds] = useCountdown(targetDate);
 
     return(
         <div className={styles.timerContainer}>

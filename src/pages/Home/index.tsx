@@ -20,18 +20,11 @@ const Home = (): JSX.Element => {
   return (
     <>
      <div className={styles.basicGrid}>
-       
+        
       <div className={`${styles.gridTile} ${styles.video}`}> 
-        <iframe
-          width="853"
-          height="480"
-          src={demoVideo}
-          className={styles.iframe}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          title="demo video"
-        />
+        <video autoPlay loop muted width={800} >
+          <source src={demoVideo} type={"video/mp4"}/>
+        </video>
       </div>
 
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>

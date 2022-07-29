@@ -1,5 +1,5 @@
 import styles from "./styles.module.css";
-import { useState , createContext, useContext, useEffect, ReactFragment } from "react";
+import { useState , useContext, useEffect } from "react";
 import SquareButton from "components/SquareButton";
 import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
@@ -30,7 +30,7 @@ const MainConsole = () => {
                   key={`squareButton${index}`}
                   onClick={()=> Client.getInstance().phaserGame.events.emit("shortcut",index)}>
       <div className={styles.inventoryConsumable}>
-        <img src={ isFilled ? playerConsumables[index-1].image : ''} />
+        <img src={ isFilled ? playerConsumables[index-1].image : ''}  alt={isFilled ? playerConsumables[index-1].name : 'empty'}/>
       </div>
     </SquareButton>
     );
@@ -62,7 +62,7 @@ const MainConsole = () => {
       <div className={styles.mainConsoleContainer}>
         <div className={styles.playerButtons}>
           <SquareButton size={bigButton} quantity={1}>
-            <img src={drillIcon} className={styles.toolIcon} />
+            <img src={drillIcon} className={styles.toolIcon} alt={'drill'}/>
           </SquareButton>
           {consoleButtons}
           <div

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
-import walletIcon from "assets/hud/wallet_icon.png";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -31,8 +30,6 @@ const GameMenu = () => {
   }
 
   const updateMusicVolume = (volume:number | number[]) =>{
-    console.log(`Updating volume`)
-    console.log(volume)
     if (typeof volume === "number") {
       Client.getInstance().phaserGame.events.emit('music volume',volume) 
     } else {
@@ -59,15 +56,11 @@ const GameMenu = () => {
         <div className={styles.playerMenuBar}>
           <div className={styles.mainPlayerBalance}
                 onClick={ () => Client.getInstance().phaserGame.events.emit("open_exchange")  }>
-            <img src={ggemsIcon} className={styles.ggemsIcon} />
+            <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
             {playerGGEMS}
           </div>
           <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
-          {/* 
-          <div className={styles.walletIconContainer} onClick={ () => Client.getInstance().phaserGame.events.emit("open_exchange") }>
-            <img src={walletIcon} className={styles.walletIcon}  />
-          </div>
-          */}
+
           <div className={styles.menuButton} onClick={()=> setShowMenu(true)}>MENU</div>
         </div>
         <div onClick={nextSong}>

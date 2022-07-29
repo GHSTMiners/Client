@@ -1,6 +1,5 @@
 import { AavegotchiObject } from "types";
-import { click, ArrowLeft, ArrowRight, Arrow } from "assets";
-import { playSound } from "helpers/hooks/useSound";
+import { Arrow } from "assets";
 import { useEffect, useState, useCallback } from "react";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import useWindowWidth from "helpers/hooks/windowSize";
@@ -8,8 +7,6 @@ import styles from "./styles.module.css";
 import { GotchiSVG } from "components/GotchiSVG";
 import { SearchToggle } from "components/SearchToggle";
 import { SortToggle, Sort } from "components/SortToggle";
-import ringDeselected from "assets/icons/ring_deselected3.svg";
-import ringSelected from "assets/icons/ring_selected3.svg";
 import Client from "matchmaking/Client";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 

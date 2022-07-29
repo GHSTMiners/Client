@@ -17,7 +17,7 @@ const Consumables = () => {
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>
-        <img src={ isFilled ? playerConsumables[index-1].image : ''} />
+        <img src={ isFilled ? playerConsumables[index-1].image : ''}  alt={ isFilled ? playerConsumables[index-1].name : 'empty'}/>
       </div>
     </SquareButton>
     );

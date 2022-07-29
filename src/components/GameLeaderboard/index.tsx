@@ -15,7 +15,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     type playerObj = {playerId: number, ggems: number };
 
     const [displayLeaderboard,setDisplayLeaderboard] = useState(!hidden);
-    const [players, setPlayers] = useState<IndexedPlayers>({});
+    const [players ] = useState<IndexedPlayers>({});
     const [sortedPlayers, setSortedPlayers] = useState<number[]>([]);
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
@@ -45,7 +45,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             const sortedIds = sortedData.map( entry => entry.playerId);
             setSortedPlayers([...sortedIds]);
         }
-    },[displayLeaderboard])
+    },[displayLeaderboard,players])
 
     // Upgrade color array for all the defined tiers
     let upgradeColors: string[] = [];

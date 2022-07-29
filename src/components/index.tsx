@@ -15,7 +15,6 @@ export * from "./TraitsTile";
 export * from "./RockyCheckbox";
 export * from "./HUD";
 export * from "./GreenButton";
-export * from "./GotchiSelector";
 export * from "./GotchiSelectorVertical";
 export * from "./Tabs";
 export * from "./UpgradeBar";

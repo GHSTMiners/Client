@@ -99,7 +99,7 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
           }
         })
     }
-  },[chatHistory]);
+  },[chatHistory,gameMode]);
 
 
   return (

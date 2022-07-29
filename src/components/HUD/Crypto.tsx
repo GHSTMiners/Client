@@ -25,7 +25,7 @@ const Crypto = () => {
   // inializing cargo & wallet ballances to 0 and fetching images from Chisel
   useEffect(()=>{
     for (let i = 0; i < world.crypto.length; i++) {
-      if (world.crypto[i].shortcode!='GGEMS'){
+      if (world.crypto[i].shortcode!=='GGEMS'){
         crystalsArray.push({
           cryptoID: world.crypto[i].id,
           name: `${world.crypto[i].shortcode}`,
@@ -57,7 +57,8 @@ const Crypto = () => {
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
       <img src={image} className={`${styles.crystalIcon} 
-                                   ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`} />
+                                   ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`} 
+            alt={tag}/>
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
         {quantity} x {tag}
@@ -79,6 +80,7 @@ const Crypto = () => {
       <img
         src={cargoIcon}
         className={`${styles.cargoIcon} ${styles.iconSelected}`}
+        alt={'Cargo'}
       />
       <div className={styles.cryptoGallery}>{cryptoInventoryList}</div>
     </div>
