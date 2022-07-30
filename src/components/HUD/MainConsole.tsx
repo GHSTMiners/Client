@@ -17,7 +17,12 @@ const MainConsole = () => {
   },[consoleUp])
 
   useEffect(()=>{
-    Client.getInstance().phaserGame.events.on("close_dialogs", ()=>{setConsoleUp(false)} );
+    const lowerConsole = ()=> setConsoleUp(false) ;
+    Client.getInstance().phaserGame.events.on("close_dialogs", lowerConsole );
+
+    return () => {
+      Client.getInstance().phaserGame.events.off("close_dialogs", lowerConsole )
+    }
   },[])
 
   // rendering function for each consumable  slot. TO DO: replace by drag-and-drop system to assign shortcuts
@@ -42,17 +47,20 @@ const MainConsole = () => {
     shortcutButtons.push( renderConsumable(i) )
   }
 
-  function updateButtons (){
-    let updatedButtons = [];
-    for (let i = 1; i < 5; i++) {
-      updatedButtons.push( renderConsumable(i) )
-    }
-    setConsoleButtons( updatedButtons );
-  }
-
   const [consoleButtons , setConsoleButtons] = useState(shortcutButtons);
 
-  useEffect(()=>{  updateButtons()  },[playerConsumables])
+  useEffect(()=>{  
+    function updateButtons (){
+      let updatedButtons = [];
+      for (let i = 1; i < 5; i++) {
+        updatedButtons.push( renderConsumable(i) )
+      }
+      setConsoleButtons( updatedButtons );
+    }
+
+    updateButtons()  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[playerConsumables])
 
   return (
     <div

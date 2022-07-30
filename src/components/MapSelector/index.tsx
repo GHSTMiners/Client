@@ -43,13 +43,15 @@ const MapSelector: React.FC<Props> = ({
         }
       })
     }
-  },[])
+  },[worldArray])
 
   // temporary solution to include thumbnail images. TO DO: get from Chisel
   useEffect(()=>{
-    worldThumbnails.push(desertImage);
-    worldThumbnails.push(forestImage);
-  },[])
+    if (worldThumbnails.length === 0){
+      worldThumbnails.push(desertImage);
+      worldThumbnails.push(forestImage);
+    }
+  },[worldThumbnails])
 
   useEffect(() => {
     if(worldArray.length > 0) {
@@ -60,7 +62,7 @@ const MapSelector: React.FC<Props> = ({
         Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
       }
     }
-  }, [mapSelection])
+  }, [mapSelection,worldArray])
 
   const handleArrowClick = (positionShift : number)=>{
     if(worldArray.length > 1) {

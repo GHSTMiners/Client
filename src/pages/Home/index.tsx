@@ -12,10 +12,10 @@ import { useEffect } from "react";
 const Home = (): JSX.Element => {
 
   // Initializing web3 hook
-  const { state: { usersAavegotchis, address },dispatch } = useWeb3();
+  const { state: { address },dispatch } = useWeb3();
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
-  }, [address]);
+  }, [address,dispatch]);
 
   return (
     <>

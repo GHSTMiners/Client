@@ -100,6 +100,7 @@ const TabUpgrades: FC<{}> = () => {
         Client.getInstance().phaserGame.events.emit("upgraded tier", upgrade.id, upgrade.tier);
       }
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   const renderUpgradeElement = ( obj:upgradePriceObject , upgradeTierObj: upgradeLevels) => {

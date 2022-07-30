@@ -34,11 +34,13 @@ const Crypto = () => {
         updateCargoBalance(world.crypto[i].id,0);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+
+
   useEffect(() => {
-    //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
+    const addCargoListeners = () =>{
       //Define cargo after fetching from Chisel on mount
       setCrytoCrystals(crystalsArray)
       // CARGO
@@ -51,7 +53,16 @@ const Crypto = () => {
       Client.getInstance().ownPlayer.cargo.onRemove = (item: CargoEntry) => {
         updateCargoBalance(item.cryptoID,0);
       }
-    });
+    }
+
+    //Wait until the player was admitted to the server
+    Client.getInstance().phaserGame.events.on("joined_game", addCargoListeners )
+
+    return () =>{
+      Client.getInstance().phaserGame.events.off("joined_game", addCargoListeners)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (

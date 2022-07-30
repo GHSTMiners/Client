@@ -374,6 +374,8 @@ export const customiseSvg = (
         default:
           return styledSvg;
       }
+    } else {
+      return null
     }
   });
   return styledSvg;

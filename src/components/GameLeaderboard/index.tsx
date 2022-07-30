@@ -20,14 +20,19 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
     useEffect(()=>{
-        Client.getInstance().phaserGame.events.on( "open_leaderboard", ()=> {setDisplayLeaderboard(true); console.log('opening leaderboard')});
-        Client.getInstance().phaserGame.events.on("close_leaderboard", ()=> {setDisplayLeaderboard(false); console.log('closing leaderboard') });
+        Client.getInstance().phaserGame.events.on( "open_leaderboard", ()=> { setDisplayLeaderboard(true) });
+        Client.getInstance().phaserGame.events.on("close_leaderboard", ()=> { setDisplayLeaderboard(false) });
         if ( Client.getInstance().colyseusRoom){
+            // TO DO: check if the function only gets executed once after a player leaves the room (then listeners must be cleared)
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
             Client.getInstance().colyseusRoom.state.players.onChange = (modPlayer , key )=>{ players[modPlayer.gotchiID]=modPlayer } 
+        } 
+        
+        return ()=>{
+            Client.getInstance().phaserGame.events.off("open_leaderboard")
+            Client.getInstance().phaserGame.events.off("close_leaderboard")
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[players])
 
     // Hook to sort players depending on their score
     useEffect(()=>{

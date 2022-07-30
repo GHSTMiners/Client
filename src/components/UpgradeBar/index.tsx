@@ -99,14 +99,18 @@ const UpgradeBar: React.FC<Props> = ({
  })
 
  // Making sure that the UI update when a new upgrade is purchased
- const updateUpgradeTier = (id:number, tier:number)=>{
+ useEffect(()=>{
+  const updateUpgradeTier = (id:number, tier:number)=>{
     if (id === upgradeId){
       setUpgradeLevel(tier);
     }
- }
- useEffect(()=>{
+  }
   Client.getInstance().phaserGame.events.on("upgraded tier", updateUpgradeTier )
- },[])
+
+  return ()=>{
+    Client.getInstance().phaserGame.events.off("upgraded tier", updateUpgradeTier )
+  }
+ },[upgradeId])
 
 
   return (

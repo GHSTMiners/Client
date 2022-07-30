@@ -21,7 +21,7 @@ const Leaderboard = (): JSX.Element => {
   const { state: { usersAavegotchis, address },dispatch } = useWeb3();
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
-  }, [address]);
+  }, [address,dispatch]);
 
   // Initializing internal variables and hooks
   const highScores : Array<HighScore> = [];
@@ -133,7 +133,7 @@ const Leaderboard = (): JSX.Element => {
       }
     }
     return () => {mounted = false}; // cleanup function
-  },[activeCathegory])
+  },[activeCathegory,highScoresData.length])
 
   // Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
   const getHighScoresWithNames = async (gotchiIDs:string[],displayData:HighScore[]): Promise<Array<HighScore>> => {
@@ -143,7 +143,7 @@ const Leaderboard = (): JSX.Element => {
         getAavegotchiNames(gotchiIDs)
       );
       if (res){
-        res.aavegotchis.map( entry =>{
+        res.aavegotchis.forEach( entry =>{
           const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId === entry.id);
           if (unnamedEntry) unnamedEntry.name = entry.name;
         })
@@ -179,7 +179,7 @@ const Leaderboard = (): JSX.Element => {
        </div>
   
        <div className={styles.tableContainer}>
-         <img className={styles.leaderboardHeader} src={LeaderboardHeader} /> 
+         <img className={styles.leaderboardHeader} src={LeaderboardHeader} alt={'Leaderboard Header'}/> 
          <div className={styles.tableBackground}>
            <div className={styles.tableToolbar}>
              <div>
@@ -216,7 +216,7 @@ const Leaderboard = (): JSX.Element => {
                    hideElement={totalDataPages<2} 
                    handlePagination={handlePages} />
          </div>
-         <img className={styles.leaderboardFooter} src={LeaderboardFooter} />
+         <img className={styles.leaderboardFooter} src={LeaderboardFooter} alt={'Leaderboard Footer'} />
        </div> 
      
      </div>

@@ -7,6 +7,15 @@ import $ from "jquery";
 import Cookies from 'js-cookie'
 import { Action } from "web3/context/reducer";
 
+export enum AuthenticatorState{
+  Start = "Start",
+  WalletConnected = "WalletConnected",
+  AwaitingSignature = "AwaitingSignature",
+  ValidatingSignature = "ValidatingSignature",
+  ValidatingToken = "ValidatingToken",
+  Authenticated = "Authenticated"
+}
+
 export default class Authenticator {
     constructor() {
       this.m_web3 = new Web3()
@@ -203,7 +212,6 @@ export default class Authenticator {
         console.log(`Failed to connect to wallet`)
       }
     }
-
     private m_web3: Web3
     private m_token : string
     private m_chainId : number
@@ -214,12 +222,5 @@ export default class Authenticator {
     private m_dispatch?: React.Dispatch<Action>
 }
 
-export enum AuthenticatorState{
-    Start = "Start",
-    WalletConnected = "WalletConnected",
-    AwaitingSignature = "AwaitingSignature",
-    ValidatingSignature = "ValidatingSignature",
-    ValidatingToken = "ValidatingToken",
-    Authenticated = "Authenticated"
-}
+
 

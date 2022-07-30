@@ -19,11 +19,9 @@ import { IndexedBooleanArray } from "types";
 
 const Lobby = (): JSX.Element => {
   const {
-    state: { usersAavegotchis, address, selectedAavegotchiId, networkId },
+    state: { usersAavegotchis, address, selectedAavegotchiId },
     dispatch,
   } = useWeb3();
-
-  
 
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
@@ -47,16 +45,11 @@ const Lobby = (): JSX.Element => {
     [dispatch]
   );
 
-
-  /**
-   * 
-   */
   useEffect(() => {
 
     try{
            //Register message handlers
           Client.getInstance().lobbyRoom.onMessage("*", (type, message) => {
-            //prettier-ignore
             Client.getInstance().lobbyMessageRouter.processRawMessage( type as string, message);
           });
 
@@ -112,7 +105,7 @@ const Lobby = (): JSX.Element => {
     if (selectedAavegotchiId){
       setPlayerReady(playerSeats[selectedAavegotchiId]);
     }
-  },[playerSeats])
+  },[playerSeats,selectedAavegotchiId])
 
 
   // Updating the current selected aavegotchi
@@ -121,7 +114,7 @@ const Lobby = (): JSX.Element => {
       const gotchiSelected = usersAavegotchis.find( (gotchi) => gotchi.id === selectedAavegotchiId );
       if (gotchiSelected) setSelectedGotchi(gotchiSelected)
     }
-  },[selectedAavegotchiId])
+  },[selectedAavegotchiId,usersAavegotchis])
 
   const [gotchiSide, setGotchiSide] = useState<0 | 1 | 2 | 3>(0);
   const rotateGotchi = () => {
@@ -151,7 +144,7 @@ const Lobby = (): JSX.Element => {
       });
       updateAavegotchis(dispatch, address);
     }
-  }, [address]);
+  }, [address,usersAavegotchis, dispatch]);
 
   const handlePlayerReady = ()=>{
     // sending message to server    

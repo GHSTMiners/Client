@@ -20,7 +20,7 @@ const HowToPlay = (): JSX.Element => {
   const renderControlItem = ( keyIcon: string , description: string, iconHeight : number ) =>{
     return(
       <div className={styles.controlKeyContainer}>
-        <img src={keyIcon} style={{height:`${iconHeight}rem`}}/>
+        <img src={keyIcon} style={{height:`${iconHeight}rem`}} alt={keyIcon}/>
         <div className={styles.controlDescription}>
           {description}
         </div>
@@ -57,11 +57,11 @@ const HowToPlay = (): JSX.Element => {
           <div className={styles.tileTitle}>GameFlow</div>
           <div className={styles.tileContent}>
             <div className={styles.flowTitle}>Leaderboard grinding</div>
-            <img src={gameFlow} className={styles.flowImage}/>
+            <img src={gameFlow} className={styles.flowImage} alt={'Game Flow'}/>
             <div className={styles.flowTitle}>Upgrading your gear</div>
-            <img src={upgradesFlow} className={styles.flowImage}/>
+            <img src={upgradesFlow} className={styles.flowImage} alt={'Purchasing Upgrades'}/>
             <div className={styles.flowTitle}>Purchasing explosives</div>
-            <img src={explosivesFlow} className={styles.flowImage}/>
+            <img src={explosivesFlow} className={styles.flowImage} alt={'Purchasing Explosives'}/>
           </div>
         </div>
 
@@ -70,19 +70,19 @@ const HowToPlay = (): JSX.Element => {
           <div className={styles.tileContent}>
             <div className={styles.traitList}>
               <div className={styles.traitElement}> 
-                <img src={nrg} className={styles.traitIcon}/>
+                <img src={nrg} className={styles.traitIcon} alt={'Energy'}/>
                 Turnt gotchis move very fast, Zen gotchis are more fuel efficient. 
               </div> 
               <div className={styles.traitElement}> 
-                <img src={agg} className={styles.traitIcon}/>
+                <img src={agg} className={styles.traitIcon} alt={'Aggresiveness'}/>
                 Based gotchis are the best at drilling. Nonviolent gotchis have better cargo. 
               </div> 
               <div className={styles.traitElement}> 
-                <img src={spk} className={styles.traitIcon}/>
+                <img src={spk} className={styles.traitIcon} alt={'Spookiness'}/>
                 Ghastly creatures can survive greater damage. Cuddly ones enjoy cheaper upgrades.
               </div> 
               <div className={styles.traitElement}> 
-                <img src={brn} className={styles.traitIcon}/>
+                <img src={brn} className={styles.traitIcon} alt={'Brain Size'}/>
                 Galaxy brains are great at trading crypto. Smol brains get discounts on explosives.
               </div> 
             </div>
@@ -92,14 +92,14 @@ const HowToPlay = (): JSX.Element => {
         <div className={`${styles.gridTile} ${styles.vitalsTile}`}>
           <div className={styles.tileTitle}>Vitals</div>
           <div className={styles.tileContent}>
-            <img src={vitalsHowTo} className={styles.flowImage}/>
+            <img src={vitalsHowTo} className={styles.flowImage} alt={'Vitals Console'}/>
           </div>
         </div>
 
         <div className={`${styles.gridTile} ${styles.consoleTile}`}>
           <div className={styles.tileTitle}>Console</div>
           <div className={styles.tileContent}>
-            <img src={consoleHowTo} className={styles.flowImage}/>
+            <img src={consoleHowTo} className={styles.flowImage} alt={'Main Console'}/>
           </div>
         </div>
       </div>

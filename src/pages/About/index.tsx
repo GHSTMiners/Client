@@ -8,10 +8,10 @@ import { updateAavegotchis, useWeb3 } from "web3/context";
 const About = (): JSX.Element => {
 
     // Initializing web3 hook
-    const { state: { usersAavegotchis, address },dispatch } = useWeb3();
+    const { state: { address },dispatch } = useWeb3();
     useEffect(() => {
       if (address)  updateAavegotchis(dispatch, address);
-    }, [address]);
+    }, [address,dispatch]);
 
   const renderGotchiTile = (name: string, twitter:string, discord:string, role:string, gotchiID:string , aboutme:string ,description?:string) =>{
     return(

@@ -21,20 +21,28 @@ export const Layout = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    window.ethereum.on("accountsChanged", (accounts: Array<string>) => {
+    const changeAccount = (accounts: Array<string>) => {
       dispatch({
         type: "SET_ADDRESS",
         address: accounts[0],
-      });
-    });
+      })};
 
-    window.ethereum.on("chainChanged", (chainId: string) => {
+    const changeChain = (chainId: string) => {
       dispatch({
         type: "SET_NETWORK_ID",
         networkId: Number(chainId),
       });
-    });
-  }, []);
+    }
+
+    window.ethereum.on("accountsChanged", changeAccount);
+    window.ethereum.on("chainChanged", changeChain );
+
+    return () => {
+      window.ethereum.off("accountsChanged", changeAccount);
+      window.ethereum.off("chainChanged", changeChain );
+    }
+
+  }, [dispatch]);
 
   // add this into the div and import Header class if required: <Header />
   return (

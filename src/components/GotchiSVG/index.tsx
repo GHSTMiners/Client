@@ -73,8 +73,9 @@ export const GotchiSVG = ({
       } else if (provider) {
         fetchGotchiSvg(tokenId, !!selectedGotchi, provider);
       }
-    }
-  }, [usersAavegotchis, tokenId, lazyloadIn, side]);
+    } 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usersAavegotchis, tokenId, lazyloadIn, side, provider, options]);
 
   return (
     <img

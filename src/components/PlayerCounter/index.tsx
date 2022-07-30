@@ -23,7 +23,7 @@ export const PlayerCounter = ({
         (i<playerIds.length)? currentPlayers.push(+playerIds[i]) : currentPlayers.push(undefined);
       }
       setPlayerArray(currentPlayers)
-    },[playerSeats])
+    },[playerSeats,totalPlayers])
     
     const renderPlayerArray = playerArray.map( function (id,index) {
       return( 

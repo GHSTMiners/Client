@@ -40,7 +40,7 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
       });
       setLeaderboardData(hs);
     }
-  }, [highscores]);
+  }, [highscores,competition]);
 
   // Filtering and setting up on screen the selected dataset
   useEffect(() => {
@@ -53,7 +53,7 @@ const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,only
       let pageData = leaderboardData.slice((pageIndex-1) * entriesPerPage, pageIndex * entriesPerPage );
       setDisplayedScores(pageData);
     }
-  }, [onlyMine, leaderboardData, ownedGotchis]);
+  }, [onlyMine, leaderboardData, ownedGotchis, entriesPerPage, pageIndex]);
   
   const renderRankingRow = ( rank:number, name:string, score: number) =>{
     return(

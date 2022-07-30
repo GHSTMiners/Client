@@ -31,7 +31,7 @@ const WalletButton = () => {
   useEffect(() => {
     Client.getInstance().authenticator.authenticate(dispatch)
     // Update the document title using the browser API
-  }, []);
+  }, [dispatch]);
 
   return (
     <button
