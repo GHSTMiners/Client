@@ -53,7 +53,6 @@ export const callDiamond = async <R extends unknown>(
       : contract[name]());
     return res;
   } catch (err: any) {
-    throw Object.assign(
-      new CodeError(400,'Diamond contract error', err.message, err.stack))
+    throw Object.assign( new CodeError(400,'Diamond contract error', err.message, err.stack))
   }
 };

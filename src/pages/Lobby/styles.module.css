@@ -200,6 +200,7 @@
 }
 
 .timeCounter{
+  grid-area: counter;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -274,7 +275,8 @@
     "map  players"
     "chat  chat"
     "chat  chat"
-    "chat   chat";
+    "chat   chat"
+    "counter counter";
   }
   .gotchiSelection{
     grid-template-columns: 1fr 1fr;
@@ -301,6 +303,7 @@
     "map  players"
     "chat  chat"
     "chat  chat"
-    "chat   chat";
+    "chat   chat"
+    "counter counter";
   }
 }

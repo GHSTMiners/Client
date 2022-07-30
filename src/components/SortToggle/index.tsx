@@ -41,7 +41,7 @@ export const SortToggle = ({
       }`}
     >
       <button className={styles.toggle} onClick={handleToggle}>
-        <SortIcon width={'2.8rem'} height={'2.8rem'} style={{padding: "0.5rem"}} className={styles.iconContainer}/>
+        <SortIcon style={{padding: "0.5rem", width: "2.8rem", height:"2.8rem"}} className={styles.iconContainer}/>
       </button>
       
       <div className={styles.sortOptions}>
@@ -70,7 +70,7 @@ export const SortToggle = ({
                 <p>{option.name}</p>
                 <DropdownIcon
                   fill="#ffffff"
-                  width={32}
+                  style={{width:'32px'}}
                   className={styles[direction]}
                 />
               </div>

@@ -89,9 +89,9 @@ const MapSelector: React.FC<Props> = ({
   return (
     <>
       <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} alt={`Selected World ${mapSelection}`}/>
-      <Arrow width={'4rem'} className={`${styles.arrowLeft} ${mapSelection === 0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
+      <Arrow style={{width:'4rem'}} className={`${styles.arrowLeft} ${mapSelection === 0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
-      <Arrow width={'4rem'} className={`${styles.arrowRight} ${( mapSelection === (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
+      <Arrow style={{width:'4rem'}} className={`${styles.arrowRight} ${( mapSelection === (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>
       <div className={styles.thumbnailGallery}>
         {thumbnailGallery}
       </div>
