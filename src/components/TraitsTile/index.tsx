@@ -68,6 +68,25 @@ export const TraitsTile = ({ selectedGotchi, worldID=6 }: Props) => {
 
   useEffect(() => {
     let mounted = true; // safety component to avoid leackage if async info arrives when the component is unmounted
+    
+    const setCustomLabels = ()=>{
+      graphDataInfo.forEach(  dataEntry =>{
+          const uiTrait = dataRecord[dataEntry.name];
+          if (uiTrait){
+            dataRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
+          }
+        }
+      )
+    }
+    
+    const updateStateData = (traits:number[],displayObjs:displayDataObj[],setMethod:(value:React.SetStateAction<number[]>)=>void) =>{
+      let newTraits = [...traits];
+      displayObjs.forEach( (obj,index) =>{
+        newTraits[index] = dataRecord[displayObjs[index].name].trait;
+      })
+      setMethod(newTraits);
+    }
+
     if (selectedGotchi){
       const scope = {
         energy: selectedGotchi.withSetsNumericTraits[0],
@@ -117,25 +136,12 @@ export const TraitsTile = ({ selectedGotchi, worldID=6 }: Props) => {
       }
     } 
     return () => {mounted = false}; // cleanup function
-  },[selectedGotchi])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[selectedGotchi,worldID])
 
-  const setCustomLabels = ()=>{
-    graphDataInfo.forEach(  dataEntry =>{
-        const uiTrait = dataRecord[dataEntry.name];
-        if (uiTrait){
-          dataRecord[dataEntry.name] = {label:dataEntry.label,trait:uiTrait.trait};
-        }
-      }
-    )
-  }
 
-  const updateStateData = (traits:number[],displayObjs:displayDataObj[],setMethod:(value:React.SetStateAction<number[]>)=>void) =>{
-    let newTraits = [...traits];
-    displayObjs.forEach( (obj,index) =>{
-      newTraits[index] = dataRecord[displayObjs[index].name].trait;
-    })
-    setMethod(newTraits);
-  }
+
+
 
 
   return (

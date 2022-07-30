@@ -44,9 +44,7 @@ export const HUD = () => {
   const [chatMode, setChatMode] = useState<boolean>(false)
   //const [hideChat, setHideChat] = useState<boolean>(largeChat);
 
-  const handleLoadingBar = (percentage:number) => {
-    setLoadingPercentage(percentage)
-  }
+
 
   const loadingBar = (value:number) =>{
     return(
@@ -56,20 +54,7 @@ export const HUD = () => {
     )
   }
 
-  const useShortcut = (index:number) =>{
-    if (playerConsumables.length >= index){
-      let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
-      requestDropExplosive.explosiveID = playerConsumables[index-1].id;
-      let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
-      Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-      /*// Deleting the explosive if this is the last one about to be used (TO DO: do it server-side on 0)
-      if (playerConsumables[index-1].quantity == 1){
-        playerConsumables= playerConsumables.filter( consumable => consumable.id !== playerConsumables[index-1].id );
-        setPlayerConsumables(playerConsumables);
-        console.log('entered deleting loop')
-      } */
-    }
-  }
+
 
   function handleClick (event:any ) {
     // if the user clicks on the background, all open dialogs are closed
@@ -97,8 +82,7 @@ export const HUD = () => {
 
     // TO DO: loop through all other consumables, potions, etc.
   useEffect(() => {
-    //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
+    const playerExplosiveListeners = () => {
       // INVENTORY EXPLOSIVES
       Client.getInstance().ownPlayer.explosives.onAdd = (item: ExplosiveEntry ) =>{
         const newConsumableItem : consumableItem = {
@@ -117,17 +101,46 @@ export const HUD = () => {
       Client.getInstance().ownPlayer.explosives.onRemove = (item: ExplosiveEntry) =>{
         playerConsumables.filter( consumable => consumable.id !== item.explosiveID );
       }
-    });
+    }
+    //Wait until the player was admitted to the server
+    Client.getInstance().phaserGame.events.on("joined_game", playerExplosiveListeners);
+
+    return () => {
+      Client.getInstance().phaserGame.events.off("joined_game", playerExplosiveListeners);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Declaring event listeners
   useEffect(() => {
+    const openChat = ()=>setChatMode(true);
+    const setGameReady = () => {setgameLoaded(true)};
+    const disableChatMode = ()=>setChatMode(false);
+    const handleLoadingBar = (percentage:number) => setLoadingPercentage(percentage);
+    const useShortcut = (index:number) =>{
+      if (playerConsumables.length >= index){
+        let requestDropExplosive : Protocol.RequestDropExplosive = new Protocol.RequestDropExplosive()
+        requestDropExplosive.explosiveID = playerConsumables[index-1].id;
+        let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestDropExplosive)
+        Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
+      }
+    }
+
     Client.getInstance().phaserGame.events.on("shortcut", useShortcut );
     Client.getInstance().phaserGame.events.on("loading", handleLoadingBar );
-    Client.getInstance().phaserGame.events.on("mainscene_ready", () => {setgameLoaded(true)});
-    Client.getInstance().phaserGame.events.on("open_chat",()=>setChatMode(true));
-    Client.getInstance().phaserGame.events.on("close_chat",()=>setChatMode(false));
-  }, []);
+    Client.getInstance().phaserGame.events.on("mainscene_ready", setGameReady);
+    Client.getInstance().phaserGame.events.on("open_chat",openChat);
+    Client.getInstance().phaserGame.events.on("close_chat",disableChatMode);
+
+    return () => {
+      Client.getInstance().phaserGame.events.off("shortcut", useShortcut );
+      Client.getInstance().phaserGame.events.off("loading", handleLoadingBar );
+      Client.getInstance().phaserGame.events.off("mainscene_ready", setGameReady);
+      Client.getInstance().phaserGame.events.off("open_chat",openChat);
+      Client.getInstance().phaserGame.events.off("close_chat",disableChatMode);
+    }
+
+  }, [playerConsumables]);
 
 
   return (

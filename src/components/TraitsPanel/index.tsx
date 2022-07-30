@@ -123,7 +123,8 @@ export const TraitsPanel = ({ selectedGotchi, worldID=6 }: Props) => {
       }
     } 
     return () => {mounted = false}; // cleanup function
-  },[selectedGotchi])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[selectedGotchi,worldID])
 
   const setCustomLabels = ()=>{
     graphDataInfo.forEach(  dataEntry =>{

@@ -98,6 +98,7 @@ const Lobby = (): JSX.Element => {
     } catch(exception : any) {
       alert(`Failed to create a lobby, maybe we are having server issues?, ${exception}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Updating player ready state 

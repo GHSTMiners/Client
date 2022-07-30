@@ -48,6 +48,7 @@ const TabConsumables: FC<{}> = () => {
      } 
    }
    setExplosionPattern([...emptyPattern]);
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   
   // Updating UI every time the item (quantity or selection) changes
@@ -147,6 +148,7 @@ const TabConsumables: FC<{}> = () => {
         renderSelectedPattern(hoverItem)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[hoverItem,selectedItem])
 
   const detailsPanel = () => {

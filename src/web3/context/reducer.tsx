@@ -1,5 +1,6 @@
 import { State } from "./initialState";
 import { Tuple } from "types";
+import { CodeError } from "web3/CodeError";
 
 export type Action =
   | {
@@ -78,7 +79,7 @@ export const reducer = (state: State, action: Action): State => {
       };
     }
     case "UPDATE_AAVEGOTCHI_SVG": {
-      if (!state.usersAavegotchis) throw "No Aavegotchis to update."
+      if (!state.usersAavegotchis) throw Object.assign( new CodeError(400,'Bad Request', 'No Aavegotchis to update'))
       const copyGotchiState = [...state.usersAavegotchis];
       const updatedGotchi = copyGotchiState.find(gotchi => gotchi.id === action.tokenId);
 
@@ -89,7 +90,7 @@ export const reducer = (state: State, action: Action): State => {
           usersAavegotchis: copyGotchiState
         }
       } else {
-        throw "Selected gotchi doesn't exist in state."
+        throw Object.assign( new CodeError(400,'Bad Request', 'Selected gotchi does not exist in state'))
       }
     }
     case "SET_PROVIDER": {
@@ -105,6 +106,6 @@ export const reducer = (state: State, action: Action): State => {
       }
     }
     default:
-      throw "Bad action type";
+      throw Object.assign( new CodeError(400,'Bad Request', 'Bad action type'))
   }
 };

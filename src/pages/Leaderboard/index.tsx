@@ -108,7 +108,7 @@ const Leaderboard = (): JSX.Element => {
           rawHighScores.then( rawScoresData => {
             let displayData: Array<HighScore> = [];
             let idArray : Array<string>=[];
-            rawScoresData.map( data => {
+            rawScoresData.forEach( data => {
               const entryId = data.gotchi.gotchi_id.toString();
               const entryScore = data.entry.value;
               const entryName = `${entryId}`;

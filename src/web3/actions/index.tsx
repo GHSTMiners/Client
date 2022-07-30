@@ -3,6 +3,7 @@ import { addresses } from "helpers/vars";
 import diamondAbi from "../abi/diamond.json";
 import { ethers } from "ethers";
 import { Tuple } from "types";
+import { CodeError } from "web3/CodeError"
 
 const coreURI =
   "https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic";
@@ -15,16 +16,12 @@ export const callSubgraph = async <T extends unknown>(
     const data = await request<T>(uri || coreURI, query);
     return data;
   } catch (err: unknown) {
-    throw {
-      status: 400,
-      name: "Subgraph error",
-      message:
-        err instanceof ClientError
-          ? err.response.errors
-            ? err.response.errors[0].message
-            : "Unknown error"
-          : "Unknown error",
-    };
+    throw Object.assign(
+      new CodeError(400,'Subgraph Error', err instanceof ClientError
+      ? err.response.errors
+        ? err.response.errors[0].message
+        : "Unknown error"
+      : "Unknown error"))
   }
 };
 
@@ -56,11 +53,7 @@ export const callDiamond = async <R extends unknown>(
       : contract[name]());
     return res;
   } catch (err: any) {
-    throw {
-      status: 400,
-      name: "Diamond contract error",
-      message: err.message,
-      stack: err.stack,
-    };
+    throw Object.assign(
+      new CodeError(400,'Diamond contract error', err.message, err.stack))
   }
 };
