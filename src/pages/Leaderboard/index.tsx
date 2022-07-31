@@ -1,18 +1,17 @@
-import styles from "./styles.module.css";
-import { Podium, RockyCheckbox } from "components";
 import { ChangeEvent, useEffect, useState } from "react";
-import LeaderboardTable from "components/LeaderboardTable";
-import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
-import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
+import { Pagination, RockyCheckbox } from "components";
+import { Podium , LeaderboardTable } from "./components";
 import { useWeb3, updateAavegotchis } from "web3/context";
-import { HighScore } from "types";
-import { Pagination } from 'components/Pagination';
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
+import { HighScore } from "types";
 import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
-import { number } from "mathjs";
-import { callSubgraph } from "web3/actions";
 import { AavegotchisNameArray, getAavegotchiNames } from "web3/actions/queries";
+import { callSubgraph } from "web3/actions";
+import { number } from "mathjs";
+import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
+import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
+import styles from "./styles.module.css";
 
 
 const Leaderboard = (): JSX.Element => {

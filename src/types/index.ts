@@ -92,3 +92,7 @@ export interface CustomError extends Error {
 export type IndexedArray = {[key: string]: number};
 
 export type IndexedBooleanArray = {[key: string]: boolean};
+
+export type PricePair = { cryptoId:number, cost:number };
+
+export type CryptoEntry = {id: number, quantity: number};

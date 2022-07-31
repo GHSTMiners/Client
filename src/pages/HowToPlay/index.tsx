@@ -1,4 +1,3 @@
-import styles from "./styles.module.css";
 import gameFlow from "assets/images/gameflow.png"
 import explosivesFlow from "assets/images/explosivesflow.png"
 import upgradesFlow from "assets/images/upgradesflow.png"
@@ -13,6 +12,7 @@ import nrg from "assets/images/nrg.png"
 import agg from "assets/images/agg.png"
 import spk from "assets/images/spk.png"
 import brn from "assets/images/brn.png"
+import styles from "./styles.module.css";
 
 
 const HowToPlay = (): JSX.Element => {

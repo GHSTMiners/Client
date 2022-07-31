@@ -1,13 +1,13 @@
-import { InfoPanel, NewsPanel, StatsPanel } from "components";
-import demoVideo from "assets/videos/demo.mp4"
-import styles from "./styles.module.css";
-import { DailyWinners } from "components/DailyWinners";
+import { useEffect } from "react";
+import { InfoPanel, NewsPanel, StatsPanel, DailyWinners } from "./components";
+import { updateAavegotchis, useWeb3 } from "web3/context";
 import ActiveFrensIcon from "assets/icons/active_frens.svg"
 import BlocksMinedIcon from "assets/icons/blocks_mined.svg"
 import GamesPlayedIcon from "assets/icons/games_played.svg"
 import CrystalsCollectedIcon from "assets/icons/crystals_collected.svg"
-import { updateAavegotchis, useWeb3 } from "web3/context";
-import { useEffect } from "react";
+import demoVideo from "assets/videos/demo.mp4"
+import styles from "./styles.module.css";
+
 
 const Home = (): JSX.Element => {
 

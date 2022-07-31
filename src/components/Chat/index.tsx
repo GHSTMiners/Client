@@ -6,13 +6,12 @@ import React, { useEffect, useState } from "react";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 //import { format } from 'fecha';
 
-
 interface Props {
   disabled?: boolean;
   gameMode: boolean;
 }
 
-const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
+export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
 
@@ -131,5 +130,3 @@ const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
     </div>
   );
 };
-
-export default Chat;
