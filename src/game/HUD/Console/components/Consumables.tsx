@@ -1,8 +1,8 @@
 import styles from "./styles.module.css";
 import SquareButton from "components/SquareButton";
 import { useContext } from "react";
-import { HUDContext } from ".";
-import { smallButton } from ".";
+import { HUDContext } from "../..";
+import { BUTTONWIDTH } from "helpers/vars"
 
 const Consumables = () => {
 
@@ -12,7 +12,7 @@ const Consumables = () => {
   const renderConsumable = (index:number) =>{
     const isFilled = (playerConsumables.length >= index);
     return (
-    <SquareButton size={smallButton} 
+    <SquareButton size={BUTTONWIDTH} 
                   quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>

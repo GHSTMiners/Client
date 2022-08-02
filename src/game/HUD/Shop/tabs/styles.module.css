@@ -1,0 +1,302 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+
+@font-face {
+  font-family: MSDOS;
+  src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
+}
+
+
+.shopContainer{
+  background-image: url('assets/hud/shop_hud2.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  width: 70rem;
+  height: 47rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.screenContainer{
+  position:relative;
+  width: 68%;
+  margin-top: 22%;
+  height: 28rem;
+  margin-left: 16%;
+}
+
+.closeButton{
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  right: 0.5rem;
+  top: 0.5rem;
+  color:#a4ffff;
+  outline: 0;
+  margin: auto;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border-width: 1px;
+    background-color: rgba(0,255,255,0.3);
+    border-color: #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.displayOn{
+  top: 0rem;
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -100rem;
+  transition: all 400ms ease;
+}
+
+.playerDoekoes{
+  background-color: transparent;
+  text-align: center;
+  width: 8rem;
+  height: 2rem;
+  right: 2.5rem;
+  top: 0.5rem;
+  color:#a4ffff;
+  margin: auto;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+}
+
+.shopTabs{
+  padding-top: 2rem;
+  font-size: 2em;
+  display: flex;
+  color: white;
+  position: static;
+}
+
+.contentContainer{
+  display:flex;
+  padding-top: 1rem;
+  padding-right: 0rem;
+}
+
+.galleryPanel {
+  height: 22rem;
+  width: 70%;
+  scrollbar-width: thin;
+  scrollbar-color: #6db9aeff #a4ffff;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  position:relative;
+}
+
+.upgradePanel {
+  height: 22rem;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #6db9aeff #a4ffff;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  overflow-y: auto;
+  overflow-x: hidden;
+  white-space: nowrap;
+  position:relative;
+}
+
+.upgradesList{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  
+}
+ 
+.itemContainer {
+  display: flex;
+  font-size: 0.9em;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 1rem;
+  margin: 1rem;
+  cursor: pointer; 
+  border:1px solid rgba(0,0,0,0);
+}
+
+.itemImage {
+  height: auto;
+  width: 4rem;
+  opacity: 0.9;
+}
+
+.itemText {
+  width: 80%;
+  display:grid;
+  justify-content: center;
+  border-bottom: 3px solid #a4ffff;
+}
+
+.buyButton{
+  margin-top: 0.5rem;
+  width: 80%;
+}
+
+.enabledButton{
+  color:black;
+  background-color: #a4ffff;
+}
+
+.disabledButton{
+  background-color: transparent;
+  border: 1px solid #a4ffff;
+  color: #a4ffff;
+  opacity: 0.7;
+  cursor:auto;
+}
+
+.disabledContainer{
+  filter: grayscale(0.5);  
+}
+
+.detailsPanel{
+  width: 30%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-left:1px solid #a4ffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position:relative;
+  overflow-x: hidden;
+}
+
+
+
+.drillIcon{
+  opacity: 0.5;
+  position: absolute;
+  right:0rem;
+  height: 12rem;
+  margin-top:4rem;
+  transform: rotate(-30deg);
+}
+
+.detailsTitle{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 3rem;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.titleImage {
+  height: 3rem;
+  opacity: 0.9;
+}
+
+.detailsBody{
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+}
+
+.amountContainer{
+  width:100%;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.buyManyButton{
+  width: 40%;
+  margin-top: 0.5rem;
+}
+
+.inputQuantity{
+  width: 40%;
+  text-align: center;
+}
+
+.explosivePattern{
+  display: flex;
+  padding: 0rem;
+  width: 100%;
+  flex-wrap: wrap;
+  gap:0.2rem;
+}
+
+.patternElement{
+  width: 0.9rem;
+  height: 0.9rem;
+  opacity: 0.1;
+  background-color: #a4ffff;
+}
+
+.explosionElement{
+  opacity: 0.5;
+  background-color: red;
+}
+
+.detonationElement{
+  background-color: red;
+  opacity: 0.9;
+}
+
+.totalPrice{
+  padding-top: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.gotchiPreview{
+  opacity: 0.2;
+  position: absolute;
+  right:-8rem;
+  height: 16rem;
+  margin-top:2.5rem;
+}
+
+.upgradesContainer{
+  box-shadow: 0;
+  -webkit-transition : all ease-in-out .2s;
+  transition : all ease-in-out .2s;
+}
+
+.selectedUpgrade, .upgradesContainer:hover {
+  border-width: 1px;
+    background-color: rgba(0,255,255,0.3);
+    border-color: #a4ffff;
+  -webkit-transition : all ease-in-out .2s;
+  transition : all ease-in-out .2s;
+}
+
+.selectedContainer{
+    border:1px solid #a4ffff;
+}

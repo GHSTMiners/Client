@@ -6,7 +6,7 @@ interface Props{
     hidden : boolean
 }
 
-const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
+export const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     const [latency,setLatency]=useState(0);
     const [showDiagnostics,setShowDiagnostics] = useState<boolean>(!hidden);
 
@@ -39,5 +39,3 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
         </div>
     )
 };
-
-export default Diagnostics

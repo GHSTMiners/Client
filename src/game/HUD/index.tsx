@@ -1,25 +1,23 @@
-import styles from "./styles.module.css";
-import Client from "matchmaking/Client";
 import { useState, useEffect, createContext } from "react";
-import VitalsConsole from "./VitalsConsole/VitalsConsole";
-import MainConsole from "./Console/MainConsole";
-import { Shop } from "./Shop";
-import { CryptoEntry } from "types";
-import * as Chisel from "chisel-api-interface";
-import { ExplosiveEntry } from "matchmaking/Schemas";
-import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { Chat } from "components/Chat";
-import Exchange from "./Exchange";
-import GameMenu from "./Menu/GameMenu";
-import GameLeaderboard from "game/HUD/Leaderboard";
-import Diagnostics from "./Diagnostics";
+import { GameLeaderboard } from "./Leaderboard";
+import { VitalsConsole } from "./VitalsConsole";
+import { Diagnostics } from "./Diagnostics";
+import { MainConsole } from "./Console";
+import { Exchange } from "./Exchange";
+import { GameMenu } from "./Menu";
+import { Shop } from "./Shop";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
+import * as Chisel from "chisel-api-interface";
+import Client from "matchmaking/Client";
+import { ExplosiveEntry } from "matchmaking/Schemas";
+import styles from "./styles.module.css";
 
 // Initializing the contextHook with an empty array of consumable items
 type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 let consumablesArray : consumableItem[] = [];
 
 export const HUDContext = createContext(consumablesArray);
-export const smallButton = "3.3rem";
 
 export const HUD = () => {  
 
@@ -157,7 +155,7 @@ export const HUD = () => {
           <VitalsConsole />
           <MainConsole />
           <Chat disabled={!chatMode} gameMode={true} />
-          <MiningShop />
+          <Shop />
           <Exchange hidden={true} />
           <GameMenu />
           <GameLeaderboard hidden={true} />

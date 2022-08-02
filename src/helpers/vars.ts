@@ -15,6 +15,7 @@ export type Collaterals = "aAAVE" | "aWETH" | "aLINK" | "aDAI" | "aUSDT" | "aUSD
 type CollateralToAddress = {
   [key in Collaterals]: string;
 }
+
 export const collateralToAddress: CollateralToAddress = {
   aAAVE: "0x823cd4264c1b951c9209ad0deaea9988fe8429bf",
   aWETH: "0x20d3922b4a1a8560e1ac99fba4fade0c849e2142",
@@ -44,3 +45,6 @@ export enum WearableSlots {
   Pet = 6,
   BG = 7,
 }
+
+export const BUTTONWIDTH = '3.3rem';
+

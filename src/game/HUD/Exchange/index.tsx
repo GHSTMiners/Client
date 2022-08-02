@@ -3,16 +3,16 @@ import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import * as Schema from "matchmaking/Schemas"
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { WalletEntry } from "matchmaking/Schemas";
-import * as Schema from "../../matchmaking/Schemas"
 import { IndexedArray } from "types";
 
 interface Props {
   hidden: boolean;
 }
 
-const Exchange : React.FC<Props> = ({ hidden }) => {
+export const Exchange : React.FC<Props> = ({ hidden }) => {
   type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
   type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
@@ -162,5 +162,3 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     </>
   );
 };
-
-export default Exchange;

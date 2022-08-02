@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
-import UpgradeBar from "game/HUD/MiningShop/components/UpgradeBar";
+import UpgradeBar from "game/HUD/Shop/components/UpgradeBar";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 import { Upgrade } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"

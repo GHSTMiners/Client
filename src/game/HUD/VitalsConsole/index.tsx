@@ -7,7 +7,7 @@ import fuelBar from "assets/hud/fuel_bar.svg";
 import healthBar from "assets/hud/health_bar.svg";
 import cargoBar from "assets/hud/cargo_bar.svg";
 
-const VitalsConsole = () => {
+export const VitalsConsole = () => {
   const [fuel, setFuel] = useState("14rem");
   const [cargo, setCargo] = useState("0rem");
   const [health, setHealth] = useState("14rem");
@@ -88,5 +88,3 @@ const VitalsConsole = () => {
     </>
   );
 };
-
-export default VitalsConsole;

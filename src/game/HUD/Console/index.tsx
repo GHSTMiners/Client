@@ -5,9 +5,10 @@ import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
 import Inventory from "./components/Inventory";
 import Client from "matchmaking/Client";
-import { HUDContext, smallButton } from "..";
+import { BUTTONWIDTH } from "helpers/vars"
+import { HUDContext} from "..";
 
-const MainConsole = () => {
+export const MainConsole = () => {
   const bigButton = "5.8rem";
   const playerConsumables = useContext(HUDContext);
   const [consoleUp, setConsoleUp] = useState(false);
@@ -29,7 +30,7 @@ const MainConsole = () => {
   const renderConsumable = (index:number) =>{
     const isFilled = (playerConsumables.length >= index);
     return (
-    <SquareButton size={smallButton} 
+    <SquareButton size={BUTTONWIDTH} 
                   quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}
                   key={`squareButton${index}`}
@@ -78,7 +79,7 @@ const MainConsole = () => {
             onClick={() => {
               setConsoleUp(!consoleUp);
             }}
-            style={{ width: smallButton, height: smallButton }}
+            style={{ width: BUTTONWIDTH, height: BUTTONWIDTH }}
           >
             <img
               src={expandIcon}
@@ -96,5 +97,3 @@ const MainConsole = () => {
     </div>
   );
 };
-
-export default MainConsole;

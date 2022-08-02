@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import { ShopContext } from "game/HUD/MiningShop";
+import { ShopContext } from "game/HUD/Shop";
 
 interface Props {
   upgradeId:number;

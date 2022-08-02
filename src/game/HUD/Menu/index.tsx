@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 
-const GameMenu = () => {
+export const GameMenu = () => {
   
   const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
   const [showMenu, setShowMenu] = useState(false);
@@ -88,5 +88,3 @@ const GameMenu = () => {
     </>
   );
 };
-
-export default GameMenu;
