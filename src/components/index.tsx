@@ -11,6 +11,5 @@ export * from "./Sidetray";
 export * from "./RockyCheckbox";
 export * from "./GreenButton";
 export * from "./Tabs";
-export * from "../game/HUD/Shop/components/UpgradeBar";
 export * from "./Chat";
 export * from "./Pagination"

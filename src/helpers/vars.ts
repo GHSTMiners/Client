@@ -46,5 +46,6 @@ export enum WearableSlots {
   BG = 7,
 }
 
-export const BUTTONWIDTH = '3.3rem';
+export const ITEMWIDTH = '3.3rem';
+export const ARTIFACTWIDTH = '5.8rem';
 

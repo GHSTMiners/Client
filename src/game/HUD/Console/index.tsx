@@ -5,11 +5,10 @@ import expandIcon from "assets/hud/expand_icon.svg";
 import drillIcon from "assets/hud/drill.png";
 import Inventory from "./components/Inventory";
 import Client from "matchmaking/Client";
-import { BUTTONWIDTH } from "helpers/vars"
+import { ITEMWIDTH, ARTIFACTWIDTH } from "helpers/vars"
 import { HUDContext} from "..";
 
-export const MainConsole = () => {
-  const bigButton = "5.8rem";
+const Console = () => {
   const playerConsumables = useContext(HUDContext);
   const [consoleUp, setConsoleUp] = useState(false);
 
@@ -30,7 +29,7 @@ export const MainConsole = () => {
   const renderConsumable = (index:number) =>{
     const isFilled = (playerConsumables.length >= index);
     return (
-    <SquareButton size={BUTTONWIDTH} 
+    <SquareButton size={ITEMWIDTH} 
                   quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}
                   key={`squareButton${index}`}
@@ -70,7 +69,7 @@ export const MainConsole = () => {
     >
       <div className={styles.mainConsoleContainer}>
         <div className={styles.playerButtons}>
-          <SquareButton size={bigButton} quantity={1}>
+          <SquareButton size={ARTIFACTWIDTH} quantity={1}>
             <img src={drillIcon} className={styles.toolIcon} alt={'drill'}/>
           </SquareButton>
           {consoleButtons}
@@ -79,7 +78,7 @@ export const MainConsole = () => {
             onClick={() => {
               setConsoleUp(!consoleUp);
             }}
-            style={{ width: BUTTONWIDTH, height: BUTTONWIDTH }}
+            style={{ width: ITEMWIDTH, height: ITEMWIDTH }}
           >
             <img
               src={expandIcon}
@@ -97,3 +96,5 @@ export const MainConsole = () => {
     </div>
   );
 };
+
+export default Console

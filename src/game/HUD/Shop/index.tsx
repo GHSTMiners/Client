@@ -31,7 +31,7 @@ const tabs: TabsType = [
 
 export const ShopContext = createContext({currencyBalance:0 ,walletCrypto:[] as CryptoEntry[]});
 
-export const Shop = () => {
+const Shop = () => {
   
 
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
@@ -104,3 +104,5 @@ export const Shop = () => {
     </div>
   );
 }
+
+export default Shop

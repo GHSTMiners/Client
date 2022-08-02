@@ -224,11 +224,6 @@ const Lobby = (): JSX.Element => {
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
           <PlayerCounter playerSeats={playerSeats} totalPlayers={5} />
         </div>
-        
-         
-        <div className={`${styles.gridTile} ${styles.chat}`}>
-          <Chat  disabled={false} gameMode={false}/>
-        </div>
                     
       </div>
     </>

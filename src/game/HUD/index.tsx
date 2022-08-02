@@ -1,12 +1,12 @@
 import { useState, useEffect, createContext } from "react";
 import { Chat } from "components/Chat";
-import { GameLeaderboard } from "./Leaderboard";
-import { VitalsConsole } from "./VitalsConsole";
-import { Diagnostics } from "./Diagnostics";
-import { MainConsole } from "./Console";
-import { Exchange } from "./Exchange";
-import { GameMenu } from "./Menu";
-import { Shop } from "./Shop";
+import GameLeaderboard from "./Leaderboard";
+import Vitals from "./Vitals";
+import Diagnostics from "./Diagnostics";
+import Console from "./Console";
+import Exchange from "./Exchange";
+import Menu from "./Menu";
+import Shop from "./Shop";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
@@ -152,12 +152,12 @@ export const HUD = () => {
            id="game-background"
            hidden={!gameLoaded}>
         <HUDContext.Provider value={playerConsumables}>
-          <VitalsConsole />
-          <MainConsole />
+          <Vitals />
+          <Console />
           <Chat disabled={!chatMode} gameMode={true} />
           <Shop />
           <Exchange hidden={true} />
-          <GameMenu />
+          <Menu />
           <GameLeaderboard hidden={true} />
           <Diagnostics hidden={true} />
         </HUDContext.Provider>

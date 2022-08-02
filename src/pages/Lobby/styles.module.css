@@ -4,13 +4,13 @@
   display: grid;
   gap: 1rem;
   width: 100%;
-  grid-template-columns: minmax(20rem,2.5fr)  minmax(48rem,5fr) minmax(15rem,2.5fr);
+  grid-template-columns:  minmax(48rem,2fr) minmax(15rem,1fr);
   grid-auto-rows: 160px;
   grid-template-areas:
-  "chat gotchi  players"
-  "chat gotchi  map"
-  "chat gotchi  map"
-  "chat gotchi  counter"
+  "gotchi  players"
+  "gotchi  map"
+  "gotchi  map"
+  "gotchi  counter"
  }
 
  .gridTile {

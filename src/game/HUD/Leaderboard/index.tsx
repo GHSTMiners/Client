@@ -9,7 +9,7 @@ interface Props {
   hidden: boolean;
 }
 
-export const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
+const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     
     type IndexedPlayers =  {[key: string]: Player} ;
     type playerObj = {playerId: number, ggems: number };
@@ -119,3 +119,5 @@ export const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     </div>
     )
 };
+
+export default GameLeaderboard

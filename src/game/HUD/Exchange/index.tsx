@@ -12,7 +12,7 @@ interface Props {
   hidden: boolean;
 }
 
-export const Exchange : React.FC<Props> = ({ hidden }) => {
+const Exchange : React.FC<Props> = ({ hidden }) => {
   type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
   type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
@@ -162,3 +162,5 @@ export const Exchange : React.FC<Props> = ({ hidden }) => {
     </>
   );
 };
+
+export default Exchange
