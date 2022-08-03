@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GotchiSVG, Chat} from "components";
+import { GotchiSVG } from "components";
 import { TraitsTile , GotchiSelector, MapSelector } from "./components";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { ProgressBar } from "react-bootstrap";
