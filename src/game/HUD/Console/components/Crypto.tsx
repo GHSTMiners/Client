@@ -77,14 +77,6 @@ const Crypto = () => {
     </div>
   );
 
-  let cryptoInventoryList = cryptoCrystals.map(function (crypto) {
-    return inventoryCrystal(
-      crypto.name,
-      cargoBalance[crypto.cryptoID],
-      crypto.image
-    );
-  });
-
   return (
     <div className={styles.cryptoContainer}>
       <div className={styles.sectionTitle}>CARGO</div>
@@ -93,7 +85,14 @@ const Crypto = () => {
         className={`${styles.cargoIcon} ${styles.iconSelected}`}
         alt={'Cargo'}
       />
-      <div className={styles.cryptoGallery}>{cryptoInventoryList}</div>
+      <div className={styles.cryptoGallery}>
+        {cryptoCrystals.map(function (crypto) {
+          return inventoryCrystal(
+            crypto.name,
+            cargoBalance[crypto.cryptoID],
+            crypto.image)
+          })}
+      </div>
     </div>
   );
 };

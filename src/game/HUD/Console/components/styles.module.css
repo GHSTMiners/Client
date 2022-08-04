@@ -267,12 +267,6 @@ body {
   width: 80%;
 }
 
-.inventoryTitle {
-  grid-area: inventory;
-  font-size: 1em;
-  justify-self: center;
-}
-
 .sectionTitle {
   font-size: 2rem;
 }

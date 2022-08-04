@@ -96,3 +96,5 @@ export type IndexedBooleanArray = {[key: string]: boolean};
 export type PricePair = { cryptoId:number, cost:number };
 
 export type CryptoEntry = {id: number, quantity: number};
+
+export type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}

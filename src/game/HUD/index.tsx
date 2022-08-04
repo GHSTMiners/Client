@@ -11,10 +11,11 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { ExplosiveEntry } from "matchmaking/Schemas";
+import { consumableItem } from "types";
 import styles from "./styles.module.css";
 
+
 // Initializing the contextHook with an empty array of consumable items
-type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 let consumablesArray : consumableItem[] = [];
 
 export const HUDContext = createContext(consumablesArray);

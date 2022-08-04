@@ -103,3 +103,9 @@ body {
 .inventoryConsumable > img {
   height: 1.5rem;
 }
+
+.inventoryTitle {
+  grid-area: inventory;
+  font-size: 1em;
+  justify-self: center;
+}
