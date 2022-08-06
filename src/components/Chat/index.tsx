@@ -4,6 +4,7 @@ import lobbySyle from "./lobby.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents";
 //import { format } from 'fecha';
 
 interface Props {
@@ -82,7 +83,7 @@ export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
     const divID = event.target.getAttribute('id');
     if (divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox'){
       if (Client.getInstance().phaserGame){
-        Client.getInstance().phaserGame.events.emit("open_chat");
+        Client.getInstance().phaserGame.events.emit( gameEvents.chat.SHOW );
       }
     }
   }

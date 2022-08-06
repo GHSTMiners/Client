@@ -13,6 +13,7 @@ import Client from "matchmaking/Client";
 import { ExplosiveEntry } from "matchmaking/Schemas";
 import { consumableItem } from "types";
 import styles from "./styles.module.css";
+import gameEvents from "game/helpers/gameEvents";
 
 
 // Initializing the contextHook with an empty array of consumable items
@@ -60,8 +61,8 @@ export const HUD = () => {
     // if the user clicks on the background, all open dialogs are closed
     const divID = event.target.getAttribute('id');
     if (divID === 'game-background'){
-      Client.getInstance().phaserGame.events.emit("close_chat");
-      Client.getInstance().phaserGame.events.emit("close_dialogs");
+      Client.getInstance().phaserGame.events.emit( gameEvents.chat.HIDE);
+      Client.getInstance().phaserGame.events.emit( gameEvents.dialogs.HIDE);
     }
   }
 
@@ -129,15 +130,15 @@ export const HUD = () => {
     Client.getInstance().phaserGame.events.on("shortcut", useShortcut );
     Client.getInstance().phaserGame.events.on("loading", handleLoadingBar );
     Client.getInstance().phaserGame.events.on("mainscene_ready", setGameReady);
-    Client.getInstance().phaserGame.events.on("open_chat",openChat);
-    Client.getInstance().phaserGame.events.on("close_chat",disableChatMode);
+    Client.getInstance().phaserGame.events.on( gameEvents.chat.SHOW,openChat);
+    Client.getInstance().phaserGame.events.on( gameEvents.chat.HIDE,disableChatMode);
 
     return () => {
       Client.getInstance().phaserGame.events.off("shortcut", useShortcut );
       Client.getInstance().phaserGame.events.off("loading", handleLoadingBar );
       Client.getInstance().phaserGame.events.off("mainscene_ready", setGameReady);
-      Client.getInstance().phaserGame.events.off("open_chat",openChat);
-      Client.getInstance().phaserGame.events.off("close_chat",disableChatMode);
+      Client.getInstance().phaserGame.events.off(gameEvents.chat.SHOW,openChat);
+      Client.getInstance().phaserGame.events.off(gameEvents.chat.HIDE,disableChatMode);
     }
 
   }, [playerConsumables]);

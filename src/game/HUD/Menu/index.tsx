@@ -7,6 +7,7 @@ import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
+import gameEvents from "game/helpers/gameEvents";
 
 const Menu = () => {
   
@@ -55,7 +56,7 @@ const Menu = () => {
       <div className={styles.playerMenuBarContainer}>
         <div className={styles.playerMenuBar}>
           <div className={styles.mainPlayerBalance}
-                onClick={ () => Client.getInstance().phaserGame.events.emit("open_exchange")  }>
+                onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
             {playerGGEMS}
           </div>

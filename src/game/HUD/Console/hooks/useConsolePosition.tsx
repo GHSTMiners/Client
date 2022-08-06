@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import Client from "matchmaking/Client";
+import gameEvents from "game/helpers/gameEvents";
 
-const useConsolePosition = (): {state: boolean, up: ()=>void, down: ()=>void, change: ()=>void} => {
+const useConsolePosition = (): {state: boolean, show: ()=>void, hide: ()=>void, change: ()=>void} => {
   const [state, setState] = useState(false);
 
   // Methods
-  const up = () => {
+  const show = () => {
     setState(true);
   }
 
-  const down = () => {
+  const hide = () => {
     setState(false);
   }
 
@@ -19,16 +20,16 @@ const useConsolePosition = (): {state: boolean, up: ()=>void, down: ()=>void, ch
 
   // Listeners to phaser events
   useEffect(()=>{
-    Client.getInstance().phaserGame.events.on("change_console_state", change );
-    Client.getInstance().phaserGame.events.on("close_dialogs", down );
+    Client.getInstance().phaserGame.events.on( gameEvents.console.CHANGE, change );
+    Client.getInstance().phaserGame.events.on( gameEvents.dialogs.HIDE , hide );
 
     return ()=> { 
-        Client.getInstance().phaserGame.events.off("change_console_state", change )
-        Client.getInstance().phaserGame.events.off("close_dialogs", down ) 
+        Client.getInstance().phaserGame.events.off( gameEvents.console.CHANGE , change )
+        Client.getInstance().phaserGame.events.off( gameEvents.dialogs.HIDE , hide ) 
     }
   },[state,change])
 
-    return { state,  up , down, change} 
+    return { state,  show , hide, change} 
 }
 
 export default useConsolePosition

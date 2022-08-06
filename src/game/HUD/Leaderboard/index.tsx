@@ -3,6 +3,7 @@ import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import { Player } from "matchmaking/Schemas/Player";
 import { GotchiSVG } from "components/GotchiSVG";
+import gameEvents from "game/helpers/gameEvents";
 
 
 interface Props {
@@ -20,8 +21,8 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
     useEffect(()=>{
-        Client.getInstance().phaserGame.events.on( "open_leaderboard", ()=> { setDisplayLeaderboard(true) });
-        Client.getInstance().phaserGame.events.on("close_leaderboard", ()=> { setDisplayLeaderboard(false) });
+        Client.getInstance().phaserGame.events.on( gameEvents.leaderboard.SHOW, ()=> { setDisplayLeaderboard(true) });
+        Client.getInstance().phaserGame.events.on( gameEvents.leaderboard.HIDE, ()=> { setDisplayLeaderboard(false) });
         if ( Client.getInstance().colyseusRoom){
             // TO DO: check if the function only gets executed once after a player leaves the room (then listeners must be cleared)
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
@@ -29,8 +30,8 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
         } 
         
         return ()=>{
-            Client.getInstance().phaserGame.events.off("open_leaderboard")
-            Client.getInstance().phaserGame.events.off("close_leaderboard")
+            Client.getInstance().phaserGame.events.off(gameEvents.leaderboard.SHOW)
+            Client.getInstance().phaserGame.events.off(gameEvents.leaderboard.HIDE)
         }
     },[players])
 

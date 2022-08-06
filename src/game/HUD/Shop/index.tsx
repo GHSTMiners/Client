@@ -7,6 +7,7 @@ import { CryptoEntry } from "types";
 // Tabs Components
 import TabUpgrades from "./tabs/TabUpgrades";
 import TabConsumables from "./tabs/TabConsumables";
+import gameEvents from "game/helpers/gameEvents";
 
 type TabsType = {
   label: string;
@@ -72,16 +73,16 @@ const Shop = () => {
     }
 
     Client.getInstance().phaserGame.events.on("exit_building", closeShop );
-    Client.getInstance().phaserGame.events.on("show_shop", openShop );
-    Client.getInstance().phaserGame.events.on("close_dialogs", closeShop );
+    Client.getInstance().phaserGame.events.on( gameEvents.shop.SHOW, openShop );
+    Client.getInstance().phaserGame.events.on( gameEvents.dialogs.HIDE, closeShop );
     Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
     Client.getInstance().phaserGame.events.on("added crypto", addCryptoToWallet )
     Client.getInstance().phaserGame.events.on("updated wallet", updateWalletBalance )
     
     return () => {
       Client.getInstance().phaserGame.events.off("exit_building", closeShop );
-      Client.getInstance().phaserGame.events.off("show_shop", openShop );
-      Client.getInstance().phaserGame.events.off("close_dialogs", closeShop );
+      Client.getInstance().phaserGame.events.off( gameEvents.shop.SHOW, openShop );
+      Client.getInstance().phaserGame.events.off( gameEvents.dialogs.HIDE, closeShop );
       Client.getInstance().phaserGame.events.off("updated balance", updatePlayerBalance )
       Client.getInstance().phaserGame.events.off("added crypto", addCryptoToWallet )
       Client.getInstance().phaserGame.events.off("updated wallet", updateWalletBalance )

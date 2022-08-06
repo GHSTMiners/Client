@@ -1,4 +1,6 @@
 import { ethers } from 'ethers';
+import gameEvents from 'game/helpers/gameEvents';
+
 export interface Tuple<T extends unknown, L extends number> extends Array<T> {
   0: T;
   length: L;
@@ -93,8 +95,25 @@ export type IndexedArray = {[key: string]: number};
 
 export type IndexedBooleanArray = {[key: string]: boolean};
 
+export type GameEventKey = keyof typeof gameEvents;
+
 export type PricePair = { cryptoId:number, cost:number };
 
 export type CryptoEntry = {id: number, quantity: number};
 
+export type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
+
+export type IndexedCrypto =  {[key: string]: CryptoObj} ;
+
 export type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
+
+export type CustomEvents = {
+  SHOW: symbol;
+  HIDE: symbol;
+  CHANGE: symbol;
+}
+
+export type GameEventList = {
+  [key:string]: CustomEvents;
+}
+

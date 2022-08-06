@@ -4,6 +4,7 @@ import * as Schema from "matchmaking/Schemas";
 import Building from "../../World/Building"
 import { Player } from ".././../World/Player";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents";
 
 export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -29,7 +30,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(activateBuildingMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
             if (this.currentBuilding.type === 'Bazaar'){
-                this.scene.game.events.emit("show_shop")
+                this.scene.game.events.emit( gameEvents.shop.SHOW )
             }
         }
     }
