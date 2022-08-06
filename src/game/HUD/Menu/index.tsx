@@ -8,14 +8,16 @@ import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 import gameEvents from "game/helpers/gameEvents";
+import useVisible from "hooks/useVisible";
 
 const Menu = () => {
   
   const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
-  const [showMenu, setShowMenu] = useState(false);
   const [currentSong , setCurrentSong] = useState<string>('');
   const [playerReady, setPlayerReady] = useState(false);
+  const menuVisibility = useVisible('menu', false); 
   const navigator = useNavigate();
+  
   
 
   const updatePlayerBalance = (quantity:number) =>{
@@ -62,7 +64,7 @@ const Menu = () => {
           </div>
           <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
 
-          <div className={styles.menuButton} onClick={()=> setShowMenu(true)}>MENU</div>
+          <div className={styles.menuButton} onClick={ menuVisibility.show }>MENU</div>
         </div>
         <div onClick={nextSong}>
           <Marquee className={styles.marquee} gradient={false} play={playerReady}>
@@ -70,9 +72,9 @@ const Menu = () => {
           </Marquee>
         </div>
       </div>
-      <div className={styles.fullScreenMenu} hidden={!showMenu}>
+      <div className={styles.fullScreenMenu} hidden={!menuVisibility.state}>
         <div className={styles.menuDialogContainer}>
-          <button className={styles.closeButton} onClick={()=>setShowMenu(false)}>X</button>
+          <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>
           <div className={styles.volumeSlider}>
             <span className={styles.menuEntryTitle}> Sound FX </span>
             <Slider />

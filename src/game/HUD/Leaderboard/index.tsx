@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Player } from "matchmaking/Schemas/Player";
 import { GotchiSVG } from "components/GotchiSVG";
 import gameEvents from "game/helpers/gameEvents";
+import useVisible from "hooks/useVisible";
 
 
 interface Props {
@@ -15,14 +16,13 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     type IndexedPlayers =  {[key: string]: Player} ;
     type playerObj = {playerId: number, ggems: number };
 
-    const [displayLeaderboard,setDisplayLeaderboard] = useState(!hidden);
+    //const [displayLeaderboard,setDisplayLeaderboard] = useState(!hidden);
+    const leaderboardVisibility = useVisible('leaderboard', !hidden); 
     const [players ] = useState<IndexedPlayers>({});
     const [sortedPlayers, setSortedPlayers] = useState<number[]>([]);
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
     useEffect(()=>{
-        Client.getInstance().phaserGame.events.on( gameEvents.leaderboard.SHOW, ()=> { setDisplayLeaderboard(true) });
-        Client.getInstance().phaserGame.events.on( gameEvents.leaderboard.HIDE, ()=> { setDisplayLeaderboard(false) });
         if ( Client.getInstance().colyseusRoom){
             // TO DO: check if the function only gets executed once after a player leaves the room (then listeners must be cleared)
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
@@ -52,7 +52,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             const sortedIds = sortedData.map( entry => entry.playerId);
             setSortedPlayers([...sortedIds]);
         }
-    },[displayLeaderboard,players,worldCryptoId])
+    },[leaderboardVisibility.state,players,worldCryptoId])
 
     // Upgrade color array for all the defined tiers
     let upgradeColors: string[] = [];
@@ -106,7 +106,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
     }
 
     return(
-    <div className={`${styles.leaderboardContainer} ${displayLeaderboard? styles.displayOn:styles.displayOff}`}>
+    <div className={`${styles.leaderboardContainer} ${leaderboardVisibility.state? styles.displayOn:styles.displayOff}`}>
        
         <div className={styles.tableHeader}>
             <div>Rank</div>

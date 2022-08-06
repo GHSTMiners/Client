@@ -8,6 +8,7 @@ import { WalletEntry } from "matchmaking/Schemas";
 import { IndexedArray } from "types";
 import useWorldCrypto from "./hooks/useWorldCrypto";
 import gameEvents from "game/helpers/gameEvents";
+import useVisible from "hooks/useVisible";
 
 interface Props {
   hidden: boolean;
@@ -15,11 +16,11 @@ interface Props {
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
 
-  const [displayExchange, setDisplayExchange] = useState<boolean>(!hidden);
   const [playerBalance, setPlayerBalance] = useState<number>(0);
   const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
   const [inputValues , setInputValues] = useState<IndexedArray>({});
   const [cryptoRecord] = useWorldCrypto();
+  const exchangeVisibility = useVisible('exchange', !hidden); 
 
   //const schema: Schema.World = Client.getInstance().colyseusRoom.state;
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
@@ -31,8 +32,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   },[cryptoRecord])
   
   useEffect(() => {
-    Client.getInstance().phaserGame.events.on( gameEvents.exchange.SHOW, openExchange );
-    Client.getInstance().phaserGame.events.on( gameEvents.dialogs.HIDE, closeExchange);
     //Wait until the player was admitted to the server
     Client.getInstance().phaserGame.events.on("joined_game", () => {
       // WALLET
@@ -50,6 +49,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       // Update balance
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
     });
+    Client.getInstance().phaserGame.events.on( gameEvents.exchange.SHOW, ()=>{setInputValues({...walletBalance})})
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -61,15 +61,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message);
     Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data);
   };
-  
-  const openExchange = () => {
-    setInputValues({...walletBalance})
-    setDisplayExchange(true);
-  }
-
-  const closeExchange = () => {
-    setDisplayExchange(false); 
-  }
   
   function updateWalletBalance (id:number, value:number){
     walletBalance[id]= value;
@@ -125,7 +116,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
     <>
       <div  id="exchange" 
             className={`${styles.exchangeContainer}
-                       ${displayExchange? styles.displayOn:styles.displayOff }`}>
+                       ${exchangeVisibility.state? styles.displayOn:styles.displayOff }`}>
           <div>
             <div className={styles.exchangeDisplayContainer}>
               <div className={styles.exchangeHeader} key={'exchangeHeader'}>
@@ -134,7 +125,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                   <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
                   {playerBalance} x GGEMS
                 </div>
-                <button className={styles.closeButton} onClick={closeExchange}>X</button>
+                <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>
               <div className={styles.coinList}> 
                 {cryptoList} 

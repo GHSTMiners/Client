@@ -6,18 +6,18 @@ import { ITEMWIDTH, ARTIFACTWIDTH } from "helpers/vars"
 import Consumables from "./components/Consumables";
 import Artifacts from "./components/Artifacts";
 import Crypto from "./components/Crypto";
-import useConsolePosition from "./hooks/useConsolePosition"
 import useConsoleButtons from "./hooks/useConsoleButtons";
+import useVisible from "hooks/useVisible";
 
 const Console = () => {
 
-  const consolePosition = useConsolePosition();
+  const consoleVisbility = useVisible('console');
   const consoleButtons = useConsoleButtons();
  
   return (
     <div
       className={`${styles.mainConsole} 
-    ${consolePosition.state ? styles.mainConsoleUp : styles.mainConsoleDown}`}
+    ${consoleVisbility.state ? styles.mainConsoleUp : styles.mainConsoleDown}`}
     >
       <div className={styles.mainConsoleContainer}>
         <div className={styles.playerButtons}>
@@ -27,14 +27,14 @@ const Console = () => {
           {consoleButtons.renderedButtons}
           <div
             className={styles.expandButton}
-            onClick={ consolePosition.change }
+            onClick={ consoleVisbility.change }
             style={{ width: ITEMWIDTH, height: ITEMWIDTH }}
           >
             <img
               src={expandIcon}
               className={`${styles.expandIncon} 
-                ${consolePosition.state ? styles.expandIconUp : styles.expandIconDown}`}
-              onClick={ consolePosition.change }
+                ${consoleVisbility.state ? styles.expandIconUp : styles.expandIconDown}`}
+              onClick={ consoleVisbility.change }
               alt={'Show/Hide Full Console'}
             />
           </div>

@@ -3,8 +3,14 @@ import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
 import { GameEventKey } from "types";
 
-const useVisible = (UIElement:GameEventKey): {state: boolean, show: ()=>void, hide: ()=>void, change: ()=>void} => {
-  const [state, setState] = useState(false);
+const useVisible = (UIElement:GameEventKey, initialState: boolean = false ): {
+    state: boolean, 
+    setState: React.Dispatch<React.SetStateAction<boolean>>,
+    show: ()=>void, 
+    hide: ()=>void, 
+    change: ()=>void
+  } => {
+  const [state, setState] = useState(initialState);
 
   // Methods
   const show = () => {
@@ -32,9 +38,9 @@ const useVisible = (UIElement:GameEventKey): {state: boolean, show: ()=>void, hi
       Client.getInstance().phaserGame.events.off(gameEvents[UIElement].CHANGE, change );
       Client.getInstance().phaserGame.events.off(gameEvents['dialogs'].HIDE, hide );
     }
-  },[state,change])
+  },[state,change,UIElement])
 
-    return { state,  show , hide, change} 
+    return { state, setState, show , hide, change} 
 }
 
 export default useVisible

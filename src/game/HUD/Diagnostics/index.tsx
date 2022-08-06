@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './styles.module.css'
 import Client from "matchmaking/Client";
 import gameEvents from 'game/helpers/gameEvents';
+import useVisible from 'hooks/useVisible';
 
 interface Props{
     hidden : boolean
@@ -9,14 +10,13 @@ interface Props{
 
 const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     const [latency,setLatency]=useState(0);
-    const [showDiagnostics,setShowDiagnostics] = useState<boolean>(!hidden);
+    const elementVisibility = useVisible('diagnostics', !hidden); 
 
     const updateLatency = (newLatency:number) => {
         setLatency(newLatency);
     }
-
+    
     const updateDisplay = (state:boolean) =>{
-        setShowDiagnostics(state);
         if (state === true){
             Client.getInstance().phaserGame.events.emit('start_polling');
         } else {
@@ -25,17 +25,20 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     }
 
     useEffect(()=>{
-        Client.getInstance().phaserGame.events.on("joined_game", () => {
-            Client.getInstance().phaserGame.events.on('new_latency', updateLatency )
-            Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.SHOW, () => updateDisplay(true) )
-            Client.getInstance().phaserGame.events.on( gameEvents.dialogs.HIDE, () => updateDisplay(false)  );
-            Client.getInstance().phaserGame.events.emit('start_polling');  // automatically start checking latency by default
-        })
+        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.SHOW , updateDisplay)
+        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.HIDE , updateDisplay)
+        Client.getInstance().phaserGame.events.on('new_latency', updateLatency )
+
+        return () =>{
+            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.SHOW , updateDisplay)
+            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.HIDE , updateDisplay)
+            Client.getInstance().phaserGame.events.off('new_latency', updateLatency )  
+        }
     },[])
 
     return(
         <div className={ `${styles.diagnosticsContainer}
-                          ${showDiagnostics? styles.displayOn:styles.displayOff }`}>
+                          ${elementVisibility.state? styles.displayOn:styles.displayOff }`}>
             Latency: {latency} ms
         </div>
     )
