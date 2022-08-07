@@ -2,82 +2,41 @@ import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
-import * as Protocol from "gotchiminer-multiplayer-protocol"
 import ggemsIcon from "assets/icons/ggems_icon.svg";
-import { WalletEntry } from "matchmaking/Schemas";
 import { IndexedArray } from "types";
-import useWorldCrypto from "./hooks/useWorldCrypto";
-import gameEvents from "game/helpers/gameEvents";
 import useVisible from "hooks/useVisible";
+import useWorldCrypto from "hooks/useWorldCrypto";
+import usePlayerCrypto from "hooks/usePlayerCrypto";
+import sellCrypto from "./helpers/sellCrypto"
 
 interface Props {
   hidden: boolean;
 }
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
-
-  const [playerBalance, setPlayerBalance] = useState<number>(0);
-  const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
-  const [inputValues , setInputValues] = useState<IndexedArray>({});
+  
+  const { walletBalance, setWalletBalance } = usePlayerCrypto();
   const [cryptoRecord] = useWorldCrypto();
   const exchangeVisibility = useVisible('exchange', !hidden); 
-
-  //const schema: Schema.World = Client.getInstance().colyseusRoom.state;
+  const [inputValues , setInputValues] = useState<IndexedArray>(walletBalance);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   // inializing cargo & wallet ballances to 0 and fetching the list of crypto from Chisel
   useEffect(()=>{
-    (Object.keys(cryptoRecord)).forEach((id)=> updateWalletBalance(+id,0) )
+    (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[cryptoRecord])
   
   useEffect(() => {
-    //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
-      // WALLET
-      Client.getInstance().ownPlayer.wallet.onAdd = (item: WalletEntry) => {
-        updateWalletBalance(item.cryptoID,item.amount);
-        Client.getInstance().phaserGame.events.emit("added crypto", item.cryptoID, item.amount);
-        item.onChange = () => {
-          updateWalletBalance(item.cryptoID,item.amount);
-          Client.getInstance().phaserGame.events.emit("updated wallet", item.cryptoID, item.amount);
-          if (world.world_crypto_id === item.cryptoID) {
-            Client.getInstance().phaserGame.events.emit("updated balance",item.amount);
-          }
-        };
-      };
-      // Update balance
-      Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
-    });
-    Client.getInstance().phaserGame.events.on( gameEvents.exchange.SHOW, ()=>{setInputValues({...walletBalance})})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const sellCrypto = (cryptoID : number, amount: number) => {
-    let message : Protocol.ExchangeCrypto = new Protocol.ExchangeCrypto();
-    message.sourceCryptoId = cryptoID;
-    message.targetCryptoId = world.world_crypto_id;
-    message.amount = amount;
-    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message);
-    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data);
-  };
-  
-  function updateWalletBalance (id:number, value:number){
-    walletBalance[id]= value;
-    setWalletBalance({...walletBalance});
-    setInputValues({...walletBalance});
-  }
-
-  const updatePlayerBalance = (quantity:number) =>{
-    setPlayerBalance(Math.round(quantity*10)/10);
-    setInputValues({...walletBalance});
-  }
+    setInputValues( c => { return {...walletBalance}} )
+  }, [walletBalance]);
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
     if (+event.target.value>=0 && +event.target.value<=walletBalance[id] ){
+      console.log(`changing input to ${event.target.value}`)
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
-      setInputValues(newValues);
+      setInputValues( newValues);
     }
   } 
 
@@ -109,8 +68,8 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   // List of coins to be displayed in the UI
   const cryptoIds = Object.keys(cryptoRecord)
   let cryptoList = cryptoIds.map(function (id) {
-    return +id===world.world_crypto_id ? '' : renderCoinEntry( +id );
-  });
+  return +id===world.world_crypto_id ? '' : renderCoinEntry(+id);//RenderCoinEntry( cryptoRecord[+id], walletBalance[+id], inputValues[+id]); 
+  });  
 
   return (
     <>
@@ -123,7 +82,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
                   <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-                  {playerBalance} x GGEMS
+                  {walletBalance[world.world_crypto_id]} x GGEMS
                 </div>
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>

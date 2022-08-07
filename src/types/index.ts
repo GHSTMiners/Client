@@ -1,5 +1,6 @@
 import { ethers } from 'ethers';
 import gameEvents from 'game/helpers/gameEvents';
+import { Player } from 'matchmaking/Schemas/Player';
 
 export interface Tuple<T extends unknown, L extends number> extends Array<T> {
   0: T;
@@ -108,12 +109,14 @@ export type IndexedCrypto =  {[key: string]: CryptoObj} ;
 export type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 
 export type CustomEvents = {
-  SHOW: symbol;
-  HIDE: symbol;
-  CHANGE: symbol;
+  [key:string]: symbol;
 }
 
 export type GameEventList = {
   [key:string]: CustomEvents;
 }
+
+export type IndexedPlayers =  {[key: string]: Player} ;
+
+export type playerObj = {playerId: number, ggems: number };
 

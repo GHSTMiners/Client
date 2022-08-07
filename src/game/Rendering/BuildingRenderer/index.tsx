@@ -11,7 +11,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
         super(scene, "BuildingRenderer")
         this.buildings = new Map<APIInterface.Building, Building>()
         this.loadBuildings();
-        this.scene.game.events.on("joined_game", this.handlePlayerAdded, this);
+        this.scene.game.events.on( gameEvents.room.JOINED, this.handlePlayerAdded, this);
         this.scene.add.existing(this);
         var self = this
         scene.input.keyboard.on('keydown-E', function() {

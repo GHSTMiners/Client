@@ -1,23 +1,27 @@
 import { CustomEvents , GameEventList } from "types"
 
 const gameEvents : GameEventList = {
-    chat: createEventList('chat'),
-    console : createEventList('console'),
-    diagnostics: createEventList('diagnostics'),
-    dialogs: createEventList('dialogs'),
-    exchange: createEventList('exchange'),
-    leaderboard : createEventList('leaderboard'),
-    menu: createEventList('menu'),
-    shop: createEventList('shop')
+    chat: createDisplayEvent('chat'),
+    console : createDisplayEvent('console'),
+    diagnostics: createDisplayEvent('diagnostics'),
+    dialogs: createDisplayEvent('dialogs'),
+    exchange: createDisplayEvent('exchange'),
+    leaderboard : createDisplayEvent('leaderboard'),
+    menu: createDisplayEvent('menu'),
+    room: { JOINED: Symbol('JOINED_GAME') },
+    shop: createDisplayEvent('shop'),
+    wallet: { ADDED: Symbol('ADDED_CRYPTO'), 
+              UPDATED: Symbol('UPDATED_CRYPTO')
+            }
 }
 
-function createEventList (name:string){
-    const newCustomEvents : CustomEvents = {
+function createDisplayEvent (name:string){
+    const newDisplayEvents : CustomEvents = {
         SHOW: Symbol(`SHOW_${name.toUpperCase}`),
         HIDE: Symbol(`HIDE_${name.toUpperCase}`),
         CHANGE: Symbol(`CHANGE_${name.toUpperCase}_STATE`),
     }
-    return newCustomEvents
+    return newDisplayEvents
 }
 
 export default gameEvents

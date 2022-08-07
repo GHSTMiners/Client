@@ -47,7 +47,7 @@ const Menu = () => {
 
   useEffect( () => {
     Client.getInstance().phaserGame.events.on("newSong", updateMusicTrack)
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
+    Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, () => {
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
       setPlayerReady(true);
     });

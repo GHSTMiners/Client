@@ -1,40 +1,30 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
-import { Player } from "matchmaking/Schemas/Player";
-import { GotchiSVG } from "components/GotchiSVG";
-import gameEvents from "game/helpers/gameEvents";
 import useVisible from "hooks/useVisible";
-
+import { IndexedPlayers, playerObj } from "types";
+import renderPlayerInfo from "./helpers/renderPlayerInfo";
 
 interface Props {
-  hidden: boolean;
-}
+    hidden: boolean;
+  }
+  
+  const GameLeaderboard : React.FC<Props> = ({ hidden }) => { 
 
-const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
-    
-    type IndexedPlayers =  {[key: string]: Player} ;
-    type playerObj = {playerId: number, ggems: number };
-
-    //const [displayLeaderboard,setDisplayLeaderboard] = useState(!hidden);
     const leaderboardVisibility = useVisible('leaderboard', !hidden); 
-    const [players ] = useState<IndexedPlayers>({});
+    const [ players ] = useState<IndexedPlayers>({});
     const [sortedPlayers, setSortedPlayers] = useState<number[]>([]);
+    //const {sortedPlayers} = useSortPlayers(players);
     const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
 
     useEffect(()=>{
         if ( Client.getInstance().colyseusRoom){
-            // TO DO: check if the function only gets executed once after a player leaves the room (then listeners must be cleared)
             Client.getInstance().colyseusRoom.state.players.onAdd = ( newPlayer, key ) => { players[newPlayer.gotchiID]=newPlayer } ;
             Client.getInstance().colyseusRoom.state.players.onChange = (modPlayer , key )=>{ players[modPlayer.gotchiID]=modPlayer } 
         } 
-        
-        return ()=>{
-            Client.getInstance().phaserGame.events.off(gameEvents.leaderboard.SHOW)
-            Client.getInstance().phaserGame.events.off(gameEvents.leaderboard.HIDE)
-        }
     },[players])
 
+    
     // Hook to sort players depending on their score
     useEffect(()=>{
         // Sorting players ids based on their GGEMS balance
@@ -54,57 +44,6 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
         }
     },[leaderboardVisibility.state,players,worldCryptoId])
 
-    // Upgrade color array for all the defined tiers
-    let upgradeColors: string[] = [];
-    upgradeColors.push('#7f63ff');
-    upgradeColors.push('#33bacc');
-    upgradeColors.push('#59bcff');
-    upgradeColors.push('#ffc36b');
-    upgradeColors.push('#ff96ff');
-    upgradeColors.push('#51ffa8');
-
-    function renderUpgradeElement(tier: number, index: number) {
-        return (
-            <div className={styles.upgradeElement}
-                 style={{ backgroundColor: upgradeColors[tier] }}
-                 key={`upgradeTier${index}`}>
-            </div>
-        );
-    }
-
-    const renderPlayerInfo = (id:number) => {
-        let playerGGEMS = Math.round(players[id].wallet.get(worldCryptoId)?.amount as number);
-        const playerRank = sortedPlayers.findIndex( element => element===id) +1 ;
-        const playerUpgrades = players[id].upgrades;
-        let upgradesBar: JSX.Element[] = [];
-        playerUpgrades.forEach( (upgrade,index) => upgradesBar.push(renderUpgradeElement(upgrade.tier,index)) ) ;
-    
-        return(
-        <div className={styles.playerEntry} key={id}>
-            <div>
-                {playerRank}
-            </div>            
-            <div className={styles.gotchi}>
-                {/*players[id].name*/}
-                <div className={styles.gotchiPreviewContainer}>
-                <GotchiSVG
-                        side={0}
-                        tokenId={players[id].gotchiID.toString()}
-                        options={{ animate: false, removeBg: true }}
-                      />
-                </div>
-                {players[id].name}
-            </div>
-            <div>
-                {playerGGEMS? playerGGEMS: 0 } 
-            </div>
-            <div className={styles.upgradeBar}>
-                {upgradesBar}
-            </div>
-        </div>
-        )
-    }
-
     return(
     <div className={`${styles.leaderboardContainer} ${leaderboardVisibility.state? styles.displayOn:styles.displayOff}`}>
        
@@ -115,7 +54,7 @@ const GameLeaderboard : React.FC<Props> = ({ hidden }) => {
             <div>Upgrades</div>
         </div>
 
-        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id)) }
+        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers)) }
 
     </div>
     )

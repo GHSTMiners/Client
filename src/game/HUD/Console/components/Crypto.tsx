@@ -5,6 +5,7 @@ import cargoIcon from "assets/hud/cargo_icon.svg";
 import { useEffect, useState } from "react";
 import { CargoEntry } from "matchmaking/Schemas";
 import { IndexedArray } from "types";
+import gameEvents from "game/helpers/gameEvents";
 
 const Crypto = () => {  
   type CryptoArray = { cryptoID: number; name: string; image: string };
@@ -56,10 +57,10 @@ const Crypto = () => {
     }
 
     //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", addCargoListeners )
+    Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED , addCargoListeners )
 
     return () =>{
-      Client.getInstance().phaserGame.events.off("joined_game", addCargoListeners)
+      Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, addCargoListeners)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

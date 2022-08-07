@@ -104,10 +104,10 @@ export const HUD = () => {
       }
     }
     //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", playerExplosiveListeners);
+    Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, playerExplosiveListeners);
 
     return () => {
-      Client.getInstance().phaserGame.events.off("joined_game", playerExplosiveListeners);
+      Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED , playerExplosiveListeners);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

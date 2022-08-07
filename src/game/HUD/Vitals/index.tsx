@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import fuelBar from "assets/hud/fuel_bar.svg";
 import healthBar from "assets/hud/health_bar.svg";
 import cargoBar from "assets/hud/cargo_bar.svg";
+import gameEvents from "game/helpers/gameEvents";
 
 const Vitals = () => {
   const [fuel, setFuel] = useState("14rem");
@@ -18,7 +19,7 @@ const Vitals = () => {
     // Declaring local state variable, since useState does not update when called from inside an event listener
     let lowFuelHookState = false;
     //Wait until the player was admitted to the server
-    Client.getInstance().phaserGame.events.on("joined_game", () => {
+    Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, () => {
       //Update the health, fuel and cargo bar
       Client.getInstance().ownPlayer.vitals.forEach((vital) => {
         if (vital.name === "Fuel") {
