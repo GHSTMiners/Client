@@ -108,13 +108,9 @@ export type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
 export type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 
-export type CustomEvents = {
-  [key:string]: symbol;
-}
+export type CustomEvents = { [key:string]: symbol }
 
-export type GameEventList = {
-  [key:string]: CustomEvents;
-}
+export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 

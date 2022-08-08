@@ -8,21 +8,25 @@ import { useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 import gameEvents from "game/helpers/gameEvents";
+import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
 
 const Menu = () => {
   
-  const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
+  //const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
+  //const { walletBalance } = usePlayerCrypto();
   const [currentSong , setCurrentSong] = useState<string>('');
-  const [playerReady, setPlayerReady] = useState(false);
+  const [playerReady] = useState(false);
   const menuVisibility = useVisible('menu', false); 
   const navigator = useNavigate();
+  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   
   
-
+/*
   const updatePlayerBalance = (quantity:number) =>{
     setPlayerGGEMS(Math.round(quantity*10)/10);
   }
+*/
 
   const updateMusicTrack = (songName:string)=>{
     setCurrentSong(songName);
@@ -47,12 +51,14 @@ const Menu = () => {
 
   useEffect( () => {
     Client.getInstance().phaserGame.events.on("newSong", updateMusicTrack)
+    /*
     Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, () => {
       Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
       setPlayerReady(true);
     });
+    */
   },[]);
-
+//
   return (
     <>
       <div className={styles.playerMenuBarContainer}>
@@ -60,7 +66,7 @@ const Menu = () => {
           <div className={styles.mainPlayerBalance}
                 onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-            {playerGGEMS}
+            {(world.world_crypto_id)? 'TO DO...': '0'}
           </div>
           <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
 

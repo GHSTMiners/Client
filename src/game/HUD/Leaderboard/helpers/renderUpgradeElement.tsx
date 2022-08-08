@@ -1,15 +1,14 @@
 import styles from "../styles.module.css"
 
-// Upgrade color array for all the defined tiers
-let upgradeColors: string[] = [];
-upgradeColors.push('#7f63ff');
-upgradeColors.push('#33bacc');
-upgradeColors.push('#59bcff');
-upgradeColors.push('#ffc36b');
-upgradeColors.push('#ff96ff');
-upgradeColors.push('#51ffa8');
-
 function renderUpgradeElement(tier: number, index: number) {
+    let upgradeColors: string[] = [ 
+        '#7f63ff',
+        '#33bacc',
+        '#59bcff',
+        '#ffc36b',
+        '#ff96ff',
+        '#51ffa8'];
+
     return (
         <div className={styles.upgradeElement}
              style={{ backgroundColor: upgradeColors[tier] }}

@@ -64,13 +64,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
       </div>
     )
   }
-
-  // List of coins to be displayed in the UI
-  const cryptoIds = Object.keys(cryptoRecord)
-  let cryptoList = cryptoIds.map(function (id) {
-  return +id===world.world_crypto_id ? '' : renderCoinEntry(+id);//RenderCoinEntry( cryptoRecord[+id], walletBalance[+id], inputValues[+id]); 
-  });  
-
+     
   return (
     <>
       <div  id="exchange" 
@@ -87,7 +81,9 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>
               <div className={styles.coinList}> 
-                {cryptoList} 
+                {Object.keys(cryptoRecord).map( function (id) {
+                    return +id===world.world_crypto_id ? '' : renderCoinEntry(+id);
+                  })} 
               </div>
             </div>
           </div>

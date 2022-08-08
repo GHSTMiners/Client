@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import renderConsumable from "../utils/renderConsumable";
+import renderConsumable from "../helpers/renderConsumable";
 import { HUDContext } from "game/HUD";
 
 const useConsoleButtons = () => {
