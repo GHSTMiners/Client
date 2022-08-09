@@ -116,3 +116,5 @@ export type IndexedPlayers =  {[key: string]: Player} ;
 
 export type playerObj = {playerId: number, ggems: number };
 
+export type playerContext = { consumables:consumableItem[] , wallet: IndexedArray}
+

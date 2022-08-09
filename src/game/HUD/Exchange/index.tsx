@@ -1,13 +1,13 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { IndexedArray } from "types";
 import useVisible from "hooks/useVisible";
 import useWorldCrypto from "hooks/useWorldCrypto";
-import usePlayerCrypto from "hooks/usePlayerCrypto";
 import sellCrypto from "./helpers/sellCrypto"
+import { HUDContext } from "..";
 
 interface Props {
   hidden: boolean;
@@ -15,24 +15,26 @@ interface Props {
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
   
-  const { walletBalance, setWalletBalance } = usePlayerCrypto();
+  //const { playerBalance.wallet, setWalletBalance } = usePlayerCrypto();
+  const playerBalance = useContext(HUDContext);
   const [cryptoRecord] = useWorldCrypto();
   const exchangeVisibility = useVisible('exchange', !hidden); 
-  const [inputValues , setInputValues] = useState<IndexedArray>(walletBalance);
+  const [inputValues , setInputValues] = useState<IndexedArray>(playerBalance.wallet);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
+  /*
   // inializing cargo & wallet ballances to 0 and fetching the list of crypto from Chisel
   useEffect(()=>{
     (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[cryptoRecord])
+  },[cryptoRecord])*/
   
   useEffect(() => {
-    setInputValues( c => { return {...walletBalance}} )
-  }, [walletBalance]);
+    setInputValues( c => { return {...playerBalance.wallet}} )
+  }, [playerBalance.wallet]);
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
-    if (+event.target.value>=0 && +event.target.value<=walletBalance[id] ){
+    if (+event.target.value>=0 && +event.target.value<=playerBalance.wallet[id] ){
       console.log(`changing input to ${event.target.value}`)
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
@@ -41,7 +43,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   } 
 
   const renderCoinEntry = ( id: number ) => {
-    const quantity = walletBalance[id];
+    const quantity = playerBalance.wallet[id];
     const hasCoins = quantity>0;
     const inputTokens = inputValues[id];
     return(
@@ -76,7 +78,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
                   <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-                  {walletBalance[world.world_crypto_id]} x GGEMS
+                  {playerBalance.wallet[world.world_crypto_id]} x GGEMS
                 </div>
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
@@ -10,6 +10,7 @@ import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 import gameEvents from "game/helpers/gameEvents";
 import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
+import { HUDContext } from "..";
 
 const Menu = () => {
   
@@ -19,6 +20,7 @@ const Menu = () => {
   const [playerReady] = useState(false);
   const menuVisibility = useVisible('menu', false); 
   const navigator = useNavigate();
+  const playerBalance = useContext(HUDContext);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   
   
@@ -66,7 +68,7 @@ const Menu = () => {
           <div className={styles.mainPlayerBalance}
                 onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-            {(world.world_crypto_id)? 'TO DO...': '0'}
+            {(world.world_crypto_id)? playerBalance.wallet[world.world_crypto_id]: '0'}
           </div>
           <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
 

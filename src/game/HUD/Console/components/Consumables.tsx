@@ -6,18 +6,18 @@ import { ITEMWIDTH } from "helpers/vars"
 
 const Consumables = () => {
 
-  const playerConsumables = useContext(HUDContext);
+  const playerBalance = useContext(HUDContext);
 
   // rendering function for each consumable  slot 
   const renderConsumable = (index:number) =>{
-    const isFilled = (playerConsumables.length >= index);
+    const isFilled = (playerBalance.consumables.length >= index);
     return (
     <SquareButton size={ITEMWIDTH} 
-                  quantity={ isFilled ? playerConsumables[index-1].quantity : -1 }
+                  quantity={ isFilled ? playerBalance.consumables[index-1].quantity : -1 }
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>
-        <img src={ isFilled ? playerConsumables[index-1].image : ''}  alt={ isFilled ? playerConsumables[index-1].name : 'empty'}/>
+        <img src={ isFilled ? playerBalance.consumables[index-1].image : ''}  alt={ isFilled ? playerBalance.consumables[index-1].name : 'empty'}/>
       </div>
     </SquareButton>
     );
