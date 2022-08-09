@@ -3,7 +3,7 @@ import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import { ShopContext } from "..";
+import { HUDContext } from "game/HUD";
 
 
 const TabConsumables: FC<{}> = () => {
@@ -15,8 +15,8 @@ const TabConsumables: FC<{}> = () => {
 
   // global variables
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const contextObj = useContext(ShopContext);
-  const playerDoekoes = contextObj.currencyBalance;
+  const playerBalance = useContext(HUDContext);
+  const playerDoekoes = playerBalance.wallet[world.world_crypto_id];
 
   // state hooks
   const [ shopItemArray, setShopItemArray ] = useState<indexedShopItem>({});

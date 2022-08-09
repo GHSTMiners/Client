@@ -27,7 +27,7 @@ const Vitals = () => {
             let remFuelValue: number =
               (vital.currentValue / vital.filledValue) * 14;
             if (remFuelValue<2 && lowFuelHookState === false){ 
-              Client.getInstance().phaserGame.events.emit('LowFuelWarning')
+              Client.getInstance().phaserGame.events.emit( gameEvents.vitals.LOWFUEL )
               lowFuelHookState = true;
               setLowFuel(true);
             } else{

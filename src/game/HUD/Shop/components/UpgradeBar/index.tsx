@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { ShopContext } from "game/HUD/Shop";
+import gameEvents from "game/helpers/gameEvents";
 
 interface Props {
   upgradeId:number;
@@ -105,10 +106,10 @@ const UpgradeBar: React.FC<Props> = ({
       setUpgradeLevel(tier);
     }
   }
-  Client.getInstance().phaserGame.events.on("upgraded tier", updateUpgradeTier )
+  Client.getInstance().phaserGame.events.on( gameEvents.shop.UPGRADED , updateUpgradeTier )
 
   return ()=>{
-    Client.getInstance().phaserGame.events.off("upgraded tier", updateUpgradeTier )
+    Client.getInstance().phaserGame.events.off( gameEvents.shop.UPGRADED , updateUpgradeTier )
   }
  },[upgradeId])
 

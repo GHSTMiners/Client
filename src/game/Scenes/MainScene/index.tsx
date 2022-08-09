@@ -7,6 +7,7 @@ import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";
 import DiagnosticsManager from "game/Management/DiagnosticsManager";
+import gameEvents from "game/helpers/gameEvents";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -26,7 +27,7 @@ export default class MainScene extends Phaser.Scene {
     this.excavationManager = new ExcavationManager(this);
     this.soundFXManager = new SoundFXManager(this);
     this.diagnosticsManager = new DiagnosticsManager(this);
-    this.game.events.emit("mainscene_ready");
+    this.game.events.emit( gameEvents.phaser.MAINSCENE);
     this.sound.pauseOnBlur = false
     this.cameras.main.zoom = 0.75
 

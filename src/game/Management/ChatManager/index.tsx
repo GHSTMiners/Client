@@ -1,5 +1,6 @@
 import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents"
 
 export default class ChatManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -10,9 +11,9 @@ export default class ChatManager extends Phaser.GameObjects.GameObject {
 
     private handleMessage(notification : Protocol.MessageFromServer) {
         if (notification.systemMessage) {
-            Client.getInstance().phaserGame.events.emit('system_message', notification)
+            Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT , notification)
         } else {
-            Client.getInstance().phaserGame.events.emit('chat_message', notification)
+            Client.getInstance().phaserGame.events.emit( gameEvents.chat.MESSAGE , notification)
         } 
     }
 }

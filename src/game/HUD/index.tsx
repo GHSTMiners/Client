@@ -11,7 +11,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { ExplosiveEntry } from "matchmaking/Schemas";
-import { consumableItem, playerContext } from "types";
+import { consumableItem, inventoryExplosives, playerContext } from "types";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
 import usePlayerCrypto from "hooks/usePlayerCrypto";
@@ -22,11 +22,7 @@ import useWorldCrypto from "hooks/useWorldCrypto";
 
 export const HUDContext = createContext<playerContext>({consumables: [], wallet: {}});
 
-
 export const HUD = () => {  
-
-  type inventoryExplosives = Record< number, consumableItem>; // ( explosiveID , quantity }
-
 
   // extracting info from Chisel about all possible explosives
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
@@ -46,8 +42,7 @@ export const HUD = () => {
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   let [playerConsumables, setPlayerConsumables] = useState<consumableItem[]>([]);
   const [chatMode, setChatMode] = useState<boolean>(false)
-  //const [hideChat, setHideChat] = useState<boolean>(largeChat);
-
+  
   const [cryptoRecord] = useWorldCrypto();
   const {walletBalance, setWalletBalance} = usePlayerCrypto();
   useEffect(()=>{
@@ -133,16 +128,16 @@ export const HUD = () => {
       }
     }
 
-    Client.getInstance().phaserGame.events.on("shortcut", useShortcut );
-    Client.getInstance().phaserGame.events.on("loading", handleLoadingBar );
-    Client.getInstance().phaserGame.events.on("mainscene_ready", setGameReady);
+    Client.getInstance().phaserGame.events.on( gameEvents.console.SHORTCUT, useShortcut );
+    Client.getInstance().phaserGame.events.on( gameEvents.phaser.LOADING, handleLoadingBar );
+    Client.getInstance().phaserGame.events.on( gameEvents.phaser.MAINSCENE, setGameReady);
     Client.getInstance().phaserGame.events.on( gameEvents.chat.SHOW,openChat);
     Client.getInstance().phaserGame.events.on( gameEvents.chat.HIDE,disableChatMode);
 
     return () => {
-      Client.getInstance().phaserGame.events.off("shortcut", useShortcut );
-      Client.getInstance().phaserGame.events.off("loading", handleLoadingBar );
-      Client.getInstance().phaserGame.events.off("mainscene_ready", setGameReady);
+      Client.getInstance().phaserGame.events.off(gameEvents.console.SHORTCUT, useShortcut );
+      Client.getInstance().phaserGame.events.off(gameEvents.phaser.LOADING, handleLoadingBar );
+      Client.getInstance().phaserGame.events.off(gameEvents.phaser.MAINSCENE, setGameReady);
       Client.getInstance().phaserGame.events.off(gameEvents.chat.SHOW,openChat);
       Client.getInstance().phaserGame.events.off(gameEvents.chat.HIDE,disableChatMode);
     }

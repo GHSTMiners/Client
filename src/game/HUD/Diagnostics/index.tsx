@@ -18,21 +18,21 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     
     const updateDisplay = (state:boolean) =>{
         if (state === true){
-            Client.getInstance().phaserGame.events.emit('start_polling');
+            Client.getInstance().phaserGame.events.emit( gameEvents.diagnostics.START );
         } else {
-            Client.getInstance().phaserGame.events.emit('stop_polling');
+            Client.getInstance().phaserGame.events.emit( gameEvents.diagnostics.STOP );
         }
     }
 
     useEffect(()=>{
         Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.SHOW , updateDisplay)
         Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.HIDE , updateDisplay)
-        Client.getInstance().phaserGame.events.on('new_latency', updateLatency )
+        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.LATENCY , updateLatency )
 
         return () =>{
             Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.SHOW , updateDisplay)
             Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.HIDE , updateDisplay)
-            Client.getInstance().phaserGame.events.off('new_latency', updateLatency )  
+            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.LATENCY, updateLatency )  
         }
     },[])
 

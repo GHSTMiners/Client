@@ -7,6 +7,7 @@ import UpgradeBar from "game/HUD/Shop/components/UpgradeBar";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 import { Upgrade } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents";
 
 export type PricePair = { cryptoId:number, cost:number };
   
@@ -97,7 +98,7 @@ const TabUpgrades: FC<{}> = () => {
     Client.getInstance().ownPlayer.upgrades.forEach( upgrade => {
       upgrade.onChange = () =>{
         upgradePlayerTier(upgrade.id,upgrade.tier);
-        Client.getInstance().phaserGame.events.emit("upgraded tier", upgrade.id, upgrade.tier);
+        Client.getInstance().phaserGame.events.emit( gameEvents.shop.UPGRADED , upgrade.id, upgrade.tier);
       }
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps

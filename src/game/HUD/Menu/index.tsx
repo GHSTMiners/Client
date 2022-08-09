@@ -14,35 +14,26 @@ import { HUDContext } from "..";
 
 const Menu = () => {
   
-  //const [playerGGEMS, setPlayerGGEMS] = useState<number>(0);
-  //const { walletBalance } = usePlayerCrypto();
   const [currentSong , setCurrentSong] = useState<string>('');
   const [playerReady] = useState(false);
   const menuVisibility = useVisible('menu', false); 
   const navigator = useNavigate();
   const playerBalance = useContext(HUDContext);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  
-  
-/*
-  const updatePlayerBalance = (quantity:number) =>{
-    setPlayerGGEMS(Math.round(quantity*10)/10);
-  }
-*/
 
   const updateMusicTrack = (songName:string)=>{
     setCurrentSong(songName);
   }
 
   const nextSong = () => {
-    Client.getInstance().phaserGame.events.emit('next song')
+    Client.getInstance().phaserGame.events.emit( gameEvents.music.NEXT )
   }
 
   const updateMusicVolume = (volume:number | number[]) =>{
     if (typeof volume === "number") {
-      Client.getInstance().phaserGame.events.emit('music volume',volume) 
+      Client.getInstance().phaserGame.events.emit( gameEvents.music.VOLUME ,volume) 
     } else {
-      Client.getInstance().phaserGame.events.emit('music volume',volume[0]) 
+      Client.getInstance().phaserGame.events.emit( gameEvents.music.VOLUME ,volume[0]) 
     } 
   }
 
@@ -52,13 +43,7 @@ const Menu = () => {
    }
 
   useEffect( () => {
-    Client.getInstance().phaserGame.events.on("newSong", updateMusicTrack)
-    /*
-    Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, () => {
-      Client.getInstance().phaserGame.events.on("updated balance", updatePlayerBalance )
-      setPlayerReady(true);
-    });
-    */
+    Client.getInstance().phaserGame.events.on( gameEvents.music.NEW, updateMusicTrack)
   },[]);
 //
   return (

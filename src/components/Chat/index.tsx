@@ -90,10 +90,10 @@ export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
 
   useEffect(()=>{
     if (gameMode) {
-        Client.getInstance().phaserGame.events.on('chat_message',(notification: Protocol.MessageFromServer)=>{
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE,(notification: Protocol.MessageFromServer)=>{
           setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
         })
-        Client.getInstance().phaserGame.events.on('system_message',(notification: Protocol.MessageFromServer)=>{
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT,(notification: Protocol.MessageFromServer)=>{
           if (notification.msg) {
             setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
           }

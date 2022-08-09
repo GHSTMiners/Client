@@ -27,7 +27,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
       console.log(
         `Player entered the game with Aavegotchi ID: ${player.gotchiID}`
       );
-      Client.getInstance().phaserGame.events.emit('system_message',`[${player.name}] entered the room`)
+      Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT,`[${player.name}] entered the room`)
 
       let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher(
         player.gotchiID
@@ -71,7 +71,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
 
   private removePlayerSprite(player: Schema.Player) {
     console.log(`Player left the game with Aavegotchi ID: ${player.gotchiID}`);
-    Client.getInstance().phaserGame.events.emit('system_message',`[${player.name}] left the room`)
+    Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT ,`[${player.name}] left the room`)
 
     let playerSprite: Player | undefined = this.playerSprites.get(
       player.gotchiID

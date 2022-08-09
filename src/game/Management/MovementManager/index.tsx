@@ -80,16 +80,16 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ONE)?.isDown) {
-            this.scene.game.events.emit("shortcut",1)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 1 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TWO)?.isDown) {
-            this.scene.game.events.emit("shortcut",2)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 2 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.THREE)?.isDown) {
-            this.scene.game.events.emit("shortcut",3)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 3 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown) {
-            this.scene.game.events.emit("shortcut",4)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 4 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isDown) {
             this.scene.game.events.emit( gameEvents.leaderboard.SHOW )
