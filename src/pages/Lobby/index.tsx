@@ -1,19 +1,16 @@
-import styles from "./styles.module.css";
-import { GotchiSVG, TraitsTile } from "components";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { GotchiSVG } from "components";
+import { TraitsTile , GotchiSelector, MapSelector } from "./components";
 import { updateAavegotchis, useWeb3 } from "web3/context";
-import { GotchiSelectorVertical } from "components";
-import gotchiLoading from "assets/gifs/loadingBW.gif";
 import { ProgressBar } from "react-bootstrap";
-import { AavegotchiObject, IndexedArray } from "types";
-import { PlayerCounter } from "components/PlayerCounter";
-import Chat from "components/Chat";
-import MapSelector from "components/MapSelector";
+import { AavegotchiObject, IndexedArray, IndexedBooleanArray } from "types";
+import { PlayerCounter } from "pages/Lobby/components/PlayerCounter";
 import Client from "matchmaking/Client";
 import * as Schema from "matchmaking/Schemas";
-import { useNavigate } from "react-router-dom";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
-import { IndexedBooleanArray } from "types";
+import gotchiLoading from "assets/gifs/loadingBW.gif";
+import styles from "./styles.module.css";
 
 
 
@@ -170,7 +167,7 @@ const Lobby = (): JSX.Element => {
       <div className={styles.basicGrid}>
         <div className={`${styles.gotchiSelection} ${styles.gridTile}`}>
           <div className={styles.gotchiSelectionBar}>
-            <GotchiSelectorVertical
+            <GotchiSelector
                   initialGotchiId={selectedAavegotchiId}
                   gotchis={usersAavegotchis}
                   selectGotchi={handleSelect}
@@ -226,11 +223,6 @@ const Lobby = (): JSX.Element => {
 
         <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
           <PlayerCounter playerSeats={playerSeats} totalPlayers={5} />
-        </div>
-        
-         
-        <div className={`${styles.gridTile} ${styles.chat}`}>
-          <Chat  disabled={false} gameMode={false}/>
         </div>
                     
       </div>

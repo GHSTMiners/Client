@@ -1,5 +1,6 @@
 import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents";
 export default class MovementManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "MovementManager")
@@ -7,8 +8,8 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.addAllKeys();
         this.setGameMode();
         // Adding event related actions to open/close the chat with a mouse click
-        this.scene.game.events.on("open_chat",  ()=>{this.setChatMode()} );
-        this.scene.game.events.on("close_chat", ()=>{this.setGameMode()} );
+        this.scene.game.events.on( gameEvents.chat.SHOW,  ()=>{this.setChatMode()} );
+        this.scene.game.events.on( gameEvents.chat.HIDE, ()=>{this.setGameMode()} );
     }
 
     private addAllKeys=()=>{
@@ -79,43 +80,43 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ONE)?.isDown) {
-            this.scene.game.events.emit("shortcut",1)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 1 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TWO)?.isDown) {
-            this.scene.game.events.emit("shortcut",2)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 2 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.THREE)?.isDown) {
-            this.scene.game.events.emit("shortcut",3)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 3 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown) {
-            this.scene.game.events.emit("shortcut",4)
+            this.scene.game.events.emit( gameEvents.console.SHORTCUT, 4 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isDown) {
-            this.scene.game.events.emit("open_leaderboard")
+            this.scene.game.events.emit( gameEvents.leaderboard.SHOW )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isUp) {
-            this.scene.game.events.emit("close_leaderboard")
+            this.scene.game.events.emit( gameEvents.leaderboard.HIDE )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
-            this.scene.game.events.emit("close_dialogs")
+            this.scene.game.events.emit( gameEvents.dialogs.HIDE )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.Q)?.isDown) {
-            this.scene.game.events.emit("open_exchange")
+            this.scene.game.events.emit( gameEvents.exchange.SHOW )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.SPACE)?.isDown) {
-            this.scene.game.events.emit("change_console_state")
+            this.scene.game.events.emit( gameEvents.console.CHANGE )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.F3)?.isDown) {
-            this.scene.game.events.emit("open_diagnostics")
+            this.scene.game.events.emit( gameEvents.diagnostics.SHOW )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.T)?.isDown) {
-            this.scene.game.events.emit("open_chat")
+            this.scene.game.events.emit( gameEvents.chat.SHOW )
         }
     }
 
     private keysChangedChatting() {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
-            this.scene.game.events.emit("close_chat")
+            this.scene.game.events.emit( gameEvents.chat.HIDE )
         }        
     }
  

@@ -6,6 +6,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
 import Jetpack from "../Jetpack";
 import Jackhammer from "../Jackhammer";
+import gameEvents from "game/helpers/gameEvents";
 
 export class Player extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, player: Schema.Player) {
@@ -138,7 +139,7 @@ export class Player extends Phaser.GameObjects.Container {
 
   public hideMessage() {
     this.playerMessage.setVisible(false)
-    this.scene.game.events.emit("exit_building",this.currentBuilding) // to close shop window automatically
+    this.scene.game.events.emit( gameEvents.buildings.EXIT,this.currentBuilding) // to close shop window automatically
     this.currentBuilding = '';
   }
 

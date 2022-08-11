@@ -3,7 +3,7 @@ import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import LoadingScene from "game/Scenes/LoadingScene";
 import MainScene from "game/Scenes/MainScene";
-import { HUD } from "components";
+import { HUD } from "game/HUD";
 
 export default class Play extends React.Component {
   componentDidMount() {

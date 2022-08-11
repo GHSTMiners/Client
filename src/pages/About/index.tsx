@@ -1,9 +1,8 @@
-import styles from "./styles.module.css";
-import { GotchiSVG } from "components";
-import { FaTwitter, FaYoutube } from "react-icons/fa";
-import { FaDiscord } from "react-icons/fa";
 import { useEffect } from "react";
+import { GotchiSVG } from "components";
 import { updateAavegotchis, useWeb3 } from "web3/context";
+import { FaTwitter, FaYoutube, FaDiscord } from "react-icons/fa";
+import styles from "./styles.module.css";
 
 const About = (): JSX.Element => {
 

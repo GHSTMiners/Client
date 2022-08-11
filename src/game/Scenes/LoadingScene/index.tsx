@@ -1,6 +1,7 @@
 import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import * as Chisel from "chisel-api-interface";
+import gameEvents from "game/helpers/gameEvents";
 
 
 export default class LoadingScene extends Phaser.Scene {
@@ -120,7 +121,7 @@ export default class LoadingScene extends Phaser.Scene {
 
   updateBar(percentage: number) {
     percentage = percentage * 100;
-    Client.getInstance().phaserGame.events.emit("loading",percentage.toFixed(2));
+    Client.getInstance().phaserGame.events.emit(gameEvents.phaser.LOADING,percentage.toFixed(2));
   }
 
   complete() {

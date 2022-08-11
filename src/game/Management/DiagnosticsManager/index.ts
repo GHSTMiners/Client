@@ -1,5 +1,6 @@
 import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import gameEvents from "game/helpers/gameEvents"
 
 export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -7,8 +8,8 @@ export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
         this.lastLatency = 0
         this.lastPongRequest = new Date()
         Client.getInstance().messageRouter.addRoute(Protocol.Pong, this.handleMessage.bind(this))
-        Client.getInstance().phaserGame.events.on('start_polling',this.startPolling.bind(this))
-        Client.getInstance().phaserGame.events.on('stop_polling',this.stopPolling.bind(this))
+        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.START ,this.startPolling.bind(this))
+        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.STOP ,this.stopPolling.bind(this))
     }
 
     public requestPong() {
@@ -28,8 +29,7 @@ export default class DiagnosticsManager extends Phaser.GameObjects.GameObject {
 
     private handleMessage(notification : Protocol.Pong) {
         this.lastLatency = (new Date()).getTime() - this.lastPongRequest.getTime() 
-        Client.getInstance().phaserGame.events.emit('new_latency', this.lastLatency)
-        //this.emit(DiagnosticsManager.NEW_LATENCY, this.lastLatency) // issues accessing the class symbol state before initiating the class, to be changed when REDUX is implemented
+        Client.getInstance().phaserGame.events.emit( gameEvents.diagnostics.LATENCY, this.lastLatency)
     }
 
     static readonly NEW_LATENCY: unique symbol = Symbol();
