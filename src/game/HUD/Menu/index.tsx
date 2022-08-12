@@ -2,20 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
+import gearIcon from "assets/icons/gear.svg";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
-import Marquee from "react-fast-marquee";
-import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
+import Marquee from "react-easy-marquee";
+//import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 import gameEvents from "game/helpers/gameEvents";
 import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
+import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import { HUDContext } from "..";
 
 const Menu = () => {
   
   const [currentSong , setCurrentSong] = useState<string>('');
-  const [playerReady] = useState(false);
   const menuVisibility = useVisible('menu', false); 
   const navigator = useNavigate();
   const playerBalance = useContext(HUDContext);
@@ -45,26 +46,40 @@ const Menu = () => {
   useEffect( () => {
     Client.getInstance().phaserGame.events.on( gameEvents.music.NEW, updateMusicTrack)
   },[]);
-//
+//<CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
+          
   return (
     <>
       <div className={styles.playerMenuBarContainer}>
+
         <div className={styles.playerMenuBar}>
           <div className={styles.mainPlayerBalance}
                 onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
             {(world.world_crypto_id)? playerBalance.wallet[world.world_crypto_id]: '0'}
           </div>
-          <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
+          
+          <div className={styles.leaderboardShortcut} onClick={()=> Client.getInstance().phaserGame.events.emit( gameEvents.leaderboard.SHOW ) }>
+            <img src={leaderboardIcon} className={styles.leaderboardIcon} alt={'Open/Close Room Leaderboard'}/> 
+          </div>
 
-          <div className={styles.menuButton} onClick={ menuVisibility.show }>MENU</div>
+          <div className={styles.menuButton} onClick={ menuVisibility.show }>
+            <img src={gearIcon} className={styles.gearIcon} alt={'Settings'}/> 
+          </div>
         </div>
-        <div onClick={nextSong}>
-          <Marquee className={styles.marquee} gradient={false} play={playerReady}>
-             Playing <span className={styles.songTitle}>{currentSong}</span>
-          </Marquee>
+
+        <div className={styles.soundtrack} onClick={nextSong}>
+          <div className={styles.soundtrackText}>
+            <Marquee duration={30000}>
+                 Playing {currentSong}
+            </Marquee>
+          </div>   
         </div>
+        
       </div>
+
+
+
       <div className={styles.fullScreenMenu} hidden={!menuVisibility.state}>
         <div className={styles.menuDialogContainer}>
           <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>

@@ -43,7 +43,7 @@ export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
      }
 
     return (
-      <div className={styles.chatMessage}>
+      <div className={styles.chatMessage} key={Date.now()} >
         <span className={styles.chatUser} style={{color: messageColor}}> [{user}] </span> : {text}
       </div>
     );
@@ -89,16 +89,27 @@ export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
   }
 
   useEffect(()=>{
-    if (gameMode) {
-        Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE,(notification: Protocol.MessageFromServer)=>{
-          setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
-        })
-        Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT,(notification: Protocol.MessageFromServer)=>{
-          if (notification.msg) {
-            setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
-          }
-        })
+    
+    const printMessage = (notification: Protocol.MessageFromServer) => {
+      setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
     }
+
+    const printAnnouncement = (notification: Protocol.MessageFromServer)=>{
+      if (notification.msg) {
+        setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
+      }
+    }
+    
+    if (gameMode) {
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE, printMessage)
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
+    }
+
+    return () =>{
+      Client.getInstance().phaserGame.events.off( gameEvents.chat.MESSAGE, printMessage)
+      Client.getInstance().phaserGame.events.off( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
+    }
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[chatHistory,gameMode]);
 
@@ -108,24 +119,24 @@ export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
           className={`${ gameMode? gameStyle.chatContainer: lobbySyle.chatContainer }
                      ${disabled? (gameMode? gameStyle.smallContainer: ''): (gameMode? gameStyle.largeContainer: '') }`}
            onClick={(e)=>handleClick(e)}>
+      
       <div  id="chat-history"
             className={`${ gameMode? gameStyle.chatHistory: lobbySyle.chatHistory }
                      ${disabled? (gameMode? gameStyle.smallHistory : ''): (gameMode? gameStyle.largeHistory: '') }`}>
-                       {chatHistory}</div>
+                       {chatHistory}
+      </div>
+      
       <div className={ gameMode? gameStyle.textBoxContainer: lobbySyle.textBoxContainer  }>
         <form onSubmit={submitMessage} className={gameMode? '': lobbySyle.formContainer }>
           <input
             id="chat-textbox"
             className={styles.textBox}
             type="text"
-            placeholder="Write your message here..."
+            placeholder="Type here..."
             autoComplete="off"
             onChange={(e) => setChatMessage(e.target.value)}
             value={chatMessage}
           ></input>
-          <button type="submit" className={gameMode? gameStyle.chatButton: lobbySyle.chatButton}>
-            SEND
-          </button>
         </form>
       </div>
     </div>
