@@ -3,13 +3,12 @@
   src: url("assets/fonts/pixelar_regular.woff2");
 }
 
-
 .playerMenuBarContainer{
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  width: 22rem;
-  height: 9rem;
+  width: 20rem;
+  height: 8rem;
   border-bottom-left-radius: 4px;
   overflow: hidden;
 }
@@ -20,7 +19,7 @@
   background-size: cover;
   position: relative;
   width: 100%;
-  min-height: 5.9rem;
+  min-height: 5.25rem;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -150,7 +149,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   color: #b4e2ecff;
-  height: 2.15rem;
+  height: 2rem;
 }
 
 .soundtrackText{

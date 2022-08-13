@@ -64,7 +64,6 @@ const Vitals = () => {
     });
   }, []);
 
-  console.log(health)
   return (
     <>
       <div className={(depth>8)? `${styles.gameVignette} ${styles.underground}` : `${styles.gameVignette} ${styles.aboveground}`}></div>
