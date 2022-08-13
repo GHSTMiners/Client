@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import ggemsIcon from "assets/icons/ggems_icon.svg";
@@ -12,28 +12,21 @@ import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
 import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import { HUDContext } from "..";
+import useMusicManager from "./hooks/useMusicManager";
 
 const Menu = () => {
   
-  const [currentSong , setCurrentSong] = useState<string>('');
   const menuVisibility = useVisible('menu', false); 
+  const musicManager = useMusicManager();
   const navigator = useNavigate();
   const playerBalance = useContext(HUDContext);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
-  const updateMusicTrack = (songName:string)=>{
-    setCurrentSong(songName);
-  }
-
-  const nextSong = () => {
-    Client.getInstance().phaserGame.events.emit( gameEvents.music.NEXT )
-  }
-
   const updateMusicVolume = (volume:number | number[]) =>{
     if (typeof volume === "number") {
-      Client.getInstance().phaserGame.events.emit( gameEvents.music.VOLUME ,volume) 
+      musicManager.setVolume(volume);
     } else {
-      Client.getInstance().phaserGame.events.emit( gameEvents.music.VOLUME ,volume[0]) 
+      musicManager.setVolume(volume[0])
     } 
   }
 
@@ -42,9 +35,6 @@ const Menu = () => {
     navigator('/')
    }
 
-  useEffect( () => {
-    Client.getInstance().phaserGame.events.on( gameEvents.music.NEW, updateMusicTrack)
-  },[]);
           
   return (
     <>
@@ -66,10 +56,10 @@ const Menu = () => {
           </div>
         </div>
 
-        <div className={styles.soundtrack} onClick={nextSong}>
+        <div className={styles.soundtrack} onClick={musicManager.next}>
           <div className={styles.soundtrackText}>
             <Marquee duration={30000}>
-                 Playing {currentSong}
+                 Playing {musicManager.currentSong}
             </Marquee>
           </div>   
         </div>
@@ -83,11 +73,11 @@ const Menu = () => {
           <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>
           <div className={styles.volumeSlider}>
             <span className={styles.menuEntryTitle}> Sound FX </span>
-            <Slider />
+            <Slider max={1} step={0.01} defaultValue={1} />
           </div>
           <div className={styles.volumeSlider}>
             <span className={styles.menuEntryTitle}> Music</span>
-            <Slider max={1} step={0.01} onChange={updateMusicVolume} />
+            <Slider max={1} step={0.01} defaultValue={1} onChange={updateMusicVolume} />
           </div>
           
           <button className={styles.leaveButton} onClick={leaveGame}>LEAVE GAME</button>

@@ -11,10 +11,7 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         Client.getInstance().chiselWorld.music.forEach(music => {
             this.music.push(music)
         })
-        this.scene.game.events.on( gameEvents.music.NEXT ,this.next.bind(this) );
-        this.scene.game.events.on( gameEvents.music.VOLUME ,this.setVolume.bind(this) );
         this.play();
-
     }
 
     public play() {
