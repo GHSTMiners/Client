@@ -11,6 +11,7 @@ const Vitals = () => {
   const [health, setHealth] = useState(100);
   const [depth, setDepth] = useState(0);
   const [lowFuel , setLowFuel] = useState(false);
+  const lowFuelThreshold = 20; // (%)
   
   useEffect(() => {
     // Declaring local state variable, since useState does not update when called from inside an event listener
@@ -23,12 +24,12 @@ const Vitals = () => {
           vital.onChange = () => {
             let remFuelValue: number =
               (vital.currentValue / vital.filledValue) * 100;
-            if (remFuelValue<2 && lowFuelHookState === false){ 
+            if (remFuelValue<lowFuelThreshold && lowFuelHookState === false){ 
               Client.getInstance().phaserGame.events.emit( gameEvents.vitals.LOWFUEL )
               lowFuelHookState = true;
               setLowFuel(true);
             } else{
-              if (remFuelValue>2 && lowFuelHookState === true){ 
+              if (remFuelValue>lowFuelThreshold && lowFuelHookState === true){ 
                 lowFuelHookState = false;
                 setLowFuel(false);
               }
@@ -37,18 +38,15 @@ const Vitals = () => {
           };
         } else if (vital.name === "Health") {
           vital.onChange = () => {
-            let remFuelValue: number =
+            let remHealthValue: number =
               (vital.currentValue / vital.filledValue) * 100;
-            setHealth(remFuelValue);
+            setHealth(remHealthValue);
           };
         } else if (vital.name === "Cargo") {
           vital.onChange = () => {
-            let remFuelValue: number =
+            let cargoValue: number =
               (1 - vital.currentValue / vital.filledValue) * 100;
-            setCargo(remFuelValue);
-          };
-          vital.onRemove = ()=>{
-            setCargo(0);
+            setCargo(Math.round(cargoValue));
           };
         }
       });
