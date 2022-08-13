@@ -42,7 +42,7 @@ body {
 
 .mainConsoleContainer {
   display: grid;
-  background-image: url("assets/hud/main_hud2.svg");
+  background-image: url("assets/hud/main_hud.svg");
   background-size: cover;
   width: 100rem;
   height: 44rem;

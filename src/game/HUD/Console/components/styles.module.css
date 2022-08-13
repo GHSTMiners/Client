@@ -207,36 +207,6 @@ body {
   transition: 0.5s ease;
 }
 
-.mainConsoleContainer {
-  display: grid;
-  background-image: url("assets/hud/main_hud2.svg");
-  background-size: cover;
-  width: 100rem;
-  height: 44rem;
-  grid-template-rows: 4fr 1fr 4fr 4fr;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-areas:
-    "playerButtons playerButtons"
-    "inventory inventory"
-    "consumables crypto"
-    "artifacts crypto";
-  padding-left: 12.9rem;
-  padding-right: 15.5rem;
-  padding-bottom: 2rem;
-  column-gap: 2rem;
-  font-size: 3em;
-  color: white;
-  font-family: Pixelar;
-  text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
-    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
-    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
-  z-index: 10;
-}
-
-.mainConsoleContainer > * {
-  font-size: 0.5em;
-}
-
 .playerButtons {
   grid-area: playerButtons;
   align-items: flex-end;

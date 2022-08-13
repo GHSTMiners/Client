@@ -21,20 +21,51 @@
   margin-top: 0;
 }
 
-.fuelBar,
-.healthBar,
-.cargoBar {
+.fuelBarContainer,
+.healthBarContainer,
+.cargoBarContainer {
   position: absolute;
-  z-index: 1;
-  height: 1rem;
-  width: 14rem;
-  left: 14.8rem;
+  z-index: 2;
+  height: 1.5rem;
+  width: 16.6rem;
+  left: 12.4rem;
+  border-radius: 0 10px 10px 0;
   overflow: hidden;
 }
 
-.fuelBar {
-  top: 2.6rem;
+.fuelBarContainer {
+  top: 0.55rem;
 }
+
+.healthBarContainer {
+  top: 3.42rem;
+}
+
+.cargoBarContainer {
+  top: 6.22rem;
+}
+
+.fuelBar,
+.healthBar,
+.cargoBar {
+  display: block;
+  height: 100%;
+}
+
+.fuelBar {
+  background-color: #fce359ff;
+}
+
+.healthBar {
+  display: block;
+  background-color: #92d245ff;
+}
+
+.cargoBar {
+  display: block;
+  background-color: #a4fffdff;
+}
+
 
 .lowFuelBar{
   color: red;
@@ -62,13 +93,7 @@
   100% {background-color:rgba(255, 0, 0, 0.1)}
 }
 
-.healthBar {
-  top: 5.4rem;
-}
 
-.cargoBar {
-  top: 8rem;
-}
 
 .vitalBar {
   position: absolute;
@@ -81,10 +106,10 @@
   font-size: 1.5rem;
   color: white;
   width: 5rem;
-  left: 1.5rem;
+  left: 1.8rem;
   line-height: 1.7rem;
   text-align: center;
-  top: 0.7rem;
+  top: 4rem;
   position: absolute;
   opacity: 1;
   z-index: 2;

@@ -3,15 +3,12 @@ import Client from "matchmaking/Client";
 import { DataChange } from "@colyseus/schema";
 import Config from "config";
 import styles from "./styles.module.css";
-import fuelBar from "assets/hud/fuel_bar.svg";
-import healthBar from "assets/hud/health_bar.svg";
-import cargoBar from "assets/hud/cargo_bar.svg";
 import gameEvents from "game/helpers/gameEvents";
 
 const Vitals = () => {
-  const [fuel, setFuel] = useState("14rem");
-  const [cargo, setCargo] = useState("0rem");
-  const [health, setHealth] = useState("14rem");
+  const [fuel, setFuel] = useState(100);
+  const [cargo, setCargo] = useState(0);
+  const [health, setHealth] = useState(100);
   const [depth, setDepth] = useState(0);
   const [lowFuel , setLowFuel] = useState(false);
   
@@ -25,7 +22,7 @@ const Vitals = () => {
         if (vital.name === "Fuel") {
           vital.onChange = () => {
             let remFuelValue: number =
-              (vital.currentValue / vital.filledValue) * 14;
+              (vital.currentValue / vital.filledValue) * 100;
             if (remFuelValue<2 && lowFuelHookState === false){ 
               Client.getInstance().phaserGame.events.emit( gameEvents.vitals.LOWFUEL )
               lowFuelHookState = true;
@@ -36,22 +33,22 @@ const Vitals = () => {
                 setLowFuel(false);
               }
             }  
-            setFuel(`${remFuelValue}rem`);
+            setFuel(remFuelValue);
           };
         } else if (vital.name === "Health") {
           vital.onChange = () => {
             let remFuelValue: number =
-              (vital.currentValue / vital.filledValue) * 14;
-            setHealth(`${remFuelValue}rem`);
+              (vital.currentValue / vital.filledValue) * 100;
+            setHealth(remFuelValue);
           };
         } else if (vital.name === "Cargo") {
           vital.onChange = () => {
             let remFuelValue: number =
-              (1 - vital.currentValue / vital.filledValue) * 14;
-            setCargo(`${remFuelValue}rem`);
+              (1 - vital.currentValue / vital.filledValue) * 100;
+            setCargo(remFuelValue);
           };
           vital.onRemove = ()=>{
-            setCargo('0rem');
+            setCargo(0);
           };
         }
       });
@@ -67,19 +64,20 @@ const Vitals = () => {
     });
   }, []);
 
+  console.log(health)
   return (
     <>
       <div className={(depth>8)? `${styles.gameVignette} ${styles.underground}` : `${styles.gameVignette} ${styles.aboveground}`}></div>
       <div className={styles.vitalsConsole}>
-        <div className={`${styles.fuelBar} ${lowFuel? styles.lowFuelBar: ''}`} style={{ width: fuel }}>
-          <img src={fuelBar} className={styles.vitalBar} alt={'Fuel'}/> 
+        <div className={`${styles.fuelBarContainer} ${lowFuel? styles.lowFuelBar: ''}`} >
+        <span className={styles.fuelBar} style={{ width: `${fuel}%` }}></span>
         </div>
         { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
-        <div className={styles.healthBar} style={{ width: health }}>
-          <img src={healthBar} className={styles.vitalBar} alt={'Health'}/>
+        <div className={styles.healthBarContainer} >
+          <span className={styles.healthBar} style={{ width: `${health}%` }} ></span>
         </div>
-        <div className={styles.cargoBar} style={{ width: cargo }}>
-          <img src={cargoBar} className={styles.vitalBar} alt={'Cargo'}/>
+        <div className={styles.cargoBarContainer} >
+        <span className={styles.cargoBar} style={{ width: `${cargo}%` }} ></span>
         </div>
         <div className={styles.vitalsBarsCovers}></div>
         <div className={styles.depthTag}>
