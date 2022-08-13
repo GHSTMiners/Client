@@ -7,7 +7,6 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-easy-marquee";
-//import CountdownTimer  from "game/HUD/Menu/components/CountdownTimer";
 import gameEvents from "game/helpers/gameEvents";
 import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
@@ -46,7 +45,6 @@ const Menu = () => {
   useEffect( () => {
     Client.getInstance().phaserGame.events.on( gameEvents.music.NEW, updateMusicTrack)
   },[]);
-//<CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
           
   return (
     <>

@@ -143,12 +143,12 @@
 }
 
 .soundtrack{
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
   background-image: url('assets/hud/soundtrack.svg');
   background-repeat: no-repeat;
   background-size: cover;
   color: #b4e2ecff;
-  height: 1.5rem;
+  height: 1.6rem;
 }
 
 .soundtrackText{
