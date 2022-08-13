@@ -4,6 +4,7 @@ import { DataChange } from "@colyseus/schema";
 import Config from "config";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
+import CountdownTimer  from "./components/CountdownTimer";
 
 const Vitals = () => {
   const [fuel, setFuel] = useState(100);
@@ -67,19 +68,25 @@ const Vitals = () => {
       <div className={(depth>8)? `${styles.gameVignette} ${styles.underground}` : `${styles.gameVignette} ${styles.aboveground}`}></div>
       <div className={styles.vitalsConsole}>
         <div className={`${styles.fuelBarContainer} ${lowFuel? styles.lowFuelBar: ''}`} >
-        <span className={styles.fuelBar} style={{ width: `${fuel}%` }}></span>
+          <span className={styles.fuelBar} style={{ width: `${fuel}%` }} />
         </div>
-        { (lowFuel)? <div className={styles.lowFuelIndicator} /> : '' }
         <div className={styles.healthBarContainer} >
-          <span className={styles.healthBar} style={{ width: `${health}%` }} ></span>
+          <span className={styles.healthBar} style={{ width: `${health}%` }} />
         </div>
         <div className={styles.cargoBarContainer} >
-        <span className={styles.cargoBar} style={{ width: `${cargo}%` }} ></span>
+          <span className={styles.cargoBar} style={{ width: `${cargo}%` }} />
         </div>
         <div className={styles.vitalsBarsCovers}></div>
+        { (lowFuel)? 
+        <div className={styles.lowFuelIndicator} /> 
+        : '' }
+        
         <div className={styles.depthTag}>
           Depth:<br /> {depth}
         </div>
+
+        <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
+        
       </div>
     </>
   );
