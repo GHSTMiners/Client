@@ -11,7 +11,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { ExplosiveEntry } from "matchmaking/Schemas";
-import { consumableItem, inventoryExplosives, playerContext } from "types";
+import { ConsumableItem, InventoryExplosives, PlayerContext } from "types";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
 import usePlayerCrypto from "hooks/usePlayerCrypto";
@@ -20,15 +20,15 @@ import useWorldCrypto from "hooks/useWorldCrypto";
 
 // Initializing the contextHook with an empty array of consumable items
 
-export const HUDContext = createContext<playerContext>({consumables: [], wallet: {}});
+export const HUDContext = createContext<PlayerContext>({consumables: [], wallet: {}});
 
 export const HUD = () => {  
 
   // extracting info from Chisel about all possible explosives
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  let worldExplosives: inventoryExplosives = {};
+  let worldExplosives: InventoryExplosives = {};
   world.explosives.forEach((explosive)=>{
-    let newItem : consumableItem = { 
+    let newItem : ConsumableItem = { 
       name: explosive.name,
       id: explosive.id,
       image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`,
@@ -40,7 +40,7 @@ export const HUD = () => {
   
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
-  let [playerConsumables, setPlayerConsumables] = useState<consumableItem[]>([]);
+  let [playerConsumables, setPlayerConsumables] = useState<ConsumableItem[]>([]);
   const [chatMode, setChatMode] = useState<boolean>(false)
   
   const [cryptoRecord] = useWorldCrypto();
@@ -67,7 +67,7 @@ export const HUD = () => {
     }
   }
 
-  function addExplosive (item: consumableItem){
+  function addExplosive (item: ConsumableItem){
     playerConsumables.push(item);
     setPlayerConsumables(playerConsumables);
   }
@@ -87,7 +87,7 @@ export const HUD = () => {
     const playerExplosiveListeners = () => {
       // INVENTORY EXPLOSIVES
       Client.getInstance().ownPlayer.explosives.onAdd = (item: ExplosiveEntry ) =>{
-        const newConsumableItem : consumableItem = {
+        const newConsumableItem : ConsumableItem = {
           name: worldExplosives[item.explosiveID].name,
           id: item.explosiveID,
           image: worldExplosives[item.explosiveID].image,

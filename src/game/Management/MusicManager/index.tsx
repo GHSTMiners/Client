@@ -1,6 +1,5 @@
 import Client from "matchmaking/Client"
 import * as APIInterface from "chisel-api-interface"
-import gameEvents from "game/helpers/gameEvents"
 
 export default class MusicManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -19,7 +18,6 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         if(this.currentSound) {
             if (!this.currentSound.isPlaying) this.currentSound.play()
         } else {
-            this.scene.game.events.emit( gameEvents.music.NEW , this.music[this.currentSong].name );
             this.currentSound = this.scene.sound.add(`music_${this.music[this.currentSong].name}`,
             { 
                 loop : false

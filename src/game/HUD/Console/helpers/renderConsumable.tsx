@@ -2,10 +2,10 @@ import SquareButton from "components/SquareButton";
 import gameEvents from "game/helpers/gameEvents";
 import { ITEMWIDTH } from "helpers/vars";
 import Client from "matchmaking/Client";
-import { consumableItem } from "types";
+import { ConsumableItem } from "types";
 import styles from "../styles.module.css"
 
-function renderConsumable(playerConsumable: consumableItem, index: number) {
+function renderConsumable(playerConsumable: ConsumableItem, index: number) {
   return (
     <SquareButton size={ITEMWIDTH}
       quantity={playerConsumable ? playerConsumable.quantity : -1}

@@ -5,25 +5,28 @@ import { IndexedArray } from "types";
 
 const usePlayerCrypto = ():{walletBalance:IndexedArray,setWalletBalance: React.Dispatch<React.SetStateAction<IndexedArray>>} =>{
 
-    const [gameOn, setGameOn] = useState(false);
     const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
-    
-    useEffect(() => {   
-        Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, () => setGameOn(true) )
-    },[])
 
     useEffect(()=>{
+        
         const updateWallet = (id:number,value:number) => {
             setWalletBalance( (wallet:IndexedArray) => { wallet[id]=value;  return {...wallet}  } );
         }
-
-        if (gameOn){
+        
+        const walletListener = () => {
             Client.getInstance().ownPlayer.wallet.onAdd = (item) => {
                 updateWallet(item.cryptoID,item.amount)
                 item.onChange = () => updateWallet(item.cryptoID,item.amount);
             };             
         }
-    },[gameOn])
+        
+        Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, walletListener )
+
+        return () => {
+            Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, walletListener )
+        }
+
+    },[])
 
     return { walletBalance , setWalletBalance }
 }

@@ -106,7 +106,7 @@ export type CryptoObj = { cryptoID: number; name: string; image: string ; price:
 
 export type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
-export type consumableItem = { name: string, id:number, image:string, type: string, quantity: number}
+export type ConsumableItem = { name: string, id:number, image:string, type: string, quantity: number}
 
 export type CustomEvents = { [key:string]: symbol }
 
@@ -114,9 +114,11 @@ export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 
-export type inventoryExplosives = Record< number, consumableItem>;
+export type InventoryExplosives = Record< number, ConsumableItem>;
 
-export type playerObj = {playerId: number, ggems: number };
+export type PlayerObj = {playerId: number, ggems: number };
 
-export type playerContext = { consumables:consumableItem[] , wallet: IndexedArray}
+export type PlayerContext = { consumables:ConsumableItem[] , wallet: IndexedArray}
+
+export type PlayerVitals = { fuel:number, health:number, cargo:number};
 

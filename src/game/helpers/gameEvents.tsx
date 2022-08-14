@@ -15,9 +15,6 @@ const gameEvents : GameEventList = {
     exchange: createDisplayEvent('exchange'),
     leaderboard : createDisplayEvent('leaderboard'),
     menu: createDisplayEvent('menu'),
-    music: {VOLUME: Symbol('MUSIC_VOLUME'),
-            NEW: Symbol('NEW_SONG'),
-            NEXT: Symbol('NEXT_SONG')},
     phaser: { MAINSCENE: Symbol('MAINSCENE_LOADED'), 
               LOADING: Symbol('LOADING') 
             },

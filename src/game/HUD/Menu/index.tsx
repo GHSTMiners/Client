@@ -12,7 +12,7 @@ import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
 import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import { HUDContext } from "..";
-import useMusicManager from "./hooks/useMusicManager";
+import useMusicManager from "hooks/useMusicManager";
 
 const Menu = () => {
   
