@@ -7,7 +7,6 @@ import { ExplosiveItem } from "types";
 import dropExplosive from "../helpers/dropExplosive";
 import styles from "../styles.module.css"
 
-
 interface Props {
   item: ExplosiveItem | undefined, 
   amount: number, 
@@ -20,7 +19,6 @@ const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
     const shortcutCallback = (shotcutID:number) => {
       if (shotcutID === index) dropExplosive( item?.id) 
     }
-
     Client.getInstance().phaserGame.events.on( gameEvents.console.SHORTCUT, shortcutCallback );
     
     return () => {

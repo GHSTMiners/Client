@@ -15,19 +15,11 @@ interface Props {
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
   
-  //const { hudContext.player.crypto, setWalletBalance } = usePlayerCrypto();
   const hudContext = useContext(HUDContext);
   const [cryptoRecord] = useWorldCrypto();
   const exchangeVisibility = useVisible('exchange', !hidden); 
   const [inputValues , setInputValues] = useState<IndexedArray>(hudContext.player.crypto);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-
-  /*
-  // inializing cargo & wallet ballances to 0 and fetching the list of crypto from Chisel
-  useEffect(()=>{
-    (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[cryptoRecord])*/
   
   useEffect(() => {
     setInputValues( c => { return {...hudContext.player.crypto}} )

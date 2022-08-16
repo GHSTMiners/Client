@@ -102,7 +102,7 @@ export type PricePair = { cryptoId:number, cost:number };
 
 export type CryptoEntry = {id: number, quantity: number};
 
-export type CryptoObj = { cryptoID: number; name: string; image: string ; price:number};
+export type CryptoObj = { cryptoID: number; name: string; image: string ; price:number; crystal: string};
 
 export type IndexedCrypto =  {[key: string]: CryptoObj} ;
 

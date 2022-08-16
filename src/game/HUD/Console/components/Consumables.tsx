@@ -8,7 +8,6 @@ const Consumables = () => {
 
   const hudContext = useContext(HUDContext);
 
-  // rendering function for each consumable  slot 
   const renderConsumable = (index:number) =>{
     const isFilled = (hudContext.player.explosives.length >= index);
     return (

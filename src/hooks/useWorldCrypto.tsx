@@ -21,6 +21,7 @@ const useWorldCrypto = ():[IndexedCrypto] => {
         cryptoID: id,
         name: `${world.crypto[i].shortcode}`,
         image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
+        crystal: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
         price: (cryptoPrice? cryptoPrice.usd_value : 1)
       }
       cryptoRecord[newCrypto.cryptoID]= newCrypto;

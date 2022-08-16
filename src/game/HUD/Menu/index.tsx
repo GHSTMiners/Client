@@ -66,8 +66,6 @@ const Menu = () => {
         
       </div>
 
-
-
       <div className={styles.fullScreenMenu} hidden={!menuVisibility.state}>
         <div className={styles.menuDialogContainer}>
           <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>
