@@ -19,7 +19,7 @@ const Menu = () => {
   const menuVisibility = useVisible('menu', false); 
   const musicManager = useMusicManager();
   const navigator = useNavigate();
-  const playerBalance = useContext(HUDContext);
+  const hudContext = useContext(HUDContext);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   const updateMusicVolume = (volume:number | number[]) =>{
@@ -44,7 +44,7 @@ const Menu = () => {
           <div className={styles.mainPlayerBalance}
                 onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-            {(world.world_crypto_id)? playerBalance.wallet[world.world_crypto_id]: '0'}
+            {(world.world_crypto_id)? hudContext.player.crypto[world.world_crypto_id]: '0'}
           </div>
           
           <div className={styles.leaderboardShortcut} onClick={()=> Client.getInstance().phaserGame.events.emit( gameEvents.leaderboard.SHOW ) }>

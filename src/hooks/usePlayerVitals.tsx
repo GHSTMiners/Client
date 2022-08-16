@@ -8,8 +8,7 @@ const usePlayerVitals = () => {
     const [ health , setHealth ] = useState(100);
     const [ cargo, setCargo ] = useState(0);
 
-    useEffect(() => {
-
+    useEffect(() => {   
         const vitalsListeners = () =>{
           Client.getInstance().ownPlayer.vitals.forEach((vital) => {
             if (vital.name === "Fuel") {
@@ -31,13 +30,12 @@ const usePlayerVitals = () => {
          })
         }
 
-        Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, vitalsListeners )
-
+        Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, vitalsListeners )    
         return () => {
             Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, vitalsListeners )
         }
     },[])
-
+       
     return { fuel , cargo, health }
 }
 

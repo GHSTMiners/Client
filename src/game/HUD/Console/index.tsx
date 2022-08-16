@@ -6,14 +6,13 @@ import { ITEMWIDTH, ARTIFACTWIDTH } from "helpers/vars"
 import Consumables from "./components/Consumables";
 import Artifacts from "./components/Artifacts";
 import Crypto from "./components/Crypto";
-import useConsoleButtons from "./hooks/useConsoleButtons";
+import ConsoleButtons from "./components/ConsoleButtons";
 import useVisible from "hooks/useVisible";
 
 const Console = () => {
 
   const consoleVisbility = useVisible('console');
-  const consoleButtons = useConsoleButtons();
- 
+
   return (
     <div
       className={`${styles.mainConsole} 
@@ -24,7 +23,7 @@ const Console = () => {
           <SquareButton size={ARTIFACTWIDTH} quantity={1}>
             <img src={drillIcon} className={styles.toolIcon} alt={'drill'}/>
           </SquareButton>
-          {consoleButtons.renderedButtons}
+          <ConsoleButtons />
           <div
             className={styles.expandButton}
             onClick={ consoleVisbility.change }

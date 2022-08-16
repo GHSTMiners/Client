@@ -114,11 +114,16 @@ export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 
+export type ExplosiveItem = { name: string, id:number, image:string, type: string, quantity: number}
+
+export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
+
 export type InventoryExplosives = Record< number, ConsumableItem>;
 
 export type PlayerObj = {playerId: number, ggems: number };
 
-export type PlayerContext = { consumables:ConsumableItem[] , wallet: IndexedArray}
+export type PlayerContext = { world : { crypto:IndexedCrypto, explosives:IndexedExplosives},
+                              player: { crypto: IndexedArray, explosives: IndexedArray }};
 
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
 

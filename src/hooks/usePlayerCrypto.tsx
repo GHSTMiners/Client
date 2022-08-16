@@ -3,7 +3,7 @@ import Client from "matchmaking/Client";
 import gameEvents from "game/helpers/gameEvents";
 import { IndexedArray } from "types";
 
-const usePlayerCrypto = ():{walletBalance:IndexedArray,setWalletBalance: React.Dispatch<React.SetStateAction<IndexedArray>>} =>{
+const usePlayerCrypto = () => {
 
     const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
 

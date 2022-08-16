@@ -15,11 +15,11 @@ interface Props {
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
   
-  //const { playerBalance.wallet, setWalletBalance } = usePlayerCrypto();
-  const playerBalance = useContext(HUDContext);
+  //const { hudContext.player.crypto, setWalletBalance } = usePlayerCrypto();
+  const hudContext = useContext(HUDContext);
   const [cryptoRecord] = useWorldCrypto();
   const exchangeVisibility = useVisible('exchange', !hidden); 
-  const [inputValues , setInputValues] = useState<IndexedArray>(playerBalance.wallet);
+  const [inputValues , setInputValues] = useState<IndexedArray>(hudContext.player.crypto);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   /*
@@ -30,11 +30,11 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   },[cryptoRecord])*/
   
   useEffect(() => {
-    setInputValues( c => { return {...playerBalance.wallet}} )
-  }, [playerBalance.wallet]);
+    setInputValues( c => { return {...hudContext.player.crypto}} )
+  }, [hudContext.player.crypto]);
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
-    if (+event.target.value>=0 && +event.target.value<=playerBalance.wallet[id] ){
+    if (+event.target.value>=0 && +event.target.value<=hudContext.player.crypto[id] ){
       console.log(`changing input to ${event.target.value}`)
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
@@ -43,7 +43,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   } 
 
   const renderCoinEntry = ( id: number ) => {
-    const quantity = playerBalance.wallet[id];
+    const quantity = hudContext.player.crypto[id];
     const hasCoins = quantity>0;
     const inputTokens = inputValues[id];
     return(
@@ -78,7 +78,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
                   <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-                  {playerBalance.wallet[world.world_crypto_id]} x GGEMS
+                  {hudContext.player.crypto[world.world_crypto_id]} x GGEMS
                 </div>
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>

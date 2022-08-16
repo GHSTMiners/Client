@@ -15,8 +15,8 @@ const TabConsumables: FC<{}> = () => {
 
   // global variables
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const playerBalance = useContext(HUDContext);
-  const playerDoekoes = playerBalance.wallet[world.world_crypto_id];
+  const hudContext = useContext(HUDContext);
+  const playerDoekoes = hudContext.player.crypto[world.world_crypto_id];
 
   // state hooks
   const [ shopItemArray, setShopItemArray ] = useState<indexedShopItem>({});

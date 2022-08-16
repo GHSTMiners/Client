@@ -38,7 +38,7 @@ const Shop = () => {
   
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const shopVisibility = useVisible('shop'); 
-  const playerBalance = useContext(HUDContext);
+  const hudContext = useContext(HUDContext);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   useEffect( () => {
@@ -55,7 +55,7 @@ const Shop = () => {
   return (
     <div className={`${styles.shopContainer} ${shopVisibility.state ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
-        <div className={styles.playerDoekoes}>{playerBalance.wallet[world.world_crypto_id]} GGEMS</div>
+        <div className={styles.playerDoekoes}>{hudContext.player.crypto[world.world_crypto_id]} GGEMS</div>
         <button className={styles.closeButton} onClick={ shopVisibility.hide }>X</button>
         <div className={styles.shopTabs}>
           <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
