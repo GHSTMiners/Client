@@ -1,24 +1,15 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
 import Client from "matchmaking/Client";
-import { CryptoEntry } from "types";
+import { TabsType } from "types";
 import * as Chisel from "chisel-api-interface";
-
-// Tabs Components
 import TabUpgrades from "./tabs/TabUpgrades";
 import TabConsumables from "./tabs/TabConsumables";
 import useVisible from "hooks/useVisible";
 import gameEvents from "game/helpers/gameEvents";
 import { HUDContext } from "..";
 
-type TabsType = {
-  label: string;
-  index: number;
-  Component: React.FC<{}>;
-}[];
-
-// Tabs Array
 const tabs: TabsType = [
   {
     label: "Consumables",
@@ -31,8 +22,6 @@ const tabs: TabsType = [
     Component: TabUpgrades
   }
 ];
-
-export const ShopContext = createContext({currencyBalance:0 ,walletCrypto:[] as CryptoEntry[]});
 
 const Shop = () => {
   

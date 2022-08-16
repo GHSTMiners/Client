@@ -8,6 +8,8 @@ import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 import { Upgrade } from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
+import {  upgradeLevels, upgradePriceObject } from "types";
+import useWorldUpgrades from "../hooks/useWorldUpgrades";
 
 export type PricePair = { cryptoId:number, cost:number };
   
@@ -15,59 +17,16 @@ const TabUpgrades: FC<{}> = () => {
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const [gotchiSVG,setGotchiSVG]=useState('');
 
-  // Defining all the data types required to store all the price per tier info
-  type TierCost = { tierLabel:string, priceList:PricePair[] };
-  type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
-  type upgradeLevels = {upgradeId:number, tier:number};
-
   // Retrieving upgrading list from Chisel
   const playerUpgradesIni: Upgrade[] = Client.getInstance().ownPlayer.upgrades;
   const [playerUpgrades ] = useState(playerUpgradesIni);
   const [hoverUpgrade , setHoverUpgrade] = useState({} as upgradePriceObject);
   const [selectedUpgrade ] = useState({} as upgradePriceObject);
-  let upgradeLabels: string[] = [];
-  const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
-  const upgradeObjectArray : upgradePriceObject[] = [];
   const upgradeLevelIni: upgradeLevels[] =[];
 
+  const { upgradeObjectArray } = useWorldUpgrades();
+
   world.upgrades.forEach( upgrade => {
-    upgradeLabels.push(upgrade.name);
-    // Looking for the prices of each tier
-    let multiTierCost: TierCost[] = [];
-    upgradeTiers.forEach( tier => {
-      let tierPriceList: PricePair[]  = [];
-      let coinsPerTier: TierCost = { tierLabel:tier , priceList: tierPriceList };
-      upgrade.prices.forEach( ( priceEntry: Chisel.UpgradePrice ) => {
-        let price = 0;
-        switch(tier){
-          case 'tier_1':
-            price = priceEntry.tier_1;
-            break;
-          case 'tier_2':
-            price = priceEntry.tier_2;
-            break;
-          case 'tier_3':
-            price = priceEntry.tier_3;
-            break;
-          case 'tier_4':
-            price = priceEntry.tier_4;
-            break;
-          case 'tier_5':
-            price = priceEntry.tier_5;
-            break;
-        }
-        if (price>0){
-          const coinEntry:PricePair = { cryptoId: priceEntry.crypto_id , cost: price } ;
-          tierPriceList.push(coinEntry);
-        }
-      })
-      multiTierCost.push(coinsPerTier);
-    })
-    let newObject = { id:upgrade.id, 
-                      name:upgrade.name, 
-                      costPerTier: multiTierCost,
-                      description: upgrade.description };
-    upgradeObjectArray.push(newObject);
     // Defining default tier
     let upgradeTier: number = 5; 
     // Fetching tier info from Schemas (if found)
@@ -75,6 +34,7 @@ const TabUpgrades: FC<{}> = () => {
     // Storing data
     upgradeLevelIni.push({upgradeId: upgrade.id, tier: upgradeTier });
   } )
+
   const [currentTiers,setCurrentTiers]=useState(upgradeLevelIni);
 
   let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );

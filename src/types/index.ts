@@ -92,6 +92,12 @@ export interface CustomError extends Error {
   status?: number;
 }
 
+export type TabsType = {
+  label: string;
+  index: number;
+  Component: React.FC<{}>;
+}[];
+
 export type IndexedArray = {[key: string]: number};
 
 export type IndexedBooleanArray = {[key: string]: boolean};
@@ -127,3 +133,9 @@ export type PlayerContext = { world : { crypto:IndexedCrypto, explosives:Indexed
 
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
 
+
+export type TierCost = { tierLabel:string, priceList:PricePair[] };
+
+export type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
+
+export type upgradeLevels = {upgradeId:number, tier:number};

@@ -3,8 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import { ShopContext } from "game/HUD/Shop";
+//import { ShopContext } from "game/HUD/Shop";
 import gameEvents from "game/helpers/gameEvents";
+import { HUDContext } from "game/HUD";
 
 interface Props {
   upgradeId:number;
@@ -29,8 +30,8 @@ const UpgradeBar: React.FC<Props> = ({
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
 
   let upgradeLevelArray: upgradeObj[] = [];
-  const contextObj = useContext(ShopContext);
-  const playerCrypto = contextObj.walletCrypto;
+  const hudContext = useContext(HUDContext);
+  const playerCrypto = hudContext.player.crypto;
   upgradeLevelArray.push({name:'common', color:'#7f63ff'});
   upgradeLevelArray.push({name:'uncommon', color:'#33bacc'});
   upgradeLevelArray.push({name:'rare', color:'#59bcff'});
@@ -61,9 +62,9 @@ const UpgradeBar: React.FC<Props> = ({
   let coinsAvailable = 0;
   // Making sure that the player has all the coins required
   upgradeCost.forEach( costEntry => {
-    let walletCoin = playerCrypto.find( walletEntry => walletEntry.id === costEntry.cryptoId);
+    let walletCoin = playerCrypto[costEntry.cryptoId];
     if (walletCoin){
-      if (walletCoin.quantity>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
+      if (walletCoin>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
     }        
   });
   if (coinsAvailable === coinsRequired && upgradeLevel<upgradeLevelArray.length-1 ) upgradeAvailable=true;
@@ -82,9 +83,9 @@ const UpgradeBar: React.FC<Props> = ({
  const renderedCostArray= upgradeCost.map( entry => {
   const entryImage = world.crypto.find( coin => coin.id === entry.cryptoId);
   let canBuy = false;
-  playerCrypto.forEach( walletEntry => {
-    if (walletEntry.id === entry.cryptoId) {
-      if (walletEntry.quantity>=entry.cost) canBuy = true; 
+  Object.keys(playerCrypto).forEach( cryptoId => {
+    if (+cryptoId === entry.cryptoId) {
+      if (playerCrypto[cryptoId]>=entry.cost) canBuy = true; 
     }
   }) 
   return(
