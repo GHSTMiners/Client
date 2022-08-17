@@ -30,9 +30,10 @@ jobs:
 
     - name: Build
       run: |
-        NODE_OPTIONS=--openssl-legacy-provider
         npm install
         CI='' npm run build
+      env:
+          NODE_OPTIONS: --openssl-legacy-provider
         
     - name: Deploy with rsync
       run: rsync -avz ./build/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/staging
