@@ -14,7 +14,7 @@ interface Props {
 }
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
-  
+
   const hudContext = useContext(HUDContext);
   const [cryptoRecord] = useWorldCrypto();
   const exchangeVisibility = useVisible('exchange', !hidden); 
@@ -27,7 +27,6 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
     if (+event.target.value>=0 && +event.target.value<=hudContext.player.crypto[id] ){
-      console.log(`changing input to ${event.target.value}`)
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
       setInputValues( newValues);

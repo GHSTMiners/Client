@@ -7,13 +7,17 @@ import { PricePair, TierCost, upgradePriceObject } from "types";
 const useWorldUpgrades = () => {
 
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;  
-  const [upgradeObjectArray , setUpgradeObjectArray] = useState<upgradePriceObject[]>([]);
-  
+  const [worldUpgrades] = useState<upgradePriceObject[]>([]);
+  //console.log(`updating hook general scope! Array length: ${worldUpgrades.length}`)
+  //console.log(`world upgrade length: ${world.upgrades.length}`)
   // Fetching the list of crypto from Chisel
   useEffect(()=>{
     const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];
+
+    console.log('Running useEffect of Hook!')
   
     world.upgrades.forEach( upgrade => {
+      console.log(`Addding [${upgrade.name}]`)
      // Looking for the prices of each tier
       let multiTierCost: TierCost[] = [];
       upgradeTiers.forEach( tier => {
@@ -39,14 +43,19 @@ const useWorldUpgrades = () => {
                         name:upgrade.name, 
                         costPerTier: multiTierCost,
                         description: upgrade.description };
-      setUpgradeObjectArray(state => {state.push(newObject) ; return([...state])});
+      //console.log(`Adding a new upgrade entry to register [${upgrade.name}]`)
+      worldUpgrades.push(newObject)
+      //setworldUpgrades(state => { console.log(`pushing [${newObject.name}]`) ; state.push(newObject) ; return([...state])});
      
     } )
 
-  },[world.upgrades])
 
-  return { upgradeObjectArray }
+  },[world.upgrades,worldUpgrades])
+
+  return { worldUpgrades }
 
 }
 
 export default useWorldUpgrades
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
