@@ -30,6 +30,7 @@ jobs:
 
     - name: Build
       run: |
+        NODE_OPTIONS=--openssl-legacy-provider
         npm install
         CI='' npm run build
         
