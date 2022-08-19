@@ -2,19 +2,19 @@ import { useState } from "react";
 import styles from "./styles.module.css";
 import UpgradeBar from "game/HUD/Shop/components/UpgradeBar";
 import buyUpgrade from "../helpers/buyUpgrade";
-import {  upgradePriceObject } from "types";
+import { UpgradePriceObject } from "types";
 import useWorldUpgrades from "hooks/useWorldUpgrades";
 import usePlayerUpgrades from "hooks/usePlayerUpgrades";
 import usePlayerGotchi from "hooks/usePlayerGotchi";
   
 const TabUpgrades = () => {
-  const [ hoverUpgrade , setHoverUpgrade] = useState({} as upgradePriceObject);
-  const [ selectedUpgrade ] = useState({} as upgradePriceObject);
+  const [ hoverUpgrade , setHoverUpgrade] = useState({} as UpgradePriceObject);
+  const [ selectedUpgrade ] = useState({} as UpgradePriceObject);
   const { playerGotchi } = usePlayerGotchi();
   const { worldUpgrades } = useWorldUpgrades();
   const {currentTiers} = usePlayerUpgrades();
 
-  function renderUpgradeElement ( obj:upgradePriceObject , upgradeTier: number) {
+  function renderUpgradeElement ( obj: UpgradePriceObject , upgradeTier: number) {
     const isSelected = (obj.id === selectedUpgrade.id);
     const nextTier = upgradeTier + 1;
     const upgradeCost = obj.costPerTier.find(entry => entry.tierLabel === `tier_${nextTier}`)?.priceList;

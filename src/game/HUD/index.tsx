@@ -88,12 +88,14 @@ export const HUD = () => {
               world:  { crypto: cryptoRecord,  explosives: worldExplosives} , 
               player: { crypto: walletBalance, explosives: playerExplosives} 
               }}>
+          {/* PERMANENT HUD ELEMENTS */}
           <Vitals />
           <Console />
           <Chat disabled={!chatMode} gameMode={true} />
+          <Menu />
+          {/* DIALOGS HUD */}
           <Shop />
           <Exchange hidden={true} />
-          <Menu />
           <GameLeaderboard hidden={true} />
           <Diagnostics hidden={true} />
         </HUDContext.Provider>

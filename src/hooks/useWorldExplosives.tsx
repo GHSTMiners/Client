@@ -2,7 +2,7 @@ import * as Chisel from "chisel-api-interface"
 import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
-import { ConsumableItem, InventoryExplosives } from "types";
+import { ExplosiveItem, InventoryExplosives } from "types";
 
 const useWorldExplosives = () => {
 
@@ -11,10 +11,12 @@ const useWorldExplosives = () => {
     const loadWorldExplosives = () => {
       const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
       world.explosives.forEach((explosive)=>{
-        let newItem : ConsumableItem = { 
-          name: explosive.name,
+        let newItem : ExplosiveItem = { 
           id: explosive.id,
+          name: explosive.name,
           image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`,
+          pattern: explosive.explosion_coordinates,
+          price: explosive.price, 
           type: 'explosive',
           quantity: 0    
         };

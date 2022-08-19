@@ -16,7 +16,7 @@ const Console = () => {
   return (
     <div
       className={`${styles.mainConsole} 
-    ${consoleVisbility.state ? styles.mainConsoleUp : styles.mainConsoleDown}`}
+      ${consoleVisbility.state ? styles.mainConsoleUp : styles.mainConsoleDown}`}
     >
       <div className={styles.mainConsoleContainer}>
         <div className={styles.playerButtons}>

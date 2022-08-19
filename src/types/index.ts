@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import gameEvents from 'game/helpers/gameEvents';
 import { Player } from 'matchmaking/Schemas/Player';
+import * as Chisel from "chisel-api-interface";
 
 export interface Tuple<T extends unknown, L extends number> extends Array<T> {
   0: T;
@@ -98,6 +99,9 @@ export type TabsType = {
   Component: React.FC<{}>;
 }[];
 
+export type PlayerContext = { world : { crypto:IndexedCrypto, explosives:IndexedExplosives},
+                              player: { crypto: IndexedArray, explosives: IndexedArray }};
+
 export type IndexedArray = {[key: string]: number};
 
 export type IndexedBooleanArray = {[key: string]: boolean};
@@ -112,7 +116,7 @@ export type CryptoObj = { cryptoID: number; name: string; image: string ; price:
 
 export type IndexedCrypto =  {[key: string]: CryptoObj} ;
 
-export type ConsumableItem = { name: string, id:number, image:string, type: string, quantity: number}
+export type ConsumableItem = { id:number, name: string, image:string, type: string, quantity: number}
 
 export type CustomEvents = { [key:string]: symbol }
 
@@ -120,22 +124,18 @@ export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 
-export type ExplosiveItem = { name: string, id:number, image:string, type: string, quantity: number}
+export type ExplosiveItem = { id:number, name: string, image:string, pattern: Chisel.ExplosionCoordinate[], type: string, quantity: number, price: number }
 
 export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
 
-export type InventoryExplosives = Record< number, ConsumableItem>;
+export type InventoryExplosives = Record< number, ExplosiveItem>;
 
 export type PlayerObj = {playerId: number, ggems: number };
 
-export type PlayerContext = { world : { crypto:IndexedCrypto, explosives:IndexedExplosives},
-                              player: { crypto: IndexedArray, explosives: IndexedArray }};
-
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
-
 
 export type TierCost = { tierLabel:string, priceList:PricePair[] };
 
-export type upgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
+export type UpgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
 
-export type upgradeLevels = {upgradeId:number, tier:number};
+export type ShopItem = { name: string; id: number; price: number; pattern: Chisel.ExplosionCoordinate[]; image: string };
