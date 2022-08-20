@@ -1,0 +1,17 @@
+.gameVignette{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    transition: all 2s ease-in-out;
+  }
+  
+  .underground{
+    background: radial-gradient( circle, transparent 30%, black 150%), transparent;
+    opacity: 1;
+  }
+  
+  .aboveground{
+    background: radial-gradient( circle, transparent 30%, black 150%), transparent;
+    opacity: 0;
+  }

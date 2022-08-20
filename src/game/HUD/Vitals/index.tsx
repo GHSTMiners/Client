@@ -2,18 +2,18 @@ import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import CountdownTimer  from "./components/CountdownTimer";
 import usePlayerVitals from "hooks/usePlayerVitals";
-import usePlayerDepth from "hooks/usePlayerDepth";
 import useLowFuel from "./hooks/useLowFuel";
+import { useContext } from "react";
+import { HUDContext } from "..";
 
 const Vitals = () => {
 
+  const hudContext = useContext(HUDContext);
   const playerVitals = usePlayerVitals();
-  const { depth } = usePlayerDepth();
   const { lowFuel } = useLowFuel(playerVitals.fuel);
 
   return (
     <>
-      <div className={(depth>8)? `${styles.gameVignette} ${styles.underground}` : `${styles.gameVignette} ${styles.aboveground}`}></div>
       <div className={styles.vitalsConsole}>
         <div className={`${styles.fuelBarContainer} ${lowFuel? styles.lowFuelBar: ''}`} >
           <span className={styles.fuelBar} style={{ width: `${playerVitals.fuel}%` }} />
@@ -30,7 +30,7 @@ const Vitals = () => {
         : '' }
         
         <div className={styles.depthTag}>
-          Depth:<br /> {depth}
+          Depth:<br /> {hudContext.player.depth}
         </div>
 
         <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
