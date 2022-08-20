@@ -5,129 +5,62 @@ import Client from "matchmaking/Client";
 import React, { useEffect, useState } from "react";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
-//import { format } from 'fecha';
+import renderPlayerMessage from "./renderPlayerMessage"
+import renderSystemMessage from "./renderSystemMessage"
+import submitMessage from "./submitMessage";
+import useVisible from "hooks/useVisible";
 
 interface Props {
-  disabled?: boolean;
   gameMode: boolean;
 }
 
-export const Chat : React.FC<Props> = ({ disabled, gameMode=true }) => {
+export const Chat : React.FC<Props> = ({ gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
-
-  const renderMessage = (id: number, text: string) => {
-     let messageColor = '#ffffff';
-     let user = '';
-
-     if (gameMode){
-      if ( Client.getInstance().colyseusRoom){
-        Client.getInstance().colyseusRoom.state.players.forEach( player => {
-          if (player.gotchiID === id){
-           messageColor = player.chatColor;
-           user = player.name;
-           return;
-          }
-        })
-      }
-     } else{
-      if ( Client.getInstance().lobbyRoom){
-        Client.getInstance().lobbyRoom.state.player_seats.forEach( player => {
-          if (player.gotchi_id === id){
-            player.ready? messageColor='#00ff00' : messageColor='#ffffff';
-           user = `${player.gotchi_id}`;
-           return;
-          }
-        })
-      }
-     }
-
-    return (
-      <div className={styles.chatMessage} key={Date.now()} >
-        <span className={styles.chatUser} style={{color: messageColor}}> [{user}] </span> : {text}
-      </div>
-    );
-  };
-
-  const renderSystemMessage = (text: string) => {
-    // alternative div with timestamp
-    //<div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`}> 
-    // [{format(new Date(), 'shortTime')}] {text} </div>
-   return (
-     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`}> {text} </div>
-   );
- };
-
-  const submitMessage = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // prevent the page from reloading
-    //const playerName = Client.getInstance().ownPlayer.name;
-    setChatMessage("");
-    //Create message and send
-    let message : Protocol.MessageToServer = new Protocol.MessageToServer();
-    message.msg = chatMessage;
-    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(message)
-    if (gameMode){
-      if ( Client.getInstance().colyseusRoom){
-        Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-      }
-    } else {
-      if ( Client.getInstance().lobbyRoom){
-        Client.getInstance().lobbyRoom.send(serializedMessage.name, serializedMessage.data)
-      }
-    }
-    
-  };
-
-  function handleClick (event:any ) {
-    // if the user clicks on the background, all open dialogs are closed
-    const divID = event.target.getAttribute('id');
-    if (divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox'){
-      if (Client.getInstance().phaserGame){
-        Client.getInstance().phaserGame.events.emit( gameEvents.chat.SHOW );
-      }
-    }
-  }
+  const chatVisibility = useVisible('chat', false); 
 
   useEffect(()=>{
-    
     const printMessage = (notification: Protocol.MessageFromServer) => {
-      setChatHistory([renderMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
+      setChatHistory([renderPlayerMessage(notification.gotchiId,notification.msg)].concat(chatHistory));
     }
-
     const printAnnouncement = (notification: Protocol.MessageFromServer)=>{
-      if (notification.msg) {
-        setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
-      }
+      if (notification.msg)   setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
     }
-    
     if (gameMode) {
         Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE, printMessage)
         Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
     }
-
+    
     return () =>{
       Client.getInstance().phaserGame.events.off( gameEvents.chat.MESSAGE, printMessage)
       Client.getInstance().phaserGame.events.off( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
     }
-    
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[chatHistory,gameMode]);
 
+  function handleClick (event:any ) {
+    const divID = event.target.getAttribute('id');
+    if ((divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox') && Client.getInstance().phaserGame){
+      Client.getInstance().phaserGame.events.emit( gameEvents.chat.SHOW );
+    }
+  }
 
   return (
     <div  id="chat" 
           className={`${ gameMode? gameStyle.chatContainer: lobbySyle.chatContainer }
-                     ${disabled? (gameMode? gameStyle.smallContainer: ''): (gameMode? gameStyle.largeContainer: '') }`}
+                     ${chatVisibility.state? (gameMode? gameStyle.largeContainer: '') : (gameMode? gameStyle.smallContainer: '') }`}
            onClick={(e)=>handleClick(e)}>
       
       <div  id="chat-history"
             className={`${ gameMode? gameStyle.chatHistory: lobbySyle.chatHistory }
-                     ${disabled? (gameMode? gameStyle.smallHistory : ''): (gameMode? gameStyle.largeHistory: '') }`}>
+                     ${chatVisibility.state? (gameMode? gameStyle.largeHistory: ''):(gameMode? gameStyle.smallHistory : '') }`}>
                        {chatHistory}
       </div>
       
       <div className={ gameMode? gameStyle.textBoxContainer: lobbySyle.textBoxContainer  }>
-        <form onSubmit={submitMessage} className={gameMode? '': lobbySyle.formContainer }>
+        <form className={gameMode? '': lobbySyle.formContainer }
+          onSubmit={(event) => { 
+            submitMessage(event,chatMessage);
+            setChatMessage(''); }}>
           <input
             id="chat-textbox"
             className={styles.textBox}

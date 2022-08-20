@@ -23,12 +23,10 @@ export const HUDContext = createContext<PlayerContext>({
 });
 
 export const HUD = () => {  
-
   const { worldExplosives } = useWorldExplosives();
   const { playerExplosives } = usePlayerExplosives();
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
-  const [chatMode, setChatMode] = useState<boolean>(false)
   const [cryptoRecord] = useWorldCrypto();
   const {walletBalance, setWalletBalance} = usePlayerCrypto();
   
@@ -56,21 +54,15 @@ export const HUD = () => {
 
   // Declaring event listeners
   useEffect(() => {
-    const openChat = ()=>setChatMode(true);
     const setGameReady = () => {setgameLoaded(true)};
-    const disableChatMode = ()=>setChatMode(false);
     const handleLoadingBar = (percentage:number) => setLoadingPercentage(percentage);
 
     Client.getInstance().phaserGame.events.on( gameEvents.phaser.LOADING, handleLoadingBar );
     Client.getInstance().phaserGame.events.on( gameEvents.phaser.MAINSCENE, setGameReady);
-    Client.getInstance().phaserGame.events.on( gameEvents.chat.SHOW,openChat);
-    Client.getInstance().phaserGame.events.on( gameEvents.chat.HIDE,disableChatMode);
 
     return () => {
       Client.getInstance().phaserGame.events.off(gameEvents.phaser.LOADING, handleLoadingBar );
       Client.getInstance().phaserGame.events.off(gameEvents.phaser.MAINSCENE, setGameReady);
-      Client.getInstance().phaserGame.events.off(gameEvents.chat.SHOW,openChat);
-      Client.getInstance().phaserGame.events.off(gameEvents.chat.HIDE,disableChatMode);
     }
 
   }, [playerExplosives]);
@@ -91,7 +83,7 @@ export const HUD = () => {
           {/* PERMANENT HUD ELEMENTS */}
           <Vitals />
           <Console />
-          <Chat disabled={!chatMode} gameMode={true} />
+          <Chat gameMode={true} />
           <Menu />
           {/* DIALOGS HUD */}
           <Shop />
