@@ -46,6 +46,15 @@ export enum WearableSlots {
   BG = 7,
 }
 
+export const UpgradeTags  = [
+   { name:'common', color:'#7f63ff' },
+   { name:'uncommon', color:'#33bacc' },
+   { name:'rare', color:'#59bcff' },
+   { name:'legendary', color:'#ffc36b' },
+   { name:'mythical', color:'#ff96ff' },
+   { name:'godlike', color:'#51ffa8' }
+];
+
 export const ITEMWIDTH = '3.3rem';
 export const ARTIFACTWIDTH = '5.8rem';
 

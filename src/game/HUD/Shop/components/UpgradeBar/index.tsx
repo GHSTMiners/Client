@@ -1,18 +1,15 @@
 import { PricePair } from "types"
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import * as Chisel from "chisel-api-interface";
-import Client from "matchmaking/Client";
-//import { ShopContext } from "game/HUD/Shop";
-import gameEvents from "game/helpers/gameEvents";
 import { HUDContext } from "game/HUD";
+import { UpgradeTags } from "helpers/vars"
 
 interface Props {
   upgradeId:number;
   upgradeLabel?: string;
   currentTier:number;
   upgradeCost?:PricePair[];
-  purchaseCallback?: () => void;
+  purchaseCallback: () => void;
 }
 
 const UpgradeBar: React.FC<Props> = ({
@@ -22,22 +19,22 @@ const UpgradeBar: React.FC<Props> = ({
   upgradeCost= [] as PricePair[],
   purchaseCallback,
 }) => {
-
-  type upgradeObj = { name: string; color: string };
-
-  // Defining the tags and colors of all possible upgrade levels
-  const [ upgradeLevel, setUpgradeLevel ]=useState(currentTier);
-  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-
-  let upgradeLevelArray: upgradeObj[] = [];
+  const [ upgradeLevel, setUpgradeLevel ]= useState(currentTier);
+  const [ upgradeAvailable, setUpgradeAvailable] = useState(false);
   const hudContext = useContext(HUDContext);
   const playerCrypto = hudContext.player.crypto;
-  upgradeLevelArray.push({name:'common', color:'#7f63ff'});
-  upgradeLevelArray.push({name:'uncommon', color:'#33bacc'});
-  upgradeLevelArray.push({name:'rare', color:'#59bcff'});
-  upgradeLevelArray.push({name:'legendary', color:'#ffc36b'});
-  upgradeLevelArray.push({name:'mythical', color:'#ff96ff'});
-  upgradeLevelArray.push({name:'godlike', color:'#51ffa8'});
+
+  // Checking if the player has all the coins required & refreshing after upgraded
+  useEffect(()=>{
+    let coinsAvailable = 0; 
+    upgradeCost.forEach( costEntry => {
+      if (playerCrypto[costEntry.cryptoId] && playerCrypto[costEntry.cryptoId]>= costEntry.cost ){
+         coinsAvailable = coinsAvailable + 1;
+      }        
+    });
+    setUpgradeLevel(currentTier)
+    setUpgradeAvailable( coinsAvailable === upgradeCost.length && upgradeLevel<UpgradeTags.length-1  ) 
+  },[ upgradeCost, playerCrypto, upgradeLevel, currentTier])
 
   // creatng definition of each of the upgradable levels
   const renderUpgradeLevel = (name: string, color: string, disabled: boolean, index:number) => (
@@ -48,72 +45,28 @@ const UpgradeBar: React.FC<Props> = ({
   );
 
   // rendering the array of level elements and storing into one variable
-  const upgradeLevels = upgradeLevelArray.map( (upgradeElement , index) => {
+  const upgradeLevels = UpgradeTags.map( (upgradeElement , index) => {
     return(  
       ( index<=upgradeLevel ? 
-          renderUpgradeLevel( upgradeElement.name, upgradeLevelArray[upgradeLevel].color, false , index) 
+          renderUpgradeLevel( upgradeElement.name, UpgradeTags[upgradeLevel].color, false , index) 
           : renderUpgradeLevel( upgradeElement.name, 'transparent', true , index) )  
       );
   });
 
-  // checking if the player has funds available for the upgrade
-  let upgradeAvailable = false;
-  const coinsRequired = upgradeCost.length;
-  let coinsAvailable = 0;
-  // Making sure that the player has all the coins required
-  upgradeCost.forEach( costEntry => {
-    let walletCoin = playerCrypto[costEntry.cryptoId];
-    if (walletCoin){
-      if (walletCoin>= costEntry.cost) coinsAvailable = coinsAvailable + 1;
-    }        
-  });
-  if (coinsAvailable === coinsRequired && upgradeLevel<upgradeLevelArray.length-1 ) upgradeAvailable=true;
-
-  // Purchased function executed 
-  const purchaseUpgrade = ()=>{
-    if (upgradeLevel<upgradeLevelArray.length-1) {
-      if (purchaseCallback){
-        if (upgradeAvailable) purchaseCallback(); // executes external routine
-      }
-    }
-  }
-
-
   // rendering function of the total upgrading cost
  const renderedCostArray= upgradeCost.map( entry => {
-  const entryImage = world.crypto.find( coin => coin.id === entry.cryptoId);
-  let canBuy = false;
-  Object.keys(playerCrypto).forEach( cryptoId => {
-    if (+cryptoId === entry.cryptoId) {
-      if (playerCrypto[cryptoId]>=entry.cost) canBuy = true; 
-    }
-  }) 
   return(
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
-       <img src={`https://chisel.gotchiminer.rocks/storage/${entryImage?.wallet_image}`} 
-            alt={`${entryImage?.name}`}
+       <img src={hudContext.world.crypto[entry.cryptoId].image} 
+            alt={hudContext.world.crypto[entry.cryptoId].name}
             className={`${styles.exchangeCoin}
-                   ${canBuy? styles.upgradeAvailable: styles.upgradeUnavailable}`}
+                   ${ (playerCrypto[entry.cryptoId]>=entry.cost) ? 
+                    styles.upgradeAvailable: styles.upgradeUnavailable}`}
        />   
     </div>
   )
  })
-
- // Making sure that the UI update when a new upgrade is purchased
- useEffect(()=>{
-  const updateUpgradeTier = (id:number, tier:number)=>{
-    if (id === upgradeId){
-      setUpgradeLevel(tier);
-    }
-  }
-  Client.getInstance().phaserGame.events.on( gameEvents.shop.UPGRADED , updateUpgradeTier )
-
-  return ()=>{
-    Client.getInstance().phaserGame.events.off( gameEvents.shop.UPGRADED , updateUpgradeTier )
-  }
- },[upgradeId])
-
 
   return (
     <div className={styles.upgradeRowContainer} key={`${upgradeLabel}_bar`} >
@@ -129,7 +82,7 @@ const UpgradeBar: React.FC<Props> = ({
       <div className={styles.upgradeBarContainer}>
         <button className={`${styles.upgradeButton}
                           ${upgradeAvailable? '' : styles.buttonUnavailable}`}
-                onClick={purchaseUpgrade} >
+                onClick={() => { if (upgradeLevel<UpgradeTags.length-1 && upgradeAvailable) purchaseCallback()  } } >
           <div className={styles.upgradeButtonText}>UPGRADE</div>        
         </button>  
 
