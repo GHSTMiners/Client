@@ -5,26 +5,26 @@ import { useEffect, useState } from "react";
 
 const usePlayerDepth = () => {
 
-  const [ depth, setDepth ] = useState(0);
+  const [ playerDepth, setPlayerDepth ] = useState(0);
 
   useEffect(() => {
-      const depthListener = () =>{
+      const playerDepthListener = () =>{
         Client.getInstance().ownPlayer.playerState.onChange = ( change ) => {
           change.forEach((value) => {
             if (value.field === "y")
-              setDepth(Math.ceil(value.value / Config.blockHeight));
+              setPlayerDepth(Math.ceil(value.value / Config.blockHeight));
           });
         }
       }
 
-      Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, depthListener )
+      Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, playerDepthListener )
       
       return () => {
-          Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, depthListener )
+          Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, playerDepthListener )
       }
   },[])
 
-  return { depth }
+  return { playerDepth }
 }
 
 export default usePlayerDepth
