@@ -3,28 +3,28 @@ import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
 
-const usePlayerplayerDepth = () => {
+const usePlayerDepth = () => {
 
-  const [ playerDepth, setplayerDepth ] = useState(0);
+  const [ depth, setDepth ] = useState(0);
 
   useEffect(() => {
-      const playerDepthListener = () =>{
+      const depthListener = () =>{
         Client.getInstance().ownPlayer.playerState.onChange = ( change ) => {
           change.forEach((value) => {
             if (value.field === "y")
-              setplayerDepth(Math.ceil(value.value / Config.blockHeight));
+              setDepth(Math.ceil(value.value / Config.blockHeight));
           });
         }
       }
-      
-      Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, playerDepthListener )
+
+      Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, depthListener )
       
       return () => {
-          Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, playerDepthListener )
+          Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED, depthListener )
       }
   },[])
 
-  return { playerDepth }
+  return { depth }
 }
 
-export default usePlayerplayerDepth
+export default usePlayerDepth

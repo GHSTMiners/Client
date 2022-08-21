@@ -15,19 +15,16 @@ import usePlayerCrypto from "hooks/usePlayerCrypto";
 import useWorldCrypto from "hooks/useWorldCrypto";
 import useWorldExplosives from "hooks/useWorldExplosives";
 import usePlayerExplosives from "hooks/usePlayerExplosives";
-import usePlayerDepth from "hooks/usePlayerDepth";
-import Vignette from "./Vignette";
 
 
 export const HUDContext = createContext<PlayerContext>({ 
   world:  { crypto: {}, explosives: {}} , 
-  player: { crypto: {}, explosives: {} , depth: 0}  
+  player: { crypto: {}, explosives: {}}  
 });
 
 export const HUD = () => {  
   const { worldExplosives } = useWorldExplosives();
   const { playerExplosives } = usePlayerExplosives();
-  const { playerDepth } = usePlayerDepth();
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   const [cryptoRecord] = useWorldCrypto();
@@ -81,10 +78,8 @@ export const HUD = () => {
            hidden={!gameLoaded}>
         <HUDContext.Provider value={{ 
               world:  { crypto: cryptoRecord,  explosives: worldExplosives} , 
-              player: { crypto: walletBalance, explosives: playerExplosives, depth: playerDepth} 
+              player: { crypto: walletBalance, explosives: playerExplosives} 
               }}>
-          {/* EFFECTS */}
-          <Vignette />
           {/* PERMANENT HUD ELEMENTS */}
           <Vitals />
           <Console />

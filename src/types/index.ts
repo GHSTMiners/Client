@@ -100,7 +100,7 @@ export type TabsType = {
 }[];
 
 export type PlayerContext = { world : { crypto:IndexedCrypto, explosives:IndexedExplosives},
-                              player: { crypto: IndexedArray, explosives: IndexedArray, depth:number }};
+                              player: { crypto: IndexedArray, explosives: IndexedArray }};
 
 export type IndexedArray = {[key: string]: number};
 
