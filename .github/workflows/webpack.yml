@@ -33,7 +33,7 @@ jobs:
         npm install
         CI='' npm run build
       env:
-          NODE_OPTIONS: --openssl-legacy-provider
+          NODE_OPTIONS: --openssl-legacy-provider --max_old_space_size=4096
         
     - name: Deploy with rsync
       run: rsync -avz ./build/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/staging
