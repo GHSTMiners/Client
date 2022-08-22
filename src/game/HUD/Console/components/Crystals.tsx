@@ -2,13 +2,11 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import { useContext } from "react";
 import { HUDContext } from "game/HUD";
-import usePlayerCargo from "hooks/usePlayerCargo";
 
 const Crystals = () => {  
   
   const hudContext = useContext(HUDContext);
   const crystalsArray = hudContext.world.crypto;
-  const playerCargo = usePlayerCargo();
  
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
@@ -37,7 +35,7 @@ const Crystals = () => {
               const crypto = crystalsArray[key];
               return inventoryCrystal(
                 crypto.name,
-                playerCargo.balance[crypto.cryptoID],
+                hudContext.player.crystals[crypto.cryptoID],
                 crypto.crystal)
             })
         }

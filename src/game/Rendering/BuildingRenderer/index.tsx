@@ -24,14 +24,20 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
         if(this.currentBuilding) {
             //Play sound
             this.scene.sound.play(`building_activation_${this.currentBuilding.id}`)
+            switch (this.currentBuilding.type){
+                case 'Refinery':
+                    this.scene.game.events.emit( gameEvents.refinary.REFINE );
+                    break;
+                case 'Bazaar':
+                    this.scene.game.events.emit( gameEvents.shop.SHOW );
+                    break;
+            }
+             
             //Notify server
             let activateBuildingMessage : Protocol.ActivateBuilding = new Protocol.ActivateBuilding()
             activateBuildingMessage.id = this.currentBuilding.id
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(activateBuildingMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
-            if (this.currentBuilding.type === 'Bazaar'){
-                this.scene.game.events.emit( gameEvents.shop.SHOW )
-            }
         }
     }
 

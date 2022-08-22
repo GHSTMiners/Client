@@ -18,6 +18,7 @@ const gameEvents : GameEventList = {
     phaser: { MAINSCENE: Symbol('MAINSCENE_LOADED'), 
               LOADING: Symbol('LOADING') 
             },
+    refinary: { REFINE: Symbol('REFINING_CARGO')},
     room: { JOINED: Symbol('JOINED_GAME') },
     shop: { ...createDisplayEvent('shop'), UPGRADED:Symbol('UPGRADED_TIER') },
     vitals: { LOWFUEL: Symbol('LOW_FUEL')},
