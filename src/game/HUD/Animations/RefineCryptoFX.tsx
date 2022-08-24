@@ -49,7 +49,7 @@ const RefineCryptoFX = () => {
           </div>
         </div>
 
-        <div className={styles.cargoInfoContainer} hidden = {hidden}>
+        <div className={`${styles.cargoInfoContainer} ${ hidden? styles.hide: styles.show}`} >
             { Object.keys(processedCargo).map( key =>{
               return(
                <div className={styles.cargoCoinContainer}>
