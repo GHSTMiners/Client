@@ -63,7 +63,11 @@ export const Header = () => {
   
   const routeToLobby = () => {
     Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
+      console.log(`Joined lobby room`)
       Client.getInstance().lobbyRoom = room 
+      Client.getInstance().lobbyRoom.onLeave(code => {
+        console.log(`Left the lobby room with code: ${code}`)
+      })
       navigator('/lobby')
     }).catch(exception => {
       alert(`Failed to join a lobby, maybe we're having server issues ?`)

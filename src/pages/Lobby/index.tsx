@@ -45,7 +45,12 @@ const Lobby = (): JSX.Element => {
   useEffect(() => {
 
     try{
-           //Register message handlers
+          if(!Client.getInstance().lobbyRoom) {
+            navigate("/");
+            return;
+          }
+          
+          //Register message handlers
           Client.getInstance().lobbyRoom.onMessage("*", (type, message) => {
             Client.getInstance().lobbyMessageRouter.processRawMessage( type as string, message);
           });
