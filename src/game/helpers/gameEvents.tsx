@@ -13,6 +13,7 @@ const gameEvents : GameEventList = {
                 },
     dialogs: createDisplayEvent('dialogs'),
     exchange: createDisplayEvent('exchange'),
+    game: { MINEDCRYSTAL: Symbol('MINED_CRYSTAL') },
     leaderboard : createDisplayEvent('leaderboard'),
     menu: createDisplayEvent('menu'),
     phaser: { MAINSCENE: Symbol('MAINSCENE_LOADED'), 

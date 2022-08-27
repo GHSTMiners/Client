@@ -20,6 +20,7 @@ import Vignette from "./Vignette";
 import RefineCryptoFX from "./Animations/RefineCryptoFX";
 import usePlayerVitals from "hooks/usePlayerVitals";
 import usePlayerCargo from "hooks/usePlayerCargo";
+import MinedCryptoFX from "./Animations/MinedCryptoFX";
 
 
 export const HUDContext = createContext<PlayerContext>({ 
@@ -99,6 +100,7 @@ export const HUD = () => {
               }}>
           {/* EFFECTS */}
           <RefineCryptoFX />
+          <MinedCryptoFX />
           <Vignette />
           {/* PERMANENT HUD ELEMENTS */}
           <Vitals />
