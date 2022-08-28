@@ -25,7 +25,8 @@ import MinedCryptoFX from "./Animations/MinedCryptoFX";
 
 export const HUDContext = createContext<PlayerContext>({ 
   world:  { crypto: {}, explosives: {} } , 
-  player: { crypto: {}, 
+  player: { crypto: {},
+            total: 0, 
             explosives: {}, 
             depth: 0 , 
             vitals : {} as PlayerVitals,
@@ -41,7 +42,7 @@ export const HUD = () => {
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   const [cryptoRecord] = useWorldCrypto();
-  const {walletBalance, setWalletBalance} = usePlayerCrypto();
+  const {walletBalance, totalCryptoValue, setWalletBalance} = usePlayerCrypto();
   
   useEffect(()=>{
     (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
@@ -91,7 +92,8 @@ export const HUD = () => {
            hidden={!gameLoaded}>
         <HUDContext.Provider value={{ 
               world:  { crypto: cryptoRecord,  explosives: worldExplosives} , 
-              player: { crypto: walletBalance, 
+              player: { crypto: walletBalance,
+                        total: totalCryptoValue, 
                         explosives: playerExplosives, 
                         depth: playerDepth, 
                         vitals: playerVitals,

@@ -6,6 +6,13 @@ import { IndexedArray } from "types";
 const usePlayerCrypto = () => {
 
     const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
+    const [totalCryptoValue, setTotalCryptoValue] = useState(0);
+
+    useEffect(()=>{
+        let total = 0;
+        Object.keys(walletBalance).forEach( key => total = walletBalance[key] + total)
+        setTotalCryptoValue(total)
+    },[walletBalance])
 
     useEffect(()=>{
         
@@ -28,7 +35,7 @@ const usePlayerCrypto = () => {
 
     },[])
 
-    return { walletBalance , setWalletBalance }
+    return { walletBalance , totalCryptoValue, setWalletBalance }
 }
 
 export default usePlayerCrypto
