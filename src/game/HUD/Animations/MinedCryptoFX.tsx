@@ -28,10 +28,22 @@ const MinedCryptoFX = () => {
             key = {`${selectedCoin}_${hudContext.player.crystals[+selectedCoin]}`} 
             onAnimationEnd = { () => setHidden(true) }>
         <div className={styles.minedCryptoContainer}>
-          <div className={styles.refinedCoinContainer}>
-            <img className={styles.crystalPreview} src={hudContext.world.crypto[+selectedCoin]?.crystal} alt={hudContext.world.crypto[+selectedCoin]?.name}/>
+          <div className={styles.crystalContainer}>
+            <img className={styles.crystalPreview} 
+                src={hudContext.world.crypto[+selectedCoin]?.crystal} 
+                key = {`${selectedCoin}_${hudContext.player.crystals[+selectedCoin]}_image`} 
+                alt={hudContext.world.crypto[+selectedCoin]?.name}/>
           </div>
-          +{hudContext.player.crystals[+selectedCoin]}
+          +<span className={styles.rollingCounterContainer}>
+            <div className={styles.rollingWrapper}>
+              <div className={styles.rollingNumber}>  
+                {hudContext.player.crystals[+selectedCoin]-1}
+              </div>
+              <div className={styles.rollingNumber}> 
+                {hudContext.player.crystals[+selectedCoin]} 
+              </div>
+            </div>
+          </span>
         </div>      
       </div>
     )

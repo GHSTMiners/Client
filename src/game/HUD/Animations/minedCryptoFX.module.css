@@ -13,8 +13,7 @@
     font-size: 2rem;
     border-radius: 4px;
     gap: 2rem;
-    animation: popup 1s ease-in-out;
-    transition: all 300ms ease;
+    animation: popup 1.5s ease-in-out;
   }
 
   .minedCryptoContainer{
@@ -34,20 +33,58 @@
     font-size: 0.8rem;
   }
 
+  .rollingCounterContainer{
+    height: 3rem;
+    overflow: hidden;
+  }
+
+  .rollingWrapper{
+    position: relative;
+    top: -3rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-end;
+    animation: rollingNumbers 1.5s ease;
+  }
+
   .show{
-    opacity: 1;
+    /*opacity: 1;*/
   }
 
   .hide{
-    transform: translate(-50%, 0%);
-    opacity: 0;
+    display: none;
   }
 
   .crystalPreview{
     padding: 0.1rem;
     height: 3rem;
+    animation: pulse 1s ease;
   }
 
   @keyframes popup {
-    0%,100% { }
+    0% { 
+      opacity: 1; 
+    }
+    80% {   
+      opacity: 1;
+      transform: translate(-50%, -50%); 
+    }
+    100% { 
+      opacity: 0; 
+      transform: translate(-50%, 0%);}
+  }
+
+  @keyframes pulse {
+    0%,100% { transform: scale(.7); }
+    25%,80% { transform: scale(1); }
+  }
+
+  @keyframes rollingNumbers {
+    0% {
+      top: 0rem;  
+    }
+    25%,100% { 
+      top: -3rem; 
+    } 
   }
