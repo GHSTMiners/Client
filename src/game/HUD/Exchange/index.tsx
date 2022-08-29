@@ -74,7 +74,9 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>
               <div className={styles.coinList}> 
-                {Object.keys(cryptoRecord).map( function (id) {
+                {Object.keys(cryptoRecord)
+                .sort( (prev,next) => hudContext.player.crypto[next] - hudContext.player.crypto[prev])
+                .map( function (id) {
                     return +id===world.world_crypto_id ? '' : renderCoinEntry(+id);
                   })} 
               </div>
