@@ -88,6 +88,11 @@
   filter: grayscale(0.5);  
 }
 
+.coinUnavailable{
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
 .detailsPanel{
   width: 30%;
   padding-left: 1rem;

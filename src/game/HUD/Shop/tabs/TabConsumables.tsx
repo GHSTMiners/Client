@@ -78,7 +78,10 @@ const TabConsumables: FC<{}> = () => {
           <img src={item.image} className={styles.itemImage} alt={item.name}/>
           <div className={styles.itemText}>
             {item.name} 
-            <img src={hudContext.world.crypto[world.world_crypto_id].image} className={styles.cryptoThumbnail}/>
+            <img src={hudContext.world.crypto[world.world_crypto_id].image} 
+                className={`${styles.cryptoThumbnail}
+                            ${playerDoekoes>=item.price? styles.coinAvailable : styles.coinUnavailable }`} 
+                alt={hudContext.world.crypto[world.world_crypto_id].name}/>
             {item.price} 
           </div>
           <button className={`${styles.buyButton} 
@@ -117,7 +120,10 @@ const TabConsumables: FC<{}> = () => {
         </div>
         <div className={styles.totalPrice}>
           Price
-          <img src={hudContext.world.crypto[world.world_crypto_id].image} className={styles.cryptoThumbnail}/>
+          <img src={hudContext.world.crypto[world.world_crypto_id].image} 
+              className={`${styles.cryptoThumbnail}
+              ${playerDoekoes>=multipleItemPrice? styles.coinAvailable : styles.coinUnavailable }`} 
+              alt={hudContext.world.crypto[world.world_crypto_id].name}/>
           {multipleItemPrice}
         </div>
       </div>

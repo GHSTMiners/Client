@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import gameEvents from "game/helpers/gameEvents";
-import { IndexedArray } from "types";
+import { IndexedArray, IndexedCrypto } from "types";
 
-const usePlayerCrypto = () => {
+const usePlayerCrypto = ( cryptoRecord : IndexedCrypto) => {
 
     const [walletBalance, setWalletBalance] = useState<IndexedArray>({});
     const [totalCryptoValue, setTotalCryptoValue] = useState(0);
 
     useEffect(()=>{
         let total = 0;
-        Object.keys(walletBalance).forEach( key => total = walletBalance[key] + total)
+        Object.keys(walletBalance).forEach( key => total = walletBalance[key] * cryptoRecord[key].price + total)
         setTotalCryptoValue(total)
-    },[walletBalance])
+    },[walletBalance,cryptoRecord])
 
     useEffect(()=>{
         

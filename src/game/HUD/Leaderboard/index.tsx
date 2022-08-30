@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";
@@ -6,6 +6,7 @@ import renderPlayerInfo from "./helpers/renderPlayerInfo";
 import useSortPlayers from "./hooks/useSortPlayers";
 import { Player } from "matchmaking/Schemas";
 import { IndexedPlayers } from "types";
+import { HUDContext } from "..";
 
 interface Props {
     hidden: boolean;
@@ -13,7 +14,8 @@ interface Props {
   
   const GameLeaderboard : React.FC<Props> = ({ hidden }) => { 
 
-    const leaderboardVisibility = useVisible('leaderboard', !hidden); 
+    const leaderboardVisibility = useVisible('leaderboard', !hidden);
+    const hudContext = useContext(HUDContext); 
     const [ players , setPlayers] = useState({} as IndexedPlayers);
     const {sortedPlayers} = useSortPlayers(players, leaderboardVisibility.state );
 
@@ -37,11 +39,11 @@ interface Props {
         <div className={styles.tableHeader}>
             <div>Rank</div>
             <div>Gotchi</div>
-            <div>GGEMS</div>
+            <div>$</div>
             <div>Upgrades</div>
         </div>
 
-        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers)) }
+        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers, hudContext.world.crypto )) }
 
     </div>
     )

@@ -1,13 +1,12 @@
 import { GotchiSVG } from "components/GotchiSVG";
-import { IndexedPlayers } from "types";
-import styles from "../styles.module.css"
-import Client from "matchmaking/Client";
+import { IndexedCrypto, IndexedPlayers } from "types";
+import styles from "../styles.module.css";
 import renderUpgradeElement from "./renderUpgradeElement";
 
-const renderPlayerInfo = (id:number,players:IndexedPlayers,sortedPlayers:number[]) => {
+const renderPlayerInfo = (id:number,players:IndexedPlayers,sortedPlayers:number[],worldCrypto:IndexedCrypto) => {
     
-    const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
-    let playerGGEMS = Math.round(players[id].wallet.get(worldCryptoId)?.amount as number);
+    let totalCrypto = 0;
+    players[id].wallet.forEach( entry => totalCrypto = entry.amount * worldCrypto[entry.cryptoID].price + totalCrypto );
     const playerRank = sortedPlayers.findIndex( element => element===id) +1 ;
     const playerUpgrades = players[id].upgrades;
     let upgradesBar: JSX.Element[] = [];
@@ -30,7 +29,7 @@ const renderPlayerInfo = (id:number,players:IndexedPlayers,sortedPlayers:number[
             {players[id].name}
         </div>
         <div>
-            {playerGGEMS? playerGGEMS: 0 } 
+            {Math.round(totalCrypto*10)/10} 
         </div>
         <div className={styles.upgradeBar}>
             {upgradesBar}

@@ -33,7 +33,7 @@ const Shop = () => {
                   <div className={`${styles.playerCryptoWrapper}
                     ${ (hudContext.player.crypto[key]>0) ? 
                       styles.coinAvailable: styles.coinUnavailable}`}>
-                    <img src={hudContext.world.crypto[key].image} style={{ height: '1.5rem' }}/>
+                    <img src={hudContext.world.crypto[key].image} className={styles.currencyThumbnail} alt={hudContext.world.crypto[key].name}/>
                     x 
                     {hudContext.player.crypto[key]}
                   </div>

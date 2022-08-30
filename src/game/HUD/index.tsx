@@ -42,7 +42,7 @@ export const HUD = () => {
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
   const [cryptoRecord] = useWorldCrypto();
-  const {walletBalance, totalCryptoValue, setWalletBalance} = usePlayerCrypto();
+  const {walletBalance, totalCryptoValue, setWalletBalance} = usePlayerCrypto(cryptoRecord);
   
   useEffect(()=>{
     (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
