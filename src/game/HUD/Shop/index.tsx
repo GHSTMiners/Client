@@ -26,10 +26,23 @@ const Shop = () => {
   return (
     <div className={`${styles.shopContainer} ${shopVisibility.state ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
-        <div className={styles.playerDoekoes}>$ {Math.round(hudContext.player.total*10)/10} </div>
-
-        
-        <button className={styles.closeButton} onClick={ shopVisibility.hide }>X</button>
+        <div className={styles.shopHeader}>
+          <div className={styles.playerCryptoContainer}>
+              {Object.keys(hudContext.player.crypto).map( key =>{
+                return(
+                  <div className={`${styles.playerCryptoWrapper}
+                    ${ (hudContext.player.crypto[key]>0) ? 
+                      styles.coinAvailable: styles.coinUnavailable}`}>
+                    <img src={hudContext.world.crypto[key].image} style={{ height: '1.5rem' }}/>
+                    x 
+                    {hudContext.player.crypto[key]}
+                  </div>
+                )
+              })
+              }
+          </div>
+          <button className={styles.closeButton} onClick={ shopVisibility.hide }>X</button>
+        </div>
         <div className={styles.shopTabs}>
           <Tabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={tabs} />
         </div>

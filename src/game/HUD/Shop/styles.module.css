@@ -19,18 +19,39 @@
   margin-left: 16%;
 }
 
+
+.shopHeader{
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #a4ffff;
+}
+
+.playerCryptoContainer{
+  display: flex;
+  flex-direction: row;
+  gap:1rem;
+  margin: auto;
+}
+
+.playerCryptoWrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  color:white;
+  font-size: 1.2rem;
+  align-items: center;
+}
+
 .closeButton{
   background-color: transparent;
   width: 2rem;
   height: 2rem;
-  right: 0.5rem;
-  top: 0.5rem;
   color:#a4ffff;
-  outline: 0;
-  margin: auto;
-  box-shadow: 0;
-  position: absolute;
-  border: 1px solid #a4ffff;
+  border: none;
+  border-left: 1px solid #a4ffff;
   -webkit-transition : box-shadow ease-in .3s;
   transition : box-shadow ease-in .3s;
 }
@@ -67,8 +88,13 @@
   border: 1px solid #a4ffff;
 }
 
+.coinUnavailable{
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
 .shopTabs{
-  padding-top: 2rem;
+  padding-top: 3rem;
   font-size: 2em;
   display: flex;
   color: white;
@@ -76,8 +102,5 @@
 }
 
 .currencyThumbnail{
-  height: 2rem;
-  top: 0.5rem;
-  right: 11rem;
-  position: absolute;
+  height: 1rem;
 }

@@ -66,9 +66,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
             <div className={styles.exchangeDisplayContainer}>
               <div className={styles.exchangeHeader} key={'exchangeHeader'}>
                 <h2>WALLET</h2>
-                <div className={styles.playerBalance}>
-                  $ {Math.round(hudContext.player.total*10)/10}
-                </div>
+
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>
               <div className={styles.coinList}> 
