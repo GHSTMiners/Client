@@ -29,6 +29,7 @@
 .mainPlayerBalance{
   display: flex;
   flex-direction: row;
+  padding-left: 2rem;
   justify-content:center;
   align-items: center;
   min-width: 8rem;

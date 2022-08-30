@@ -58,7 +58,10 @@
 
 .itemText {
   width: 80%;
-  display:grid;
+  height: 2rem;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
   justify-content: center;
   border-bottom: 3px solid #a4ffff;
 }
@@ -94,7 +97,7 @@
   flex-direction: column;
   justify-content: center;
   position:relative;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 
@@ -177,8 +180,13 @@
 }
 
 .totalPrice{
-  padding-top: 0.5rem;
+  padding-top: 1rem;
   font-size: 1.2rem;
+  height: 2rem;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .gotchiPreview{
@@ -205,4 +213,10 @@
 
 .selectedContainer{
     border:1px solid #a4ffff;
+}
+
+.cryptoThumbnail{
+  height: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.25rem;
 }

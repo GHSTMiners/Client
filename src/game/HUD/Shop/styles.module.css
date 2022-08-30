@@ -74,3 +74,10 @@
   color: white;
   position: static;
 }
+
+.currencyThumbnail{
+  height: 2rem;
+  top: 0.5rem;
+  right: 11rem;
+  position: absolute;
+}

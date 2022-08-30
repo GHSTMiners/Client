@@ -2,7 +2,6 @@ import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import React, { useContext, useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
-import ggemsIcon from "assets/icons/ggems_icon.svg";
 import { IndexedArray } from "types";
 import useVisible from "hooks/useVisible";
 import useWorldCrypto from "hooks/useWorldCrypto";
@@ -43,7 +42,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
         <div className={`${styles.coinRowContainer} ${hasCoins? styles.hasCoins : styles.noCoins }`}>
           <div className={styles.exchangeRowText}>
             <div className={styles.tokenValue}>{quantity} x {cryptoRecord[id].name}</div>
-            <div  className={styles.ggemsValue}>{Math.round(cryptoRecord[id].price*quantity*10)/10} GGEMS</div>
+            <div  className={styles.ggemsValue}>{Math.round(cryptoRecord[id].price*quantity*10)/10} DAI</div>
           </div>
           <input className={`${styles.inputQuantity} ${inputValues[id]>0? '': styles.emptyInput }`} 
                  type="number" 
@@ -68,8 +67,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
               <div className={styles.exchangeHeader} key={'exchangeHeader'}>
                 <h2>WALLET</h2>
                 <div className={styles.playerBalance}>
-                  <img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>
-                  {hudContext.player.crypto[world.world_crypto_id]} x GGEMS
+                  $ {Math.round(hudContext.player.total*10)/10}
                 </div>
                 <button className={styles.closeButton} onClick={ exchangeVisibility.hide }>X</button>
               </div>

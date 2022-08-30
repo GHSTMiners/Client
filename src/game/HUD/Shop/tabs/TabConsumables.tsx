@@ -77,7 +77,9 @@ const TabConsumables: FC<{}> = () => {
            onMouseLeave={()=>setHoverItem({} as ShopItem)}>
           <img src={item.image} className={styles.itemImage} alt={item.name}/>
           <div className={styles.itemText}>
-            {item.name} : {item.price} GGEMS
+            {item.name} 
+            <img src={hudContext.world.crypto[world.world_crypto_id].image} className={styles.cryptoThumbnail}/>
+            {item.price} 
           </div>
           <button className={`${styles.buyButton} 
                               ${playerDoekoes>=item.price? styles.enabledButton : styles.disabledButton }`} 
@@ -114,7 +116,9 @@ const TabConsumables: FC<{}> = () => {
           </button>
         </div>
         <div className={styles.totalPrice}>
-          Price: {multipleItemPrice}
+          Price
+          <img src={hudContext.world.crypto[world.world_crypto_id].image} className={styles.cryptoThumbnail}/>
+          {multipleItemPrice}
         </div>
       </div>
     </>

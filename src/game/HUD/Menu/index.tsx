@@ -1,14 +1,12 @@
 import { useContext } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
-import ggemsIcon from "assets/icons/ggems_icon.svg";
 import gearIcon from "assets/icons/gear.svg";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useNavigate } from "react-router-dom";
 import Marquee from "react-easy-marquee";
 import gameEvents from "game/helpers/gameEvents";
-import * as Chisel from "chisel-api-interface";
 import useVisible from "hooks/useVisible";
 import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import { HUDContext } from "..";
@@ -20,7 +18,6 @@ const Menu = () => {
   const musicManager = useMusicManager();
   const navigator = useNavigate();
   const hudContext = useContext(HUDContext);
-  const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   const playerTotalCrypto = Math.round(hudContext.player.total*10)/10;
 
   const updateMusicVolume = (volume:number | number[]) =>{
@@ -46,7 +43,7 @@ const Menu = () => {
           <div className={styles.mainPlayerBalance}
               onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
             {/*<img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>*/}
-            ${playerTotalCrypto}
+            $ {playerTotalCrypto}
           </div>
 
           <div className={styles.coinThumbnailContainer}
