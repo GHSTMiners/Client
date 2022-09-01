@@ -6,6 +6,7 @@ import useVisible from "hooks/useVisible";
 import gameEvents from "game/helpers/gameEvents";
 import { HUDContext } from "..";
 import tabs from "./tabs";
+import sellCrypto from "./helpers/sellCrypto";
 
 
 const Shop = () => {
@@ -31,8 +32,8 @@ const Shop = () => {
               {Object.keys(hudContext.player.crypto).map( key =>{
                 return(
                   <div className={`${styles.playerCryptoWrapper}
-                    ${ (hudContext.player.crypto[key]>0) ? 
-                      styles.coinAvailable: styles.coinUnavailable}`}>
+                    ${ (hudContext.player.crypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
+                    onClick={()=>sellCrypto(+key,1)}>
                     <img src={hudContext.world.crypto[key].image} className={styles.currencyThumbnail} alt={hudContext.world.crypto[key].name}/>
                     x 
                     {hudContext.player.crypto[key]}

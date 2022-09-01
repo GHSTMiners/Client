@@ -4,7 +4,6 @@ import GameLeaderboard from "./Leaderboard";
 import Vitals from "./Vitals";
 import Diagnostics from "./Diagnostics";
 import Console from "./Console";
-import Exchange from "./Exchange";
 import Menu from "./Menu";
 import Shop from "./Shop";
 import Client from "matchmaking/Client";
@@ -111,7 +110,6 @@ export const HUD = () => {
           <Menu />
           {/* DIALOGS HUD */}
           <Shop />
-          <Exchange hidden={true} />
           <GameLeaderboard hidden={true} />
           <Diagnostics hidden={true} />
         </HUDContext.Provider>
