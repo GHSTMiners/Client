@@ -4,8 +4,8 @@
 // 
 // GENERATED USING @colyseus/schema 2.0.3
 // 
-
-import { Schema, type, ArraySchema, MapSchema, SetSchema, DataChange } from '@colyseus/schema';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Schema, type} from '@colyseus/schema';
 
 
 export class Rock extends Schema {

@@ -4,7 +4,7 @@
 // 
 // GENERATED USING @colyseus/schema 2.0.3
 // 
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Schema, type } from "@colyseus/schema"
 
 export class Explosive extends Schema {

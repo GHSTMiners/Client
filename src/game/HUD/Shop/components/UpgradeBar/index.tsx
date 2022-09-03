@@ -58,8 +58,8 @@ const UpgradeBar: React.FC<Props> = ({
   return(
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
-       <img src={hudContext.world.crypto[entry.cryptoId].image} 
-            alt={hudContext.world.crypto[entry.cryptoId].name}
+       <img src={hudContext.world.crypto[entry.cryptoId]?.image} 
+            alt={hudContext.world.crypto[entry.cryptoId]?.name}
             className={`${styles.exchangeCoin}
                    ${ (playerCrypto[entry.cryptoId]>=entry.cost) ? 
                     styles.upgradeAvailable: styles.upgradeUnavailable}`}

@@ -8,6 +8,7 @@ import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";
 import DiagnosticsManager from "game/Management/DiagnosticsManager";
 import gameEvents from "game/helpers/gameEvents";
+import RespawnManager from "game/Management/RespawnManager";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -25,6 +26,7 @@ export default class MainScene extends Phaser.Scene {
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this);
+    this.respawnManager = new RespawnManager(this);
     this.soundFXManager = new SoundFXManager(this);
     this.diagnosticsManager = new DiagnosticsManager(this);
     this.game.events.emit( gameEvents.phaser.MAINSCENE);
@@ -48,4 +50,5 @@ export default class MainScene extends Phaser.Scene {
   private movementManager?: MovementManager;
   public diagnosticsManager? : DiagnosticsManager
   private excavationManager?: ExcavationManager;
+  private respawnManager?: RespawnManager;
 }

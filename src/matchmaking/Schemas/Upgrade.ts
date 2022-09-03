@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Schema, type } from "@colyseus/schema"
 
 export class Upgrade extends Schema {

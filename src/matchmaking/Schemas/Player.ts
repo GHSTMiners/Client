@@ -4,7 +4,7 @@
 // 
 // GENERATED USING @colyseus/schema 2.0.3l
 // 
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Schema, type, ArraySchema, MapSchema } from '@colyseus/schema';
 import { PlayerState } from './PlayerState'
 import { Vital } from './Vital'

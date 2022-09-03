@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Schema, ArraySchema, type } from "@colyseus/schema"
 import { PlayerSeatState } from "./PlayerSeatState";
 
