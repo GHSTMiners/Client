@@ -75,13 +75,14 @@ const TabConsumables: FC<{}> = () => {
            key={item.name}
            onMouseEnter={()=>setHoverItem(item)}
            onMouseLeave={()=>setHoverItem({} as ShopItem)}>
-          <img src={item.image} className={styles.itemImage} alt={item.name}/>
+          <img src={item.image} className={styles.itemImage} alt={item.name} loading='lazy'/>
           <div className={styles.itemText}>
             {item.name} 
             <img src={hudContext.world.crypto[world.world_crypto_id].image} 
                 className={`${styles.cryptoThumbnail}
                             ${playerDoekoes>=item.price? styles.coinAvailable : styles.coinUnavailable }`} 
-                alt={hudContext.world.crypto[world.world_crypto_id].name}/>
+                alt={hudContext.world.crypto[world.world_crypto_id].name}
+                loading='lazy'/>
             {item.price} 
           </div>
           <button className={`${styles.buyButton} 
@@ -99,7 +100,7 @@ const TabConsumables: FC<{}> = () => {
     <>
       <div className={styles.detailsTitle}>
         <div>{detailsItem.name}</div>
-        <img src={detailsItem.image} className={styles.titleImage} alt={detailsItem.name}/>
+        <img src={detailsItem.image} className={styles.titleImage} alt={detailsItem.name} loading='lazy'/>
       </div>
       <div className={styles.detailsBody}>
         <div className={styles.explosivePattern}>
@@ -123,7 +124,8 @@ const TabConsumables: FC<{}> = () => {
           <img src={hudContext.world.crypto[world.world_crypto_id].image} 
               className={`${styles.cryptoThumbnail}
               ${playerDoekoes>=multipleItemPrice? styles.coinAvailable : styles.coinUnavailable }`} 
-              alt={hudContext.world.crypto[world.world_crypto_id].name}/>
+              alt={hudContext.world.crypto[world.world_crypto_id].name}
+              loading='lazy'/>
           {multipleItemPrice}
         </div>
       </div>

@@ -175,5 +175,5 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
  
 
     
-  private playerSprites: Map<number, Player>;
+  public playerSprites: Map<number, Player>;
 }

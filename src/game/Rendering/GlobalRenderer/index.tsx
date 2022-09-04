@@ -27,6 +27,6 @@ export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
     private explosiveRenderer : ExplosiveRenderer
     private buildingRenderer : BuildingRenderer
     private blockRenderer : BlockRenderer
-    private playerRender : PlayerRenderer
+    public playerRender : PlayerRenderer
     private backgroundRenderer : BackgroundRenderer
 }

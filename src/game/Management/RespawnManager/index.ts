@@ -2,6 +2,7 @@ import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { IndexedArray } from "types"
 import gameEvents from "game/helpers/gameEvents";
+import { Crystal } from "game/World/Crystal";
 
 export default class RespawnManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -11,10 +12,11 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
     }
 
     private handleDead = () => {
-        Client.getInstance().ownPlayer?.cargo.forEach( entry => this.lostCargo[entry.cryptoID] = entry.amount )
+        Client.getInstance().ownPlayer?.cargo.forEach( entry => {
+            this.lostCargo[entry.cryptoID] = entry.amount
+            for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, entry.cryptoID.toString() )
+        })
         Client.getInstance().phaserGame.events.emit( gameEvents.game.LOSTCARGO, this.lostCargo )
-        console.log(`My gotchi just died and lost all cargo :(`)
-        console.log(this.lostCargo)
         this.lostCargo = {};
     }
 
