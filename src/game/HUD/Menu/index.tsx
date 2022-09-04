@@ -50,13 +50,13 @@ const Menu = () => {
           <div className={styles.coinThumbnailContainer}
               onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
               key={'Thumbnail_cointainer'}>
-            { Object.keys(hudContext.player.crypto).map( cryptoKey => 
-                {if (hudContext.player.crypto[cryptoKey]>0 && hudContext.world.crypto[cryptoKey].name !== 'GGEMS'){
-                <img src={hudContext.world.crypto[cryptoKey].image} 
+            { Object.keys(hudContext.player.crypto)
+                .filter( key => hudContext.player.crypto[key]>0 )
+                .map( cryptoKey => 
+                  <img src={hudContext.world.crypto[cryptoKey].image} 
                     className={styles.coinThumbnail}
                     alt={`${hudContext.world.crypto[cryptoKey].name}_thumbnail`}  
-                    key={cryptoKey}/>
-                }}
+                    key={`coin_thumbnail_${cryptoKey}`}/>
               )
             }
           </div>

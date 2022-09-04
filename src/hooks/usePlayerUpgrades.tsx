@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import { IndexedArray } from "types";
-import gameEvents from "game/helpers/gameEvents";
+//import gameEvents from "game/helpers/gameEvents";
 
 const usePlayerUpgrades = () => {
 
