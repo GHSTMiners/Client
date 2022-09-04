@@ -13,7 +13,7 @@ const usePlayerUpgrades = () => {
             setCurrentTiers( (state) => { state[id]=value;  return {...state}  } );
         }
         
-        const getPlayerUpgrades = () => {
+        //const getPlayerUpgrades = () => {
             Client.getInstance().ownPlayer.upgrades.forEach( (upgrade) => {
                 updatePlayerTiers(upgrade.id,upgrade.tier);
                 upgrade.onChange = () => {
@@ -21,13 +21,14 @@ const usePlayerUpgrades = () => {
                     console.log(`Upgrade updated! ID: ${upgrade.id} to tier ${upgrade.tier}`)
                 } 
             });
-        }
-
+        //}
+        /*
         Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, getPlayerUpgrades);
   
         return () => {
           Client.getInstance().phaserGame.events.off( gameEvents.room.JOINED , getPlayerUpgrades);
         }
+        */
     },[])
 
     return { currentTiers , setCurrentTiers }

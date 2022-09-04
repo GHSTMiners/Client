@@ -37,10 +37,10 @@ const MinedCryptoFX = () => {
           +<span className={styles.rollingCounterContainer}>
             <div className={styles.rollingWrapper}>
               <div className={styles.rollingNumber}>  
-                {hudContext.player.crystals[+selectedCoin]-1}
+                {hudContext.player.crystals[+selectedCoin]? hudContext.player.crystals[+selectedCoin]-1 : 0}
               </div>
               <div className={styles.rollingNumber}> 
-                {hudContext.player.crystals[+selectedCoin]} 
+                {hudContext.player.crystals[+selectedCoin]? hudContext.player.crystals[+selectedCoin] : 0} 
               </div>
             </div>
           </span>

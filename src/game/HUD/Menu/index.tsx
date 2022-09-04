@@ -41,19 +41,22 @@ const Menu = () => {
         <div className={styles.playerMenuBar}>
           
           <div className={styles.mainPlayerBalance}
-              onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
+              onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
+              key={'Tota_Worth_Value'}>
             {/*<img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>*/}
             $ {playerTotalCrypto}
           </div>
 
           <div className={styles.coinThumbnailContainer}
-              onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }>
+              onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
+              key={'Thumbnail_cointainer'}>
             { Object.keys(hudContext.player.crypto).map( cryptoKey => 
-                (hudContext.player.crypto[cryptoKey]>0 && hudContext.world.crypto[cryptoKey].name !== 'GGEMS')?
+                {if (hudContext.player.crypto[cryptoKey]>0 && hudContext.world.crypto[cryptoKey].name !== 'GGEMS'){
                 <img src={hudContext.world.crypto[cryptoKey].image} 
                     className={styles.coinThumbnail}
-                    alt={`${hudContext.world.crypto[cryptoKey].name}_thumbnail`}  />
-                : <></>
+                    alt={`${hudContext.world.crypto[cryptoKey].name}_thumbnail`}  
+                    key={cryptoKey}/>
+                }}
               )
             }
           </div>

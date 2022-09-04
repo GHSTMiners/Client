@@ -33,13 +33,14 @@ const Shop = () => {
                 return(
                   <div className={`${styles.playerCryptoWrapper}
                     ${ (hudContext.player.crypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
-                    onClick={()=>sellCrypto(+key,1)}>
+                    onClick={()=>sellCrypto(+key,1)}
+                    key={key}>
                     <img src={hudContext.world.crypto[key].image} 
                     className={styles.currencyThumbnail} 
                     alt={hudContext.world.crypto[key].name}
                     loading='lazy'/>
                     x 
-                    {hudContext.player.crypto[key]}
+                    {Math.round(hudContext.player.crypto[key]*10)/10}
                   </div>
                 )
               })

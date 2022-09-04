@@ -111,7 +111,7 @@ export class Player extends Phaser.GameObjects.Container {
         repeat: -1,
     });
     this.playerSprite.anims.create({
-      key: 'flying_normal',
+      key: 'sad',
       frames: this.playerSprite.anims.generateFrameNumbers( spriteKey || '', { frames: [ 10] }),
       frameRate: 8,
       repeat: -1,

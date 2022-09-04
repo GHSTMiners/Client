@@ -54,7 +54,7 @@ const RefineCryptoFX = () => {
             .filter( key => processedCargo[+key] > 0 )
             .map( key =>{
               return(
-               <div className={styles.cargoCoinContainer}>
+               <div className={styles.cargoCoinContainer} key={`cargo_crystal_${key}`}>
                 <div className={styles.refinedCoinContainer}>
                   <img className={styles.coinPreview} src={hudContext.world.crypto[+key].image} alt={hudContext.world.crypto[+key].name}/>
                 </div>
