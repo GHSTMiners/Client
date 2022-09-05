@@ -14,7 +14,7 @@ const gameEvents : GameEventList = {
     dialogs: createDisplayEvent('dialogs'),
     exchange: createDisplayEvent('exchange'),
     game: { MINEDCRYSTAL: Symbol('MINED_CRYSTAL'), 
-            LOSTCARGO: Symbol('LOST_CARGO') },
+            SUSPEND: Symbol('SUSPEND_PLAYER')},
     leaderboard : createDisplayEvent('leaderboard'),
     menu: createDisplayEvent('menu'),
     phaser: { MAINSCENE: Symbol('MAINSCENE_LOADED'), 

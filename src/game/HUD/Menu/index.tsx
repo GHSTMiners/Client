@@ -43,7 +43,6 @@ const Menu = () => {
           <div className={styles.mainPlayerBalance}
               onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
               key={'Tota_Worth_Value'}>
-            {/*<img src={ggemsIcon} className={styles.ggemsIcon} alt={'GGEMS'}/>*/}
             $ {playerTotalCrypto}
           </div>
 
