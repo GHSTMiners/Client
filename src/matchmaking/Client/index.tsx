@@ -7,6 +7,7 @@ import Phaser from "phaser";
 import * as Schema from "matchmaking/Schemas";
 import Authenticator from "matchmaking/Authenticator";
 import { Lobby } from "matchmaking/Schemas/Lobby";
+import ServerLocator from "matchmaking/ServerLocator";
 
 export default class Client {
   private static instance: Client;
@@ -16,6 +17,7 @@ export default class Client {
   public apiInterface: Chisel.APIInterface = new Chisel.APIInterface(
     Config.apiURL
   );
+  public serverLocator : ServerLocator
   public lobbyRoom!: Colyseus.Room<Lobby>;
   public colyseusRoom!: Colyseus.Room<World>;
   public chiselWorld!: Chisel.DetailedWorld;
@@ -30,6 +32,7 @@ export default class Client {
    * construction calls with the `new` operator.
    */
   private constructor() {
+    this.serverLocator = new ServerLocator(this.apiInterface)
     this.authenticator = new Authenticator();
     this.authenticationInfo = new Protocol.AuthenticationInfo();
     this.messageRouter = new Protocol.MessageRouter()
@@ -49,13 +52,5 @@ export default class Client {
     }
 
     return Client.instance;
-  }
-
-  /**
-   * Finally, any singleton should define some business logic, which can be
-   * executed on its instance.
-   */
-  public someBusinessLogic() {
-    // ...
   }
 }
