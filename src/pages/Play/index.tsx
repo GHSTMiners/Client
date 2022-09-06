@@ -19,6 +19,9 @@ export default class Play extends React.Component {
         },
         physics: {
           default: "arcade",
+          arcade: {
+            debug: false,
+          }
         },
         scene: [LoadingScene, MainScene],
       };

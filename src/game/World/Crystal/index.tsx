@@ -14,10 +14,16 @@ export class Crystal extends Phaser.GameObjects.Sprite {
         this.setTexture(`crypto_soil_${cryptoID}`)
         this.setOrigin(0, 0)
         const myGotchiID = Client.getInstance().ownPlayer.gotchiID;
-        const myPlayer  = (scene as MainScene).globalRenderer?.playerRender.playerSprites.get( myGotchiID )        
-        if (myPlayer) myPlayer.add(this)
-        this.scene.time.delayedCall( 2000, this.destroy)
+        this.myPlayer  = (scene as MainScene).globalRenderer?.playerRender.playerSprites.get( myGotchiID )        
+        if (this.myPlayer) this.myPlayer.add(this)
+        this.scene.time.delayedCall( 2000, this.delete.bind(this))
     }
 
+    public delete () {
+        if (this.myPlayer) this.myPlayer.remove(this)
+        this.destroy();
+    }
+
+    private myPlayer
     private cryptoID
 }

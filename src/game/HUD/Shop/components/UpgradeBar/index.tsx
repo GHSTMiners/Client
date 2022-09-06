@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { HUDContext } from "game/HUD";
 import { UpgradeTags } from "helpers/vars"
+import upgradeSound from "assets/sounds/upgrade.mp3"
 
 interface Props {
   upgradeId:number;
@@ -23,6 +24,10 @@ const UpgradeBar: React.FC<Props> = ({
   const [ upgradeAvailable, setUpgradeAvailable] = useState(false);
   const hudContext = useContext(HUDContext);
   const playerCrypto = hudContext.player.crypto;
+
+  const playAudioEffect = () => {
+    new Audio(upgradeSound).play();
+  }
 
   // Checking if the player has all the coins required & refreshing after upgraded
   useEffect(()=>{
@@ -82,7 +87,13 @@ const UpgradeBar: React.FC<Props> = ({
       <div className={styles.upgradeBarContainer}>
         <button className={`${styles.upgradeButton}
                           ${upgradeAvailable? '' : styles.buttonUnavailable}`}
-                onClick={() => { if (upgradeLevel<UpgradeTags.length-1 && upgradeAvailable) purchaseCallback()  } } >
+                onClick={() => { 
+                  if (upgradeLevel<UpgradeTags.length-1 && upgradeAvailable) {
+                    purchaseCallback()
+                    playAudioEffect()
+                    }  
+                  } 
+                  } >
           <div className={styles.upgradeButtonText}>UPGRADE</div>        
         </button>  
 

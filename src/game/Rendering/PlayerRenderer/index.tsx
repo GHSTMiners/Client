@@ -159,7 +159,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
             mouth: "neutral",
             armsUp: false,
             removeBg: true,
-            removeShadow: false,
+            removeShadow: true,
             removePet: true,
             removeHandWearables: true  }),
         ],
