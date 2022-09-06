@@ -36,6 +36,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("jackHammer", "assets/audio/jackHammer.webm");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
     this.load.audio("explosion", "assets/audio/explosion.mp3");
+    this.load.audio("dead", "assets/audio/dead.mp3");
     this.load.audio("lowFuelWarning","assets/audio/lowFuelWarning.mp3")
     this.load.spritesheet("explosionAnimation", "assets/images/explosionSprite.png", {frameHeight: 128, frameWidth: 128, startFrame:0, endFrame: 15})
     this.load.spritesheet("jetpackAnimationRear", "assets/sprites/jetpackRear.png", {frameHeight: 337, frameWidth: 296, startFrame:0, endFrame: 24})

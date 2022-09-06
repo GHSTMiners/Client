@@ -21,11 +21,18 @@ export enum MovementDirection {
     None = 4
 }
 
+export enum HealthState {
+    Healthy = 0,
+    Hurt = 1,
+    Deceased = 2,
+}
+
 export class PlayerState extends Schema {
     @type("int32") public x!: number;
     @type("int32") public y!: number;
     @type("int32") public velocityX!: number;
     @type("int32") public velocityY!: number;
+    @type ("number") public healthState : HealthState = HealthState.Healthy
     @type("number") public movementState!: MovementState;
     @type ("number") movementDirection : MovementDirection = MovementDirection.Down
 }

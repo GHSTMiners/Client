@@ -26,7 +26,7 @@ export class Player extends Phaser.GameObjects.Container {
     this.xVelocity = 0;
     this.yVelocity = 0;
     this.alphaRefresh = 0.4;
-    this.suspended = false;
+    //this.suspended = false;
 
     //Add jackhammer
     this.playerJackhammer = new Jackhammer(scene, this);
@@ -68,7 +68,8 @@ export class Player extends Phaser.GameObjects.Container {
     //Message handlers
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerCollision, this.handleCollision.bind(this))
     Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerMinedLava, this.handleLavaMined.bind(this))
-    Client.getInstance().phaserGame.events.on( gameEvents.game.SUSPEND, (state:boolean) => { this.setSuspended(state) } )
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
+    Client.getInstance().phaserGame.events.on( gameEvents.game.DEAD, this.handleDead.bind(this) )
     //Add animations
     this.createAnimations();
   }
@@ -125,10 +126,6 @@ export class Player extends Phaser.GameObjects.Container {
     //console.log(`Entering ${buildingName}`)
   }
 
-  public setSuspended ( state : boolean ) {
-    this.suspended = state ;
-  }
-
   public displayMessage(message : string, timeout : number) {
     this.playerMessage.setText(message)
     this.playerMessage.setVisible(true)
@@ -156,6 +153,15 @@ export class Player extends Phaser.GameObjects.Container {
   private handleLavaMined(message : Protocol.NotifyPlayerMinedLava) {
     this.scene.sound.play(`metalThud`)
     this.scene.cameras.main.flash(250, 255, 0, 0, true);
+  }
+
+  private handleDead() {
+    this.scene.sound.play(`dead`)
+    this.scene.cameras.main.flash(1000, 255, 0, 0, true);
+  }
+
+  private handleRespawn() {
+    /* Add respawn animation and respawn sound */
   }
 
   private smoothMove(
@@ -195,93 +201,90 @@ export class Player extends Phaser.GameObjects.Container {
     //Drilling update stuff
     let playerState: PlayerState = this.playerSchema.playerState;
 
-    if (this.suspended === true){
-      this.dirtParticleEmitter.stop()
-      this.playerSprite.anims.play('sad', true)
+    //Process sound
+    if ((playerState.movementState === Schema.MovementState.Drilling) !== this.jackHammerSound.isPlaying) {
+      if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play()
+      else this.jackHammerSound.pause()
     }
-    else {
-      //Process sound
-      if ((playerState.movementState === Schema.MovementState.Drilling) !== this.jackHammerSound.isPlaying) {
-        if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play()
-        else this.jackHammerSound.pause()
+
+    //Process drilling particles
+    if (
+      playerState.movementState !== Schema.MovementState.Drilling &&
+      this.dirtParticleEmitter.on
+    ) {this.dirtParticleEmitter.stop();}
+    else if (
+      playerState.movementState === Schema.MovementState.Drilling &&
+      !this.dirtParticleEmitter.on
+    ) {this.dirtParticleEmitter.start();}
+
+    if (playerState.x !== this.x || playerState.y !== this.y) {
+      let [xSmooth, vxSmooth] = this.smoothMove(
+        playerState.x,
+        this.x,
+        delta,
+        this.xVelocity
+      );
+      this.xVelocity = vxSmooth;
+      let [ySmooth, vySmooth] = this.smoothMove(
+        playerState.y,
+        this.y,
+        delta,
+        this.yVelocity
+      );
+      this.yVelocity = vySmooth;
+      
+      switch(playerState.movementState) {
+        case Schema.MovementState.Stationary:
+          this.playerSprite.anims.play('idle', true);
+        break;
+        case Schema.MovementState.Drilling:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('drilling', true);
+          }
+        break;
+        case Schema.MovementState.Flying:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('flying', true);
+          }
+        break;
+        default:
+          switch(playerState.movementDirection) {
+            case Schema.MovementDirection.Left:
+              this.playerSprite.anims.play('left',true);
+            break;
+            case Schema.MovementDirection.Right:
+              this.playerSprite.anims.play('right', true)
+            break;
+            default: 
+              this.playerSprite.anims.play('idle', true);
+          }
       }
+      
+      if (this.playerSchema.playerState.movementState !== Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
+      else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
+    }
 
-      //Process drilling particles
-      if (
-        playerState.movementState !== Schema.MovementState.Drilling &&
-        this.dirtParticleEmitter.on
-      ) {this.dirtParticleEmitter.stop();}
-      else if (
-        playerState.movementState === Schema.MovementState.Drilling &&
-        !this.dirtParticleEmitter.on
-      ) {this.dirtParticleEmitter.start();}
-
-      if (playerState.x !== this.x || playerState.y !== this.y) {
-        let [xSmooth, vxSmooth] = this.smoothMove(
-          playerState.x,
-          this.x,
-          delta,
-          this.xVelocity
-        );
-        this.xVelocity = vxSmooth;
-
-        let [ySmooth, vySmooth] = this.smoothMove(
-          playerState.y,
-          this.y,
-          delta,
-          this.yVelocity
-        );
-        this.yVelocity = vySmooth;
-        
-        switch(playerState.movementState) {
-          case Schema.MovementState.Stationary:
-            this.playerSprite.anims.play('idle', true);
-          break;
-
-          case Schema.MovementState.Drilling:
-            switch(playerState.movementDirection) {
-              case Schema.MovementDirection.Left:
-                this.playerSprite.anims.play('left',true);
-              break;
-              case Schema.MovementDirection.Right:
-                this.playerSprite.anims.play('right', true)
-              break;
-              default: 
-                this.playerSprite.anims.play('drilling', true);
-            }
-          break;
-
-          case Schema.MovementState.Flying:
-            switch(playerState.movementDirection) {
-              case Schema.MovementDirection.Left:
-                this.playerSprite.anims.play('left',true);
-              break;
-              case Schema.MovementDirection.Right:
-                this.playerSprite.anims.play('right', true)
-              break;
-              default: 
-                this.playerSprite.anims.play('flying', true);
-            }
-          break;
-
-          default:
-            switch(playerState.movementDirection) {
-              case Schema.MovementDirection.Left:
-                this.playerSprite.anims.play('left',true);
-              break;
-              case Schema.MovementDirection.Right:
-                this.playerSprite.anims.play('right', true)
-              break;
-              default: 
-                this.playerSprite.anims.play('idle', true);
-            }
-        }
-
-        if(this.playerSchema.playerState.movementState !== Schema.MovementState.Drilling) this.setPosition(xSmooth, ySmooth);
-        else this.setPosition(this.playerSchema.playerState.x, this.playerSchema.playerState.y)
-
-
-      }
+    if (playerState.healthState === Schema.HealthState.Deceased) {
+      this.playerSprite.setAngle(60)
+      this.playerJetpack.setAngle(60)
+      this.playerSprite.anims.play('sad', true)
+    } else {
+      this.playerSprite.setAngle(0)
+      this.playerJetpack.setAngle(0)
     }
   }
   private jackHammerSound : Phaser.Sound.BaseSound
@@ -290,5 +293,5 @@ export class Player extends Phaser.GameObjects.Container {
   private playerJetpack: Jetpack;
   private playerJackhammer : Jackhammer
   private currentBuilding: string;
-  private suspended: boolean;
+  //private suspended: boolean;
 }

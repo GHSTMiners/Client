@@ -9,7 +9,7 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
         super(scene, "RespawnManager")
         this.lostCargo = {};
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerDied, this.handleDead.bind(this))
-        Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
+        //Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
     }
 
     private handleDead = () => {
@@ -17,13 +17,13 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
             this.lostCargo[entry.cryptoID] = entry.amount
             for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, entry.cryptoID.toString() )
         })
-        Client.getInstance().phaserGame.events.emit( gameEvents.game.SUSPEND, true )
+        Client.getInstance().phaserGame.events.emit( gameEvents.game.DEAD )
         this.lostCargo = {};
     }
-
+/*
     private handleRespawn = () => {
-        Client.getInstance().phaserGame.events.emit( gameEvents.game.SUSPEND , false )
-    }
+        
+    }*/
 
     private lostCargo : IndexedArray
 }
