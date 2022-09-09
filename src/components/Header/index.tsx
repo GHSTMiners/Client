@@ -4,7 +4,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useWeb3 } from "web3/context";
 import { smartTrim } from "helpers/functions";
 import { networkIdToName } from "helpers/vars";
-import * as Colyseus from "colyseus.js";
+//import * as Colyseus from "colyseus.js";
 //import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';

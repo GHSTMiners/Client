@@ -39,7 +39,8 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     return(
         <div className={ `${styles.diagnosticsContainer}
                           ${elementVisibility.state? styles.displayOn:styles.displayOff }`}>
-            Latency: {latency} ms
+            Latency: {latency}ms ;
+            FPS : {Math.round(Client.getInstance().phaserGame?.loop.actualFps)}
         </div>
     )
 };
