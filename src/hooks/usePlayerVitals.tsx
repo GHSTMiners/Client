@@ -23,7 +23,7 @@ const usePlayerVitals = () => {
               };
             } else if (vital.name === "Cargo") {
               vital.onChange = () => {
-                const myCargo = Math.round((1 - vital.currentValue / vital.filledValue) * 100);
+                const myCargo = Math.ceil((1 - vital.currentValue / vital.filledValue) * 100);
                 setCargo( myCargo );
               };
             };
