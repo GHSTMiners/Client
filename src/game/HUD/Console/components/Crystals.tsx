@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import { useContext } from "react";
 import { HUDContext } from "game/HUD";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Crystals = () => {  
   
@@ -10,9 +11,12 @@ const Crystals = () => {
  
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
-      <img src={image} className={`${styles.crystalIcon} 
-                                   ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`} 
-            alt={tag}/>
+      <LazyLoadImage 
+            src={image} 
+            className={`${styles.crystalIcon} 
+                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`} 
+            alt={tag}
+            effect={'blur'}/>
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
         {quantity} x {tag}

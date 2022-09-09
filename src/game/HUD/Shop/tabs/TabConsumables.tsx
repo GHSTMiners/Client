@@ -5,6 +5,7 @@ import Client from "matchmaking/Client";
 import { HUDContext } from "game/HUD";
 import { ShopItem } from "types";
 import buyItem from "../helpers/buyItem";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const TabConsumables: FC<{}> = () => {
 
@@ -75,14 +76,14 @@ const TabConsumables: FC<{}> = () => {
            key={item.name}
            onMouseEnter={()=>setHoverItem(item)}
            onMouseLeave={()=>setHoverItem({} as ShopItem)}>
-          <img src={item.image} className={styles.itemImage} alt={item.name} loading='lazy'/>
+          <LazyLoadImage src={item.image} className={styles.itemImage} alt={item.name} loading='lazy'/>
           <div className={styles.itemText}>
             {item.name} 
-            <img src={hudContext.world.crypto[world.world_crypto_id].image} 
+            <LazyLoadImage src={hudContext.world.crypto[world.world_crypto_id].image} 
                 className={`${styles.cryptoThumbnail}
                             ${playerDoekoes>=item.price? styles.coinAvailable : styles.coinUnavailable }`} 
                 alt={hudContext.world.crypto[world.world_crypto_id].name}
-                loading='lazy'/>
+                effect={'blur'}/>
             {item.price} 
           </div>
           <button className={`${styles.buyButton} 
@@ -100,7 +101,7 @@ const TabConsumables: FC<{}> = () => {
     <>
       <div className={styles.detailsTitle}>
         <div>{detailsItem.name}</div>
-        <img src={detailsItem.image} className={styles.titleImage} alt={detailsItem.name} loading='lazy'/>
+        <LazyLoadImage src={detailsItem.image} className={styles.titleImage} alt={detailsItem.name} loading='lazy'/>
       </div>
       <div className={styles.detailsBody}>
         <div className={styles.explosivePattern}>
@@ -121,7 +122,7 @@ const TabConsumables: FC<{}> = () => {
         </div>
         <div className={styles.totalPrice}>
           Price
-          <img src={hudContext.world.crypto[world.world_crypto_id].image} 
+          <LazyLoadImage src={hudContext.world.crypto[world.world_crypto_id].image} 
               className={`${styles.cryptoThumbnail}
               ${playerDoekoes>=multipleItemPrice? styles.coinAvailable : styles.coinUnavailable }`} 
               alt={hudContext.world.crypto[world.world_crypto_id].name}
