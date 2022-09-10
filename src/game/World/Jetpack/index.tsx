@@ -1,7 +1,5 @@
 import { Player } from "../Player"
 import * as Schema from "matchmaking/Schemas";
-import { Howl } from "howler";
-import Config from "config";
 
 export default class Jetpack extends Phaser.GameObjects.Container {
     constructor(scene : Phaser.Scene, player: Player) {
@@ -13,22 +11,8 @@ export default class Jetpack extends Phaser.GameObjects.Container {
         this.jetpackSpriteRear.setScale(0.40)
         this.jetpackSpriteSide.setScale(0.45)
 
-        this.thrusterSound = new Howl({
-            
-            src : ['assets/audio/thrusters.webm', 'assets/audio/thrusters.mp3'],
-            loop: true,
-            autoplay: false,
-        })
-        this.thrusterSound.pannerAttr({
-            coneInnerAngle: 360,
-            coneOuterAngle: 360,
-            coneOuterGain: 1,
-            maxDistance: Config.blockWidth * 8,
-            refDistance: 0,
-            distanceModel: 'inverse',
-            rolloffFactor: 1,
-            panningModel: 'HRTF'
-        })
+        this.thrusterSound = this.scene.sound.add('thrusters');
+
 
         this.jetpackSpriteRear.anims.create({
             key: 'idle_rear',
@@ -89,14 +73,13 @@ export default class Jetpack extends Phaser.GameObjects.Container {
 
         //Process sound
         
-        this.thrusterSound.pos(this.player.playerSchema.playerState.x, this.player.playerSchema.playerState.y, 0)
-        if(this.thrusterSound.playing() !== flying) {
+        if(this.thrusterSound.isPlaying !== flying) {
             flying ? this.thrusterSound.play() : this.thrusterSound.pause()
         }
     }
 
     protected player : Player 
-    protected thrusterSound : Howl
+    protected thrusterSound : Phaser.Sound.BaseSound
     protected jetpackSpriteRear : Phaser.GameObjects.Sprite
     protected jetpackSpriteSide : Phaser.GameObjects.Sprite
 
