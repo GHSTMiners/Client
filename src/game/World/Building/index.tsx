@@ -7,7 +7,7 @@ export default class Builing extends Phaser.GameObjects.Video {
         this.buildingInfo = building
         scene.add.existing(this)
         this.setDepth(20)
-        this.play(true)
+        // this.play(true)
         this.setOrigin(0, 1)
         this.scene.physics.add.existing(this);
     }
