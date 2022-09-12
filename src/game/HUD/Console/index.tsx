@@ -8,9 +8,10 @@ import Artifacts from "./components/Artifacts";
 import Crystals from "./components/Crystals";
 import ConsoleButtons from "./components/ConsoleButtons";
 import useVisible from "hooks/useVisible";
+import React from "react";
 
 const Console = () => {
-
+  
   const consoleVisbility = useVisible('console');
 
   return (
@@ -49,4 +50,4 @@ const Console = () => {
   );
 };
 
-export default Console
+export default React.memo(Console)

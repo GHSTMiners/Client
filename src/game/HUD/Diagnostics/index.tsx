@@ -11,7 +11,7 @@ interface Props{
 const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     const [latency,setLatency]=useState(0);
     const elementVisibility = useVisible('diagnostics', !hidden); 
-
+    console.count('Rendering diagnostics: ')
     const updateLatency = (newLatency:number) => {
         setLatency(newLatency);
     }
@@ -25,16 +25,18 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     }
 
     useEffect(()=>{
-        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.SHOW , updateDisplay)
-        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.HIDE , updateDisplay)
-        Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.LATENCY , updateLatency )
+        if (elementVisibility.state){
+            Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.SHOW , updateDisplay)
+            Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.HIDE , updateDisplay)
+            Client.getInstance().phaserGame.events.on( gameEvents.diagnostics.LATENCY , updateLatency )
 
-        return () =>{
-            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.SHOW , updateDisplay)
-            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.HIDE , updateDisplay)
-            Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.LATENCY, updateLatency )  
+            return () =>{
+                Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.SHOW , updateDisplay)
+                Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.HIDE , updateDisplay)
+                Client.getInstance().phaserGame.events.off( gameEvents.diagnostics.LATENCY, updateLatency )  
+            }
         }
-    },[])
+    },[elementVisibility.state])
 
     return(
         <div className={ `${styles.diagnosticsContainer}
@@ -45,4 +47,4 @@ const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     )
 };
 
-export default Diagnostics
+export default React.memo(Diagnostics)

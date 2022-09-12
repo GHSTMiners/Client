@@ -1,4 +1,3 @@
-import Config from "config";
 import * as Schema from "matchmaking/Schemas";
 
 
