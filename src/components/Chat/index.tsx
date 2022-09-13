@@ -11,10 +11,10 @@ import submitMessage from "./submitMessage";
 import useVisible from "hooks/useVisible";
 
 interface Props {
-  gameMode: boolean;
+  gameMode?: boolean;
 }
 
-export const Chat : React.FC<Props> = ({ gameMode=true }) => {
+const Chat : React.FC<Props> = ({ gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
   const chatVisibility = useVisible('chat', false); 
@@ -75,3 +75,5 @@ export const Chat : React.FC<Props> = ({ gameMode=true }) => {
     </div>
   );
 };
+
+export default React.memo(Chat)

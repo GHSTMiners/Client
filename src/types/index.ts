@@ -110,6 +110,8 @@ export type PlayerContext = { world : { crypto: IndexedCrypto, explosives: Index
 
 export type IndexedArray = {[key: string]: number};
 
+export type IndexedString = {[key: string]: string};
+
 export type IndexedBooleanArray = {[key: string]: boolean};
 
 export type GameEventKey = keyof typeof gameEvents;

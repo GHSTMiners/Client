@@ -2,11 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";
-import renderPlayerInfo from "./helpers/renderPlayerInfo";
 import useSortPlayers from "./hooks/useSortPlayers";
 import { Player } from "matchmaking/Schemas";
-import { IndexedPlayers } from "types";
+import { IndexedPlayers, IndexedString } from "types";
 import { HUDContext } from "..";
+import renderPlayerInfo from "./helpers/renderPlayerInfo";
+import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
+import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 
 interface Props {
     hidden: boolean;
@@ -15,8 +17,9 @@ interface Props {
   const GameLeaderboard : React.FC<Props> = ({ hidden }) => { 
 
     const leaderboardVisibility = useVisible('leaderboard', !hidden);
-    const hudContext = useContext(HUDContext); 
+    const { world } = useContext(HUDContext); 
     const [ players , setPlayers] = useState({} as IndexedPlayers);
+    const [ playerGotchiSVG, setplayerGotchiSVG] = useState({} as IndexedString);
     const {sortedPlayers} = useSortPlayers(players, leaderboardVisibility.state );
 
     useEffect(()=>{
@@ -25,6 +28,14 @@ interface Props {
                 state[player.gotchiID]=player; 
                 return({...state})
             })
+
+            const aavegotchiSVGFetcher = new AavegotchiSVGFetcher( player.gotchiID );
+            aavegotchiSVGFetcher.frontWithoutBackground()
+            .then((svg) => {
+                let gotchiSVG = convertInlineSVGToBlobURL(svg);
+                setplayerGotchiSVG( state => {state[player.gotchiID]=gotchiSVG; return {...state} }  )
+            });
+            
         }
 
         if ( Client.getInstance().colyseusRoom){
@@ -43,7 +54,7 @@ interface Props {
             <div>Upgrades</div>
         </div>
 
-        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers, hudContext.world.crypto )) }
+        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers, world.crypto, playerGotchiSVG[id])) }
 
     </div>
     )

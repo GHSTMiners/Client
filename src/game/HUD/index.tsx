@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext } from "react";
-import { Chat } from "components/Chat";
+import Chat from "components/Chat";
 import GameLeaderboard from "./Leaderboard";
 import Vitals from "./Vitals";
 import Diagnostics from "./Diagnostics";
