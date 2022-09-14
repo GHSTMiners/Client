@@ -2,7 +2,9 @@ import * as Phaser from "phaser";
 import Client from "matchmaking/Client";
 import * as Chisel from "chisel-api-interface";
 import gameEvents from "game/helpers/gameEvents";
-
+import * as Schema from "matchmaking/Schemas"
+import { IndexedCrypto } from "types"
+import { useGlobalStore } from "hooks/useGlobalStore"
 
 export default class LoadingScene extends Phaser.Scene {
   graphics!: Phaser.GameObjects.Graphics;
@@ -29,7 +31,7 @@ export default class LoadingScene extends Phaser.Scene {
       loadingText: loadingText,
       self: this,
     });
-    this.load.on("complete", this.complete, { scene: this.scene });
+    this.load.on("complete", this.complete.bind(this), { scene: this.scene });
 
     //Static images and audio files
     this.load.image("dirtParticle", "assets/images/stone.png");
@@ -120,7 +122,27 @@ export default class LoadingScene extends Phaser.Scene {
         `explosive_inventory_${explosive.id}`,
         `https://chisel.gotchiminer.rocks/storage/${explosive.inventory_image}`
       );
-    });
+    }); 
+  }
+
+  storeWorldCrypto(){
+    const world : Chisel.DetailedWorld =  Client.getInstance().chiselWorld;
+    const schema: Schema.World = Client.getInstance().colyseusRoom.state;
+    let cryptoRecord : IndexedCrypto ={};
+    for (let i = 0; i < world.crypto.length; i++) {
+      const cryptoPrice = schema.exchange.get(world.crypto[i].id.toString());
+      const id = world.crypto[i].id;
+      const newCrypto = {
+        cryptoID: id,
+        name: `${world.crypto[i].shortcode}`,
+        image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
+        crystal: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
+        price: (cryptoPrice? cryptoPrice.usd_value : 1)
+      }
+      cryptoRecord[newCrypto.cryptoID]= newCrypto;
+    }
+    const { setState } = useGlobalStore;
+    setState( (state) => state.worldCrypto = cryptoRecord )
   }
 
   updateBar(percentage: number) {
@@ -128,7 +150,8 @@ export default class LoadingScene extends Phaser.Scene {
     Client.getInstance().phaserGame.events.emit(gameEvents.phaser.LOADING,percentage.toFixed(2));
   }
 
-  complete() {
+  complete() {   
+    this.storeWorldCrypto();
     console.log("Loading assets complete!");
     this.scene.start("MainScene");
   }

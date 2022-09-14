@@ -1,6 +1,6 @@
 import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
-import { IndexedPlayers, PlayerObj } from "types";
+import { IndexedPlayers, PlayerBalance } from "types";
 
 const useSortPlayers = (players:IndexedPlayers, refresh:boolean):{ sortedPlayers : number[]} => {
     
@@ -11,7 +11,7 @@ const useSortPlayers = (players:IndexedPlayers, refresh:boolean):{ sortedPlayers
     
         if (players){
             const unsortedkeys = Object.keys(players);
-            let unsortedData: PlayerObj[] = [];
+            let unsortedData: PlayerBalance[] = [];
             
             unsortedkeys.forEach( playerEntry =>{
                 let GGEMS = players[playerEntry].wallet.get(worldCryptoId);

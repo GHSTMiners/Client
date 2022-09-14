@@ -16,7 +16,7 @@ type Actions = {
     setWorldCrypto: (crypto:IndexedCrypto) => void
 }
 
-const useGlobalStore = create<State & Actions>((set) => ({
+export const useGlobalStore = create<State & Actions>((set) => ({
     // Global Variables
     worldCrypto: {},
     worldExplosives: {}, 
@@ -27,7 +27,8 @@ const useGlobalStore = create<State & Actions>((set) => ({
     playerVitals : {} as PlayerVitals,
     playerCrystals: {} ,
     // Settings methods
-    setWorldCrypto: (crypto) => set( () => ({ worldCrypto : crypto }) )
+    setWorldCrypto: (crypto) => { 
+        set( (state) => ({ ...state, worldCrypto : crypto }) ) }
 }))
 
-export default useGlobalStore
+//export default useGlobalStore

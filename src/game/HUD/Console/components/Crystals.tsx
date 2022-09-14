@@ -3,12 +3,14 @@ import cargoIcon from "assets/hud/cargo_icon.svg";
 import { useContext } from "react";
 import { HUDContext } from "game/HUD";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useGlobalStore } from "hooks/useGlobalStore";
 
 const Crystals = () => {  
   
   const hudContext = useContext(HUDContext);
-  const crystalsArray = hudContext.world.crypto;
- 
+  //const crystalsArray = hudContext.world.crypto;
+  const crystalsArray = useGlobalStore( state => state.worldCrypto );
+  
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
       <LazyLoadImage 

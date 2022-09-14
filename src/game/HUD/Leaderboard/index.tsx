@@ -5,10 +5,10 @@ import useVisible from "hooks/useVisible";
 import useSortPlayers from "./hooks/useSortPlayers";
 import { Player } from "matchmaking/Schemas";
 import { IndexedPlayers, IndexedString } from "types";
-import { HUDContext } from "..";
 import renderPlayerInfo from "./helpers/renderPlayerInfo";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
+import { useGlobalStore } from "hooks/useGlobalStore";
 
 interface Props {
     hidden: boolean;
@@ -17,7 +17,7 @@ interface Props {
   const GameLeaderboard : React.FC<Props> = ({ hidden }) => { 
 
     const leaderboardVisibility = useVisible('leaderboard', !hidden);
-    const { world } = useContext(HUDContext); 
+    const worldCrypto = useGlobalStore( store => store.worldCrypto );
     const [ players , setPlayers] = useState({} as IndexedPlayers);
     const [ playerGotchiSVG, setplayerGotchiSVG] = useState({} as IndexedString);
     const {sortedPlayers} = useSortPlayers(players, leaderboardVisibility.state );
@@ -54,10 +54,10 @@ interface Props {
             <div>Upgrades</div>
         </div>
 
-        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers, world.crypto, playerGotchiSVG[id])) }
+        { sortedPlayers.map( (id) =>  renderPlayerInfo(+id, players, sortedPlayers, worldCrypto, playerGotchiSVG[id])) }
 
     </div>
     )
 };
 
-export default GameLeaderboard
+export default React.memo(GameLeaderboard)

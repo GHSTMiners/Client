@@ -106,7 +106,7 @@ export const HUD = () => {
           {/* PERMANENT HUD ELEMENTS */}
           <Vitals />
           <Console />
-          <Chat gameMode={true} />
+          <Chat />
           <Menu />
           {/* DIALOGS HUD */}
           <Shop />

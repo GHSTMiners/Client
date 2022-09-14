@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import { PricePair, TierCost, UpgradePriceObject } from "types";
+import { PricePair, TierCost, UpgradePrice } from "types";
 
 const useWorldUpgrades = () => {
 
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;  
-  const [worldUpgrades] = useState<UpgradePriceObject[]>([]);
+  const [worldUpgrades] = useState<UpgradePrice[]>([]);
 
   useEffect(()=>{
     const upgradeTiers = ['tier_1','tier_2','tier_3','tier_4','tier_5'];

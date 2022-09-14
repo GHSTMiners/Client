@@ -4,9 +4,9 @@ import React, { useContext, useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import { IndexedArray } from "types";
 import useVisible from "hooks/useVisible";
-import useWorldCrypto from "hooks/useWorldCrypto";
 import sellCrypto from "./helpers/sellCrypto"
 import { HUDContext } from "..";
+import { useGlobalStore } from "hooks/useGlobalStore";
 
 interface Props {
   hidden: boolean;
@@ -15,7 +15,7 @@ interface Props {
 const Exchange : React.FC<Props> = ({ hidden }) => {
 
   const hudContext = useContext(HUDContext);
-  const [cryptoRecord] = useWorldCrypto();
+  const cryptoRecord = useGlobalStore( state => state.worldCrypto );
   const exchangeVisibility = useVisible('exchange', !hidden); 
   const [inputValues , setInputValues] = useState<IndexedArray>(hudContext.player.crypto);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;

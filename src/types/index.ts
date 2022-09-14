@@ -120,9 +120,9 @@ export type PricePair = { cryptoId:number, cost:number };
 
 export type CryptoEntry = {id: number, quantity: number};
 
-export type CryptoObj = { cryptoID: number; name: string; image: string ; price:number; crystal: string};
+export type Crypto = { cryptoID: number; name: string; image: string ; price:number; crystal: string};
 
-export type IndexedCrypto =  {[key: string]: CryptoObj} ;
+export type IndexedCrypto =  {[key: string]: Crypto} ;
 
 export type ConsumableItem = { id:number, name: string, image:string, type: string, quantity: number}
 
@@ -138,12 +138,12 @@ export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
 
 export type InventoryExplosives = Record< number, ExplosiveItem>;
 
-export type PlayerObj = {playerId: number, ggems: number };
+export type PlayerBalance = {playerId: number, ggems: number };
 
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
 
 export type TierCost = { tierLabel:string, priceList:PricePair[] };
 
-export type UpgradePriceObject = { id:number, name:string, costPerTier:TierCost[], description:string };
+export type UpgradePrice = { id:number, name:string, costPerTier:TierCost[], description:string };
 
 export type ShopItem = { name: string; id: number; price: number; pattern: Chisel.ExplosionCoordinate[]; image: string };
