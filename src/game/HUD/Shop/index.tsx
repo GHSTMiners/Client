@@ -4,16 +4,20 @@ import Tabs from "components/Tabs";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";
 import gameEvents from "game/helpers/gameEvents";
-import { HUDContext } from "..";
+//import { HUDContext } from "..";
 import tabs from "./tabs";
 import sellCrypto from "./helpers/sellCrypto";
+import { useGlobalStore } from "hooks/useGlobalStore";
 
 
 const Shop = () => {
 
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const shopVisibility = useVisible('shop'); 
-  const hudContext = useContext(HUDContext);
+  //const hudContext = useContext(HUDContext);
+  const playerCrypto = useGlobalStore( state => state.playerCrypto);
+  const worldCrypto = useGlobalStore( state => state.worldCrypto);
+  //console.log(playerCrypto)
 
   useEffect( () => {
     Client.getInstance().phaserGame.events.on( gameEvents.buildings.EXIT, shopVisibility.hide );
@@ -29,18 +33,18 @@ const Shop = () => {
       <div className={styles.screenContainer}>
         <div className={styles.shopHeader}>
           <div className={styles.playerCryptoContainer}>
-              {Object.keys(hudContext.player.crypto).map( key =>{
+              {Object.keys(playerCrypto).map( key =>{
                 return(
                   <div className={`${styles.playerCryptoWrapper}
-                    ${ (hudContext.player.crypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
+                    ${ (playerCrypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
                     onClick={()=>sellCrypto(+key,1)}
                     key={key}>
-                    <img src={hudContext.world.crypto[key].image} 
+                    <img src={worldCrypto[key].image} 
                     className={styles.currencyThumbnail} 
-                    alt={hudContext.world.crypto[key].name}
+                    alt={worldCrypto[key].name}
                     loading='lazy'/>
                     x 
-                    {Math.round(hudContext.player.crypto[key]*10)/10}
+                    {Math.round(playerCrypto[key]*10)/10}
                   </div>
                 )
               })

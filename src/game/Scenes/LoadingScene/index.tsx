@@ -3,7 +3,7 @@ import Client from "matchmaking/Client";
 import * as Chisel from "chisel-api-interface";
 import gameEvents from "game/helpers/gameEvents";
 import * as Schema from "matchmaking/Schemas"
-import { IndexedCrypto } from "types"
+import { ExplosiveItem, IndexedCrypto, InventoryExplosives } from "types"
 import { useGlobalStore } from "hooks/useGlobalStore"
 
 export default class LoadingScene extends Phaser.Scene {
@@ -126,23 +126,44 @@ export default class LoadingScene extends Phaser.Scene {
   }
 
   storeWorldCrypto(){
-    const world : Chisel.DetailedWorld =  Client.getInstance().chiselWorld;
+    const world =  Client.getInstance().chiselWorld;
     const schema: Schema.World = Client.getInstance().colyseusRoom.state;
     let cryptoRecord : IndexedCrypto ={};
-    for (let i = 0; i < world.crypto.length; i++) {
-      const cryptoPrice = schema.exchange.get(world.crypto[i].id.toString());
-      const id = world.crypto[i].id;
+    world.crypto.forEach( (crypto) => {
+      const cryptoPrice = schema.exchange.get(`${crypto.id}`);
       const newCrypto = {
-        cryptoID: id,
-        name: `${world.crypto[i].shortcode}`,
-        image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
-        crystal: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
+        cryptoID: crypto.id,
+        name: `${crypto.shortcode}`,
+        image: `https://chisel.gotchiminer.rocks/storage/${crypto.wallet_image}`,
+        crystal: `https://chisel.gotchiminer.rocks/storage/${crypto.soil_image}`,
         price: (cryptoPrice? cryptoPrice.usd_value : 1)
       }
       cryptoRecord[newCrypto.cryptoID]= newCrypto;
-    }
-    const { setState } = useGlobalStore;
-    setState( (state) => state.worldCrypto = cryptoRecord )
+    })
+    useGlobalStore.getState().setWorldCrypto(cryptoRecord);
+    //getState().setWorldCrypto(cryptoRecord)
+    //setState( (state) => state.worldCrypto = cryptoRecord )
+  }
+
+   storeWorldExplosives(){
+    const world =   Client.getInstance().chiselWorld;
+    let explosivesRecord : InventoryExplosives ={};
+    world.explosives.forEach((explosive)=>{
+      let newItem : ExplosiveItem = { 
+        id: explosive.id,
+        name: explosive.name,
+        image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`,
+        pattern: explosive.explosion_coordinates,
+        price: explosive.price, 
+        type: 'explosive',
+        quantity: 0    
+      };
+      explosivesRecord[explosive.id]= newItem;
+    })
+    useGlobalStore.getState().setWorldExplosives(explosivesRecord);
+    //const { getState } = useGlobalStore;
+    //getState().setWorldExplosives(explosivesRecord)
+    //setWorldExplosives( state => { state[explosive.id] = newItem; return( state ) })
   }
 
   updateBar(percentage: number) {
@@ -152,6 +173,7 @@ export default class LoadingScene extends Phaser.Scene {
 
   complete() {   
     this.storeWorldCrypto();
+    this.storeWorldExplosives();
     console.log("Loading assets complete!");
     this.scene.start("MainScene");
   }

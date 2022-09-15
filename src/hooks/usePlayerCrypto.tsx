@@ -21,10 +21,11 @@ const usePlayerCrypto = ( cryptoRecord : IndexedCrypto) => {
         }
         
         const walletListener = () => {
+            /*
             Client.getInstance().ownPlayer.wallet.onAdd = (item) => {
                 updateWallet(item.cryptoID,item.amount)
                 item.onChange = () => updateWallet(item.cryptoID,item.amount);
-            };             
+            };*/             
         }
         
         Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, walletListener )

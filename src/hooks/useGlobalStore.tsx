@@ -14,6 +14,8 @@ type State = {
 
 type Actions = {
     setWorldCrypto: (crypto:IndexedCrypto) => void
+    setWorldExplosives: (explosives:InventoryExplosives) => void
+    updatePlayerCrypto: (key:string,quantity:number) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -26,9 +28,17 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     playerDepth: 0 , 
     playerVitals : {} as PlayerVitals,
     playerCrystals: {} ,
+
     // Settings methods
     setWorldCrypto: (crypto) => { 
-        set( (state) => ({ ...state, worldCrypto : crypto }) ) }
+        set( (state) => ({ ...state, worldCrypto : crypto }) ) 
+    },
+    setWorldExplosives: (explosives) => { 
+        set( (state) => ({ ...state, worldExplosives : explosives }) ) 
+    },
+    updatePlayerCrypto: (key,quantity) =>{
+        set( (state) => ({ ...state, playerCrypto: { ...state.playerCrypto, [key]:quantity } }) )
+    }    
 }))
 
 //export default useGlobalStore

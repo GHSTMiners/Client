@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";

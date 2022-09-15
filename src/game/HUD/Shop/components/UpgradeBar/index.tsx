@@ -1,9 +1,9 @@
 import { PricePair } from "types"
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { HUDContext } from "game/HUD";
 import { UpgradeTags } from "helpers/vars"
 import upgradeSound from "assets/sounds/upgrade.mp3"
+import { useGlobalStore } from "hooks/useGlobalStore";
 
 interface Props {
   upgradeId:number;
@@ -22,8 +22,8 @@ const UpgradeBar: React.FC<Props> = ({
 }) => {
   const [ upgradeLevel, setUpgradeLevel ]= useState(currentTier);
   const [ upgradeAvailable, setUpgradeAvailable] = useState(false);
-  const hudContext = useContext(HUDContext);
-  const playerCrypto = hudContext.player.crypto;
+  const playerCrypto = useGlobalStore( state => state.playerCrypto);
+  const worldCrypto = useGlobalStore( state => state.worldCrypto )
 
   const playAudioEffect = () => {
     new Audio(upgradeSound).play();
@@ -63,8 +63,8 @@ const UpgradeBar: React.FC<Props> = ({
   return(
     <div key={`costUpgrade${entry.cryptoId}`}>
        {entry.cost} x
-       <img src={hudContext.world.crypto[entry.cryptoId]?.image} 
-            alt={hudContext.world.crypto[entry.cryptoId]?.name}
+       <img src={worldCrypto[entry.cryptoId]?.image} 
+            alt={worldCrypto[entry.cryptoId]?.name}
             className={`${styles.exchangeCoin}
                    ${ (playerCrypto[entry.cryptoId]>=entry.cost) ? 
                     styles.upgradeAvailable: styles.upgradeUnavailable}`}
