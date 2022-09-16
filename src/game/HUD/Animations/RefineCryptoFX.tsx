@@ -1,26 +1,27 @@
 import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useGlobalStore } from "store";
 import { IndexedArray } from "types";
-import { HUDContext } from "..";
 import styles from "./refineCryptoFX.module.css"
 
 const RefineCryptoFX = () => {
-    const hudContext = useContext(HUDContext);
+    const playerCargo = useGlobalStore( state => state.playerCargo );
+    const worldCrypto = useGlobalStore( state => state.worldCrypto );
     const [ selectedCoin, setSelectedCoin ] = useState('');
     const [ hidden, setHidden ] = useState(true)
     const [ processedCargo, setProcessedCargo ] = useState<IndexedArray>({});
 
     useEffect(()=>{
       const checkCargo = () => {
-        if ( Object.keys(hudContext.player.crystals).length > 0){
+        if ( Object.keys(playerCargo).length > 0){
           setHidden(false)
           // find coin associated with the biggest cargo
-          setProcessedCargo({...hudContext.player.crystals})
-          const biggestCoinKey = Object.keys(hudContext.player.crystals).reduce(function(prev, current) {
-            return ( hudContext.player.crystals[+prev] > hudContext.player.crystals[+current] ) ? prev : current
+          setProcessedCargo({...playerCargo})
+          const biggestCoinKey = Object.keys(playerCargo).reduce(function(prev, current) {
+            return ( playerCargo[+prev] > playerCargo[+current] ) ? prev : current
           }) 
-          let coinImage = hudContext.world.crypto[+biggestCoinKey].image ;
+          let coinImage = worldCrypto[+biggestCoinKey].image ;
           setSelectedCoin( coinImage )
         }
       }
@@ -30,7 +31,7 @@ const RefineCryptoFX = () => {
       return () =>{
         Client.getInstance().phaserGame.events.off( gameEvents.refinary.REFINE , checkCargo)
       }
-    },[hudContext.player.crystals,hudContext.world.crypto, hidden])
+    },[playerCargo,worldCrypto, hidden])
 
     return(
       <>        
@@ -56,7 +57,7 @@ const RefineCryptoFX = () => {
               return(
                <div className={styles.cargoCoinContainer} key={`cargo_crystal_${key}`}>
                 <div className={styles.refinedCoinContainer}>
-                  <img className={styles.coinPreview} src={hudContext.world.crypto[+key].image} alt={hudContext.world.crypto[+key].name}/>
+                  <img className={styles.coinPreview} src={worldCrypto[+key].image} alt={worldCrypto[+key].name}/>
                 </div>
                   +{processedCargo[+key]}
                </div> 

@@ -15,11 +15,11 @@ const usePlayerCrypto = ( cryptoRecord : IndexedCrypto) => {
     },[walletBalance,cryptoRecord])
 
     useEffect(()=>{
-        
+        /*
         const updateWallet = (id:number,value:number) => {
             setWalletBalance( (wallet:IndexedArray) => { wallet[id]=value;  return {...wallet}  } );
         }
-        
+        */
         const walletListener = () => {
             /*
             Client.getInstance().ownPlayer.wallet.onAdd = (item) => {

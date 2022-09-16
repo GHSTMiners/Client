@@ -1,4 +1,3 @@
-import { useContext } from "react";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import gearIcon from "assets/icons/gear.svg";
@@ -9,17 +8,18 @@ import Marquee from "react-easy-marquee";
 import gameEvents from "game/helpers/gameEvents";
 import useVisible from "hooks/useVisible";
 import leaderboardIcon from "assets/icons/top_players_blue.svg"
-import { HUDContext } from "..";
 import useMusicManager from "hooks/useMusicManager";
+import { useGlobalStore } from "store";
 
 const Menu = () => {
   
   const menuVisibility = useVisible('menu', false); 
   const musicManager = useMusicManager();
   const navigator = useNavigate();
-  const hudContext = useContext(HUDContext);
-  const playerTotalCrypto = Math.round(hudContext.player.total*10)/10;
-
+  const playerTotalCrypto = useGlobalStore( state => state.playerTotalValue);
+  const playerCrypto = useGlobalStore( state => state.playerCrypto );
+  const worldCrypto = useGlobalStore( state => state.worldCrypto );
+  
   const updateMusicVolume = (volume:number | number[]) =>{
     if (typeof volume === "number") {
       musicManager.setVolume(volume);
@@ -32,7 +32,6 @@ const Menu = () => {
     Client.getInstance().colyseusRoom.leave();
     navigator('/')
    }
-
           
   return (
     <>
@@ -49,12 +48,12 @@ const Menu = () => {
           <div className={styles.coinThumbnailContainer}
               onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
               key={'Thumbnail_cointainer'}>
-            { Object.keys(hudContext.player.crypto)
-                .filter( key => hudContext.player.crypto[key]>0 )
+            { Object.keys(playerCrypto)
+                .filter( key => playerCrypto[key]>0 )
                 .map( cryptoKey => 
-                  <img src={hudContext.world.crypto[cryptoKey].image} 
+                  <img src={worldCrypto[cryptoKey].image} 
                     className={styles.coinThumbnail}
-                    alt={`${hudContext.world.crypto[cryptoKey].name}_thumbnail`}  
+                    alt={`${worldCrypto[cryptoKey].name}_thumbnail`}  
                     key={`coin_thumbnail_${cryptoKey}`}/>
               )
             }

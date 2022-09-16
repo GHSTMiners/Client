@@ -1,9 +1,9 @@
 import { PricePair } from "types"
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { UpgradeTags } from "helpers/vars"
 import upgradeSound from "assets/sounds/upgrade.mp3"
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 interface Props {
   upgradeId:number;

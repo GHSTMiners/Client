@@ -1,20 +1,18 @@
 import styles from "./styles.module.css";
 import SquareButton from "components/SquareButton";
-import { useContext } from "react";
-import { HUDContext } from "../..";
 import { ITEMWIDTH } from "helpers/vars"
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 const Consumables = () => {
 
-  const hudContext = useContext(HUDContext);
   const worldExplosives = useGlobalStore( state => state.worldExplosives )
+  const playerExplosives = useGlobalStore( state => state.playerExplosives )
 
   const renderConsumable = (index:number) =>{
-    const isFilled = (hudContext.player.explosives.length >= index);
+    const isFilled = (playerExplosives.length >= index);
     return (
     <SquareButton size={ITEMWIDTH} 
-                  quantity={ isFilled ? hudContext.player.explosives[index-1] : -1 }
+                  quantity={ isFilled ? playerExplosives[index-1] : -1 }
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>

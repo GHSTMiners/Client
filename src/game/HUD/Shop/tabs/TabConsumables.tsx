@@ -1,11 +1,11 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { ShopItem } from "types";
 import buyItem from "../helpers/buyItem";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 const TabConsumables: FC<{}> = () => {
 

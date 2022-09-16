@@ -1,23 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from  "./styles.module.css";
 import Tabs from "components/Tabs";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";
 import gameEvents from "game/helpers/gameEvents";
-//import { HUDContext } from "..";
 import tabs from "./tabs";
 import sellCrypto from "./helpers/sellCrypto";
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 
 const Shop = () => {
-
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const shopVisibility = useVisible('shop'); 
-  //const hudContext = useContext(HUDContext);
   const playerCrypto = useGlobalStore( state => state.playerCrypto);
   const worldCrypto = useGlobalStore( state => state.worldCrypto);
-  //console.log(playerCrypto)
 
   useEffect( () => {
     Client.getInstance().phaserGame.events.on( gameEvents.buildings.EXIT, shopVisibility.hide );
@@ -27,13 +23,12 @@ const Shop = () => {
     }
   },[shopVisibility.hide]);
 
-
   return (
     <div className={`${styles.shopContainer} ${shopVisibility.state ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
         <div className={styles.shopHeader}>
           <div className={styles.playerCryptoContainer}>
-              {Object.keys(playerCrypto).map( key =>{
+              {Object.keys(worldCrypto).map( key =>{
                 return(
                   <div className={`${styles.playerCryptoWrapper}
                     ${ (playerCrypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
@@ -44,7 +39,7 @@ const Shop = () => {
                     alt={worldCrypto[key].name}
                     loading='lazy'/>
                     x 
-                    {Math.round(playerCrypto[key]*10)/10}
+                    {playerCrypto[key]? Math.round(playerCrypto[key]*10)/10 : 0}
                   </div>
                 )
               })

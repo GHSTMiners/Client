@@ -7,7 +7,6 @@ import { constructSpritesheet } from "game/helpers/spritesheet";
 import { customiseSvg } from "helpers/aavegotchi";
 import MainPlayer from "game/World/MainPlayer";
 import gameEvents from "game/helpers/gameEvents";
-import { useGlobalStore } from "hooks/useGlobalStore";
 
 export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
   constructor(scene: Phaser.Scene) {

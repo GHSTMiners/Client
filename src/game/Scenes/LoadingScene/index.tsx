@@ -4,7 +4,7 @@ import * as Chisel from "chisel-api-interface";
 import gameEvents from "game/helpers/gameEvents";
 import * as Schema from "matchmaking/Schemas"
 import { ExplosiveItem, IndexedCrypto, InventoryExplosives } from "types"
-import { useGlobalStore } from "hooks/useGlobalStore"
+import { useGlobalStore } from "store"
 
 export default class LoadingScene extends Phaser.Scene {
   graphics!: Phaser.GameObjects.Graphics;
