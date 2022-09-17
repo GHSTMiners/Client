@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import useVisible from "hooks/useVisible";
@@ -8,7 +8,7 @@ import { IndexedPlayers, IndexedString } from "types";
 import renderPlayerInfo from "./helpers/renderPlayerInfo";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 interface Props {
     hidden: boolean;

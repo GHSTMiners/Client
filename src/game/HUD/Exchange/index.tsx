@@ -1,12 +1,11 @@
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Chisel from "chisel-api-interface";
 import { IndexedArray } from "types";
 import useVisible from "hooks/useVisible";
 import sellCrypto from "./helpers/sellCrypto"
-import { HUDContext } from "..";
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
 interface Props {
   hidden: boolean;
@@ -14,18 +13,18 @@ interface Props {
 
 const Exchange : React.FC<Props> = ({ hidden }) => {
 
-  const hudContext = useContext(HUDContext);
+  const wallet = useGlobalStore( state => state.wallet );
   const cryptoRecord = useGlobalStore( state => state.worldCrypto );
   const exchangeVisibility = useVisible('exchange', !hidden); 
-  const [inputValues , setInputValues] = useState<IndexedArray>(hudContext.player.crypto);
+  const [inputValues , setInputValues] = useState<IndexedArray>(wallet);
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
   
   useEffect(() => {
-    setInputValues( c => { return {...hudContext.player.crypto}} )
-  }, [hudContext.player.crypto]);
+    setInputValues( c => { return {...wallet}} )
+  }, [wallet]);
 
   const handleInputChange = ( event : React.ChangeEvent<HTMLInputElement>, id:number ) => {
-    if (+event.target.value>=0 && +event.target.value<=hudContext.player.crypto[id] ){
+    if (+event.target.value>=0 && +event.target.value<=wallet[id] ){
       inputValues[id] = +event.target.value;
       let newValues = {...inputValues};
       setInputValues( newValues);
@@ -33,7 +32,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
   } 
 
   const renderCoinEntry = ( id: number ) => {
-    const quantity = hudContext.player.crypto[id];
+    const quantity = wallet[id];
     const hasCoins = quantity>0;
     const inputTokens = inputValues[id];
     return(
@@ -71,7 +70,7 @@ const Exchange : React.FC<Props> = ({ hidden }) => {
               </div>
               <div className={styles.coinList}> 
                 {Object.keys(cryptoRecord)
-                .sort( (prev,next) => hudContext.player.crypto[next] - hudContext.player.crypto[prev])
+                .sort( (prev,next) => wallet[next] - wallet[prev])
                 .map( function (id) {
                     return +id===world.world_crypto_id ? '' : renderCoinEntry(+id);
                   })} 

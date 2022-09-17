@@ -5,13 +5,13 @@ import drillIcon from "assets/hud/drill.png";
 import { ITEMWIDTH, ARTIFACTWIDTH } from "helpers/vars"
 import Consumables from "./components/Consumables";
 import Artifacts from "./components/Artifacts";
-import Crystals from "./components/Crystals";
+import Cargo from "./components/Cargo";
 import ConsoleButtons from "./components/ConsoleButtons";
 import useVisible from "hooks/useVisible";
 import React from "react";
 
 const Console = () => {
-  
+   
   const consoleVisbility = useVisible('console');
 
   return (
@@ -43,7 +43,7 @@ const Console = () => {
           <div className={styles.inventoryTitle}>INVENTORY</div>
           <Consumables />
           <Artifacts />
-          <Crystals />
+          <Cargo />
         </>
       </div>
     </div>

@@ -15,16 +15,17 @@ const usePlayerCrypto = ( cryptoRecord : IndexedCrypto) => {
     },[walletBalance,cryptoRecord])
 
     useEffect(()=>{
-        
+        /*
         const updateWallet = (id:number,value:number) => {
             setWalletBalance( (wallet:IndexedArray) => { wallet[id]=value;  return {...wallet}  } );
         }
-        
+        */
         const walletListener = () => {
+            /*
             Client.getInstance().ownPlayer.wallet.onAdd = (item) => {
                 updateWallet(item.cryptoID,item.amount)
                 item.onChange = () => updateWallet(item.cryptoID,item.amount);
-            };             
+            };*/             
         }
         
         Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, walletListener )

@@ -1,18 +1,20 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./styles.module.css"
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
-import { HUDContext } from "game/HUD";
 import { ShopItem } from "types";
 import buyItem from "../helpers/buyItem";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useGlobalStore } from "store";
 
 const TabConsumables: FC<{}> = () => {
 
   // global variables
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const hudContext = useContext(HUDContext);
-  const playerDoekoes = hudContext.player.crypto[world.world_crypto_id];
+  const wallet = useGlobalStore( state => state.wallet );
+  const worldCrypto = useGlobalStore( state => state.worldCrypto );
+  const worldExplosives = useGlobalStore( state => state.worldExplosives );
+  const playerDoekoes = wallet[world.world_crypto_id];
   const [ selectedItem, setSelectedItem ] = useState<ShopItem>({} as ShopItem);
   const [ hoverItem, setHoverItem ] = useState<ShopItem >({} as ShopItem);
   const [ detailsItem , setDetailsItem ] = useState<ShopItem>({} as ShopItem)
@@ -66,7 +68,7 @@ const TabConsumables: FC<{}> = () => {
 
   // Rendering shop item list
   const renderShopItem = (id: number) => {
-    const item = hudContext.world.explosives[id];
+    const item = worldExplosives[id];
     const isSelected = selectedItem.id === id;
     return(
       <div className={`${styles.itemContainer}
@@ -79,10 +81,10 @@ const TabConsumables: FC<{}> = () => {
           <LazyLoadImage src={item.image} className={styles.itemImage} alt={item.name} loading='lazy'/>
           <div className={styles.itemText}>
             {item.name} 
-            <LazyLoadImage src={hudContext.world.crypto[world.world_crypto_id].image} 
+            <LazyLoadImage src={worldCrypto[world.world_crypto_id].image} 
                 className={`${styles.cryptoThumbnail}
                             ${playerDoekoes>=item.price? styles.coinAvailable : styles.coinUnavailable }`} 
-                alt={hudContext.world.crypto[world.world_crypto_id].name}
+                alt={worldCrypto[world.world_crypto_id].name}
                 effect={'blur'}/>
             {item.price} 
           </div>
@@ -122,10 +124,10 @@ const TabConsumables: FC<{}> = () => {
         </div>
         <div className={styles.totalPrice}>
           Price
-          <LazyLoadImage src={hudContext.world.crypto[world.world_crypto_id].image} 
+          <LazyLoadImage src={worldCrypto[world.world_crypto_id].image} 
               className={`${styles.cryptoThumbnail}
               ${playerDoekoes>=multipleItemPrice? styles.coinAvailable : styles.coinUnavailable }`} 
-              alt={hudContext.world.crypto[world.world_crypto_id].name}
+              alt={worldCrypto[world.world_crypto_id].name}
               loading='lazy'/>
           {multipleItemPrice}
         </div>
@@ -137,7 +139,7 @@ const TabConsumables: FC<{}> = () => {
   return (
     <div className={styles.contentContainer}>
       <div className={styles.galleryPanel}>
-        { Object.keys( hudContext.world.explosives ).map( (id) => renderShopItem( +id ) )}
+        { Object.keys( worldExplosives ).map( (id) => renderShopItem( +id ) )}
       </div>
       <div className={styles.detailsPanel}>
         {detailsItem.name ? detailsPanel() : ''}

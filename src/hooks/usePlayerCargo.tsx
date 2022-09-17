@@ -8,7 +8,6 @@ const usePlayerCargo = () => {
     const [balance, setBalance] = useState<IndexedArray>({});
 
     useEffect(()=>{
-        
         const updateCargo = (id:number,value:number) => {
             setBalance( (wallet:IndexedArray) => { wallet[id]=value;  return {...wallet}  } );
         }

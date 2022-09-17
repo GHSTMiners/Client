@@ -1,22 +1,22 @@
 import styles from "./styles.module.css";
 import SquareButton from "components/SquareButton";
-import { useContext } from "react";
-import { HUDContext } from "../..";
 import { ITEMWIDTH } from "helpers/vars"
+import { useGlobalStore } from "store";
 
 const Consumables = () => {
 
-  const hudContext = useContext(HUDContext);
+  const worldExplosives = useGlobalStore( state => state.worldExplosives )
+  const explosives = useGlobalStore( state => state.explosives )
 
   const renderConsumable = (index:number) =>{
-    const isFilled = (hudContext.player.explosives.length >= index);
+    const isFilled = (explosives.length >= index);
     return (
     <SquareButton size={ITEMWIDTH} 
-                  quantity={ isFilled ? hudContext.player.explosives[index-1] : -1 }
+                  quantity={ isFilled ? explosives[index-1] : -1 }
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>
-        <img src={ isFilled ? hudContext.world.explosives[index-1].image : ''}  alt={ isFilled ? hudContext.world.explosives[index-1].name : 'empty'}/>
+        <img src={ isFilled ? worldExplosives[index-1].image : ''}  alt={ isFilled ? worldExplosives[index-1].name : 'empty'}/>
       </div>
     </SquareButton>
     );

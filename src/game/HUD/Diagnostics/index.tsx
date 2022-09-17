@@ -11,7 +11,7 @@ interface Props{
 const Diagnostics : React.FC<Props>   = ( { hidden } ) => {
     const [latency,setLatency]=useState(0);
     const elementVisibility = useVisible('diagnostics', !hidden); 
-    console.count('Rendering diagnostics: ')
+
     const updateLatency = (newLatency:number) => {
         setLatency(newLatency);
     }

@@ -1,15 +1,12 @@
 import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
-import { useContext } from "react";
-import { HUDContext } from "game/HUD";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useGlobalStore } from "hooks/useGlobalStore";
+import { useGlobalStore } from "store";
 
-const Crystals = () => {  
+const Cargo = () => {  
   
-  const hudContext = useContext(HUDContext);
-  //const crystalsArray = hudContext.world.crypto;
-  const crystalsArray = useGlobalStore( state => state.worldCrypto );
+  const worldCrypto = useGlobalStore( state => state.worldCrypto );
+  const playerCargo = useGlobalStore( state => state.cargo );
   
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
@@ -35,13 +32,13 @@ const Crystals = () => {
         alt={'Cargo'}
       />
       <div className={styles.cryptoGallery}>
-        { Object.keys(crystalsArray)
-            .filter( (key) => crystalsArray[key].name !== 'GGEMS' )
+        { Object.keys(worldCrypto)
+            .filter( (key) => worldCrypto[key].name !== 'GGEMS' )
             .map( function (key) {
-              const crypto = crystalsArray[key];
+              const crypto = worldCrypto[key];
               return inventoryCrystal(
                 crypto.name,
-                hudContext.player.crystals[crypto.cryptoID],
+                playerCargo[crypto.cryptoID],
                 crypto.crystal)
             })
         }
@@ -50,4 +47,4 @@ const Crystals = () => {
   );
 };
 
-export default Crystals;
+export default Cargo;
