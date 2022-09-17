@@ -11,10 +11,10 @@ const TabConsumables: FC<{}> = () => {
 
   // global variables
   const world: Chisel.DetailedWorld | undefined =   Client.getInstance().chiselWorld;
-  const playerCrypto = useGlobalStore( state => state.playerCrypto );
+  const wallet = useGlobalStore( state => state.wallet );
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
   const worldExplosives = useGlobalStore( state => state.worldExplosives );
-  const playerDoekoes = playerCrypto[world.world_crypto_id];
+  const playerDoekoes = wallet[world.world_crypto_id];
   const [ selectedItem, setSelectedItem ] = useState<ShopItem>({} as ShopItem);
   const [ hoverItem, setHoverItem ] = useState<ShopItem >({} as ShopItem);
   const [ detailsItem , setDetailsItem ] = useState<ShopItem>({} as ShopItem)

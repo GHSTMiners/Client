@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import Chat from "components/Chat";
 import GameLeaderboard from "./Leaderboard";
 import Vitals from "./Vitals";
@@ -7,46 +7,15 @@ import Console from "./Console";
 import Menu from "./Menu";
 import Shop from "./Shop";
 import Client from "matchmaking/Client";
-import { PlayerContext, PlayerVitals } from "types";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
-import usePlayerCrypto from "hooks/usePlayerCrypto";
-import useWorldCrypto from "hooks/useWorldCrypto";
-import useWorldExplosives from "hooks/useWorldExplosives";
-import usePlayerExplosives from "hooks/usePlayerExplosives";
-import usePlayerDepth from "hooks/usePlayerDepth";
 import Vignette from "./Vignette";
 import RefineCryptoFX from "./Animations/RefineCryptoFX";
-import usePlayerVitals from "hooks/usePlayerVitals";
-import usePlayerCargo from "hooks/usePlayerCargo";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
 
-
-export const HUDContext = createContext<PlayerContext>({ 
-  world:  { crypto: {}, explosives: {} } , 
-  player: { crypto: {},
-            total: 0, 
-            explosives: {}, 
-            depth: 0 , 
-            vitals : {} as PlayerVitals,
-            crystals: {} }  
-});
-
 export const HUD = () => {  
-  const { worldExplosives } = useWorldExplosives();
-  const { playerExplosives } = usePlayerExplosives();
-  const playerVitals = usePlayerVitals();
-  const playerCargo = usePlayerCargo();
-  const { playerDepth } = usePlayerDepth();
   const [gameLoaded, setgameLoaded] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
-  const [cryptoRecord] = useWorldCrypto();
-  const {walletBalance, totalCryptoValue, setWalletBalance} = usePlayerCrypto(cryptoRecord);
-  
-  useEffect(()=>{
-    (Object.keys(cryptoRecord)).forEach((id)=> setWalletBalance( s => {s[+id]=0; return s}) )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[cryptoRecord])
 
   const loadingBar = (value:number) =>{
     return(
@@ -77,8 +46,7 @@ export const HUD = () => {
       Client.getInstance().phaserGame.events.off(gameEvents.phaser.LOADING, handleLoadingBar );
       Client.getInstance().phaserGame.events.off(gameEvents.phaser.MAINSCENE, setGameReady);
     }
-
-  }, [playerExplosives]);
+  }, []);
 
   return (
     <>
@@ -89,16 +57,6 @@ export const HUD = () => {
            onClick={e => handleClick(e)}
            id="game-background"
            hidden={!gameLoaded}>
-        <HUDContext.Provider value={{ 
-              world:  { crypto: cryptoRecord,  explosives: worldExplosives} , 
-              player: { crypto: walletBalance,
-                        total: totalCryptoValue, 
-                        explosives: playerExplosives, 
-                        depth: playerDepth, 
-                        vitals: playerVitals,
-                        crystals: playerCargo.balance
-                      } 
-              }}>
           {/* EFFECTS */}
           <RefineCryptoFX />
           <MinedCryptoFX />
@@ -112,7 +70,6 @@ export const HUD = () => {
           <Shop />
           <GameLeaderboard hidden={true} />
           <Diagnostics hidden={true} />
-        </HUDContext.Provider>
       </div> 
     </>
   );

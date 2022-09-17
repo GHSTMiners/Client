@@ -8,14 +8,11 @@ const usePlayerCargo = () => {
     const [balance, setBalance] = useState<IndexedArray>({});
 
     useEffect(()=>{
-        /*
         const updateCargo = (id:number,value:number) => {
             setBalance( (wallet:IndexedArray) => { wallet[id]=value;  return {...wallet}  } );
         }
-        */
         
         const cargoListener = () => {
-            /*
             Client.getInstance().ownPlayer.cargo.onAdd = (item) => {
                 updateCargo(item.cryptoID,item.amount)
                 item.onChange = () => updateCargo(item.cryptoID,item.amount);
@@ -23,7 +20,6 @@ const usePlayerCargo = () => {
             Client.getInstance().ownPlayer.cargo.onRemove = (item) => {
                 updateCargo(item.cryptoID,0);
               }
-              */
         }
         
         Client.getInstance().phaserGame.events.on( gameEvents.room.JOINED, cargoListener )

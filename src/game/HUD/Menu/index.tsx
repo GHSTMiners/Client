@@ -16,8 +16,8 @@ const Menu = () => {
   const menuVisibility = useVisible('menu', false); 
   const musicManager = useMusicManager();
   const navigator = useNavigate();
-  const playerTotalCrypto = useGlobalStore( state => state.playerTotalValue);
-  const playerCrypto = useGlobalStore( state => state.playerCrypto );
+  const playerTotalCrypto = useGlobalStore( state => state.totalValue);
+  const wallet = useGlobalStore( state => state.wallet );
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
   
   const updateMusicVolume = (volume:number | number[]) =>{
@@ -48,8 +48,8 @@ const Menu = () => {
           <div className={styles.coinThumbnailContainer}
               onClick={ () => Client.getInstance().phaserGame.events.emit( gameEvents.exchange.SHOW)  }
               key={'Thumbnail_cointainer'}>
-            { Object.keys(playerCrypto)
-                .filter( key => playerCrypto[key]>0 )
+            { Object.keys(wallet)
+                .filter( key => wallet[key]>0 )
                 .map( cryptoKey => 
                   <img src={worldCrypto[cryptoKey].image} 
                     className={styles.coinThumbnail}

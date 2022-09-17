@@ -2,34 +2,38 @@ import { IndexedArray, IndexedCrypto, InventoryExplosives, PlayerVitals } from '
 import create from 'zustand'
 
 type State = {
+    // from schemas 
+    cargo : IndexedArray,
+    explosives: IndexedArray, 
+    vitals : PlayerVitals,
+    wallet : IndexedArray,
+    // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
-    playerCrypto: IndexedArray,
-    playerTotalValue: number,
-    playerExplosives: IndexedArray, 
-    playerDepth: number, 
-    playerVitals : PlayerVitals,
-    playerCargo: IndexedArray,
+    totalValue: number,
+    depth: number,
 }
 
 type Actions = {
+    setCargo: (key:string,quantity:number) => void
+    setExplosives: (key:string,quantity:number) => void
+    setVitals: (field:string, level:number) => void
+    setWallet: (key:string,quantity:number) => void
+    setDepth: (depth:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
-    updatePlayerCrypto: (key:string,quantity:number) => void
-    updatePlayerCargo: (key:string,quantity:number) => void
-    setPlayerDepth: (depth:number) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
     // Global Variables
     worldCrypto: {},
     worldExplosives: {}, 
-    playerCrypto: {},
-    playerTotalValue: 0,
-    playerExplosives: {}, 
-    playerDepth: 0 , 
-    playerVitals : {} as PlayerVitals,
-    playerCargo: {} ,
+    wallet : {},
+    totalValue: 0,
+    explosives: {}, 
+    depth: 0 , 
+    vitals : {fuel: 100, health: 100, cargo:0} ,
+    cargo: {} ,
 
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -38,22 +42,28 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setWorldExplosives: (explosives) => { 
         set( () => ({ worldExplosives : explosives }) ) 
     },
-    updatePlayerCrypto: (key,quantity) => {
-        set( (state) => ({ playerCrypto: { ...state.playerCrypto, [key]:quantity } }) )
+    setCargo: (key,quantity) => {
+        set( (state) => ({ cargo: {...state.cargo, [key]: quantity}}) )
+    },
+    setDepth: (depth) => {
+        set( () => ({ depth: depth}))
+    },
+    setVitals: ( vital , level) => {
+        set( (state) => ({ vitals: { ...state.vitals, [vital]:level } }))
+    },
+    setExplosives: (key,quantity) => {
+        set( (state) => ({ explosives: {...state.explosives, [key]: quantity}}) )
+    },
+    setWallet: (key,quantity) => {
+        set( (state) => ({ wallet : { ...state.wallet , [key]:quantity } }) )
         set( (state) => {
-             const total = Object.keys(state.playerCrypto).reduce( 
-                (accumulated, key) =>  state.playerCrypto[key] * state.worldCrypto[key].price + accumulated, 0  )
+             const total = Object.keys(state.wallet ).reduce( 
+                (accumulated, key) =>  state.wallet[key] * state.worldCrypto[key].price + accumulated, 0  )
             return(
-                { playerTotalValue: Math.round(total*10)/10 }
+                { totalValue: Math.round(total*10)/10 }
             )
         })
-    },
-    updatePlayerCargo: (key,quantity) => {
-        set( (state) => ({ playerCargo: {...state.playerCargo, [key]: quantity}}) )
-    },
-    setPlayerDepth: (depth) => {
-        set( () => ({ playerDepth: depth}))
-    }    
+    }  
 }))
 
 //export default useGlobalStore

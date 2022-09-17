@@ -22,7 +22,7 @@ const UpgradeBar: React.FC<Props> = ({
 }) => {
   const [ upgradeLevel, setUpgradeLevel ]= useState(currentTier);
   const [ upgradeAvailable, setUpgradeAvailable] = useState(false);
-  const playerCrypto = useGlobalStore( state => state.playerCrypto);
+  const wallet = useGlobalStore( state => state.wallet);
   const worldCrypto = useGlobalStore( state => state.worldCrypto )
 
   const playAudioEffect = () => {
@@ -33,13 +33,13 @@ const UpgradeBar: React.FC<Props> = ({
   useEffect(()=>{
     let coinsAvailable = 0; 
     upgradeCost.forEach( costEntry => {
-      if (playerCrypto[costEntry.cryptoId] && playerCrypto[costEntry.cryptoId]>= costEntry.cost ){
+      if (wallet[costEntry.cryptoId] && wallet[costEntry.cryptoId]>= costEntry.cost ){
          coinsAvailable = coinsAvailable + 1;
       }        
     });
     setUpgradeLevel(currentTier)
     setUpgradeAvailable( coinsAvailable === upgradeCost.length && upgradeLevel<UpgradeTags.length-1  ) 
-  },[ upgradeCost, playerCrypto, upgradeLevel, currentTier])
+  },[ upgradeCost, wallet, upgradeLevel, currentTier])
 
   // creatng definition of each of the upgradable levels
   const renderUpgradeLevel = (name: string, color: string, disabled: boolean, index:number) => (
@@ -66,7 +66,7 @@ const UpgradeBar: React.FC<Props> = ({
        <img src={worldCrypto[entry.cryptoId]?.image} 
             alt={worldCrypto[entry.cryptoId]?.name}
             className={`${styles.exchangeCoin}
-                   ${ (playerCrypto[entry.cryptoId]>=entry.cost) ? 
+                   ${ (wallet[entry.cryptoId]>=entry.cost) ? 
                     styles.upgradeAvailable: styles.upgradeUnavailable}`}
        />   
     </div>

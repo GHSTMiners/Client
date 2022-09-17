@@ -6,7 +6,7 @@ import { IndexedArray } from "types";
 import styles from "./refineCryptoFX.module.css"
 
 const RefineCryptoFX = () => {
-    const playerCargo = useGlobalStore( state => state.playerCargo );
+    const cargo = useGlobalStore( state => state.cargo );
     const worldCrypto = useGlobalStore( state => state.worldCrypto );
     const [ selectedCoin, setSelectedCoin ] = useState('');
     const [ hidden, setHidden ] = useState(true)
@@ -14,12 +14,12 @@ const RefineCryptoFX = () => {
 
     useEffect(()=>{
       const checkCargo = () => {
-        if ( Object.keys(playerCargo).length > 0){
+        if ( Object.keys(cargo).length > 0){
           setHidden(false)
           // find coin associated with the biggest cargo
-          setProcessedCargo({...playerCargo})
-          const biggestCoinKey = Object.keys(playerCargo).reduce(function(prev, current) {
-            return ( playerCargo[+prev] > playerCargo[+current] ) ? prev : current
+          setProcessedCargo({...cargo})
+          const biggestCoinKey = Object.keys(cargo).reduce(function(prev, current) {
+            return ( cargo[+prev] > cargo[+current] ) ? prev : current
           }) 
           let coinImage = worldCrypto[+biggestCoinKey].image ;
           setSelectedCoin( coinImage )
@@ -31,7 +31,7 @@ const RefineCryptoFX = () => {
       return () =>{
         Client.getInstance().phaserGame.events.off( gameEvents.refinary.REFINE , checkCargo)
       }
-    },[playerCargo,worldCrypto, hidden])
+    },[cargo,worldCrypto, hidden])
 
     return(
       <>        

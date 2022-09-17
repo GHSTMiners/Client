@@ -6,7 +6,7 @@ import { useGlobalStore } from "store";
 const Cargo = () => {  
   
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
-  const playerCargo = useGlobalStore( state => state.playerCargo );
+  const playerCargo = useGlobalStore( state => state.cargo );
   
   const inventoryCrystal = (tag: string, quantity: number, image: string) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>

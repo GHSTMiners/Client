@@ -4,7 +4,7 @@ import { useGlobalStore } from "store";
 
 const ConsoleButtons = () => {
     const worldExplosives = useGlobalStore( state => state.worldExplosives );  
-    const playerExplosives = useGlobalStore( state => state.playerExplosives )
+    const playerExplosives = useGlobalStore( state => state.explosives )
     const [ explosiveKeys , setExplosivesKeys] = useState(Object.keys(playerExplosives))
     
     

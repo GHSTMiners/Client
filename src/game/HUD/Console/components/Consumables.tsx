@@ -6,13 +6,13 @@ import { useGlobalStore } from "store";
 const Consumables = () => {
 
   const worldExplosives = useGlobalStore( state => state.worldExplosives )
-  const playerExplosives = useGlobalStore( state => state.playerExplosives )
+  const explosives = useGlobalStore( state => state.explosives )
 
   const renderConsumable = (index:number) =>{
-    const isFilled = (playerExplosives.length >= index);
+    const isFilled = (explosives.length >= index);
     return (
     <SquareButton size={ITEMWIDTH} 
-                  quantity={ isFilled ? playerExplosives[index-1] : -1 }
+                  quantity={ isFilled ? explosives[index-1] : -1 }
                   disabled={ isFilled ? false : true}
                   key={`inventoryConsumable${index}`}>
       <div className={styles.inventoryConsumable}>

@@ -12,7 +12,7 @@ import { useGlobalStore } from "store";
 const Shop = () => {
   const [selectedTab, setSelectedTab] = useState<number>(tabs[0].index);
   const shopVisibility = useVisible('shop'); 
-  const playerCrypto = useGlobalStore( state => state.playerCrypto);
+  const wallet = useGlobalStore( state => state.wallet);
   const worldCrypto = useGlobalStore( state => state.worldCrypto);
 
   useEffect( () => {
@@ -27,11 +27,11 @@ const Shop = () => {
     <div className={`${styles.shopContainer} ${shopVisibility.state ? styles.displayOn : styles.displayOff}`} onClick={()=>{}}>
       <div className={styles.screenContainer}>
         <div className={styles.shopHeader}>
-          <div className={styles.playerCryptoContainer}>
+          <div className={styles.walletContainer}>
               {Object.keys(worldCrypto).map( key =>{
                 return(
-                  <div className={`${styles.playerCryptoWrapper}
-                    ${ (playerCrypto[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
+                  <div className={`${styles.walletWrapper}
+                    ${ (wallet[key]>0) ? styles.coinAvailable: styles.coinUnavailable}`}
                     onClick={()=>sellCrypto(+key,1)}
                     key={key}>
                     <img src={worldCrypto[key].image} 
@@ -39,7 +39,7 @@ const Shop = () => {
                     alt={worldCrypto[key].name}
                     loading='lazy'/>
                     x 
-                    {playerCrypto[key]? Math.round(playerCrypto[key]*10)/10 : 0}
+                    {wallet[key]? Math.round(wallet[key]*10)/10 : 0}
                   </div>
                 )
               })

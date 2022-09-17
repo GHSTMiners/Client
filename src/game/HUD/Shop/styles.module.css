@@ -29,14 +29,14 @@
   border: 1px solid #a4ffff;
 }
 
-.playerCryptoContainer{
+.walletContainer{
   display: flex;
   flex-direction: row;
   gap:1rem;
   margin: auto;
 }
 
-.playerCryptoWrapper{
+.walletWrapper{
   display: flex;
   flex-direction: row;
   gap: 0.5rem;

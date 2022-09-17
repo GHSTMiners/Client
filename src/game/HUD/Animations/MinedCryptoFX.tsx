@@ -7,7 +7,7 @@ import styles from "./minedCryptoFX.module.css"
 const MinedCryptoFX = () => {
     
     const worldCrypto = useGlobalStore( state => state.worldCrypto );
-    const playerCargo = useGlobalStore( state => state.playerCargo );
+    const cargo = useGlobalStore( state => state.cargo );
     const [ selectedCoin, setSelectedCoin ] = useState('');
     const [ hidden, setHidden ] = useState(true)
 
@@ -21,27 +21,27 @@ const MinedCryptoFX = () => {
       return () =>{
         Client.getInstance().phaserGame.events.off( gameEvents.game.MINEDCRYSTAL , updateDialog)
       }
-    },[playerCargo, hidden])
+    },[cargo, hidden])
 
     return(
       <div className={`${styles.dialogContainer} 
-                        ${(hidden || playerCargo[+selectedCoin] === 0)? styles.hide: styles.show} `} 
-            key = {`${selectedCoin}_${playerCargo[+selectedCoin]}`} 
+                        ${(hidden || cargo[+selectedCoin] === 0)? styles.hide: styles.show} `} 
+            key = {`${selectedCoin}_${cargo[+selectedCoin]}`} 
             onAnimationEnd = { () => setHidden(true) }>
         <div className={styles.minedCryptoContainer}>
           <div className={styles.crystalContainer}>
             <img className={styles.crystalPreview} 
                 src={worldCrypto[+selectedCoin]?.crystal} 
-                key = {`${selectedCoin}_${playerCargo[+selectedCoin]}_image`} 
+                key = {`${selectedCoin}_${cargo[+selectedCoin]}_image`} 
                 alt={worldCrypto[+selectedCoin]?.name}/>
           </div>
           +<span className={styles.rollingCounterContainer}>
             <div className={styles.rollingWrapper}>
               <div className={styles.rollingNumber}>  
-                {playerCargo[+selectedCoin]? playerCargo[+selectedCoin]-1 : 0}
+                {cargo[+selectedCoin]? cargo[+selectedCoin]-1 : 0}
               </div>
               <div className={styles.rollingNumber}> 
-                {playerCargo[+selectedCoin]? playerCargo[+selectedCoin] : 0} 
+                {cargo[+selectedCoin]? cargo[+selectedCoin] : 0} 
               </div>
             </div>
           </span>
