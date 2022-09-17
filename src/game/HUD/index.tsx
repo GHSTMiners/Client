@@ -48,10 +48,16 @@ export const HUD = () => {
     }
   }, []);
 
+  const loadingImgURL = `https://chisel.gotchiminer.rocks/storage/${Client.getInstance().chiselWorld.thumbnail}`;
+
   return (
     <>
       <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
+        <div className={styles.loadingText}>{!gameLoaded?'Loading game...':''}</div>
         {loadingBar(loadingPercentage)}
+        <img src={loadingImgURL} 
+            alt={'world preview'}
+            className={styles.backgroundImage}/>
       </div>
       <div className={`${styles.hudContainer} ${!gameLoaded? styles.hidden : styles.reveal }`} 
            onClick={e => handleClick(e)}

@@ -78,6 +78,7 @@ const Lobby = (): JSX.Element => {
             
             if(Client.getInstance().lobbyRoom.state.state === Schema.LobbyState.Started) {  
               Client.getInstance().apiInterface.world(Client.getInstance().lobbyRoom.state.map_id).then(world =>{
+                console.log(world)
                 Client.getInstance().chiselWorld = world;
                 Client.getInstance().authenticationInfo.password = Client.getInstance().lobbyRoom.state.password;
                 Client.getInstance().authenticationInfo.chainId = Client.getInstance().authenticator.chainId().toString()

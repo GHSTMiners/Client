@@ -18,7 +18,7 @@ const Cargo = () => {
             effect={'blur'}/>
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
-        {quantity} x {tag}
+        {quantity? quantity : 0} x {tag}
       </div>
     </div>
   );
@@ -33,7 +33,6 @@ const Cargo = () => {
       />
       <div className={styles.cryptoGallery}>
         { Object.keys(worldCrypto)
-            .filter( (key) => worldCrypto[key].name !== 'GGEMS' )
             .map( function (key) {
               const crypto = worldCrypto[key];
               return inventoryCrystal(

@@ -19,6 +19,7 @@ export default class MainPlayer extends Player {
             useGlobalStore.getState().setCargo(`${cargo.cryptoID}`,cargo.amount)
             cargo.onChange= () => useGlobalStore.getState().setCargo(`${cargo.cryptoID}`,cargo.amount)
         }
+        this.playerSchema.cargo.onRemove = (cargo) => useGlobalStore.getState().setCargo(`${cargo.cryptoID}`,0)
     }
 
     storeWallet(){
