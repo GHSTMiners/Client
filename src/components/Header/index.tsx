@@ -13,6 +13,7 @@ import Client from "matchmaking/Client";
 import GreenButton from "components/GreenButton";
 import RedButton from "components/RedButton";
 import * as Schema from "matchmaking/Schemas";
+import gameEvents from "game/helpers/gameEvents";
 
 
 const WalletButton = () => {
@@ -61,6 +62,9 @@ export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigator = useNavigate();
+  const inLobby = location.pathname === "/lobby";
+  const inEndgame = location.pathname === "/endgame";
+  const inGame = location.pathname === "/play";
   
   const routeToLobby = () => {
     Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
@@ -82,8 +86,21 @@ export const Header = () => {
     navigator('/')
    }
 
+   useEffect(()=>{ 
+    const routeToEndgame = () => {
+      navigator('/endgame')
+     }
+
+     Client.getInstance().phaserGame?.events.on( gameEvents.game.END, routeToEndgame)
+
+     return () =>{
+      Client.getInstance().phaserGame?.events.off( gameEvents.game.END, routeToEndgame)
+     }
+   },[navigator])
+
+
   return (
-    <header className={styles.header} hidden = {location.pathname === "/play"  } >
+    <header className={styles.header} hidden = { inGame } >
       <nav
         className={`${globalStyles.container} ${styles.desktopHeaderContent}`}
       >
@@ -92,7 +109,7 @@ export const Header = () => {
             <div className={styles.logo}></div>
           </NavLink>
 
-          <NavLink hidden = {location.pathname === "/lobby"}
+          <NavLink hidden = { inLobby || inEndgame }
             to="/"
             className={({ isActive }) =>
               isActive ? styles.activeNavLink : styles.navLink
@@ -101,7 +118,7 @@ export const Header = () => {
             Home
           </NavLink>
           
-          <NavLink hidden = {location.pathname === "/lobby"}
+          <NavLink hidden = { inLobby || inEndgame }
             to="/leaderboard"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -109,7 +126,7 @@ export const Header = () => {
           >
             Leaderboard
           </NavLink>
-          <NavLink hidden = {location.pathname === "/lobby"}
+          <NavLink hidden = { inLobby || inEndgame }
             to="/howtoplay"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -117,7 +134,7 @@ export const Header = () => {
           >
             How to Play
           </NavLink> 
-          <NavLink hidden = {location.pathname === "/lobby"}
+          <NavLink hidden = { inLobby || inEndgame }
             to="/about"
             className={({ isActive }) =>
                 isActive ? styles.activeNavLink : styles.navLink
@@ -128,11 +145,11 @@ export const Header = () => {
           
         </ul>
         {/*<WalletButton />*/}
-        <div className={styles.playButtonContainer} hidden = {location.pathname === "/lobby"}> 
+        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame  }> 
           <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
         </div>
 
-        <div className={styles.playButtonContainer} hidden = {location.pathname !== "/lobby"}> 
+        <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 
           <RedButton width={'15rem'} fontSize={'2rem'} onClick={routeToHome}>EXIT</RedButton>
         </div>
       </nav>

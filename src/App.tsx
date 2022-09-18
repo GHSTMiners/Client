@@ -6,6 +6,7 @@ import About from "pages/About";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import Lobby from "pages/Lobby";
+import EndGame from "pages/EndGame";
 
 const App = () => {
   const location = useLocation();
@@ -20,6 +21,7 @@ const App = () => {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/howtoplay" element={<HowToPlay />} />
             <Route path="/about" element={<About />} />
+            <Route path="/endgame" element={<EndGame />} />
           </Routes>
           </CSSTransition>
         </TransitionGroup>
