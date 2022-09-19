@@ -14,6 +14,7 @@ import GreenButton from "components/GreenButton";
 import RedButton from "components/RedButton";
 import * as Schema from "matchmaking/Schemas";
 import gameEvents from "game/helpers/gameEvents";
+import RegionSelection from "components/RegionSelection";
 
 
 const WalletButton = () => {
@@ -65,7 +66,7 @@ export const Header = () => {
   const inLobby = location.pathname === "/lobby";
   const inEndgame = location.pathname === "/endgame";
   const inGame = location.pathname === "/play";
-  
+
   const routeToLobby = () => {
     Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
       console.log(`Joined lobby room`)
@@ -145,8 +146,10 @@ export const Header = () => {
           
         </ul>
         {/*<WalletButton />*/}
+        
         <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame  }> 
           <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
+          <RegionSelection />
         </div>
 
         <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 
@@ -155,6 +158,15 @@ export const Header = () => {
       </nav>
         
       <div className={styles.mobileHeaderContent}>
+        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame  }> 
+          <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
+          <RegionSelection />
+        </div>
+
+        <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 
+          <RedButton width={'15rem'} fontSize={'2rem'} onClick={routeToHome}>EXIT</RedButton>
+        </div>
+
         <Hamburger onClick={() => setMenuOpen((prevState) => !prevState)} />
         <SideTray open={menuOpen}>
           <nav>

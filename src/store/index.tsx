@@ -2,7 +2,7 @@ import { IndexedArray, IndexedCrypto, InventoryExplosives, PlayerVitals } from '
 import create from 'zustand'
 
 type State = {
-    // from schemas 
+    // schemas 
     cargo : IndexedArray,
     explosives: IndexedArray, 
     vitals : PlayerVitals,

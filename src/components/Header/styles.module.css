@@ -17,7 +17,11 @@
 }
 
 .mobileHeaderContent {
-  padding: 1.6rem;
+  /*padding: 1.6rem;*/
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 3rem 0 3rem;
 }
 
 .navLink {
@@ -121,7 +125,7 @@
   justify-self: center;
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1300px) {
   .desktopHeaderContent {
     display: flex;
     justify-content: space-between;

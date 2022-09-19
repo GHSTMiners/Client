@@ -1,0 +1,13 @@
+
+.customSelect{
+    height: 2.5rem;
+    width: 100%;
+    font-family: Rocks;
+}
+
+.customSelect>div{
+    height: 100%;
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+    border: none;
+}
