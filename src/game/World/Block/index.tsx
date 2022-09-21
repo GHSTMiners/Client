@@ -31,6 +31,7 @@ export default class Block extends Phaser.GameObjects.Container {
                     this.backgroundSprite = new Phaser.GameObjects.Sprite(scene, 0, 0, `soil_${soilType}_${blockInfo.soilID}`)
                     this.add([this.backgroundSprite])
                 break;
+                case APIInterface.SpawnType.FallThrough:
                 case APIInterface.SpawnType.None:
                     this.backgroundSprite = new Phaser.GameObjects.Image(scene, 0, 0, `soil_${soilType}_${blockInfo.soilID}`);
                     this.backgroundSprite.setAlpha(0.5)
@@ -46,7 +47,7 @@ export default class Block extends Phaser.GameObjects.Container {
     }
 
     private blockUpdated() {
-        if(this.blockInfo?.spawnType === SpawnType.None && this.backgroundSprite ) {
+        if((this.blockInfo?.spawnType === SpawnType.None || this.blockInfo?.spawnType === SpawnType.FallThrough) && this.backgroundSprite ) {
             this.backgroundSprite.setAlpha(0.5)
             //Remove foreground sprite too if it exists
             if(this.itemSprite) {
