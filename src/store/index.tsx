@@ -1,3 +1,4 @@
+import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion'
 import { IndexedArray, IndexedCrypto, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 
@@ -12,6 +13,7 @@ type State = {
     worldExplosives: InventoryExplosives, 
     totalValue: number,
     depth: number,
+    region: ServerRegion
 }
 
 type Actions = {
@@ -22,6 +24,7 @@ type Actions = {
     setDepth: (depth:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
+    setRegion: (region:ServerRegion) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -34,6 +37,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     depth: 0 , 
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
+    region:{},
 
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -63,7 +67,10 @@ export const useGlobalStore = create<State & Actions>((set) => ({
                 { totalValue: Math.round(total*10)/10 }
             )
         })
-    }  
+    },
+    setRegion: (region) => {
+        set( () => ({ region: region }) )
+    },  
 }))
 
 //export default useGlobalStore

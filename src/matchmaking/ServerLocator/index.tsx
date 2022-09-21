@@ -1,5 +1,6 @@
 import { ServerRegion } from "chisel-api-interface/lib/ServerRegion";
 import * as Chisel from "chisel-api-interface";
+import { useGlobalStore } from "store"
 
 import axios from 'axios';
 
@@ -23,6 +24,7 @@ export default class ServerLocator {
                     if(nearestLocation > distanceToRegion) {
                         nearestLocation = distanceToRegion
                         this.closestRegion = region
+                        useGlobalStore.getState().setRegion(region)
                     }
                 })
 

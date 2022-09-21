@@ -3,6 +3,7 @@
     height: 3rem;
     width: 100%;
     font-family: Rocks;
+    z-index: 3;
 }
 
 .customSelect>div{

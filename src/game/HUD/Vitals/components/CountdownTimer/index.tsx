@@ -12,9 +12,11 @@ interface Props{
 const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
   const [ minutes, seconds] = useCountdown(targetDate);
 
+
   useEffect(()=>{
     if ( minutes<=0 && seconds<=0){
-        Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
+        console.log('Triggering end game 💀 💀 💀 💀 💀 ')
+        //Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
     }
   },[minutes,seconds])
 
