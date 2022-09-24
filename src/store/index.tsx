@@ -10,6 +10,7 @@ type State = {
     vitals : PlayerVitals,
     wallet : IndexedArray,
     players: IndexedPlayers,
+    lobbyCountdown : number,
     // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
@@ -26,6 +27,7 @@ type Actions = {
     setWallet: (key:string,quantity:number) => void
     setDepth: (depth:number) => void
     setPlayer: (key:string,player:Player) => void
+    setCountdown : (time:number) => void,
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
     setRegion: (region:ServerRegion) => void
@@ -40,7 +42,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     totalValue: 0,
     explosives: {}, 
     depth: 0 ,
-    players: {}, 
+    players: {},
+    lobbyCountdown: 0, 
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
     region:{},
@@ -62,6 +65,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setPlayer: ( key , player) => {
         set( (state) => ({ players: { ...state.players, [key]:player } }))
+    },
+    setCountdown: ( time ) => {
+        set( () => ({ lobbyCountdown: time }))
     },
     setVitals: ( vital , level) => {
         set( (state) => ({ vitals: { ...state.vitals, [vital]:level } }))

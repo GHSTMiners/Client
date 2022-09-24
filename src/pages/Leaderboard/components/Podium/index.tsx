@@ -1,9 +1,9 @@
 import React from 'react';
-import { GotchiSVG} from "components";
 import gotchiPodium from "assets/svgs/podium.svg"
 import styles from './styles.module.css';
 import { HighScore } from 'types';
 import { number } from 'mathjs';
+import GotchiPreview from 'components/GotchiPreview';
 
 interface Props {
   podiumGotchis : Array<HighScore>;
@@ -14,10 +14,9 @@ export const Podium: React.FC<Props> = ({
 }) => {
     
     const renderGotchi = (id:number, winner:boolean)=>{
-        return(
-          <GotchiSVG tokenId={`${id}`}  
-          options={{ animate: true, removeBg: true, armsUp:winner }}
-          />
+      //options={{ animate: true, removeBg: true, armsUp:winner }}  
+      return(
+          <GotchiPreview tokenId={`${id}`}  />
         )
     }
     

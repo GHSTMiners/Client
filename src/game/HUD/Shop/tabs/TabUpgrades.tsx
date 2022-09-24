@@ -5,12 +5,14 @@ import buyUpgrade from "../helpers/buyUpgrade";
 import { UpgradePrice } from "types";
 import useWorldUpgrades from "hooks/useWorldUpgrades";
 import usePlayerUpgrades from "hooks/usePlayerUpgrades";
-import usePlayerGotchi from "hooks/usePlayerGotchi";
+import { useGlobalStore } from "store";
+import Client from "matchmaking/Client";
   
 const TabUpgrades = () => {
   const [ hoverUpgrade , setHoverUpgrade] = useState({} as UpgradePrice);
   const [ selectedUpgrade ] = useState({} as UpgradePrice);
-  const { playerGotchi } = usePlayerGotchi();
+  const playersGotchis = useGlobalStore( store => store.gotchiSVGs )
+  const playerGotchi = playersGotchis[Client.getInstance().ownPlayer.gotchiID ];
   const { worldUpgrades } = useWorldUpgrades();
   const {currentTiers} = usePlayerUpgrades();
 

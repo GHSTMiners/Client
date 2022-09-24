@@ -15,7 +15,7 @@ interface Props {
   disabled?: boolean;
 }
 
-export const MapSelector: React.FC<Props> = ({
+const Component: React.FC<Props> = ({
   mapVotes,
   children,
   onClick,
@@ -98,3 +98,5 @@ export const MapSelector: React.FC<Props> = ({
     </>
   );
 };
+
+export const MapSelector = React.memo(Component)

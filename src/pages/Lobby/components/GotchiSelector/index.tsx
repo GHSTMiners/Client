@@ -3,9 +3,10 @@ import { Arrow } from "assets";
 import { useEffect, useState, useCallback } from "react";
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import styles from "./styles.module.css";
-import { GotchiSVG, SearchToggle, SortToggle, Sort  } from "components";
+import { SearchToggle, SortToggle, Sort  } from "components";
 import Client from "matchmaking/Client";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
+import GotchiPreview from "components/GotchiPreview";
 
 const sortOptions = [
   {
@@ -218,8 +219,7 @@ export const GotchiSelector = ({
                 ))
               : displayedGotchis?.map((gotchi, i) => {
                   const isSelected = selected === gotchi.id;
-                  const loadIn = i < maxVisible + currentIteration;
-
+                  
                   return (
                     <div
                       className={`${styles.gotchiContainer} ${
@@ -233,7 +233,7 @@ export const GotchiSelector = ({
                         handleSelect(gotchi.id);
                       }}
                     >
-                        <GotchiSVG tokenId={gotchi.id} lazyloadIn={loadIn} />
+                        <GotchiPreview tokenId={gotchi.id}  />
                     </div>
                   );
                 })}

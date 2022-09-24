@@ -1,21 +1,23 @@
-import { useEffect } from "react";
-import { GotchiSVG } from "components";
-import { updateAavegotchis, useWeb3 } from "web3/context";
+//import { useEffect } from "react";
+//import { updateAavegotchis, useWeb3 } from "web3/context";
 import TwitterIcon from "assets/icons/twitter.svg"
 import DiscordIcon from "assets/icons/discord.svg"
 import YoutubeIcon from "assets/icons/youtube.svg"
 import styles from "./styles.module.css";
+import GotchiPreview from "components/GotchiPreview";
 
 const About = (): JSX.Element => {
 
     // Initializing web3 hook
-    const { state: { address },dispatch } = useWeb3();
+    //const { state: { address },dispatch } = useWeb3();
     const iconHeight = '0.8rem';
+    /*
     useEffect(() => {
       if (address)  updateAavegotchis(dispatch, address);
     }, [address,dispatch]);
-
+    */
   const renderGotchiTile = (name: string, twitter:string, discord:string, role:string, gotchiID:string , aboutme:string ,description?:string) =>{
+    //side={0}  options={{ animate: true, removeBg: true }} 
     return(
       <div className={styles.gotchiTileContainer} key={name}>
         <div className={styles.gotchiTileHeader}>
@@ -30,7 +32,7 @@ const About = (): JSX.Element => {
           {aboutme}
         </div>
         <div className={styles.gotchiPreview}>          
-          <GotchiSVG side={0}  tokenId={gotchiID} options={{ animate: true, removeBg: true }} />
+          <GotchiPreview tokenId={gotchiID} />
           {description}
         </div>
       </div>

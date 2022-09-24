@@ -1,6 +1,6 @@
-import { GotchiSVG } from "components/GotchiSVG";
 import styles from "./styles.module.css";
 import TopPlayersIcon2 from "assets/icons/top_players.svg"
+import GotchiPreview from "components/GotchiPreview";
 
 interface Props {
   title?: string;
@@ -13,11 +13,11 @@ export const DailyWinners = ({
   }: Props) => {
 
     const renderGotchi = (tokenId:string,name:string,score:number)=>{
-
+//options={{ animate: true, removeBg: true }} 
       return(
         <div className={styles.playerContainer}>
           <div className={styles.gotchiContainer}>
-            <GotchiSVG tokenId={tokenId}  options={{ animate: true, removeBg: true }} />
+            <GotchiPreview tokenId={tokenId}  />
           </div>
           <div className={styles.gotchiName}>{name}</div>
           <div className={styles.gotchiScore}>{score}</div>

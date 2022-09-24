@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GotchiSVG } from "components";
 import { TraitsTile , GotchiSelector, MapSelector } from "./components";
 import { updateAavegotchis, useWeb3 } from "web3/context";
 import { ProgressBar } from "react-bootstrap";
@@ -11,6 +10,7 @@ import * as Schema from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import styles from "./styles.module.css";
+import GotchiPreview from "components/GotchiPreview";
 
 
 
@@ -186,11 +186,7 @@ const Lobby = (): JSX.Element => {
             </div>
             <div className={styles.gotchiContainer} onClick={rotateGotchi}>
                   {selectedAavegotchiId ? (
-                    <GotchiSVG
-                      side={gotchiSide}
-                      tokenId={selectedAavegotchiId}
-                      options={{ animate: true, removeBg: true }}
-                    />
+                    <GotchiPreview tokenId={selectedAavegotchiId} />
                   ) : (
                     <img src={gotchiLoading} alt="Loading Aavegotchi" />
                   )}

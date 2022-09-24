@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import InactiveFrensIcon from "assets/icons/inactive_frens.svg"
 import { IndexedBooleanArray } from "types";
 import { useEffect, useState } from "react";
-import { GotchiSVG } from "components/GotchiSVG";
+import GotchiPreview from "components/GotchiPreview";
 
 interface Props {
   playerSeats: IndexedBooleanArray;
@@ -31,11 +31,7 @@ export const PlayerCounter = ({
           { (id)? 
               <>
               <div className={styles.gotchiPreviewContainer}>
-                <GotchiSVG
-                        side={0}
-                        tokenId={id.toString()}
-                        options={{ animate: false, removeBg: true }}
-                      />
+                <GotchiPreview tokenId={`${id}`}/>
                 </div>
                 {(playerSeats[id])? 'READY' : ''}    
               </> 
