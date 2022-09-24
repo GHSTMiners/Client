@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import useCountdown from 'hooks/useCountdown';
 import styles from './styles.module.css'
-import Client from 'matchmaking/Client'
-import gameEvents from 'game/helpers/gameEvents';
+//import Client from 'matchmaking/Client'
+//import gameEvents from 'game/helpers/gameEvents';
 
 
 interface Props{
@@ -15,7 +15,7 @@ const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
 
   useEffect(()=>{
     if ( minutes<=0 && seconds<=0){
-        console.log('Triggering end game 💀 💀 💀 💀 💀 ')
+        //console.log('Triggering end game 💀 💀 💀 💀 💀 ')
         //Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
     }
   },[minutes,seconds])

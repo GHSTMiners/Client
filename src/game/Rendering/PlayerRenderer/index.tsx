@@ -4,9 +4,10 @@ import * as Schema from "matchmaking/Schemas";
 import { AavegotchiGameObject } from "types";
 import AavegotchiSVGFetcher from "../AavegotchiSVGFetcher";
 import { constructSpritesheet } from "game/helpers/spritesheet";
-import { customiseSvg } from "helpers/aavegotchi";
+import { convertInlineSVGToBlobURL, customiseSvg } from "helpers/aavegotchi";
 import MainPlayer from "game/World/MainPlayer";
 import gameEvents from "game/helpers/gameEvents";
+import { useGlobalStore } from "store";
 
 export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
   constructor(scene: Phaser.Scene) {
@@ -48,6 +49,13 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
         };
         
         this.loadInGotchiSpritesheet(playerGotchi);
+
+        // adding player schema and svg to the global store
+        useGlobalStore.getState().setPlayer(playerGotchi.id,player);
+        aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
+            let gotchiSVG = convertInlineSVGToBlobURL(svg);
+            useGlobalStore.getState().setGotchiSVG(playerGotchi.id,gotchiSVG);
+        });
         
         this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
 

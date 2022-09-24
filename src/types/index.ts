@@ -138,7 +138,7 @@ export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
 
 export type InventoryExplosives = Record< number, ExplosiveItem>;
 
-export type PlayerBalance = {playerId: number, ggems: number };
+export type PlayerBalance = {playerId: number, total: number };
 
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
 

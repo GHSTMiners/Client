@@ -1,30 +1,30 @@
-import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
-import { IndexedPlayers, PlayerBalance } from "types";
+import { IndexedArray, IndexedPlayers, PlayerBalance } from "types";
+import { useGlobalStore } from "store";
 
 const useSortPlayers = (players:IndexedPlayers, refresh:boolean):{ sortedPlayers : number[]} => {
     
     const [sortedPlayers, setSortedPlayers] = useState<number[]>([]);
+    const worldCrypto = useGlobalStore( store => store.worldCrypto );
     
     useEffect(()=>{
-        const worldCryptoId: string = Client.getInstance().chiselWorld.world_crypto_id.toString();
-    
         if (players){
             const unsortedkeys = Object.keys(players);
             let unsortedData: PlayerBalance[] = [];
             
             unsortedkeys.forEach( playerEntry =>{
-                let GGEMS = players[playerEntry].wallet.get(worldCryptoId);
-                let id = players[playerEntry].gotchiID;
-                let GGEMSbalance = 0;
-                if (GGEMS) GGEMSbalance = GGEMS.amount;
-                unsortedData.push({playerId:id,ggems:GGEMSbalance})
+                let playerWallet: IndexedArray = {};
+                players[playerEntry].wallet.forEach( entry => playerWallet[entry.cryptoID]=entry.amount );
+                const playerTotal = Object.keys( playerWallet ).reduce( 
+                    (accumulated, key) =>  playerWallet[key] * worldCrypto[key].price + accumulated, 0  )
+                unsortedData.push({playerId:+playerEntry,total:playerTotal})
             })
-            const sortedData = unsortedData.sort((entry1,entry2)=> entry2.ggems - entry1.ggems)
+            
+            const sortedData = unsortedData.sort((entry1,entry2)=> entry2.total - entry1.total)
             const sortedIds = sortedData.map( entry => entry.playerId);
             setSortedPlayers([...sortedIds]);
         }
-    },[players,refresh])
+    },[players,worldCrypto,refresh])
 
     return { sortedPlayers }
 }

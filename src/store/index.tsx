@@ -1,5 +1,6 @@
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion'
-import { IndexedArray, IndexedCrypto, InventoryExplosives, PlayerVitals } from 'types'
+import { Player } from 'matchmaking/Schemas'
+import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 
 type State = {
@@ -8,12 +9,14 @@ type State = {
     explosives: IndexedArray, 
     vitals : PlayerVitals,
     wallet : IndexedArray,
+    players: IndexedPlayers,
     // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
     totalValue: number,
     depth: number,
-    region: ServerRegion
+    region: ServerRegion,
+    gotchiSVGs: IndexedString
 }
 
 type Actions = {
@@ -22,9 +25,11 @@ type Actions = {
     setVitals: (field:string, level:number) => void
     setWallet: (key:string,quantity:number) => void
     setDepth: (depth:number) => void
+    setPlayer: (key:string,player:Player) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
     setRegion: (region:ServerRegion) => void
+    setGotchiSVG: (key:string,svg:string) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -34,10 +39,13 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     wallet : {},
     totalValue: 0,
     explosives: {}, 
-    depth: 0 , 
+    depth: 0 ,
+    players: {}, 
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
     region:{},
+    gotchiSVGs: {},
+    
 
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -51,6 +59,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setDepth: (depth) => {
         set( () => ({ depth: depth}))
+    },
+    setPlayer: ( key , player) => {
+        set( (state) => ({ players: { ...state.players, [key]:player } }))
     },
     setVitals: ( vital , level) => {
         set( (state) => ({ vitals: { ...state.vitals, [vital]:level } }))
@@ -70,6 +81,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setRegion: (region) => {
         set( () => ({ region: region }) )
+    },
+    setGotchiSVG: ( key , svg) => {
+        set( (state) => ({ gotchiSVGs: { ...state.gotchiSVGs, [key]:svg } }))
     },  
 }))
 
