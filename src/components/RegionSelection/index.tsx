@@ -12,6 +12,8 @@ const RegionSelection = () => {
 
     const [selectedOption, setSelectedOption ]= useState<SelectionPair>({} as SelectionPair)
     const [serverRegions,setServerRegions] = useState<ServerRegion[]>([]);
+    const [isLoading,setLoading] = useState<boolean>(true);
+
     const defaultRegion = useGlobalStore( state => state.region );
 
     useEffect(()=>{
@@ -19,6 +21,7 @@ const RegionSelection = () => {
             setServerRegions(serverRegions)
             setSelectedOption({value: defaultRegion?.name, 
                                label: formatFlagLabel(defaultRegion?.name,defaultRegion?.flag) } as SelectionPair)
+            setLoading(false)
         } )
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[defaultRegion])
@@ -40,6 +43,7 @@ const RegionSelection = () => {
         <>
             <Select
             isSearchable={false}
+            isLoading={isLoading}
             value={selectedOption}
             className={styles.customSelect}
             onChange={(value)=> setSelectedOption(value as SelectionPair)}
