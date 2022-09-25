@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { Arrow } from "assets";
-import desertImage from "assets/images/desert_thumbnail.png";
-import forestImage from "assets/images/forest_thumbnail.png";
 import * as Chisel from "chisel-api-interface";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
@@ -24,8 +22,6 @@ const Component: React.FC<Props> = ({
 
   // state variables to handle user map selection
   const emptyWorlds: Chisel.World[] = [] ;
-  const emptyThumbnails: string[] = [];
-  const [worldThumbnails] = useState(emptyThumbnails);
   const [worldArray] = useState(emptyWorlds);
   const [mapSelection,setMapSelection]=useState(0);
 
@@ -45,14 +41,6 @@ const Component: React.FC<Props> = ({
     }
   },[worldArray])
 
-  // temporary solution to include thumbnail images. TO DO: get from Chisel
-  useEffect(()=>{
-    if (worldThumbnails.length === 0){
-      worldThumbnails.push(desertImage);
-      worldThumbnails.push(forestImage);
-    }
-  },[worldThumbnails])
-
   useEffect(() => {
     if(worldArray.length > 0) {
       let message : Protocol.ChangeMapVote = new Protocol.ChangeMapVote();
@@ -67,20 +55,19 @@ const Component: React.FC<Props> = ({
   const handleArrowClick = (positionShift : number)=>{
     if(worldArray.length > 1) {
       const newPosition = mapSelection + positionShift;
-      if ( newPosition >= 0 && newPosition < worldThumbnails.length){
+      if ( newPosition >= 0 && newPosition < worldArray.length){
         setMapSelection(newPosition);
       }
     }
   }
 
   const thumbnailGallery = worldArray.map(function (world,index) {
-    let numberOfVotes = mapVotes[world.id] ;
-    if (numberOfVotes === undefined) numberOfVotes = 0;
+    const numberOfVotes = mapVotes[world.id] ?? 0;
     return(
       <div className={styles.thumbnailContainer} onClick={disabled? ()=>{} :()=>setMapSelection(index)} key={`mapThumbnail${index}`} >         
-        <img src={worldThumbnails[index]} 
+        <img src={`https://chisel.gotchiminer.rocks/storage/${world.thumbnail}`} 
              className={`${styles.thumbnailGalleryitem} ${(index === mapSelection)? styles.selectedThumbnail :''}`} 
-             alt={`Mining World ${worldThumbnails[index]}`}/>
+             alt={`Mining World ${world.name}`}/>
         <div className={styles.voteContainer}>{numberOfVotes}</div> 
       </div>
     );
@@ -88,7 +75,9 @@ const Component: React.FC<Props> = ({
   
   return (
     <>
-      <img src={worldArray[0]? worldThumbnails[mapSelection] : ''} className={styles.mapThumbnail} alt={`Selected World ${mapSelection}`}/>
+      <img src={worldArray[mapSelection]? `https://chisel.gotchiminer.rocks/storage/${worldArray[mapSelection].thumbnail}` : ''} 
+          className={styles.mapThumbnail} 
+          alt={`Selected World ${mapSelection }`}/>
       <Arrow style={{width:'4rem'}} className={`${styles.arrowLeft} ${mapSelection === 0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>
       <div className={styles.mapTitle}>{worldArray[0]? worldArray[mapSelection].name : 'Loading...'}</div>
       <Arrow style={{width:'4rem'}} className={`${styles.arrowRight} ${( mapSelection === (worldArray.length-1) )? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} :()=>handleArrowClick(+1)}/>

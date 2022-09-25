@@ -57,4 +57,4 @@ export const UpgradeTags  = [
 
 export const ITEMWIDTH = '3.3rem';
 export const ARTIFACTWIDTH = '5.8rem';
-
+export const ICONHEIGHT = '0.8rem';

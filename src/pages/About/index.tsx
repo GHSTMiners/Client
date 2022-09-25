@@ -1,21 +1,12 @@
-//import { useEffect } from "react";
-//import { updateAavegotchis, useWeb3 } from "web3/context";
 import TwitterIcon from "assets/icons/twitter.svg"
 import DiscordIcon from "assets/icons/discord.svg"
 import YoutubeIcon from "assets/icons/youtube.svg"
+import { ICONHEIGHT } from "helpers/vars";
 import styles from "./styles.module.css";
 import GotchiPreview from "components/GotchiPreview";
 
 const About = (): JSX.Element => {
 
-    // Initializing web3 hook
-    //const { state: { address },dispatch } = useWeb3();
-    const iconHeight = '0.8rem';
-    /*
-    useEffect(() => {
-      if (address)  updateAavegotchis(dispatch, address);
-    }, [address,dispatch]);
-    */
   const renderGotchiTile = (name: string, twitter:string, discord:string, role:string, gotchiID:string , aboutme:string ,description?:string) =>{
     //side={0}  options={{ animate: true, removeBg: true }} 
     return(
@@ -25,8 +16,8 @@ const About = (): JSX.Element => {
           <div>{role}</div>
         </div>
         <div className={styles.socialMedia}>
-          <span><img src={TwitterIcon} style={{ height: iconHeight }} alt={'Twitter'}/> {twitter}</span>
-          <span><img src={DiscordIcon} style={{ height: iconHeight }} alt={'Discord'}/> {discord}</span>
+          <span><img src={TwitterIcon} style={{ height: ICONHEIGHT }} alt={'Twitter'}/> {twitter}</span>
+          <span><img src={DiscordIcon} style={{ height: ICONHEIGHT }} alt={'Discord'}/> {discord}</span>
         </div>
         <div> 
           {aboutme}
@@ -60,15 +51,15 @@ const About = (): JSX.Element => {
           <div className={styles.guildMediaContainer}>
           <div className={styles.socialMedia}>
             <span> 
-              <img src={TwitterIcon} style={{ height: iconHeight }} alt={'Twitter'}/> 
+              <img src={TwitterIcon} style={{ height: ICONHEIGHT }} alt={'Twitter'}/> 
               <a href="https://twitter.com/gotchighstsquad" rel="noreferrer"> TWITTER </a> 
               </span>
             <span> 
-              <img src={DiscordIcon} style={{ height: iconHeight }} alt={'Discord'}/> 
+              <img src={DiscordIcon} style={{ height: ICONHEIGHT }} alt={'Discord'}/> 
               <a href="https://discord.gg/HA6qkpDPCY" rel="noreferrer"> DISCORD </a> 
               </span>
             <span> 
-              <img src={YoutubeIcon} style={{ height: iconHeight }} alt={'YouTube'}/> 
+              <img src={YoutubeIcon} style={{ height: ICONHEIGHT }} alt={'YouTube'}/> 
               <a href="https://www.youtube.com/channel/UCcL-0-x85GiDRl7_udQaQhg" rel="noreferrer"> YOUTUBE </a> 
             </span>
           </div>
