@@ -18,6 +18,7 @@ type State = {
     totalValue: number,
     depth: number,
     region: ServerRegion,
+    serverRegions: ServerRegion[],
     gotchiSVGs: IndexedString
 }
 
@@ -32,6 +33,7 @@ type Actions = {
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
     setRegion: (region:ServerRegion) => void
+    setServerRegions: (regions:ServerRegion[]) => void
     setGotchiSVG: (key:string,svg:string) => void
 }
 
@@ -48,9 +50,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
     region:{},
+    serverRegions:[],
     gotchiSVGs: {},
     
-
     // Settings methods
     setWorldCrypto: (crypto) => { 
         set( () => ({ worldCrypto : crypto }) ) 
@@ -88,6 +90,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setRegion: (region) => {
         set( () => ({ region: region }) )
+    },
+    setServerRegions: (regions) => {
+        set( () => ({ serverRegions: regions }) )
     },
     setGotchiSVG: ( key , svg) => {
         set( (state) => ({ gotchiSVGs: { ...state.gotchiSVGs, [key]:svg } }))

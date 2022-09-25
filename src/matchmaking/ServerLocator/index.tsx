@@ -13,6 +13,7 @@ export default class ServerLocator {
     constructor(apiInterface: Chisel.APIInterface) {
         apiInterface.server_regions().then(regions => {
             this.regions = regions;
+            useGlobalStore.getState().setServerRegions(regions)
             let nearestLocation : number = Number.MAX_SAFE_INTEGER
             this.estimateClientLocation().then(result => {
                 let clientCoordinate : Point = {lat: result[0], long: result[1]}
