@@ -44,6 +44,7 @@ const RegionSelection = () => {
             <Select
             isSearchable={false}
             isLoading={isLoading}
+            loadingMessage={() => "Loading..."}
             value={selectedOption}
             className={styles.customSelect}
             onChange={(value)=> setSelectedOption(value as SelectionPair)}
