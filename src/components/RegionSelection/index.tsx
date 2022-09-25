@@ -13,7 +13,6 @@ const RegionSelection = () => {
     const defaultRegion = useGlobalStore( state => state.region );
     const [selectedOption, setSelectedOption ]= useState<SelectionPair>({} as SelectionPair)
     const [isLoading,setLoading] = useState<boolean>(true);
-    console.count('Rendering region selection===')
     
     useEffect(()=>{
         if (defaultRegion && defaultRegion.name){
