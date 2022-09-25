@@ -39,6 +39,7 @@ const RegionSelection = () => {
     return(
         <>
             <Select
+            isSearchable={false}
             value={selectedOption}
             className={styles.customSelect}
             onChange={(value)=> setSelectedOption(value as SelectionPair)}
