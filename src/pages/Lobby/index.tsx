@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TraitsTile , GotchiSelector, MapSelector } from "./components";
 import { updateAavegotchis, useWeb3 } from "web3/context";
-import { ProgressBar } from "react-bootstrap";
 import { AavegotchiObject, IndexedArray, IndexedBooleanArray } from "types";
 import { PlayerCounter } from "pages/Lobby/components/PlayerCounter";
 import Client from "matchmaking/Client";
@@ -11,8 +10,8 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gotchiLoading from "assets/gifs/loadingBW.gif";
 import styles from "./styles.module.css";
 import GotchiPreview from "components/GotchiPreview";
-
-
+import { useGlobalStore } from "store";
+import LobbyCountdown from "./components/LobbyCountdown";
 
 const Lobby = (): JSX.Element => {
   const {
@@ -23,11 +22,10 @@ const Lobby = (): JSX.Element => {
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
   const [playerReady,setPlayerReady]= useState(false);
-  const [playersInLobby,setPlayersInLobby] = useState(0);
-  const [lobbyCountdown,setLobbyCountdown]= useState(0);
   const [playerSeats,setPlayerSeats]= useState<IndexedBooleanArray>({});
   const [mapVoting,setMapVoting]= useState<IndexedArray>({});
   const navigate = useNavigate();
+  const setCountdown = useGlobalStore(store => store.setCountdown)
 
   /**
    * Updates global state with selected gotchi
@@ -55,26 +53,15 @@ const Lobby = (): JSX.Element => {
             Client.getInstance().lobbyMessageRouter.processRawMessage( type as string, message);
           });
 
-          Client.getInstance().lobbyRoom.state.onChange = () => { 
-            
-            // updating player counter
-            if (Client.getInstance().lobbyRoom.state.player_seats.length !== playersInLobby){
-              setPlayersInLobby(Client.getInstance().lobbyRoom.state.player_seats.length)              
-            }
+          Client.getInstance().lobbyRoom.state.player_seats.onAdd = ( seat ) =>{
+            seat.onChange = updatePlayerSeats
+            seat.onRemove = updatePlayerSeats
+          }
 
-            // updating player seats
-            let currentPlayers= {} as IndexedBooleanArray;
-            let currentMapVotes = {} as IndexedArray;
-            Client.getInstance().lobbyRoom.state.player_seats.forEach( seat => {
-              currentPlayers[seat.gotchi_id] = seat.ready;
-              if (seat.map_vote>0){
-                let newVotedMap = Object.hasOwn( currentMapVotes, seat.map_vote);
-                (newVotedMap)? currentMapVotes[seat.map_vote] += 1 : currentMapVotes[seat.map_vote]=1; 
-              }
-            })            
-            setPlayerSeats(currentPlayers)
-            setMapVoting(currentMapVotes)
-            setLobbyCountdown(Client.getInstance().lobbyRoom.state.countdown)
+          Client.getInstance().lobbyRoom.state.onChange = (dataChange) => { 
+
+            const countDownChange = dataChange.find( entry => entry.field === 'countdown') ;
+            if ( countDownChange )  setCountdown(countDownChange.value)
             
             if(Client.getInstance().lobbyRoom.state.state === Schema.LobbyState.Started) {  
               Client.getInstance().apiInterface.world(Client.getInstance().lobbyRoom.state.map_id).then(world =>{
@@ -97,7 +84,22 @@ const Lobby = (): JSX.Element => {
                 })
             })
           }
-          }
+        }
+
+        const updatePlayerSeats = () => {
+          let currentPlayers= {} as IndexedBooleanArray;
+          let currentMapVotes = {} as IndexedArray;
+          Client.getInstance().lobbyRoom.state.player_seats.forEach( seat => {
+            currentPlayers[seat.gotchi_id] = seat.ready;
+            if (seat.map_vote>0){
+              let newVotedMap = Object.hasOwn( currentMapVotes, seat.map_vote);
+              (newVotedMap)? currentMapVotes[seat.map_vote] += 1 : currentMapVotes[seat.map_vote]=1; 
+            }
+          })            
+          setPlayerSeats(currentPlayers)
+          setMapVoting(currentMapVotes)
+        }
+
     } catch(exception : any) {
       alert(`Failed to create a lobby, maybe we are having server issues?, ${exception}`)
     }
@@ -158,16 +160,6 @@ const Lobby = (): JSX.Element => {
     Client.getInstance().lobbyRoom.send(serializedMessage.name,serializedMessage.data);
   }
 
-  const renderCountdown = (time:number)=>{
-    const minutes = Math.floor(time/60);
-    const seconds = time - (minutes*60);
-    return(
-      <>
-        {minutes} : {(seconds<10)? `0${seconds}`: seconds}
-      </>
-    )
-  }
-
   return (
     <>
       <div className={styles.basicGrid}>
@@ -211,15 +203,7 @@ const Lobby = (): JSX.Element => {
             <button className={`${styles.readyUpButton} `} onClick={ handlePlayerReady }>
               {playerReady? 'UNREADY' : 'READY'}
             </button>
-            <div className={`${styles.countdownContainer} ${(lobbyCountdown<15 && lobbyCountdown>0)?styles.countdownLocked:''} `}>
-              {/*lobbyCountdown>0? `${lobbyCountdown}s` : '' */}
-              <div className={styles.progressBarContainer}>
-                <ProgressBar className={styles.progressBar} variant="danger" animated now={lobbyCountdown/300*100}/>
-                <div className={styles.progressBarLabel}>
-                  {renderCountdown(lobbyCountdown)}
-                </div>
-              </div>
-            </div>
+            <LobbyCountdown />
           </div>
         </div>
 

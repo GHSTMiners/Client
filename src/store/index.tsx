@@ -4,12 +4,13 @@ import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryEx
 import create from 'zustand'
 
 type State = {
-    // schemas 
+    // game schemas 
     cargo : IndexedArray,
     explosives: IndexedArray, 
     vitals : PlayerVitals,
     wallet : IndexedArray,
     players: IndexedPlayers,
+    // lobby schemas
     lobbyCountdown : number,
     // extra
     worldCrypto: IndexedCrypto,
@@ -27,7 +28,7 @@ type Actions = {
     setWallet: (key:string,quantity:number) => void
     setDepth: (depth:number) => void
     setPlayer: (key:string,player:Player) => void
-    setCountdown : (time:number) => void,
+    setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
     setRegion: (region:ServerRegion) => void
@@ -43,7 +44,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     explosives: {}, 
     depth: 0 ,
     players: {},
-    lobbyCountdown: 0, 
+    lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
     region:{},

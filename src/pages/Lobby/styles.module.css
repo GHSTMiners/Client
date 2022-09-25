@@ -68,16 +68,6 @@
   grid-area:traits;
 }
 
-.countdownContainer{
-  grid-area: countdown;
-  font-size: 2rem;
-  width: 100%;
-}
-
-.countdownLocked{
-  color:red;
-}
-
 .readyUpContainer{
   grid-area:readyup;
   display: grid;
@@ -122,28 +112,6 @@
 .readyUpButton:hover{
   background-color: rgba(210,210,210,0.7);
   transition: all 400ms ease;
-}
-
-
-
-.progressBar{
-  height: 1.5rem;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  background-color: rgba(255,255,255,0.7);
-}
-
-.progressBarLabel{
-  position: absolute;
-  color: black;
-  top:0rem;
-  text-align: center;
-  width: 100%;
-  font-size: 0.9rem;
-}
-
-.progressBarContainer{
-  position: relative;
 }
 
 .gotchiName {
