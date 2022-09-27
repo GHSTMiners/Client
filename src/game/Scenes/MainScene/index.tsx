@@ -9,6 +9,7 @@ import SoundFXManager from "game/Management/SoundFXManager";
 import DiagnosticsManager from "game/Management/DiagnosticsManager";
 import gameEvents from "game/helpers/gameEvents";
 import RespawnManager from "game/Management/RespawnManager";
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -18,7 +19,6 @@ export default class MainScene extends Phaser.Scene {
   create() {
     //Register message handlers
     Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
-      //prettier-ignore
       Client.getInstance().messageRouter.processRawMessage( type as string, message);
     });
     this.chatManager = new ChatManager(this);
@@ -33,9 +33,21 @@ export default class MainScene extends Phaser.Scene {
     this.sound.pauseOnBlur = false
     this.cameras.main.zoom = 0.75
 
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameStarted, this.handleGameStarted.bind(this))
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameEnded.bind(this))
+
     setInterval(() => {
       this.diagnosticsManager?.requestPong()
     }, 2000)
+  }
+
+  handleGameStarted(){
+    console.log('Game just started!')
+  }
+
+  handleGameEnded(){
+    this.musicManager?.stop();
+    Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
   }
 
   update(time: number, delta: number): void {

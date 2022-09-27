@@ -47,6 +47,10 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
         this.play()
     }
 
+    public stop() {
+        this.currentSound?.destroy();
+    }
+
     public  currentSongName() : string {
         return this.music[this.currentSong].name;
     }

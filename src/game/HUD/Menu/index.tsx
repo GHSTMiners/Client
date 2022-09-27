@@ -29,6 +29,7 @@ const Menu = () => {
   }
 
   const leaveGame = () => {
+    musicManager.stop();
     Client.getInstance().colyseusRoom.leave();
     navigator('/')
    }
