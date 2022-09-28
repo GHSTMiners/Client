@@ -21,7 +21,7 @@ const Home = (): JSX.Element => {
     <>
      <div className={styles.basicGrid}>
         
-      <div className={`${styles.gridTile} ${styles.video}`}> 
+      <div className={`${styles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
         <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
       </div>
 
