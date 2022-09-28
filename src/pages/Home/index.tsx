@@ -9,7 +9,6 @@ import demoVideo from "assets/videos/demo.mp4"
 import ReactPlayer from 'react-player/lazy'
 import styles from "./styles.module.css";
 
-
 const Home = (): JSX.Element => {
 
   // Initializing web3 hook
@@ -23,7 +22,7 @@ const Home = (): JSX.Element => {
      <div className={styles.basicGrid}>
         
       <div className={`${styles.gridTile} ${styles.video}`}> 
-        <ReactPlayer url={demoVideo} controls playing={true} muted={true}/>
+        <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
       </div>
 
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>
