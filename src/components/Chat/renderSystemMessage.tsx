@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 
 const renderSystemMessage = (text: string) => {
    return (
-     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`}> {text} </div>
+     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`} key={Date.now()}> {text} </div>
    );
  };
 
