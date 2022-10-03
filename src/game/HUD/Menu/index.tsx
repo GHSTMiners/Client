@@ -10,11 +10,13 @@ import useVisible from "hooks/useVisible";
 import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import useMusicManager from "hooks/useMusicManager";
 import { useGlobalStore } from "store";
+import useSoundFXManager from "hooks/useSoundFXManager";
 
 const Menu = () => {
   
   const menuVisibility = useVisible('menu', false); 
   const musicManager = useMusicManager();
+  const soundFXManager = useSoundFXManager();
   const navigator = useNavigate();
   const playerTotalCrypto = useGlobalStore( state => state.totalValue);
   const wallet = useGlobalStore( state => state.wallet );
@@ -25,6 +27,14 @@ const Menu = () => {
       musicManager.setVolume(volume);
     } else {
       musicManager.setVolume(volume[0])
+    } 
+  }
+
+  const updateSoundFXVolume = (volume:number | number[]) =>{
+    if (typeof volume === "number") {
+      soundFXManager.setVolume(volume);
+    } else {
+      soundFXManager.setVolume(volume[0])
     } 
   }
 
@@ -84,7 +94,7 @@ const Menu = () => {
           <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>
           <div className={styles.volumeSlider}>
             <span className={styles.menuEntryTitle}> Sound FX </span>
-            <Slider max={1} step={0.01} defaultValue={1} />
+            <Slider max={1} step={0.01} defaultValue={1} onChange={updateSoundFXVolume} />
           </div>
           <div className={styles.volumeSlider}>
             <span className={styles.menuEntryTitle}> Music</span>

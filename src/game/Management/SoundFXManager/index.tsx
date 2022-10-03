@@ -1,13 +1,16 @@
-import gameEvents from "game/helpers/gameEvents";
-
 export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "SoundFXManager")
-
-        this.scene.game.events.on( gameEvents.vitals.LOWFUEL, this.playLowFuel.bind(this) );
+        this.volume = 1;
     }
 
-    public playLowFuel (){
-        this.scene.sound.play('lowFuelWarning')
+    public setVolume(volume:number) {
+        this.volume = volume;
     }
+    
+    public playSound(key:string){
+        this.scene.sound.play(key, { volume: this.volume } )
+    }
+
+    volume: number
 }

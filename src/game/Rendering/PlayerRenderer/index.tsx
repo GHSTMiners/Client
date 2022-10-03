@@ -8,9 +8,10 @@ import { convertInlineSVGToBlobURL, customiseSvg } from "helpers/aavegotchi";
 import MainPlayer from "game/World/MainPlayer";
 import gameEvents from "game/helpers/gameEvents";
 import { useGlobalStore } from "store";
+import MainScene from "game/Scenes/MainScene";
 
 export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
-  constructor(scene: Phaser.Scene) {
+  constructor(scene: MainScene) {
     super(scene, "PlayerRenderer");
     this.playerSprites = new Map<number, Player>();
     //Handle player creation
@@ -61,14 +62,14 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
 
           //Check if self sprite belong to me
           if (player.playerSessionID === Client.getInstance().colyseusRoom.sessionId) {
-            let newPlayer: MainPlayer = new MainPlayer(this.scene, player);
+            let newPlayer: MainPlayer = new MainPlayer(this.scene as MainScene, player);
             this.playerSprites.set(player.gotchiID, newPlayer);
             this.scene.add.existing(newPlayer);
             this.scene.cameras.main.startFollow(newPlayer, true, 0.15, 0.15);
             Client.getInstance().ownPlayer = player;
             this.scene.game.events.emit( gameEvents.room.JOINED, player, newPlayer);
           } else {
-            let newPlayer: Player = new Player(this.scene, player);
+            let newPlayer: Player = new Player(this.scene as MainScene, player);
             this.playerSprites.set(player.gotchiID, newPlayer);
             this.scene.add.existing(newPlayer);
           }

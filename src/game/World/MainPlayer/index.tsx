@@ -2,9 +2,10 @@ import { Player } from "../Player";
 import * as Schema from "matchmaking/Schemas";
 import { useGlobalStore } from "store"
 import Config from "config";
+import MainScene from "game/Scenes/MainScene";
 
 export default class MainPlayer extends Player {
-    constructor(scene: Phaser.Scene, player: Schema.Player) {
+    constructor(scene: MainScene, player: Schema.Player) {
         super(scene, player)
         this.storeCargo();
         this.storeWallet();

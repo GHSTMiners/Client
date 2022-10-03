@@ -5,8 +5,10 @@ import BackgroundRenderer from "../BackgroundRenderer"
 import PlayerRenderer from "../PlayerRenderer"
 import BuildingRenderer from "../BuildingRenderer"
 import ExplosiveRenderer from "../ExplosiveRenderer"
+import MainScene from "game/Scenes/MainScene"
+
 export default class GlobalRenderer extends Phaser.GameObjects.GameObject {
-    constructor(scene : Phaser.Scene) {
+    constructor(scene : MainScene) {
         super(scene, "GlobalRenderer")
         this.buildingRenderer = new BuildingRenderer(scene)
         this.blockRenderer = new BlockRenderer(scene)

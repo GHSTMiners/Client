@@ -11,12 +11,8 @@ import ServerLocator from "matchmaking/ServerLocator";
 
 export default class Client {
   private static instance: Client;
-  public colyseusClient: Colyseus.Client = new Colyseus.Client(
-    Config.colyseusURL
-  );
-  public apiInterface: Chisel.APIInterface = new Chisel.APIInterface(
-    Config.apiURL
-  );
+  public colyseusClient: Colyseus.Client = new Colyseus.Client( Config.colyseusURL);
+  public apiInterface: Chisel.APIInterface = new Chisel.APIInterface( Config.apiURL );
   public serverLocator : ServerLocator
   public lobbyRoom!: Colyseus.Room<Lobby>;
   public colyseusRoom!: Colyseus.Room<World>;

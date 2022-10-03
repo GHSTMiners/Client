@@ -21,13 +21,13 @@ export default class MainScene extends Phaser.Scene {
     Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
       Client.getInstance().messageRouter.processRawMessage( type as string, message);
     });
+    this.soundFXManager = new SoundFXManager(this);
     this.chatManager = new ChatManager(this);
     this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
     this.movementManager = new MovementManager(this);
     this.excavationManager = new ExcavationManager(this);
     this.respawnManager = new RespawnManager(this);
-    this.soundFXManager = new SoundFXManager(this);
     this.diagnosticsManager = new DiagnosticsManager(this);
     this.lifeCycleManager = new LifeCycleManager(this);
     this.game.events.emit( gameEvents.phaser.MAINSCENE);
