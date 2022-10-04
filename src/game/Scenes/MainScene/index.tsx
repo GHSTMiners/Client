@@ -44,10 +44,10 @@ export default class MainScene extends Phaser.Scene {
     this.globalRenderer?.update(time, delta);
     // console.log(this.game.loop.actualFps); // for debuggin purposes, looking into the interpolation issue
   }
+  public soundFXManager!: SoundFXManager;
   private lifeCycleManager?: LifeCycleManager
   private chatManager? : ChatManager
   public musicManager?: MusicManager;
-  public soundFXManager?: SoundFXManager;
   public globalRenderer?: GlobalRenderer;
   private movementManager?: MovementManager;
   public diagnosticsManager? : DiagnosticsManager

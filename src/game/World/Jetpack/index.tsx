@@ -1,18 +1,19 @@
 import { Player } from "../Player"
 import * as Schema from "matchmaking/Schemas";
+import MainScene from "game/Scenes/MainScene";
+import SoundFXManager from "game/Management/SoundFXManager";
 
 export default class Jetpack extends Phaser.GameObjects.Container {
-    constructor(scene : Phaser.Scene, player: Player) {
+    constructor(scene : MainScene, player: Player) {
         super(scene, 0, 0)
         this.player = player;
+        this.soundFXManager = scene.soundFXManager;
+        this.jetpackSound = scene.soundFXManager.add('thrusters');
         this.jetpackSpriteRear = this.scene.add.sprite(0, 0, 'jetpackAnimationRear')
         this.jetpackSpriteSide = this.scene.add.sprite(-45, 0, 'jetpackAnimationSide')
 
         this.jetpackSpriteRear.setScale(0.40)
         this.jetpackSpriteSide.setScale(0.45)
-
-        this.thrusterSound = this.scene.sound.add('thrusters');
-
 
         this.jetpackSpriteRear.anims.create({
             key: 'idle_rear',
@@ -71,15 +72,15 @@ export default class Jetpack extends Phaser.GameObjects.Container {
             this.jetpackSpriteSide.anims.play('idle_side', true)
         }
 
-        //Process sound
-        
-        if(this.thrusterSound.isPlaying !== flying) {
-            flying ? this.thrusterSound.play() : this.thrusterSound.pause()
+        //Process sound        
+        if(  this.jetpackSound.isPlaying !== flying ) {
+            flying ? this.jetpackSound.play({volume: this.soundFXManager.volume}) : this.jetpackSound.pause()
         }
     }
 
+    private soundFXManager: SoundFXManager
+    private jetpackSound : Phaser.Sound.BaseSound
     protected player : Player 
-    protected thrusterSound : Phaser.Sound.BaseSound
     protected jetpackSpriteRear : Phaser.GameObjects.Sprite
     protected jetpackSpriteSide : Phaser.GameObjects.Sprite
 

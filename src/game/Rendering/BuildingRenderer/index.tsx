@@ -25,7 +25,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     private handleActivateKey() {
         if(this.currentBuilding) {
             //Play sound
-            this.soundFXManager?.playSound(`building_activation_${this.currentBuilding.id}`)
+            this.soundFXManager.play(`building_activation_${this.currentBuilding.id}`)
             switch (this.currentBuilding.type){
                 case 'Refinery':
                     this.scene.game.events.emit( gameEvents.refinary.REFINE );
