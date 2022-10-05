@@ -24,7 +24,6 @@ const gameEvents : GameEventList = {
     refinary: { REFINE: Symbol('REFINING_CARGO')},
     room: { JOINED: Symbol('JOINED_GAME') },
     shop: { ...createDisplayEvent('shop'), UPGRADED:Symbol('UPGRADED_TIER') },
-    vitals: { LOWFUEL: Symbol('LOW_FUEL')},
     wallet: { ADDED: Symbol('ADDED_CRYPTO'), 
               UPDATED: Symbol('UPDATED_CRYPTO')
             }

@@ -5,10 +5,12 @@ import Building from "../../World/Building"
 import { Player } from ".././../World/Player";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
+import MainScene from "game/Scenes/MainScene";
 
 export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
-    constructor(scene : Phaser.Scene) {
+    constructor(scene : MainScene) {
         super(scene, "BuildingRenderer")
+        this.soundFXManager = scene.soundFXManager;
         this.buildings = new Map<APIInterface.Building, Building>()
         this.loadBuildings();
         this.scene.game.events.on( gameEvents.room.JOINED, this.handlePlayerAdded, this);
@@ -23,7 +25,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     private handleActivateKey() {
         if(this.currentBuilding) {
             //Play sound
-            this.scene.sound.play(`building_activation_${this.currentBuilding.id}`)
+            this.soundFXManager.play(`building_activation_${this.currentBuilding.id}`)
             switch (this.currentBuilding.type){
                 case 'Refinery':
                     this.scene.game.events.emit( gameEvents.refinary.REFINE );
@@ -54,7 +56,6 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     }
 
     public preUpdate(time: number, delta: number) {
-        //this.currentBuilding = undefined
         if(this.player) {
             this.playerAtBuilding = false;
             this.buildings.forEach(building => {
@@ -78,6 +79,7 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
         }
     }
     
+    private soundFXManager 
     private player : Player | undefined;
     private buildings : Map<APIInterface.Building, Building>
     private currentBuilding : APIInterface.Building | undefined = undefined;

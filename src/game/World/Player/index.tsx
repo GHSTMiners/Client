@@ -7,11 +7,13 @@ import Client from "matchmaking/Client";
 import Jetpack from "../Jetpack";
 import Jackhammer from "../Jackhammer";
 import gameEvents from "game/helpers/gameEvents";
+import MainScene from "game/Scenes/MainScene";
 
 export class Player extends Phaser.GameObjects.Container {
-  constructor(scene: Phaser.Scene, player: Schema.Player) {
+  constructor(scene: MainScene, player: Schema.Player) {
     super(scene, player.playerState.x, player.playerState.y);
     this.setDepth(40);
+    this.soundFXManager = scene.soundFXManager;
 
     //Add jetpack
     this.playerJetpack = new Jetpack(scene, this);
@@ -59,7 +61,7 @@ export class Player extends Phaser.GameObjects.Container {
       blendMode: "COLOR",
     });
     //Add sound
-    this.jackHammerSound = scene.sound.add("jackHammer")
+    this.jackHammerSound = this.soundFXManager.add("jackHammer")
     this.dirtParticleEmitter.stop()
     this.dirtParticleEmitter.startFollow(this);
     // enabling physics to act as a natural interpolator
@@ -123,7 +125,6 @@ export class Player extends Phaser.GameObjects.Container {
 
   public setPlayerAtBuilding( buildingName : string) {
     this.currentBuilding = buildingName;
-    //console.log(`Entering ${buildingName}`)
   }
 
   public displayMessage(message : string, timeout : number) {
@@ -146,17 +147,17 @@ export class Player extends Phaser.GameObjects.Container {
   }
 
   private handleCollision(message : Protocol.NotifyPlayerCollision) {
-    this.scene.sound.play(`metalThud`)
+    this.soundFXManager.play(`metalThud`)
     this.scene.cameras.main.flash();
   }
 
   private handleLavaMined(message : Protocol.NotifyPlayerMinedLava) {
-    this.scene.sound.play(`metalThud`)
+    this.soundFXManager.play(`metalThud`)
     this.scene.cameras.main.flash(250, 255, 0, 0, true);
   }
 
   private handleDead() {
-    this.scene.sound.play(`dead`)
+    this.soundFXManager.play(`dead`)
     this.scene.cameras.main.flash(1000, 255, 0, 0, true);
   }
 
@@ -203,7 +204,7 @@ export class Player extends Phaser.GameObjects.Container {
 
     //Process sound
     if ((playerState.movementState === Schema.MovementState.Drilling) !== this.jackHammerSound.isPlaying) {
-      if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play()
+      if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play({volume:this.soundFXManager.volume})
       else this.jackHammerSound.pause()
     }
 
@@ -287,11 +288,11 @@ export class Player extends Phaser.GameObjects.Container {
       this.playerJetpack.setAngle(0)
     }
   }
+  private soundFXManager 
   private jackHammerSound : Phaser.Sound.BaseSound
   private playerMessageTimer : Phaser.Time.TimerEvent
   private playerMessage: Phaser.GameObjects.Text;
   private playerJetpack: Jetpack;
   private playerJackhammer : Jackhammer
   private currentBuilding: string;
-  //private suspended: boolean;
 }

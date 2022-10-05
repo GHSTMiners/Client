@@ -3,9 +3,10 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import * as Schema from "matchmaking/Schemas";
 import Explosive from "game/World/Explosive";
 import { ExplosionAnimation } from "game/World/ExplosionAnimation";
+import MainScene from "game/Scenes/MainScene";
 
 export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
-    constructor(scene : Phaser.Scene) {
+    constructor(scene : MainScene) {
         super(scene, "ExplosivesManager")
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyBombExploded, this.handleBombExploded.bind(this))
         Client.getInstance().colyseusRoom.state.explosives.onAdd = this.handleBombAdded.bind(this)
@@ -15,7 +16,7 @@ export default class ExplosiveRenderer extends Phaser.GameObjects.GameObject {
 
     private handleBombAdded(explosive : Schema.Explosive, key : number) {
         //Create new explosive
-        let newExplosive : Explosive = new Explosive(this.scene, explosive);
+        let newExplosive : Explosive = new Explosive(this.scene as MainScene, explosive);
         this.explosives.set(explosive, newExplosive)
         this.scene.add.existing(newExplosive)
     }

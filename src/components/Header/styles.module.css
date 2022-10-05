@@ -35,7 +35,8 @@
   display: block;
   padding-top: 2.5rem ;
   white-space: nowrap;
-  transition: 0.3s;
+  transition: 0.3s all ease-out;
+  border-bottom:3px solid rgba(206,206,206,0);
 }
 
 .navLink:hover {

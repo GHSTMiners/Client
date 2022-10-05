@@ -6,8 +6,8 @@ import BlocksMinedIcon from "assets/icons/blocks_mined.svg"
 import GamesPlayedIcon from "assets/icons/games_played.svg"
 import CrystalsCollectedIcon from "assets/icons/crystals_collected.svg"
 import demoVideo from "assets/videos/demo.mp4"
+import ReactPlayer from 'react-player/lazy'
 import styles from "./styles.module.css";
-
 
 const Home = (): JSX.Element => {
 
@@ -21,10 +21,8 @@ const Home = (): JSX.Element => {
     <>
      <div className={styles.basicGrid}>
         
-      <div className={`${styles.gridTile} ${styles.video}`}> 
-        <video autoPlay loop muted width={800} >
-          <source src={demoVideo} type={"video/mp4"}/>
-        </video>
+      <div className={`${styles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
+        <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
       </div>
 
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>

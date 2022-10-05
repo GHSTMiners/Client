@@ -114,8 +114,8 @@ export const Header = () => {
             to="/"
             className={({ isActive }) =>
               isActive ? styles.activeNavLink : styles.navLink
-            }
-          >
+            } 
+            end>
             Home
           </NavLink>
           

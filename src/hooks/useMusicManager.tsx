@@ -29,7 +29,11 @@ const useMusicManager = () => {
     musicManager?.setVolume(value);
   }
 
-  return {currentSong, next, setVolume}
+  const stop = () => {
+    musicManager?.stop();
+  }
+
+  return {currentSong, next, setVolume, stop}
 
 }
 

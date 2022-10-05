@@ -5,7 +5,6 @@ import vitalsHowTo from "assets/svgs/vitals_howto.svg"
 import consoleHowTo from "assets/svgs/console_howto.svg"
 import numericInfoKey from "assets/svgs/infoKeys/1234.svg"
 import eKey from "assets/svgs/infoKeys/e.svg"
-import qKey from "assets/svgs/infoKeys/q.svg"
 import spaceKey from "assets/svgs/infoKeys/space.svg"
 import wasdKeys from "assets/svgs/infoKeys/wasd.svg"
 import nrg from "assets/images/nrg.png"
@@ -48,7 +47,6 @@ const HowToPlay = (): JSX.Element => {
             {renderControlItem(wasdKeys,'Movement Keys', 5)}
             {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
             {renderControlItem(eKey,'Interact with Buildings',2.5)}
-            {renderControlItem(qKey,'Open/Close Wallet',2.5)}
             {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
           </div>
         </div>
