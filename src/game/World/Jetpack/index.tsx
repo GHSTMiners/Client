@@ -22,7 +22,7 @@ export default class Jetpack extends Phaser.GameObjects.Container {
 
         this.jetpackSpriteRear.anims.create({
             key: 'running_rear',
-            frames: this.jetpackSpriteRear.anims.generateFrameNumbers( 'jetpackAnimationRear' || '', { start:  0 , end: 24 } ),
+            frames: this.jetpackSpriteRear.anims.generateFrameNumbers( 'jetpackAnimationRear' || '', { start:  9 , end: 16 } ),
             repeat: -1
         });
 
@@ -34,7 +34,7 @@ export default class Jetpack extends Phaser.GameObjects.Container {
 
         this.jetpackSpriteSide.anims.create({
             key: 'running_side',
-            frames: this.jetpackSpriteSide.anims.generateFrameNumbers( 'jetpackAnimationSide' || '', { start:  0 , end: 24 } ),
+            frames: this.jetpackSpriteSide.anims.generateFrameNumbers( 'jetpackAnimationSide' || '', { start:  9 , end: 16 } ),
             repeat: -1
         });
 
