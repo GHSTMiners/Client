@@ -5,7 +5,7 @@ const useSoundFXManager = () => {
   
   const soundFXManager = (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.soundFXManager;
   
-  const playSound = (key:string) => {
+  const play = (key:string) => {
     soundFXManager?.play(key)
   }
 
@@ -13,7 +13,7 @@ const useSoundFXManager = () => {
     soundFXManager?.setVolume(value);
   }
 
-  return { playSound , setVolume }
+  return { play , setVolume }
 }
 
 export default useSoundFXManager

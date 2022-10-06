@@ -9,7 +9,7 @@ const useLowFuel = ( fuel: number ) => {
     useEffect(()=>{
         const lowFuelThreshold = 20;
         if (fuel<lowFuelThreshold && lowFuel === false ) {
-          soundFXManager.playSound('lowFuelWarning');
+          soundFXManager.play('lowFuelWarning');
           setLowFuel(true);
         } 
         else if (fuel>lowFuelThreshold && lowFuel === true ){
