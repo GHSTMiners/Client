@@ -35,6 +35,7 @@ export default class LoadingScene extends Phaser.Scene {
 
     //Static images and audio files
     this.load.image("dirtParticle", "assets/images/stone.png");
+    this.load.image("flare", "assets/images/flare.png");
     this.load.audio("jackHammer", "assets/audio/jackHammer.webm");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
     this.load.audio("explosion", "assets/audio/explosion.mp3");
@@ -72,7 +73,7 @@ export default class LoadingScene extends Phaser.Scene {
       );
       this.load.image(
         `crypto_wallet_${crypto.id}`,
-        `https://chisel.gotchiminer.rocks/storage/${crypto.soil_image}`
+        `https://chisel.gotchiminer.rocks/storage/${crypto.wallet_image}`
       );
     });
     world.buildings.forEach((building) => {
@@ -141,8 +142,6 @@ export default class LoadingScene extends Phaser.Scene {
       cryptoRecord[newCrypto.cryptoID]= newCrypto;
     })
     useGlobalStore.getState().setWorldCrypto(cryptoRecord);
-    //getState().setWorldCrypto(cryptoRecord)
-    //setState( (state) => state.worldCrypto = cryptoRecord )
   }
 
    storeWorldExplosives(){
@@ -161,9 +160,6 @@ export default class LoadingScene extends Phaser.Scene {
       explosivesRecord[explosive.id]= newItem;
     })
     useGlobalStore.getState().setWorldExplosives(explosivesRecord);
-    //const { getState } = useGlobalStore;
-    //getState().setWorldExplosives(explosivesRecord)
-    //setWorldExplosives( state => { state[explosive.id] = newItem; return( state ) })
   }
 
   updateBar(percentage: number) {

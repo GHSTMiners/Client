@@ -6,6 +6,8 @@ import { Player } from ".././../World/Player";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
 import MainScene from "game/Scenes/MainScene";
+import { RefineAnimation } from "game/World/RefineAnimation";
+import { useGlobalStore } from "store";
 
 export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
     constructor(scene : MainScene) {
@@ -29,6 +31,10 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
             switch (this.currentBuilding.type){
                 case 'Refinery':
                     this.scene.game.events.emit( gameEvents.refinary.REFINE );
+                    const playerCargo = useGlobalStore.getState().cargo;
+                    Object.keys(playerCargo).forEach( cryptoID => {
+                        const flyingCoin = new RefineAnimation(this.scene,cryptoID)
+                    })
                     break;
                 case 'Bazaar':
                     this.scene.game.events.emit( gameEvents.shop.SHOW );

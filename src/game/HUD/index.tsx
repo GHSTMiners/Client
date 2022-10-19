@@ -10,7 +10,6 @@ import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
 import Vignette from "./Vignette";
-import RefineCryptoFX from "./Animations/RefineCryptoFX";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
 
 export const HUD = () => {  
@@ -64,7 +63,6 @@ export const HUD = () => {
            id="game-background"
            hidden={!gameLoaded}>
           {/* EFFECTS */}
-          <RefineCryptoFX />
           <MinedCryptoFX />
           <Vignette />
           {/* PERMANENT HUD ELEMENTS */}
