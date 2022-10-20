@@ -32,9 +32,9 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
                 case 'Refinery':
                     this.scene.game.events.emit( gameEvents.refinary.REFINE );
                     const playerCargo = useGlobalStore.getState().cargo;
-                    Object.keys(playerCargo).forEach( cryptoID => {
-                        const flyingCoin = new RefineAnimation(this.scene,cryptoID)
-                    })
+                    Object.keys(playerCargo)
+                        .filter( cryptoID => playerCargo[+cryptoID] > 0 )
+                        .forEach( cryptoID => new RefineAnimation(this.scene,cryptoID) )
                     break;
                 case 'Bazaar':
                     this.scene.game.events.emit( gameEvents.shop.SHOW );

@@ -8,9 +8,9 @@ export class RefineAnimation extends Phaser.GameObjects.Container {
         this.setDepth(30)
         
         //Create particle emitter
-        var flareParticles = this.scene.add.particles(`crypto_wallet_${cryptoID}`);
-        flareParticles.setDepth(30);
-        this.flareParticleEmitter = flareParticles.createEmitter({
+        var coinParticles = this.scene.add.particles(`crypto_wallet_${cryptoID}`);
+        coinParticles.setDepth(30);
+        this.coinParticleEmitter = coinParticles.createEmitter({
             x: 400,
             y: 300,
             speed: { min: -800, max: 800 },
@@ -21,21 +21,36 @@ export class RefineAnimation extends Phaser.GameObjects.Container {
             lifespan: 600,
             gravityY: 800
         });
-        this.flareParticleEmitter.startFollow(this);
-        
+
+        //Link to container and add to the scene
+        this.coinParticleEmitter.startFollow(this);
         this.scene.physics.add.existing(this, false)
 
+        //Set position above the refinery
         this.setPosition(  27.3* Config.blockWidth , -Config.blockHeight *4  )
         
-        this.timer  = new Phaser.Time.TimerEvent({
+        //Creating timers to stop the particle emitter and then destroy the objects 
+        var stopTimer  = new Phaser.Time.TimerEvent({
             delay: 900 ,
-            callback: () => { this.flareParticleEmitter.stop(); this.destroy() } , 
+            callback: () => { this.coinParticleEmitter.stop() } , 
             callbackScope: this,
             loop: false,
           });
-        this.scene.time.addEvent(this.timer)
+
+        var destroyTimer  = new Phaser.Time.TimerEvent({
+            delay: 1500 ,
+            callback: () => { 
+                coinParticles.destroy()
+                this.destroy() 
+            } , 
+            callbackScope: this,
+            loop: false,
+          });
+
+        //Add the timers to the scene
+        this.scene.time.addEvent(stopTimer)
+        this.scene.time.addEvent(destroyTimer)
     }
 
-    private timer
-    private flareParticleEmitter
+    private coinParticleEmitter
 }
