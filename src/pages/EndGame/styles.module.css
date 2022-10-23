@@ -1,14 +1,30 @@
+@import "theme/vars.css";
+
 .basicGrid {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    pointer-events: none
+  margin-top: 2rem;
+  padding: 2rem 2rem 0 2rem;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: repeat(3,minmax(100px,1fr));
+  grid-auto-rows: 170px;
+  grid-template-areas:
+  "rank  rank myStats  "
+  "rank  rank myStats  "
+  "rank  rank myStats  "
+  "depth depth depth  ";
+ }
+
+.roomRanking{
+  grid-area: rank;
+}
+
+.myStats{
+  grid-area: myStats;
+}
+
+.depthHistory{
+  grid-area: depth;
 }
 
 .textShine{

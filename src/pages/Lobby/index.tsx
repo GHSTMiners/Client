@@ -8,10 +8,12 @@ import Client from "matchmaking/Client";
 import * as Schema from "matchmaking/Schemas";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gotchiLoading from "assets/gifs/loadingBW.gif";
-import styles from "./styles.module.css";
 import GotchiPreview from "components/GotchiPreview";
 import { useGlobalStore } from "store";
 import LobbyCountdown from "./components/LobbyCountdown";
+import styles from "./styles.module.css";
+import globalStyles from "theme/globalStyles.module.css"
+
 
 const Lobby = (): JSX.Element => {
   const {
@@ -162,7 +164,7 @@ const Lobby = (): JSX.Element => {
   return (
     <>
       <div className={styles.basicGrid}>
-        <div className={`${styles.gotchiSelection} ${styles.gridTile}`}>
+        <div className={`${styles.gotchiSelection} ${globalStyles.gridTile}`}>
           <div className={styles.gotchiSelectionBar}>
             <GotchiSelector
                   initialGotchiId={selectedAavegotchiId}
@@ -191,13 +193,13 @@ const Lobby = (): JSX.Element => {
           </div>
         </div>
 
-        <div className={`${styles.mapSelection} ${styles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
+        <div className={`${styles.mapSelection} ${globalStyles.gridTile}`}  > {/*style={{ backgroundImage: `url(${mapImage})` }}*/} 
           <div className={styles.mapSelectionContainer}>
             <MapSelector mapVotes={mapVoting} disabled={playerReady}/>
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.timeCounter}`}>
+        <div className={`${globalStyles.gridTile} ${styles.timeCounter}`}>
           <div className={styles.readyUpContainer} >
             <button className={`${styles.readyUpButton} `} onClick={ handlePlayerReady }>
               {playerReady? 'UNREADY' : 'READY'}
@@ -206,7 +208,7 @@ const Lobby = (): JSX.Element => {
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.availablePlayers}`}>
+        <div className={`${globalStyles.gridTile} ${styles.availablePlayers}`}>
           <PlayerCounter playerSeats={playerSeats} totalPlayers={5} />
         </div>
                     

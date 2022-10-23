@@ -2,8 +2,9 @@ import TwitterIcon from "assets/icons/twitter.svg"
 import DiscordIcon from "assets/icons/discord.svg"
 import YoutubeIcon from "assets/icons/youtube.svg"
 import { ICONHEIGHT } from "helpers/vars";
-import styles from "./styles.module.css";
 import GotchiPreview from "components/GotchiPreview";
+import styles from "./styles.module.css";
+import globalStyles from 'theme/globalStyles.module.css';
 
 const About = (): JSX.Element => {
 
@@ -34,18 +35,18 @@ const About = (): JSX.Element => {
     <>
     <div className={styles.basicGrid}>
 
-      <div className={`${styles.gridTile} ${styles.gaameJaam}`}>
-        <div className={styles.tileTitle}>Gaame Jaam</div>
-        <div>
+      <div className={`${globalStyles.gridTile} ${styles.gaameJaam}`}>
+        <div className={globalStyles.tileTitle}>Gaame Jaam</div>
+        <div className={globalStyles.tileContent}>
            A demo version of this game was developed for the first Aavegotchi
           Gaame Jaam, winning the first prize in the competition. PixelCraft further sponsored the development of the first
           server-secured version of the game.
         </div>
       </div>
-      <div className={`${styles.gridTile} ${styles.ghostSquad}`}>
-        <div className={styles.tileTitle}>Ghost Squad</div>
+      <div className={`${globalStyles.gridTile} ${styles.ghostSquad}`}>
+        <div className={globalStyles.tileTitle}>Ghost Squad</div>
         <div className={styles.guildTile}>
-          <div>
+          <div className={globalStyles.tileContent}>
             We manage the Ghost Squad, an active community of Gotchiverse addicts, game developers and content creators who like to hang around in district 40 with their frens. Interested? Join us!
           </div>
           <div className={styles.guildMediaContainer}>
@@ -66,14 +67,16 @@ const About = (): JSX.Element => {
           </div>
         </div>
       </div>
-      <div className={`${styles.gridTile} ${styles.donations}`}>
-        <div className={styles.tileTitle}>Donations</div>
-        <div>
-          If you would like to support this game, feel free to send a donation {` `}
-          <a href="https://polygonscan.com/address/0x3B9b1E6aD616faEAa9957Ebd2a05B3b50C83efCA" rel="noreferrer">here </a>
+      <div className={`${globalStyles.gridTile} ${styles.donations}`}>
+        <div className={globalStyles.tileTitle}>Donations</div>
+        <div className={globalStyles.tileContent}>
+          <span>
+            If you would like to support this game, feel free to send a donation {` `}
+            <a href="https://polygonscan.com/address/0x3B9b1E6aD616faEAa9957Ebd2a05B3b50C83efCA" rel="noreferrer">here </a>
+          </span>
         </div>
       </div>
-      <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.smokey}`}>
+      <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.smokey}`}>
         {renderGotchiTile('SmokeyTheBandit',
                           '@smokeyZheBandit',
                           'smokeythebandit#9941',
@@ -82,7 +85,7 @@ const About = (): JSX.Element => {
                           'Security speciallist, embedded software developer and full-stack beast. Computers fear him, he has been coding since he was 8, has not stopped since',
                           'VOYAGER was carefully named after a product created by Smokey in real life.')}
       </div>
-      <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.gotchinomics}`}>
+      <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.gotchinomics}`}>
         {renderGotchiTile('Gotchinomics',
                           '@gotchinomics',
                           'Gotchinomics#4936',
@@ -91,7 +94,7 @@ const About = (): JSX.Element => {
                           'Data scientist fascinated by Aavegotchi and the Gotchiverse Realm. He went from MatLab and spreadsheets, to web3 development after doing an [aawesome] Aavegotchi mini-game tutorial.',
                           'YODA is a gotchi politician, involved in several DAO proposals.')}
       </div>
-      <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.fabio}`}>
+      <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.fabio}`}>
         {renderGotchiTile('ItsaMeFabio',
                           '@itsamefabio94',
                           'ItsaMeFabio#4252',
@@ -100,7 +103,7 @@ const About = (): JSX.Element => {
                           'Multimedia specialist (game) designer and animator. Blessed by the VRF gods, he has proven to be able to defy unlikely odds in every raffle.',
                           'CORLEONE was born as a result of the profits achieved from Baazaar trading, GMB auctions and Raffles.')}
       </div>
-      <div className={`${styles.gridTile} ${styles.gotchiTile} ${styles.machete}`}>
+      <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.machete}`}>
         {renderGotchiTile('Machete',
                           '@crypto_Toupa',
                           'Machete#9873',

@@ -99,15 +99,6 @@ export type TabsType = {
   Component: React.FC<{}>;
 }[];
 
-export type PlayerContext = { world : { crypto: IndexedCrypto, explosives: IndexedExplosives},
-                              player: { crypto: IndexedArray,
-                                        total: number, 
-                                        explosives: IndexedArray, 
-                                        depth: number, 
-                                        vitals:PlayerVitals,
-                                        crystals: IndexedArray } 
-                            };
-
 export type IndexedArray = {[key: string]: number};
 
 export type IndexedString = {[key: string]: string};

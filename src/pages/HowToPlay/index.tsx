@@ -12,6 +12,7 @@ import agg from "assets/images/agg.png"
 import spk from "assets/images/spk.png"
 import brn from "assets/images/brn.png"
 import styles from "./styles.module.css";
+import globalStyles from "theme/globalStyles.module.css"
 
 
 const HowToPlay = (): JSX.Element => {
@@ -31,9 +32,9 @@ const HowToPlay = (): JSX.Element => {
     <>
       <div className={styles.basicGrid}>
 
-        <div className={`${styles.gridTile} ${styles.welcomeTile}`}>
-          <div className={styles.tileTitle}>Welcome to Gotchi Miner</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.welcomeTile}`}>
+          <div className={globalStyles.tileTitle}>Welcome to Gotchi Miner</div>
+          <div className={globalStyles.tileContent}>
             There is a special place in the Gotchiverse where great treasures hide under the surface. 
             Ancient civilizations flourished in the Gotchiverse by extracting buried Crypto Crystals. 
             Come and join the search Fren, the deeper you go, the higher the risk and juicier the rewards! 
@@ -41,9 +42,9 @@ const HowToPlay = (): JSX.Element => {
           </div>
         </div> 
 
-        <div className={`${styles.gridTile} ${styles.controlsTile}`}>
-          <div className={styles.tileTitle}>Controls</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.controlsTile}`}>
+          <div className={globalStyles.tileTitle}>Controls</div>
+          <div className={globalStyles.tileContent}>
             {renderControlItem(wasdKeys,'Movement Keys', 5)}
             {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
             {renderControlItem(eKey,'Interact with Buildings',2.5)}
@@ -51,9 +52,9 @@ const HowToPlay = (): JSX.Element => {
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.gameflowTile}`}>
-          <div className={styles.tileTitle}>GameFlow</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.gameflowTile}`}>
+          <div className={globalStyles.tileTitle}>GameFlow</div>
+          <div className={globalStyles.tileContent}>
             <div className={styles.flowTitle}>Leaderboard grinding</div>
             <img src={gameFlow} className={styles.flowImage} alt={'Game Flow'}/>
             <div className={styles.flowTitle}>Upgrading your gear</div>
@@ -63,9 +64,9 @@ const HowToPlay = (): JSX.Element => {
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.traitsTile}`}>
-          <div className={styles.tileTitle}>Gotchi Traits</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.traitsTile}`}>
+          <div className={globalStyles.tileTitle}>Gotchi Traits</div>
+          <div className={globalStyles.tileContent}>
             <div className={styles.traitList}>
               <div className={styles.traitElement}> 
                 <img src={nrg} className={styles.traitIcon} alt={'Energy'}/>
@@ -87,16 +88,16 @@ const HowToPlay = (): JSX.Element => {
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.vitalsTile}`}>
-          <div className={styles.tileTitle}>Vitals</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.vitalsTile}`}>
+          <div className={globalStyles.tileTitle}>Vitals</div>
+          <div className={globalStyles.tileContent}>
             <img src={vitalsHowTo} className={styles.flowImage} alt={'Vitals Console'}/>
           </div>
         </div>
 
-        <div className={`${styles.gridTile} ${styles.consoleTile}`}>
-          <div className={styles.tileTitle}>Console</div>
-          <div className={styles.tileContent}>
+        <div className={`${globalStyles.gridTile} ${styles.consoleTile}`}>
+          <div className={globalStyles.tileTitle}>Console</div>
+          <div className={globalStyles.tileContent}>
             <img src={consoleHowTo} className={styles.flowImage} alt={'Main Console'}/>
           </div>
         </div>

@@ -13,24 +13,6 @@
   "gotchi  counter"
  }
 
- .gridTile {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0,0,0,0.3);
-  font-size: 1rem;
-  color: white;
-  width: 100%;
-  border-radius: 4px;
-  transition: all 400ms;
-  overflow: hidden;
-}
-
-.gridTile:hover{
-  box-shadow: rgba(2,8,20,0.1) 0px 0.35rem 1.175em, rgba(2,8,20,0.08) 0px 0.175em 0.5em;
-}
-
 .gotchiSelection{
   grid-area: gotchi;
   display: grid;
@@ -122,13 +104,6 @@
   align-self: center;
   justify-content: center;
   margin-bottom: 1rem;
-}
-
-.tileTitle{
-  align-self: flex-start;
-  font-size: 1.3rem;
-  padding-top: 0.5rem;
-  padding-left: 1rem;
 }
 
 .mapSelectionContainer{

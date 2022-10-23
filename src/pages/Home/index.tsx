@@ -7,9 +7,10 @@ import GamesPlayedIcon from "assets/icons/games_played.svg"
 import CrystalsCollectedIcon from "assets/icons/crystals_collected.svg"
 import demoVideo from "assets/videos/demo.mp4"
 import ReactPlayer from 'react-player/lazy'
-import styles from "./styles.module.css";
 import useGlobalStatistics from "hooks/useGlobalStatistics";
 import { TimeRange } from "helpers/vars";
+import styles from "./styles.module.css";
+import globalStyles from 'theme/globalStyles.module.css';
 
 const Home = (): JSX.Element => {
 
@@ -24,11 +25,11 @@ const Home = (): JSX.Element => {
     <>
      <div className={styles.basicGrid}>
         
-      <div className={`${styles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
+      <div className={`${globalStyles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
         <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
       </div>
 
-      <div className={`${styles.gridTile} ${styles.activeFrens}`}>
+      <div className={`${globalStyles.gridTile} ${styles.activeFrens}`}>
         <InfoPanel 
           title="Deaths" 
           loading={globalStats.isLoading}
@@ -36,7 +37,7 @@ const Home = (): JSX.Element => {
           icon={ActiveFrensIcon} />
       </div> 
 
-      <div className={`${styles.gridTile} ${styles.blocksMined}`} >
+      <div className={`${globalStyles.gridTile} ${styles.blocksMined}`} >
         <InfoPanel 
           title="Blocks Mined"
           loading={globalStats.isLoading} 
@@ -44,7 +45,7 @@ const Home = (): JSX.Element => {
           icon={BlocksMinedIcon} />
       </div>
 
-      <div className={`${styles.gridTile} ${styles.gamesPlayed}`} >
+      <div className={`${globalStyles.gridTile} ${styles.gamesPlayed}`} >
         <InfoPanel 
           title="Games Played"
           loading={globalStats.isLoading} 
@@ -52,7 +53,7 @@ const Home = (): JSX.Element => {
           icon={GamesPlayedIcon} />
       </div>
 
-      <div className={`${styles.gridTile} ${styles.crystalsCollected}`} >
+      <div className={`${globalStyles.gridTile} ${styles.crystalsCollected}`} >
         <InfoPanel 
           title="Crypto Collected"
           loading={globalStats.isLoading} 
@@ -60,15 +61,15 @@ const Home = (): JSX.Element => {
           icon={CrystalsCollectedIcon} />
       </div>
 
-      <div className={`${styles.gridTile} ${styles.topPlayers}`} >
+      <div className={`${globalStyles.gridTile} ${styles.topPlayers}`} >
         <DailyWinners />
       </div>
 
-      <div className={`${styles.gridTile} ${styles.alphaNews}`} >
+      <div className={`${globalStyles.gridTile} ${styles.alphaNews}`} >
         <NewsPanel />
       </div>
 
-      <div className={`${styles.gridTile} ${styles.myStaats}`} >
+      <div className={`${globalStyles.gridTile} ${styles.myStaats}`} >
         <StatsPanel />
       </div>
 
