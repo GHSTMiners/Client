@@ -8,6 +8,7 @@ import CrystalsCollectedIcon from "assets/icons/crystals_collected.svg"
 import demoVideo from "assets/videos/demo.mp4"
 import ReactPlayer from 'react-player/lazy'
 import styles from "./styles.module.css";
+import useGlobalStatistics from "hooks/useGlobalStatistics";
 
 const Home = (): JSX.Element => {
 
@@ -16,6 +17,7 @@ const Home = (): JSX.Element => {
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
   }, [address,dispatch]);
+  const globalStats = useGlobalStatistics();
 
   return (
     <>
@@ -26,19 +28,31 @@ const Home = (): JSX.Element => {
       </div>
 
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>
-        <InfoPanel title="Active Frens" quantity='9000' icon={ActiveFrensIcon} />
+        <InfoPanel 
+          title="Deaths" 
+          quantity={(globalStats.isLoading)? '...' : `${globalStats.getAmount('Deaths')}`} 
+          icon={ActiveFrensIcon} />
       </div> 
 
       <div className={`${styles.gridTile} ${styles.blocksMined}`} >
-        <InfoPanel title="Blocks Mined" quantity='164K' icon={BlocksMinedIcon} />
+        <InfoPanel 
+          title="Blocks Mined" 
+          quantity={(globalStats.isLoading)? '...' : `${globalStats.getAmount('Blocks mined')}`} 
+          icon={BlocksMinedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.gamesPlayed}`} >
-        <InfoPanel title="Games Played" quantity='589' icon={GamesPlayedIcon} />
+        <InfoPanel 
+          title="Games Played" 
+          quantity={(globalStats.isLoading)? '...' : `${globalStats.getTotalGames()}`} 
+          icon={GamesPlayedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.crystalsCollected}`} >
-        <InfoPanel title="Crystals Collected" quantity='436K' icon={CrystalsCollectedIcon} />
+        <InfoPanel 
+          title="Crypto Collected" 
+          quantity={(globalStats.isLoading)? '...' : `$${globalStats.getAmount('Total crypto')}`} 
+          icon={CrystalsCollectedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.topPlayers}`} >
