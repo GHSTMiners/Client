@@ -46,6 +46,13 @@ export enum WearableSlots {
   BG = 7,
 }
 
+export enum TimeRange { 
+  default,
+  last_24h,
+  last_7d,
+  total
+}
+
 export const UpgradeTags  = [
    { name:'common', color:'#7f63ff' },
    { name:'uncommon', color:'#33bacc' },

@@ -1,11 +1,11 @@
 import Client from 'matchmaking/Client'
 import { useEffect, useState } from 'react';
 import { GlobalStatisticEntry, StatisticCategory } from 'chisel-api-interface/lib/Statistics'
+import { TimeRange } from 'helpers/vars';
 
 const useGlobalStatistics = () => {
-    
-    const [categories, setCategories] = useState(new Array<StatisticCategory>)
-    const [statistics, setStatistics] = useState(new Map<number,GlobalStatisticEntry>)
+    const [categories, setCategories] = useState(new Array<StatisticCategory>())
+    const [statistics, setStatistics] = useState(new Map<number,GlobalStatisticEntry>())
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(()=>{
@@ -31,18 +31,45 @@ const useGlobalStatistics = () => {
         return () => {mounted = false}
     },[])
 
-    function getAmount( cathegoryName: string, timeframe?: string  ) { 
+    function getAmount( cathegoryName: string, timeframe: TimeRange  ) { 
         const  cathegory = categories.find( entry => entry.name === cathegoryName);
-        return (
-         (cathegory?.id)? statistics.get(cathegory.id)?.total : undefined    
-        )
+        let amount = undefined;       
+        if (cathegory?.id && timeframe){
+            const selectedCathegory = statistics.get(cathegory.id);
+            switch (timeframe){
+                case TimeRange.last_24h:
+                        amount = selectedCathegory?.last_24h;
+                        break;    
+                case TimeRange.last_7d:
+                    amount = selectedCathegory?.last_7d;
+                    break;
+                case TimeRange.total:
+                    amount = selectedCathegory?.total;
+                    break;
+                default : 
+                    break;
+            }
+        }
+        return amount
     }
 
-    function getTotalGames( timeframe?: string  ) { 
+    function deaths( timeframe: TimeRange ){
+        return getAmount('Deaths', timeframe)
+    }
+
+    function cryptoCollected(timeframe: TimeRange ){
+        return getAmount('Total crypto', timeframe)
+    }
+
+    function blocksMined(timeframe: TimeRange ){
+        return getAmount('Blocks mined', timeframe)
+    }
+
+    function totalGames() { 
         return  statistics.get(-1)?.total 
     }
 
-    return { categories, statistics , isLoading, getAmount , getTotalGames }
+    return { categories, statistics , isLoading, deaths, cryptoCollected, blocksMined, totalGames }
     
 }
 

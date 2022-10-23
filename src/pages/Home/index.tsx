@@ -9,6 +9,7 @@ import demoVideo from "assets/videos/demo.mp4"
 import ReactPlayer from 'react-player/lazy'
 import styles from "./styles.module.css";
 import useGlobalStatistics from "hooks/useGlobalStatistics";
+import { TimeRange } from "helpers/vars";
 
 const Home = (): JSX.Element => {
 
@@ -30,28 +31,32 @@ const Home = (): JSX.Element => {
       <div className={`${styles.gridTile} ${styles.activeFrens}`}>
         <InfoPanel 
           title="Deaths" 
-          quantity={(globalStats.isLoading)? '...' : `${globalStats.getAmount('Deaths')}`} 
+          loading={globalStats.isLoading}
+          quantity={globalStats.deaths(TimeRange.total)} 
           icon={ActiveFrensIcon} />
       </div> 
 
       <div className={`${styles.gridTile} ${styles.blocksMined}`} >
         <InfoPanel 
-          title="Blocks Mined" 
-          quantity={(globalStats.isLoading)? '...' : `${globalStats.getAmount('Blocks mined')}`} 
+          title="Blocks Mined"
+          loading={globalStats.isLoading} 
+          quantity={globalStats.blocksMined(TimeRange.total)} 
           icon={BlocksMinedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.gamesPlayed}`} >
         <InfoPanel 
-          title="Games Played" 
-          quantity={(globalStats.isLoading)? '...' : `${globalStats.getTotalGames()}`} 
+          title="Games Played"
+          loading={globalStats.isLoading} 
+          quantity={globalStats.totalGames()} 
           icon={GamesPlayedIcon} />
       </div>
 
       <div className={`${styles.gridTile} ${styles.crystalsCollected}`} >
         <InfoPanel 
-          title="Crypto Collected" 
-          quantity={(globalStats.isLoading)? '...' : `$${globalStats.getAmount('Total crypto')}`} 
+          title="Crypto Collected"
+          loading={globalStats.isLoading} 
+          quantity={`$${globalStats.cryptoCollected(TimeRange.total)}`} 
           icon={CrystalsCollectedIcon} />
       </div>
 
