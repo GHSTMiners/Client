@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import globalStyles from 'theme/globalStyles.module.css';
 import { DepthGraph } from "./DepthGraph";
 import GotchiPreview from "components/GotchiPreview";
+import cupWinner from "assets/svgs/cup_winner.svg"
 
 
 type RankingData = { cryptoValue: number, gotchiName: string}
@@ -32,6 +33,7 @@ const EndGame= () => {
                         </div>
                         <div className={styles.gotchiContainer}>
                             <GotchiPreview tokenId={'22536'}  />
+                            <img src={cupWinner} className={styles.cup}/>
                         </div>
                     </div>
                 </div>
