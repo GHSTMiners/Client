@@ -1,0 +1,32 @@
+.rankingWrapper{
+    height: 100%;
+    display: flex;
+    margin-left: 1rem;
+    flex-direction: column;
+    gap: .7rem;
+}
+  
+.rankingEntry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3.9rem;
+    gap: 1rem;
+    padding-left: 2rem;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.rankEntryData{
+}
+
+.rankName{
+  font-size: 1.25rem;
+}
+
+.rankValue{
+    font-size: 0.9rem;
+  }
+
+.medal{
+    height: 3rem;
+}

@@ -1,36 +1,22 @@
 import styles from "./styles.module.css";
 import globalStyles from 'theme/globalStyles.module.css';
-import { DepthGraph } from "./DepthGraph";
+import { DepthGraph } from "./components/DepthGraph";
 import GotchiPreview from "components/GotchiPreview";
 import cupWinner from "assets/svgs/cup_winner.svg"
-
-
-type RankingData = { cryptoValue: number, gotchiName: string}
-const fakeData: RankingData[] = [
-    { cryptoValue: 250340, gotchiName: 'Voyager'},
-    { cryptoValue: 198652, gotchiName: 'Tyson Fury'},
-    { cryptoValue: 165351, gotchiName: 'Machete'},
-    { cryptoValue: 122110, gotchiName: 'Corleone'},
-    { cryptoValue: 95639, gotchiName: 'Yoda'},
-];
+import statisticsTabs from "./tabs";
+import { useState } from "react";
+import SlickTabs from "components/SlickTabs";
+import RoomRanking from "./components/RoomRanking";
 
 const EndGame= () => {
+    const [selectedTab, setSelectedTab] = useState<number>(statisticsTabs[0].index);
     return(
         <div className={styles.basicGrid}>
             <div className={`${globalStyles.gridTile} ${styles.roomRanking}`} >
                 <div className={globalStyles.tileTitle} style={{alignSelf: 'flex-start'}}> Ranking </div>
                 <div className={globalStyles.tileContent} >
                     <div className={styles.rankingPanel}>
-                        <div className={styles.rankingWrapper}> 
-                            {fakeData.map(element => {
-                                   return( 
-                                    <div className={styles.rankingEntry} key={element.gotchiName}>
-                                        <div className={styles.rankName}>{element.gotchiName}</div>
-                                        <div className={styles.rankValue}>{`$ ${element.cryptoValue}`}</div>
-
-                                    </div>) 
-                            })}
-                        </div>
+                        <RoomRanking />
                         <div className={styles.gotchiContainer}>
                             <GotchiPreview tokenId={'22536'}  />
                             <img src={cupWinner} className={styles.cup}/>
@@ -40,7 +26,7 @@ const EndGame= () => {
             </div>
 
             <div className={`${globalStyles.gridTile} ${styles.myStats}`}>
-                WARNING! THIS DATA IS NOT RELATED TO YOUR GAME, COMING SOON...
+                <SlickTabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={statisticsTabs} />
             </div> 
             
             <div className={`${globalStyles.gridTile} ${styles.depthHistory}`} >
