@@ -19,7 +19,7 @@ const EndGame= () => {
                         <RoomRanking />
                         <div className={styles.gotchiContainer}>
                             <GotchiPreview tokenId={'22536'}  />
-                            <img src={cupWinner} className={styles.cup}/>
+                            <img src={cupWinner} className={styles.cup} alt={'champion_cup'}/>
                         </div>
                     </div>
                 </div>

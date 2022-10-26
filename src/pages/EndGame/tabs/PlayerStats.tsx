@@ -4,7 +4,7 @@ const PlayerStats = () => {
 
   return (
     <div className={styles.contentContainer}>
-      
+      player stats are described here
     </div>
   );
 };

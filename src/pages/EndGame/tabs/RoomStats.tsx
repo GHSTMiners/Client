@@ -4,6 +4,7 @@ const RoomStats = () => {
 
   return (
     <div className={styles.contentContainer}>
+      Haall of Chaads
     </div>
   );
 };
