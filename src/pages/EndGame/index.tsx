@@ -3,13 +3,10 @@ import globalStyles from 'theme/globalStyles.module.css';
 import { DepthGraph } from "./components/DepthGraph";
 import GotchiPreview from "components/GotchiPreview";
 import cupWinner from "assets/svgs/cup_winner.svg"
-import statisticsTabs from "./tabs";
-import { useState } from "react";
-import SlickTabs from "components/SlickTabs";
 import RoomRanking from "./components/RoomRanking";
+import StatisticsTabs from "./components/StatisticTabs";
 
 const EndGame= () => {
-    const [selectedTab, setSelectedTab] = useState<number>(statisticsTabs[0].index);
     return(
         <div className={styles.basicGrid}>
             <div className={`${globalStyles.gridTile} ${styles.roomRanking}`} >
@@ -26,7 +23,7 @@ const EndGame= () => {
             </div>
 
             <div className={`${globalStyles.gridTile} ${styles.myStats}`}>
-                <SlickTabs selectedTab={selectedTab} onClick={setSelectedTab} tabs={statisticsTabs} />
+                <StatisticsTabs />
             </div> 
             
             <div className={`${globalStyles.gridTile} ${styles.depthHistory}`} >

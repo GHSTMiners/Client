@@ -18,11 +18,12 @@
 }
 
 .myStats{
+  padding: 0;
   grid-area: myStats;
   display: flex;
   flex-direction: column;
-  align-content: center;
-  justify-content: center;
+  justify-content: flex-start;
+  width: 100%;
 }
 
 .depthHistory{
