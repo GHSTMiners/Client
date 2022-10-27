@@ -45,10 +45,31 @@
   
   .statsEntry{
     display: flex; 
-    padding-left: 2rem;
+    flex-direction: column;
+    padding-left: 3rem;
+  }
+  
+  .topScoreContainer{
+    display: flex;
+    flex-direction: column;
+    padding-right: 4rem;
+  }
+
+  .entryWrapper{
+    display: flex;
+    flex-direction: row;
     margin-top: 1rem;
     align-items: center;
-    height: 4rem;
+    justify-content: space-between;
+    height: 5rem;
     background-color: rgba(0,0,0,0.3);
+  }
+
+  .entryName{
+    font-size: 0.85rem;
+  }
+
+  .entryAmount{
+    font-size: 1.5rem;
   }
   
