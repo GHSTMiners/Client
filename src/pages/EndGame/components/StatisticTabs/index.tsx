@@ -1,22 +1,12 @@
 import { useState } from "react";
 import starIcon from "assets/svgs/star.svg"
 import styles from "./styles.module.css"
-
-type roomStatsData = { name: string, amount: number};
-const fakeData: roomStatsData[] = [
-    { name: 'Blocks Mined', amount: 986},
-    { name: 'Collected Money', amount: 123456},
-    { name: 'Endgame crypto', amount: 99653},
-    { name: 'Damage taken', amount: 159},
-    { name: 'Amount spent in explosives', amount: 655},
-    { name: 'Amount spent in upgrades', amount: 1450},
-    { name: 'Travelled distance', amount: 123512},
-    { name: 'Fueld consumed', amount: 400},
-]
+import useGameStatistics from "hooks/useGameStatistics";
 
 const StatisticsTabs = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
-
+    const gameStatistics = useGameStatistics();
+    console.log(gameStatistics.myStatistics)
     return(
         <>
             <div className={styles.tabHeaderButton}>
@@ -28,19 +18,25 @@ const StatisticsTabs = () => {
             </div>
                 
                 <div className={styles.tabPanel} hidden={selectedTab===0? false:true}>
-                    {  fakeData.map( entry => {
+                    {  gameStatistics.categories.map( entry => {
+                        const statisticData = gameStatistics.myStatistics.find( stat => stat.game_statistic_category_id === entry.id )
+                        const topScore = gameStatistics.mytopScore[entry.id];
                         return(
                             <>  
-                                <div className={styles.entryWrapper}>
-                                    <div className={styles.statsEntry}>
-                                        <div className={styles.entryName}>{entry.name}</div>
-                                        <div className={styles.entryAmount}>{entry.amount}</div>
+                                { (statisticData && statisticData.value>0) ? 
+                                    <div className={styles.entryWrapper}>
+                                        <div className={styles.statsEntry}>
+                                            <div className={styles.entryName}>{entry.name}</div>
+                                            <div className={styles.entryAmount}>{statisticData?.value}</div>
+                                        </div>
+                                        { topScore? 
+                                            <div className={styles.topScoreContainer}>
+                                                <img src={starIcon} style={{height: '2rem'}} alt={'top score!'}/>
+                                                Top score!
+                                            </div>
+                                        : null}
                                     </div>
-                                    <div className={styles.topScoreContainer}>
-                                        <img src={starIcon} style={{height: '2rem'}} alt={'top score!'}/>
-                                        Top score!
-                                    </div>
-                                </div>
+                                : null}
                             </>
                             )
                         })
