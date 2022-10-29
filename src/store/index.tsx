@@ -19,7 +19,8 @@ type State = {
     depth: number,
     region: ServerRegion,
     serverRegions: ServerRegion[],
-    gotchiSVGs: IndexedString
+    gotchiSVGs: IndexedString,
+    gotchiNames: IndexedString
 }
 
 type Actions = {
@@ -35,6 +36,7 @@ type Actions = {
     setRegion: (region:ServerRegion) => void
     setServerRegions: (regions:ServerRegion[]) => void
     setGotchiSVG: (key:string,svg:string) => void
+    setGotchiName: (key:string, name:string) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -52,6 +54,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     region:{},
     serverRegions:[],
     gotchiSVGs: {},
+    gotchiNames: {},
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -96,7 +99,10 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setGotchiSVG: ( key , svg) => {
         set( (state) => ({ gotchiSVGs: { ...state.gotchiSVGs, [key]:svg } }))
-    },  
+    },
+    setGotchiName: ( key , name ) =>{
+        set( (state) => ({ gotchiNames: { ...state.gotchiNames, [key]:name } }))
+    }  
 }))
 
 //export default useGlobalStore

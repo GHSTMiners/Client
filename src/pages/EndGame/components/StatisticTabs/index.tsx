@@ -2,11 +2,14 @@ import { useState } from "react";
 import starIcon from "assets/svgs/star.svg"
 import styles from "./styles.module.css"
 import useGameStatistics from "hooks/useGameStatistics";
+import { useGlobalStore } from "store";
 
 const StatisticsTabs = () => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
+    const gotchiSVGs = useGlobalStore( state => state.gotchiSVGs)
+    //const gotchiNames = useGlobalStore( state => state.gotchiNames)
     const gameStatistics = useGameStatistics();
-    console.log(gameStatistics.myStatistics)
+
     return(
         <>
             <div className={styles.tabHeaderButton}>
@@ -17,19 +20,19 @@ const StatisticsTabs = () => {
                     onClick={()=>{ setSelectedTab(1) }}> GigaChads </button>
             </div>
                 
-                <div className={styles.tabPanel} hidden={selectedTab===0? false:true}>
-                    {  gameStatistics.categories.map( entry => {
+                <div className={styles.tabPanel} hidden={selectedTab===0? false:true} key={'myStats'}>
+                    {  gameStatistics.categories.map( (entry,index) => {
                         const statisticData = gameStatistics.myStatistics.find( stat => stat.game_statistic_category_id === entry.id )
-                        const topScore = gameStatistics.mytopScore[entry.id];
+                        const isTopScore = gameStatistics.mytopScores[entry.id];
                         return(
-                            <>  
+                            <div key={`myStats#${index}`}>  
                                 { (statisticData && statisticData.value>0) ? 
-                                    <div className={styles.entryWrapper}>
+                                    <div className={styles.entryWrapper} key={entry.name}>
                                         <div className={styles.statsEntry}>
                                             <div className={styles.entryName}>{entry.name}</div>
                                             <div className={styles.entryAmount}>{statisticData?.value}</div>
                                         </div>
-                                        { topScore? 
+                                        { isTopScore? 
                                             <div className={styles.topScoreContainer}>
                                                 <img src={starIcon} style={{height: '2rem'}} alt={'top score!'}/>
                                                 Top score!
@@ -37,15 +40,33 @@ const StatisticsTabs = () => {
                                         : null}
                                     </div>
                                 : null}
-                            </>
+                            </div>
                             )
                         })
                     }
                 </div>
-                <div className={styles.tabPanel} hidden={selectedTab===1? false:true}>
-                    Work in progress...
+                <div className={styles.tabPanel} hidden={selectedTab===1? false:true} key={'gigaChads'}>
+                    { gameStatistics.categories.map( (entry,index) => {
+                        const gotchiId = gameStatistics.roomTopScores[entry.id]?.playerId;
+                        //const gotchiName = `${gotchiNames[gotchiId]}`;
+                        const gotchiSVG = `${gotchiSVGs[gotchiId]}`;
+                        return(
+                            <div key={`myStats#${index}`}>  
+                                 { ( gameStatistics.roomTopScores[entry.id] && gameStatistics.roomTopScores[entry.id].total>0) ? 
+                                <div className={styles.entryWrapper} key={entry.name}>
+                                    <div className={styles.statsEntry}>
+                                        <div className={styles.entryName}>{entry.name}</div>
+                                        <div className={styles.entryAmount}>{gameStatistics.roomTopScores[entry.id]?.total}</div>
+                                    </div>
+                                    <img src={gotchiSVG} className={styles.gotchiContainer} alt={`Gotchi#${gotchiId}`}/>
+                                </div>
+                                : null}
+                            </div>
+                            )
+                        })
+                    }
                 </div>
-        </>
+        </> 
     )
 }
 

@@ -1,9 +1,10 @@
 import { mouths, eyes, defaultGotchi } from "./svg";
-import { Tuple, AavegotchiObject } from "types";
+import { Tuple, AavegotchiObject, HighScore } from "types";
 import { Signer } from "@ethersproject/abstract-signer";
 import { Provider } from "@ethersproject/abstract-provider";
-import { callDiamond } from "web3/actions";
+import { callDiamond, callSubgraph } from "web3/actions";
 import { collateralToAddress, Collaterals } from "helpers/vars";
+import { AavegotchisNameArray, getAavegotchiNames } from "web3/actions/queries";
 
 interface GotchiOptions {
   haunt?: "1" | "2";
@@ -314,6 +315,25 @@ export function replaceParts(svg: string, element: ReplaceElement) {
   div.appendChild(doc);
   return div.innerHTML;
 }
+
+// Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
+export const getHighScoresWithNames = async (gotchiIDs:string[],displayData:HighScore[]): Promise<Array<HighScore>> => {
+  const updateList=[...displayData];
+  try {
+    const res = await callSubgraph<AavegotchisNameArray>(
+      getAavegotchiNames(gotchiIDs)
+    );
+    if (res){
+      res.aavegotchis.forEach( entry =>{
+        const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId === entry.id);
+        if (unnamedEntry) unnamedEntry.name = entry.name;
+      })
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return updateList
+};
 
 export type CustomiseOptions = {
   removeBg?: boolean;

@@ -9,8 +9,8 @@ const usePlayerGotchi = () => {
   
   useEffect(()=>{
     const getPlayerGotchi = () => {
-      const aavegotchiSVGFetcher = new AavegotchiSVGFetcher( Client.getInstance().ownPlayer.gotchiID );
-      aavegotchiSVGFetcher.frontWithoutBackground()
+      const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
+      aavegotchiSVGFetcher.frontWithoutBackground(Client.getInstance().ownPlayer.gotchiID)
       .then((svg) => {setplayerGotchi(convertInlineSVGToBlobURL(svg))});
     }
 

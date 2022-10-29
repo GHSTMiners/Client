@@ -6,10 +6,9 @@ import Config from "config";
 import { Tuple } from "types";
 
 export default class AavegotchiSVGFetcher {
-  constructor(aavegotchiID: number) {
+  constructor() {
     //Initialize web3 using polygon rpc
     this.web3 = new Web3("https://rpc.ankr.com/polygon");
-    this.aavegotchiID = aavegotchiID;
     //Load our smart contract
     const diamondAddress = "0x86935F11C86623deC8a25696E1C19a8659CbF95d";
     this.aavegotchiFacet = new this.web3.eth.Contract(
@@ -18,10 +17,15 @@ export default class AavegotchiSVGFetcher {
     );
   }
 
-  public async frontWithoutBackground(): Promise<string> {
-    let svg: string = await this.aavegotchiFacet.methods
-      .getAavegotchiSvg(this.aavegotchiID)
-      .call();
+  public async frontWithoutBackground(aavegotchiID: number): Promise<string> {
+    let svg: string = '';
+    try {
+      svg = await this.aavegotchiFacet.methods
+        .getAavegotchiSvg(aavegotchiID)
+        .call();
+    } catch (error) {
+      console.log(error);
+    }
     svg = svg.replace(
       "<style>",
       "<style>.gotchi-bg,.wearable-bg{display: none}"
@@ -32,16 +36,20 @@ export default class AavegotchiSVGFetcher {
     );
   }
 
-  public async getSideviews(): Promise<Tuple<string, 4>> {
-    let svg: Tuple<string, 4> = await this.aavegotchiFacet.methods
-      .getAavegotchiSideSvgs(this.aavegotchiID)
+  public async getSideviews(aavegotchiID: number): Promise<Tuple<string, 4>> {
+    let svg: Tuple<string, 4> = [ '', '', '', '' ];
+    try {
+     svg = await this.aavegotchiFacet.methods
+      .getAavegotchiSideSvgs(aavegotchiID)
       .call();
+    } catch (error) {
+      console.log(error);
+    }
     return svg;
   }
 
   private web3: Web3;
   private aavegotchiFacet: Contract;
-  public readonly aavegotchiID: number;
 }
 
 /*

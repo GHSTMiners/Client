@@ -31,11 +31,9 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
       );
       Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT,`[${player.name}] entered the room`)
 
-      let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher(
-        player.gotchiID
-      );
+      let aavegotchiSVGFetcher: AavegotchiSVGFetcher = new AavegotchiSVGFetcher();
 
-      aavegotchiSVGFetcher.getSideviews().then((svg) => {
+      aavegotchiSVGFetcher.getSideviews(player.gotchiID).then((svg) => {
 
         const playerGotchi : AavegotchiGameObject = {
           svg:svg,
@@ -53,7 +51,7 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
 
         // adding player schema and svg to the global store
         useGlobalStore.getState().setPlayer(playerGotchi.id,player);
-        aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
+        aavegotchiSVGFetcher.frontWithoutBackground(player.gotchiID).then((svg) => {
             let gotchiSVG = convertInlineSVGToBlobURL(svg);
             useGlobalStore.getState().setGotchiSVG(playerGotchi.id,gotchiSVG);
         });

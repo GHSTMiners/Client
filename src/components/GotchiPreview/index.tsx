@@ -6,14 +6,15 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 
 interface Props {
     tokenId: string;
+    lazyLoading?: boolean;
   }
 
-const GotchiPreview = ( { tokenId } : Props ) => {
+const GotchiPreview = ( { tokenId , lazyLoading = true } : Props ) => {
     const [gotchiSVG , setGotchiSVG] =useState('');
 
     useEffect(()=>{
-        const aavegotchiSVGFetcher = new AavegotchiSVGFetcher( +tokenId );
-        aavegotchiSVGFetcher.frontWithoutBackground().then((svg) => {
+        const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
+        aavegotchiSVGFetcher.frontWithoutBackground(+tokenId ).then((svg) => {
             setGotchiSVG(convertInlineSVGToBlobURL(svg))
         });    
     },[tokenId])
@@ -23,7 +24,7 @@ const GotchiPreview = ( { tokenId } : Props ) => {
             height="100%"
             width="100%"
             alt={`Gotchi_${tokenId}`} 
-            loading='lazy'/>
+            loading= {lazyLoading? 'lazy' : 'eager'}/>
     )
 }
 

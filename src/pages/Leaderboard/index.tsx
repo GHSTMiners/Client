@@ -6,12 +6,11 @@ import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { HighScore } from "types";
 import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
-import { AavegotchisNameArray, getAavegotchiNames } from "web3/actions/queries";
-import { callSubgraph } from "web3/actions";
 import { number } from "mathjs";
 import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import styles from "./styles.module.css";
+import { getHighScoresWithNames } from "helpers/aavegotchi"
 
 
 const Leaderboard = (): JSX.Element => {
@@ -133,25 +132,6 @@ const Leaderboard = (): JSX.Element => {
     }
     return () => {mounted = false}; // cleanup function
   },[activeCathegory,highScoresData.length])
-
-  // Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
-  const getHighScoresWithNames = async (gotchiIDs:string[],displayData:HighScore[]): Promise<Array<HighScore>> => {
-    const updateList=[...displayData];
-    try {
-      const res = await callSubgraph<AavegotchisNameArray>(
-        getAavegotchiNames(gotchiIDs)
-      );
-      if (res){
-        res.aavegotchis.forEach( entry =>{
-          const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId === entry.id);
-          if (unnamedEntry) unnamedEntry.name = entry.name;
-        })
-      }
-    } catch (err) {
-      console.log(err);
-    }
-    return updateList
-  };
 
   // Competition parameters [Please don't puke, it's just an example of the data format :P ]. TO DO: get this from Chisel
   const endDate = new Date('June 15, 2022 16:00:00 UTC+2') ;

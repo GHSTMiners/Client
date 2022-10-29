@@ -2,42 +2,80 @@ import { GameStatistics, StatisticCategory } from "chisel-api-interface/lib/Stat
 import Client from "matchmaking/Client";
 import { StatisticEntry } from "chisel-api-interface/lib/Statistics"
 import { useEffect, useState } from "react";
-import { IndexedBooleanArray } from "types";
+import { IndexedBalance, IndexedBooleanArray } from "types";
+import { AavegotchisNameArray, getAavegotchiNames } from "web3/actions/queries";
+import { callSubgraph } from "web3/actions";
+import { useGlobalStore } from "store";
+import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
+import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 
 const useGameStatistics = () => {
     const [ categories, setCategories] = useState(new Array<StatisticCategory>())
-    const [ gameStatistics, setGameStatistics ] = useState({});
+    const [ gameStatistics, setGameStatistics ] = useState<StatisticEntry[]>([]);
     const [ myStatistics, setMyStatistics ] = useState<StatisticEntry[]>([]);
-    const [ mytopScore, setMyTopScore ] = useState<IndexedBooleanArray>({});
+    const [ mytopScores, setMyTopScores ] = useState<IndexedBooleanArray>({});
+    const [ roomTopScores, setRoomTopScores ] = useState<IndexedBalance>({});
+    const setGotchiName = useGlobalStore( state => state.setGotchiName )
+    const setGotchiSVG = useGlobalStore( state => state.setGotchiSVG )
     const myGotchiID = 3934; //Client.getInstance().ownPlayer.gotchiID;
+    
   
     useEffect(() => {
+        // Fetching base statistics cathegories
         Client.getInstance().apiInterface.statistic_categories().then( (cathegories: StatisticCategory[]) => {
             setCategories( state => { 
                 state=cathegories; 
                 return([...state]) 
             })
         })
-    },[])
-
-  useEffect(() => {
-      if (categories.length > 0 ){
+        // Fetching game statistics for all the players
         Client.getInstance().apiInterface.game('f4d626eb-c3be-4f06-9483-a490403d257c').then( (info: GameStatistics) => {
             setGameStatistics(info.statistic_entries)
             setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === myGotchiID)) 
-          })   
-      }
-  },[categories])
+          }) 
+    },[])    
 
-  useEffect(() => {
-    if (myStatistics.length>0){
+    useEffect(() => {
+      if (myStatistics.length>0){
+        // Checking my player top scores across all cathegories  
         myStatistics.forEach( entry => {
-            setMyTopScore( state => {state[entry.game_statistic_category_id] = true; return({...state}) });
+              const filteredData = gameStatistics.filter( searchEntry => searchEntry.game_statistic_category_id === entry.game_statistic_category_id );
+              const higherScore = filteredData.find( dataEntry => dataEntry.value> entry.value )
+              const isTopScore = higherScore? false: true ;
+              setMyTopScores( state => {state[entry.game_statistic_category_id] = isTopScore; return({...state}) });
+          })
+        // Finding unique gotchis
+        const singleCathegoryData =  gameStatistics.filter( entry => entry.game_statistic_category_id === myStatistics[0].game_statistic_category_id );
+        const uniqueGotchiIds = singleCathegoryData.map( entry => `${entry.gotchi.gotchi_id}` )
+        // Fetching and storing gotchi names
+        callSubgraph<AavegotchisNameArray>( getAavegotchiNames(uniqueGotchiIds) ).then( data =>{
+          data.aavegotchis.forEach( gotchi => {
+            setGotchiName( gotchi.id, gotchi.name )
+          })
+        });
+        // Fetching and storing gotchi SVGs
+        const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
+        uniqueGotchiIds.forEach( gotchiId => {
+          aavegotchiSVGFetcher.frontWithoutBackground(+gotchiId).then((svg) => {
+            setGotchiSVG( gotchiId, convertInlineSVGToBlobURL(svg))
+          }); 
         })
-    }
-  },[myStatistics])
+        // Checking the top players per cathegory
+        categories.forEach( entry=>{
+            const filteredData = gameStatistics.filter( searchEntry => searchEntry.game_statistic_category_id === entry.id );
+            const topEntry = filteredData.reduce( function (prev,current){
+                return (prev.value > current.value)? prev : current
+            } )
+            setRoomTopScores( state => {
+              state[entry.id] = {playerId: topEntry.gotchi.gotchi_id, total: topEntry.value };
+              return({...state}) 
+            });   
+        })
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[gameStatistics,myStatistics,categories])
 
-  return { gameStatistics , myStatistics, mytopScore, categories }
+  return { gameStatistics , myStatistics, mytopScores, roomTopScores, categories }
 }
 
 export default useGameStatistics

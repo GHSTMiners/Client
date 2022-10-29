@@ -131,6 +131,8 @@ export type InventoryExplosives = Record< number, ExplosiveItem>;
 
 export type PlayerBalance = {playerId: number, total: number };
 
+export type IndexedBalance = {[key: string]: PlayerBalance};
+
 export type PlayerVitals = { fuel:number, health:number, cargo:number};
 
 export type TierCost = { tierLabel:string, priceList:PricePair[] };
@@ -138,3 +140,7 @@ export type TierCost = { tierLabel:string, priceList:PricePair[] };
 export type UpgradePrice = { id:number, name:string, costPerTier:TierCost[], description:string };
 
 export type ShopItem = { name: string; id: number; price: number; pattern: Chisel.ExplosionCoordinate[]; image: string };
+
+export type RoomGotchi =  { gotchiId: number, name: string, svgURL: string } ;
+
+export type IndexedRoomGotchis = { [key: string]: RoomGotchi}
