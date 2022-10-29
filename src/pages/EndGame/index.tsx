@@ -5,8 +5,11 @@ import GotchiPreview from "components/GotchiPreview";
 import cupWinner from "assets/svgs/cup_winner.svg"
 import RoomRanking from "./components/RoomRanking";
 import StatisticsTabs from "./components/StatisticTabs";
+import { useGlobalStore } from "store";
 
 const EndGame= () => {
+    
+    const roomLeaderboard = useGlobalStore( state=> state.roomLeaderboard)
     return(
         <div className={styles.basicGrid}>
             <div className={`${globalStyles.gridTile} ${styles.roomRanking}`} >
@@ -15,7 +18,7 @@ const EndGame= () => {
                     <div className={styles.rankingPanel}>
                         <RoomRanking />
                         <div className={styles.gotchiContainer}>
-                            <GotchiPreview tokenId={'22536'}  />
+                            <GotchiPreview tokenId={`${roomLeaderboard[0]?.gotchi.gotchi_id}`}  />
                             <img src={cupWinner} className={styles.cup} alt={'champion_cup'}/>
                         </div>
                     </div>

@@ -10,13 +10,15 @@ interface Props {
   }
 
 const GotchiPreview = ( { tokenId , lazyLoading = true } : Props ) => {
-    const [gotchiSVG , setGotchiSVG] =useState('');
+    const [gotchiSVG , setGotchiSVG] =useState<string|undefined>(undefined);
 
     useEffect(()=>{
-        const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
-        aavegotchiSVGFetcher.frontWithoutBackground(+tokenId ).then((svg) => {
-            setGotchiSVG(convertInlineSVGToBlobURL(svg))
-        });    
+        if (+tokenId !== undefined && tokenId !== 'undefined' ){
+            const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
+            aavegotchiSVGFetcher.frontWithoutBackground(+tokenId ).then((svg) => {
+                setGotchiSVG(convertInlineSVGToBlobURL(svg))
+            });
+        }    
     },[tokenId])
     
     return(

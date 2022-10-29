@@ -9,7 +9,6 @@ const StatisticsTabs = () => {
     const gotchiSVGs = useGlobalStore( state => state.gotchiSVGs)
     //const gotchiNames = useGlobalStore( state => state.gotchiNames)
     const gameStatistics = useGameStatistics();
-
     return(
         <>
             <div className={styles.tabHeaderButton}>

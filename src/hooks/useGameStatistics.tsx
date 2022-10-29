@@ -15,6 +15,7 @@ const useGameStatistics = () => {
     const [ myStatistics, setMyStatistics ] = useState<StatisticEntry[]>([]);
     const [ mytopScores, setMyTopScores ] = useState<IndexedBooleanArray>({});
     const [ roomTopScores, setRoomTopScores ] = useState<IndexedBalance>({});
+    const setRoomLeaderboard = useGlobalStore( state => state.setRoomLeaderboard);
     const setGotchiName = useGlobalStore( state => state.setGotchiName )
     const setGotchiSVG = useGlobalStore( state => state.setGotchiSVG )
     const myGotchiID = 3934; //Client.getInstance().ownPlayer.gotchiID;
@@ -37,6 +38,7 @@ const useGameStatistics = () => {
 
     useEffect(() => {
       if (myStatistics.length>0){
+
         // Checking my player top scores across all cathegories  
         myStatistics.forEach( entry => {
               const filteredData = gameStatistics.filter( searchEntry => searchEntry.game_statistic_category_id === entry.game_statistic_category_id );
@@ -44,6 +46,7 @@ const useGameStatistics = () => {
               const isTopScore = higherScore? false: true ;
               setMyTopScores( state => {state[entry.game_statistic_category_id] = isTopScore; return({...state}) });
           })
+
         // Finding unique gotchis
         const singleCathegoryData =  gameStatistics.filter( entry => entry.game_statistic_category_id === myStatistics[0].game_statistic_category_id );
         const uniqueGotchiIds = singleCathegoryData.map( entry => `${entry.gotchi.gotchi_id}` )
@@ -53,6 +56,7 @@ const useGameStatistics = () => {
             setGotchiName( gotchi.id, gotchi.name )
           })
         });
+
         // Fetching and storing gotchi SVGs
         const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
         uniqueGotchiIds.forEach( gotchiId => {
@@ -60,6 +64,13 @@ const useGameStatistics = () => {
             setGotchiSVG( gotchiId, convertInlineSVGToBlobURL(svg))
           }); 
         })
+
+        // Sorting General ranking
+        const winningCategory =  categories.find( entry => entry.name === 'Endgame crypto') ;
+        const unsortedData = gameStatistics.filter( entry => entry.game_statistic_category_id === winningCategory?.id )
+        const sortedData = unsortedData.sort((entry1,entry2)=> entry2.value - entry1.value)
+        setRoomLeaderboard( sortedData );
+
         // Checking the top players per cathegory
         categories.forEach( entry=>{
             const filteredData = gameStatistics.filter( searchEntry => searchEntry.game_statistic_category_id === entry.id );
@@ -75,7 +86,7 @@ const useGameStatistics = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[gameStatistics,myStatistics,categories])
 
-  return { gameStatistics , myStatistics, mytopScores, roomTopScores, categories }
+  return { gameStatistics, myStatistics, mytopScores, roomTopScores, categories }
 }
 
 export default useGameStatistics

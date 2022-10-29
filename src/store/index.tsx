@@ -1,4 +1,5 @@
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion'
+import { StatisticEntry } from 'chisel-api-interface/lib/Statistics'
 import { Player } from 'matchmaking/Schemas'
 import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
@@ -20,7 +21,8 @@ type State = {
     region: ServerRegion,
     serverRegions: ServerRegion[],
     gotchiSVGs: IndexedString,
-    gotchiNames: IndexedString
+    gotchiNames: IndexedString,
+    roomLeaderboard: StatisticEntry[]
 }
 
 type Actions = {
@@ -37,6 +39,7 @@ type Actions = {
     setServerRegions: (regions:ServerRegion[]) => void
     setGotchiSVG: (key:string,svg:string) => void
     setGotchiName: (key:string, name:string) => void
+    setRoomLeaderboard: (data:StatisticEntry[]) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -55,6 +58,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     serverRegions:[],
     gotchiSVGs: {},
     gotchiNames: {},
+    roomLeaderboard:[],
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -102,7 +106,10 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setGotchiName: ( key , name ) =>{
         set( (state) => ({ gotchiNames: { ...state.gotchiNames, [key]:name } }))
-    }  
+    },
+    setRoomLeaderboard: ( data ) =>{
+        set( (state) => ({ roomLeaderboard: data }))
+    }    
 }))
 
 //export default useGlobalStore
