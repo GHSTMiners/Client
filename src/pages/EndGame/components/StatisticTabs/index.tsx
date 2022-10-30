@@ -26,8 +26,8 @@ const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
                 
                 <div className={styles.tabPanel} hidden={selectedTab===0? false:true} key={'myStats'}>
                     {  gameStatistics.categories.map( (entry:StatisticCategory,index:number ) => {
-                        const statisticData = gameStatistics.myStatistics.find( stat => stat.game_statistic_category_id === entry.id )
                         const idKey = entry.id as number;
+                        const statisticData = gameStatistics.myStatistics.find( stat => stat.game_statistic_category_id === idKey )
                         const isTopScore = idKey? gameStatistics.mytopScores[idKey]: false;
                         return(
                             <div key={`myStats#${index}`}>  
@@ -57,11 +57,11 @@ const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
                         const gotchiSVG = `${gotchiSVGs[gotchiId]}`;
                         return(
                             <div key={`myStats#${index}`}>  
-                                 { ( gameStatistics.roomTopScores[entry.id] && gameStatistics.roomTopScores[entry.id].total>0) ? 
+                                 { ( idKey && gameStatistics.roomTopScores[idKey] && gameStatistics.roomTopScores[idKey].total>0) ? 
                                 <div className={styles.entryWrapper} key={entry.name}>
                                     <div className={styles.statsEntry}>
                                         <div className={styles.entryName}>{entry.name}</div>
-                                        <div className={styles.entryAmount}>{gameStatistics.roomTopScores[entry.id]?.total}</div>
+                                        <div className={styles.entryAmount}>{gameStatistics.roomTopScores[idKey]?.total}</div>
                                     </div>
                                     <img src={gotchiSVG} className={styles.gotchiContainer} alt={`Gotchi#${gotchiId}`}/>
                                 </div>
