@@ -144,3 +144,5 @@ export type ShopItem = { name: string; id: number; price: number; pattern: Chise
 export type RoomGotchi =  { gotchiId: number, name: string, svgURL: string } ;
 
 export type IndexedRoomGotchis = { [key: string]: RoomGotchi}
+
+export type endedGameMessage = { roomId: string, gotchiId: string };

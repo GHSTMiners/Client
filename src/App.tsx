@@ -21,7 +21,9 @@ const App = () => {
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/howtoplay" element={<HowToPlay />} />
             <Route path="/about" element={<About />} />
-            <Route path="/endgame" element={<EndGame />} />
+            <Route path="/endgame" element={<EndGame />}>
+              <Route path="/endgame/:roomId/:gotchiId" element={<EndGame />}/>
+            </Route> 
           </Routes>
           </CSSTransition>
         </TransitionGroup>

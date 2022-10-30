@@ -16,6 +16,8 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     
     handleGameEnded(){
       (this.scene as MainScene).musicManager?.stop();
-      Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
+      Client.getInstance().phaserGame.events.emit( gameEvents.game.END,  { 
+        roomId: Client.getInstance().colyseusRoom.id , 
+        gotchiId: `${Client.getInstance().ownPlayer.gotchiID}` } );
     }
 }

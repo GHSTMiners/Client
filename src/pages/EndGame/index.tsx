@@ -6,10 +6,13 @@ import cupWinner from "assets/svgs/cup_winner.svg"
 import RoomRanking from "./components/RoomRanking";
 import StatisticsTabs from "./components/StatisticTabs";
 import { useGlobalStore } from "store";
+import { useParams } from "react-router-dom";
 
 const EndGame= () => {
-    
+    // 'f4d626eb-c3be-4f06-9483-a490403d257c'
     const roomLeaderboard = useGlobalStore( state=> state.roomLeaderboard)
+    const {roomId,gotchiId} = useParams();
+
     return(
         <div className={styles.basicGrid}>
             <div className={`${globalStyles.gridTile} ${styles.roomRanking}`} >
@@ -26,7 +29,7 @@ const EndGame= () => {
             </div>
 
             <div className={`${globalStyles.gridTile} ${styles.myStats}`}>
-                <StatisticsTabs />
+                <StatisticsTabs roomId={  roomId as string} gotchiId = {gotchiId as string} />
             </div> 
             
             <div className={`${globalStyles.gridTile} ${styles.depthHistory}`} >

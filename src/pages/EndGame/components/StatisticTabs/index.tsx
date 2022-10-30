@@ -4,11 +4,15 @@ import styles from "./styles.module.css"
 import useGameStatistics from "hooks/useGameStatistics";
 import { useGlobalStore } from "store";
 
-const StatisticsTabs = () => {
+interface Props {
+    roomId: string;
+    gotchiId: string;
+  }
+
+const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
     const gotchiSVGs = useGlobalStore( state => state.gotchiSVGs)
-    //const gotchiNames = useGlobalStore( state => state.gotchiNames)
-    const gameStatistics = useGameStatistics();
+    const gameStatistics = useGameStatistics( roomId, gotchiId );
     return(
         <>
             <div className={styles.tabHeaderButton}>
@@ -47,7 +51,6 @@ const StatisticsTabs = () => {
                 <div className={styles.tabPanel} hidden={selectedTab===1? false:true} key={'gigaChads'}>
                     { gameStatistics.categories.map( (entry,index) => {
                         const gotchiId = gameStatistics.roomTopScores[entry.id]?.playerId;
-                        //const gotchiName = `${gotchiNames[gotchiId]}`;
                         const gotchiSVG = `${gotchiSVGs[gotchiId]}`;
                         return(
                             <div key={`myStats#${index}`}>  

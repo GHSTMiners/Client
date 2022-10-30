@@ -15,6 +15,7 @@ import RedButton from "components/RedButton";
 import * as Schema from "matchmaking/Schemas";
 import gameEvents from "game/helpers/gameEvents";
 import RegionSelection from "components/RegionSelection";
+import { endedGameMessage } from "types";
 
 
 const WalletButton = () => {
@@ -64,7 +65,7 @@ export const Header = () => {
   const location = useLocation();
   const navigator = useNavigate();
   const inLobby = location.pathname === "/lobby";
-  const inEndgame = location.pathname === "/endgame";
+  const inEndgame = location.pathname.includes("/endgame");
   const inGame = location.pathname === "/play";
 
   const routeToLobby = () => {
@@ -88,8 +89,8 @@ export const Header = () => {
    }
 
    useEffect(()=>{ 
-    const routeToEndgame = () => {
-      navigator('/endgame')
+    const routeToEndgame = ( parameters: endedGameMessage ) => {
+      navigator(`/endgame/${parameters.roomId}/${parameters.gotchiId}`)
      }
 
      Client.getInstance().phaserGame?.events.on( gameEvents.game.END, routeToEndgame)

@@ -9,7 +9,7 @@ import { useGlobalStore } from "store";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
 
-const useGameStatistics = () => {
+const useGameStatistics = (roomId : string , myGotchiID: string) => {
     const [ categories, setCategories] = useState(new Array<StatisticCategory>())
     const [ gameStatistics, setGameStatistics ] = useState<StatisticEntry[]>([]);
     const [ myStatistics, setMyStatistics ] = useState<StatisticEntry[]>([]);
@@ -18,8 +18,6 @@ const useGameStatistics = () => {
     const setRoomLeaderboard = useGlobalStore( state => state.setRoomLeaderboard);
     const setGotchiName = useGlobalStore( state => state.setGotchiName )
     const setGotchiSVG = useGlobalStore( state => state.setGotchiSVG )
-    const myGotchiID = 3934; //Client.getInstance().ownPlayer.gotchiID;
-    
   
     useEffect(() => {
         // Fetching base statistics cathegories
@@ -30,10 +28,11 @@ const useGameStatistics = () => {
             })
         })
         // Fetching game statistics for all the players
-        Client.getInstance().apiInterface.game('f4d626eb-c3be-4f06-9483-a490403d257c').then( (info: GameStatistics) => {
+        Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
             setGameStatistics(info.statistic_entries)
-            setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === myGotchiID)) 
+            setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === +myGotchiID)) 
           }) 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])    
 
     useEffect(() => {
