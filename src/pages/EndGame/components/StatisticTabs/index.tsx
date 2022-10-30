@@ -52,7 +52,8 @@ const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
                 </div>
                 <div className={styles.tabPanel} hidden={selectedTab===1? false:true} key={'gigaChads'}>
                     { gameStatistics.categories.map( (entry,index) => {
-                        const gotchiId = gameStatistics.roomTopScores[entry.id]?.playerId;
+                        const idKey = entry.id as number;
+                        const gotchiId = idKey? gameStatistics.roomTopScores[idKey]?.playerId : 1 ;
                         const gotchiSVG = `${gotchiSVGs[gotchiId]}`;
                         return(
                             <div key={`myStats#${index}`}>  
