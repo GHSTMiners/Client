@@ -3,6 +3,7 @@ import starIcon from "assets/svgs/star.svg"
 import styles from "./styles.module.css"
 import useGameStatistics from "hooks/useGameStatistics";
 import { useGlobalStore } from "store";
+import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
 
 interface Props {
     roomId: string;
@@ -24,9 +25,10 @@ const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
             </div>
                 
                 <div className={styles.tabPanel} hidden={selectedTab===0? false:true} key={'myStats'}>
-                    {  gameStatistics.categories.map( (entry,index) => {
+                    {  gameStatistics.categories.map( (entry:StatisticCategory,index:number ) => {
                         const statisticData = gameStatistics.myStatistics.find( stat => stat.game_statistic_category_id === entry.id )
-                        const isTopScore = gameStatistics.mytopScores[entry.id];
+                        const idKey = entry.id as number;
+                        const isTopScore = idKey? gameStatistics.mytopScores[idKey]: false;
                         return(
                             <div key={`myStats#${index}`}>  
                                 { (statisticData && statisticData.value>0) ? 
