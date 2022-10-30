@@ -76,9 +76,10 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
             const topEntry = filteredData.reduce( function (prev,current){
                 return (prev.value > current.value)? prev : current
             } )
-            if (entry.id){
+            const idKey = entry.id as number;
+            if (idKey){
               setRoomTopScores( state => {
-                state[entry.id] = {playerId: topEntry.gotchi.gotchi_id, total: topEntry.value };
+                state[idKey] = {playerId: topEntry.gotchi.gotchi_id, total: topEntry.value };
                 return({...state}) 
               });  
             } 
