@@ -4,6 +4,8 @@ import styles from './styles.module.css';
 import selectStyle from './selectStyle'
 import { useGlobalStore } from 'store';
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion';
+import Client from 'matchmaking/Client'
+import * as Colyseus from 'colyseus.js'
 
 type SelectionPair = { value: string, label:any}
 
@@ -30,8 +32,7 @@ const RegionSelection = () => {
         const region = serverRegions.find( region => region.name === regionEntry.value )
         if (region){
             setRegion(region)
-            console.log(region)
-            console.log(selectedOption)
+            Client.getInstance().colyseusClient = new Colyseus.Client( (process.env.NODE_ENV === 'production') ? region.url : "ws://localhost:2567" ) 
         }
     }
 
