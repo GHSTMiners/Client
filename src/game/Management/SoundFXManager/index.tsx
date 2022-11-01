@@ -17,6 +17,10 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         targetSound?.pause();
     }
 
+    public stop(){
+        this.scene.sound.stopAll();
+    }
+
     public add(key:string):Phaser.Sound.BaseSound{
         const newSound = this.scene.sound.add(key)
         return newSound

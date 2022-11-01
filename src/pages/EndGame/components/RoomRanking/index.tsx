@@ -13,12 +13,15 @@ const RoomRanking = () => {
             <div className={styles.rankingWrapper}> 
                 {roomLeaderboard.map((element,index) => {
                     let iconImage = ''
+                    let coinStyle = styles.noMedal
                     switch  (index){
                         case 0:
                             iconImage = goldMedal;
+                            coinStyle = styles.goldenMedalContainer;
                             break;
                         case 1:
                             iconImage = silverMedal;
+                            coinStyle = styles.silverMedalContainer;
                             break;
                         case 2:
                             iconImage = bronzeMedal;
@@ -30,7 +33,9 @@ const RoomRanking = () => {
 
                     return( 
                      <div className={styles.rankingEntry} key={element.gotchi.gotchi_id}>
-                        <img src={iconImage} className={styles.medal} alt={`rank${index+1}_medal`}/>
+                        <div className={coinStyle}>
+                            <img src={iconImage} className={styles.medal} alt={`rank${index+1}_medal`}/>
+                        </div>
                         <div className={styles.rankEntryData}>
                             <div className={styles.rankName}>{gotchiNames[element.gotchi.gotchi_id]}</div>
                             <div className={styles.rankValue}>{`$ ${element.value}`}</div>
