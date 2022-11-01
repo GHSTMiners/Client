@@ -16,7 +16,8 @@ const selectStyle = {
     }),
     option: (base:any,state:any) => ({
       ...base,
-      backgroundColor: state.isFocused? 'rgba(168,168,168,0.9)' : 'none',
+      backgroundColor: state.isSelected ? 'rgba(168,168,168,0.3)' : 'none',
+      '&:hover': { backgroundColor: state.isSelected ? 'rgba(168,168,168,0.7)' : 'rgba(168,168,168,0.9)' }
     })
   }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import styles from './styles.module.css';
 import selectStyle from './selectStyle'
@@ -9,18 +9,31 @@ type SelectionPair = { value: string, label:any}
 
 const RegionSelection = () => {
     
-    const serverRegions = useGlobalStore(store => store.serverRegions)
-    const defaultRegion = useGlobalStore( state => state.region );
+    const serverRegions = useGlobalStore( state => state.serverRegions)
+    const setRegion = useGlobalStore( state => state.setRegion)
+    const selectedRegion = useGlobalStore( state => state.region );
     const [selectedOption, setSelectedOption ]= useState<SelectionPair>({} as SelectionPair)
     const [isLoading,setLoading] = useState<boolean>(true);
+    const selectRef = useRef(null);
     
     useEffect(()=>{
-        if (defaultRegion && defaultRegion.name){
-            const defaultLabel: SelectionPair = { value: defaultRegion.name, label: formatLabel(defaultRegion) }
-            setSelectedOption(defaultLabel)
+        if (selectedRegion && selectedRegion.name){
+            const updatedLabel: SelectionPair = { value: selectedRegion.name, label: formatLabel(selectedRegion) }
+            setSelectedOption(updatedLabel)
             setLoading(false)
         }
-    },[defaultRegion])
+    },[selectedRegion])
+
+    
+    function updateRegion( regionEntry: SelectionPair ){
+        setSelectedOption( {...regionEntry} )
+        const region = serverRegions.find( region => region.name === regionEntry.value )
+        if (region){
+            setRegion(region)
+            console.log(region)
+            console.log(selectedOption)
+        }
+    }
 
     function formatLabel(region:ServerRegion):JSX.Element{
         return(
@@ -37,13 +50,16 @@ const RegionSelection = () => {
     return(
         <>
             <Select
+            ref={selectRef}
             isSearchable={false}
             isLoading={isLoading}
             loadingMessage={() => "Loading..."}
             value={selectedOption}
+            defaultValue={selectedOption}
             className={styles.customSelect}
-            onChange={(value)=> setSelectedOption(value as SelectionPair)}
+            onChange={(value)=> {updateRegion(value as SelectionPair); }}
             styles={selectStyle}
+            openMenuOnFocus
             options={serverRegions.map( region => {
                 return(
                     {value: region.name, label: formatLabel(region) } as SelectionPair

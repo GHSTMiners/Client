@@ -16,6 +16,7 @@ import * as Schema from "matchmaking/Schemas";
 import gameEvents from "game/helpers/gameEvents";
 import RegionSelection from "components/RegionSelection";
 import { endedGameMessage } from "types";
+import { useGlobalStore } from "store";
 
 
 const WalletButton = () => {
@@ -62,6 +63,7 @@ const WalletButton = () => {
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const serverRegion = useGlobalStore( state => state.region );
   const location = useLocation();
   const navigator = useNavigate();
   const inLobby = location.pathname === "/lobby";
