@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import { HighScore } from 'types';
 import { number } from 'mathjs';
 import GotchiPreview from 'components/GotchiPreview';
+import { CustomiseOptions } from 'helpers/aavegotchi';
 
 interface Props {
   podiumGotchis : Array<HighScore>;
@@ -13,10 +14,9 @@ export const Podium: React.FC<Props> = ({
   podiumGotchis
 }) => {
     
-    const renderGotchi = (id:number, winner:boolean)=>{
-      //options={{ animate: true, removeBg: true, armsUp:winner }}  
+    const renderGotchi = (id:number, winner:boolean, options?: CustomiseOptions)=>{
       return(
-          <GotchiPreview tokenId={`${id}`}  />
+          <GotchiPreview tokenId={`${id}`} options={options} />
         )
     }
     
@@ -26,7 +26,7 @@ export const Podium: React.FC<Props> = ({
         { podiumGotchis.length>2 ? 
         <>
           <div className={styles.gotchiRank1}>
-            {renderGotchi(number(podiumGotchis[0].tokenId) as number,true)}
+            {renderGotchi(number(podiumGotchis[0].tokenId) as number,true,{armsUp:true})}
           </div>
           <div className={`${styles.podiumText} ${styles.rank1Text}`}>
             {podiumGotchis[0].name}

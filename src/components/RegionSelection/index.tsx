@@ -32,7 +32,7 @@ const RegionSelection = () => {
         const region = serverRegions.find( region => region.name === regionEntry.value )
         if (region){
             setRegion(region)
-            Client.getInstance().colyseusClient = new Colyseus.Client( (process.env.NODE_ENV === 'production') ? region.url : "ws://localhost:2567" ) 
+            Client.getInstance().colyseusClient = new Colyseus.Client( (process.env.NODE_ENV === 'production') ? `wss://${region.url}` : "ws://localhost:2567" ) 
         }
     }
 

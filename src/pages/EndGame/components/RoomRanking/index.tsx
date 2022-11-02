@@ -25,6 +25,7 @@ const RoomRanking = () => {
                             break;
                         case 2:
                             iconImage = bronzeMedal;
+                            coinStyle = styles.bronzeMedalContainer;
                             break;
                         default:
                             iconImage = noMedal;
