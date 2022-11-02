@@ -38,6 +38,13 @@ export default class Block extends Phaser.GameObjects.Container {
                     this.add(this.backgroundSprite)
                 break;
             }
+            // Scale crypto
+            if(this.itemSprite) {
+                this.itemSprite.displayHeight = 128
+                this.itemSprite.displayWidth = 128
+            }
+            this.backgroundSprite.displayHeight = 128
+            this.backgroundSprite.displayWidth = 128
         }
     }
 
