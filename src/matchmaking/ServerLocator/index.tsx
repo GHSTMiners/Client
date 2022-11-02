@@ -52,7 +52,7 @@ export default class ServerLocator {
 
     private async estimateClientLocation() : Promise<any> {
         var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        return axios.get('assets/geo/timezone_centers.json').then(response => {
+        return axios.get('/assets/geo/timezone_centers.json').then(response => {
             var timezone_locations = response.data
             return timezone_locations[timezone]
         })
