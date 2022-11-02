@@ -7,11 +7,13 @@ import RoomRanking from "./components/RoomRanking";
 import StatisticsTabs from "./components/StatisticTabs";
 import { useGlobalStore } from "store";
 import { useParams } from "react-router-dom";
+import { CustomiseOptions } from "helpers/aavegotchi";
 
 const EndGame= () => {
     // 'f4d626eb-c3be-4f06-9483-a490403d257c'
     const roomLeaderboard = useGlobalStore( state=> state.roomLeaderboard)
     const {roomId,gotchiId} = useParams();
+    const gotchiOptions: CustomiseOptions = {armsUp:true};
 
     return(
         <div className={styles.basicGrid}>
@@ -21,7 +23,9 @@ const EndGame= () => {
                     <div className={styles.rankingPanel}>
                         <RoomRanking />
                         <div className={styles.gotchiContainer}>
-                            <GotchiPreview tokenId={`${roomLeaderboard[0]?.gotchi.gotchi_id}`}  />
+                            <GotchiPreview 
+                                tokenId={`${roomLeaderboard[0]?.gotchi.gotchi_id}`} 
+                                options={gotchiOptions} />
                             <img src={cupWinner} className={styles.cup} alt={'champion_cup'}/>
                         </div>
                     </div>
