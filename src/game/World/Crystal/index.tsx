@@ -1,4 +1,4 @@
-//import Config from "config";
+import Config from "config";
 import MainScene from "game/Scenes/MainScene";
 import Client from "matchmaking/Client";
 
@@ -12,6 +12,9 @@ export class Crystal extends Phaser.GameObjects.Sprite {
         this.body.velocity.y = -1000 * ( Math.random()*2 - 1 );
         (this.body as Phaser.Physics.Arcade.Body).setAccelerationY(1000)
         this.setTexture(`crypto_soil_${cryptoID}`)
+        this.setSize( Config.blockWidth, Config.blockHeight )
+        this.displayHeight = Config.blockHeight;
+        this.displayWidth = Config.blockWidth;
         this.setOrigin(0, 0)
         const myGotchiID = Client.getInstance().ownPlayer.gotchiID;
         this.myPlayer  = (scene as MainScene).globalRenderer?.playerRender.playerSprites.get( myGotchiID )        

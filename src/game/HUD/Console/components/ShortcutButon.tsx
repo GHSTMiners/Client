@@ -33,7 +33,7 @@ const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
       key={`squareButton${index}`}
       onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
       <div className={styles.inventoryConsumable}>
-        <img src={amount ? item?.image : ''} alt={amount ? item?.name : 'empty'} />
+        <img src={amount ? item?.image : ''}  alt={amount ? item?.name : 'empty'} hidden={amount? false: true} />
       </div>
     </SquareButton>
   );

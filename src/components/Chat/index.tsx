@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import gameStyle from "./game.module.css";
 import lobbySyle from "./lobby.module.css";
 import Client from "matchmaking/Client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
 import renderPlayerMessage from "./renderPlayerMessage"
@@ -18,6 +18,7 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
   const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
   const chatVisibility = useVisible('chat', false); 
+  const inputRef = useRef<any>(null);
 
   useEffect(()=>{
     const printMessage = (notification: Protocol.MessageFromServer) => {
@@ -37,12 +38,17 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
     }
   },[chatHistory,gameMode]);
 
-  function handleClick (event:any ) {
+  function handleClick (event:any) {
     const divID = event.target.getAttribute('id');
+
     if ((divID === 'chat' || divID === 'chat-history' || divID === 'chat-textbox') && Client.getInstance().phaserGame){
       Client.getInstance().phaserGame.events.emit( gameEvents.chat.SHOW );
     }
   }
+
+  useEffect(()=>{
+    chatVisibility.state? inputRef.current?.focus() : inputRef.current?.blur();
+  },[chatVisibility.state])
 
   return (
     <div  id="chat" 
@@ -62,6 +68,7 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
             submitMessage(event,chatMessage);
             setChatMessage(''); }}>
           <input
+            ref={inputRef}
             id="chat-textbox"
             className={styles.textBox}
             type="text"
