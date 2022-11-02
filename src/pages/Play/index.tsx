@@ -11,7 +11,7 @@ export default class Play extends React.Component {
       const config = {
         type: Phaser.AUTO,
         parent: "phaser-game",
-
+        antialias: true,
         room: Client.getInstance().colyseusRoom,
         scale: {
           mode: Phaser.Scale.RESIZE,
