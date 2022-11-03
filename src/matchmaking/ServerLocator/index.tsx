@@ -11,6 +11,7 @@ export type Point = {
 
 export default class ServerLocator {
     constructor(apiInterface: Chisel.APIInterface) {
+        this.closestRegion = {} as ServerRegion;
         apiInterface.server_regions().then(regions => {
             this.regions = regions;
             useGlobalStore.getState().setServerRegions(regions)
@@ -25,12 +26,10 @@ export default class ServerLocator {
                     if(nearestLocation > distanceToRegion) {
                         nearestLocation = distanceToRegion
                         this.closestRegion = region
-                        useGlobalStore.getState().setRegion(region)
                     }
                 })
-
-                console.log(`Closest region is: ${this.closestRegion?.name}`)
-                
+                useGlobalStore.getState().setRegion( this.closestRegion )
+                console.log(`Closest region set to: ${ useGlobalStore.getState().region?.name}`)
             })
         })
     }
@@ -59,5 +58,5 @@ export default class ServerLocator {
     }
 
     private regions? : ServerRegion[]
-    public closestRegion? : ServerRegion
+    public closestRegion : ServerRegion
 }

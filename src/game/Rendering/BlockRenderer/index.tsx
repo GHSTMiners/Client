@@ -34,7 +34,7 @@ export default class BlockRenderer extends Phaser.GameObjects.GameObject {
                 }
                 
             }
-            let blocks : Block[] | undefined = self.renderedLayers.get(layer)
+            //let blocks : Block[] | undefined = self.renderedLayers.get(layer)
             if(schemaLayer) {
 
                 for (let index = 0; index < worldWidth; index++) {

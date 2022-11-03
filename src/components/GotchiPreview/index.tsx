@@ -24,7 +24,7 @@ const GotchiPreview = ( { tokenId , lazyLoading = true , options} : Props ) => {
                 setGotchiSVG(convertInlineSVGToBlobURL(styledSvg))
             });
         }    
-    },[tokenId])
+    },[tokenId,options])
     
     return(
         <LazyLoadImage src={gotchiSVG ? gotchiSVG : gotchiLoading}

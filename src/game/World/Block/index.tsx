@@ -24,14 +24,14 @@ export default class Block extends Phaser.GameObjects.Container {
 
     public updateBlock(blockInfo : BlockInterface, soilType : SoilType) {
 
-        if (this.blockInfo?.soilID != blockInfo.soilID || this.soilType != soilType) {
+        if (this.blockInfo?.soilID !== blockInfo.soilID || this.soilType !== soilType) {
             this.soilType = soilType
             this.blockInfo.soilID = blockInfo.soilID
             this.backgroundSprite.setTexture(`soil_${this.soilType}_${blockInfo.soilID}`)
             this.backgroundSprite.displayHeight = 128
             this.backgroundSprite.displayWidth = 128
         }       
-        if(this.blockInfo?.spawnType != blockInfo.spawnType || this.blockInfo?.spawnID != blockInfo.spawnID) {
+        if(this.blockInfo?.spawnType !== blockInfo.spawnType || this.blockInfo?.spawnID !== blockInfo.spawnID) {
             this.blockInfo = blockInfo
             switch(blockInfo.spawnType) {
                 case APIInterface.SpawnType.Crypto: 

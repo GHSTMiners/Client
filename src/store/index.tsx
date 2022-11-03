@@ -1,6 +1,8 @@
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion'
 import { StatisticEntry } from 'chisel-api-interface/lib/Statistics'
 import { Player } from 'matchmaking/Schemas'
+import Client from 'matchmaking/Client'
+import * as Colyseus from 'colyseus.js'
 import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 
@@ -97,6 +99,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setRegion: (region) => {
         set( () => ({ region: region }) )
+        const serverURL =  (process.env.NODE_ENV === 'production') ? `wss://${region.url}` : "ws://localhost:2567";
+        Client.getInstance().colyseusClient = new Colyseus.Client( serverURL ) 
+        console.log(`Updated server region to URL:${serverURL}`)
     },
     setServerRegions: (regions) => {
         set( () => ({ serverRegions: regions }) )
