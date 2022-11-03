@@ -13,9 +13,9 @@ h3{
   grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr) minmax(25rem,3fr);
   grid-auto-rows: 14rem; /*240px;*/
   grid-template-areas:
-  "welcome controls flow"
-  "traits  controls flow"
-  "vitals  console  flow";
+  "welcome flow controls"
+  "traits flow controls"
+  "vitals flow console";
  }
 
 .welcomeTile{
@@ -45,8 +45,9 @@ h3{
 } 
 
 .flowImage{
-  padding: 0.5rem 0rem;
-  width: 22rem;
+  position: absolute;
+  padding: 0.2rem 0rem;
+  height: 100%;
   align-self: center;
 }
 
@@ -79,6 +80,38 @@ h3{
   flex-direction: row;
 }
 
+.gameFlowEntry{
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+.imageFrame{
+  display: flex;
+  height: 6rem;
+  width: 6rem;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.imageTitle{
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 4rem;
+  color: black;
+  background-color: white;
+  border-radius: 5rem;
+  transform: translateY(50%);
+}
+
+.gameflowThumbnail{
+  align-self: center;
+  height: 3rem;
+}
 
 @media all and (max-width: 1200px) {
   .basicGrid {

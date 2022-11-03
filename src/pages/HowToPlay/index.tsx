@@ -1,6 +1,8 @@
-import gameFlow from "assets/images/gameflow.png"
-import explosivesFlow from "assets/images/explosivesflow.png"
-import upgradesFlow from "assets/images/upgradesflow.png"
+import refinery from "assets/images/refinery.png"
+import refuel from "assets/images/refuel.png"
+import shop from "assets/images/shop.png"
+import garage from "assets/images/garage.png"
+import drilling from "assets/images/drilling.png"
 import vitalsHowTo from "assets/svgs/vitals_howto.svg"
 import consoleHowTo from "assets/svgs/console_howto.svg"
 import numericInfoKey from "assets/svgs/infoKeys/1234.svg"
@@ -27,6 +29,14 @@ const HowToPlay = (): JSX.Element => {
       </div>
     )
   }
+
+  const gameFlowList = [
+    { image: drilling, title: 'Drill', text: 'Use your drill to find crypto crystals' },
+    { image: refinery, title: 'Refine', text: 'Convert your cargo into crypto' },
+    { image: refuel, title: 'Refuel', text: 'Make sure to have enough fuel for your jetpack' },
+    { image: garage, title: 'Repair', text: 'Use the garage to repair damage' },
+    { image: shop, title: 'Trade', text: 'Trade, buy explosives and upgrade your gear' },
+  ]
 
   return (
     <>
@@ -55,12 +65,17 @@ const HowToPlay = (): JSX.Element => {
         <div className={`${globalStyles.gridTile} ${styles.gameflowTile}`}>
           <div className={globalStyles.tileTitle}>GameFlow</div>
           <div className={globalStyles.tileContent}>
-            <div className={styles.flowTitle}>Leaderboard grinding</div>
-            <img src={gameFlow} className={styles.flowImage} alt={'Game Flow'}/>
-            <div className={styles.flowTitle}>Upgrading your gear</div>
-            <img src={upgradesFlow} className={styles.flowImage} alt={'Purchasing Upgrades'}/>
-            <div className={styles.flowTitle}>Purchasing explosives</div>
-            <img src={explosivesFlow} className={styles.flowImage} alt={'Purchasing Explosives'}/>
+            {gameFlowList.map( (entry,index) =>{
+              return(
+                <div className={styles.gameFlowEntry} key={`illustration_${index}`}>
+                  <div className={styles.imageFrame}>
+                    <img src={entry.image} className={styles.gameflowThumbnail}/>
+                    <div className={styles.imageTitle}>{entry.title}</div>
+                  </div>
+                  <div className={styles.gameflowText} >{entry.text}</div>
+                </div>
+              )
+            })}
           </div>
         </div>
 

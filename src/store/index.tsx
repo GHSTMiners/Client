@@ -99,7 +99,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setRegion: (region) => {
         set( () => ({ region: region }) )
-        const serverURL =  (process.env.NODE_ENV === 'production') ? `wss://${region.url}` : "ws://localhost:2567";
+        const serverURL =  (process.env.NODE_ENV !== 'production') ? `wss://${region.url}` : "ws://localhost:2567";
         Client.getInstance().colyseusClient = new Colyseus.Client( serverURL ) 
         console.log(`Updated server region to URL:${serverURL}`)
     },
