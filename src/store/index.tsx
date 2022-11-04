@@ -13,7 +13,7 @@ type State = {
     vitals : PlayerVitals,
     wallet : IndexedArray,
     players: IndexedPlayers,
-    // lobby schemas
+    // lobby schemas    
     lobbyCountdown : number,
     // extra
     worldCrypto: IndexedCrypto,
@@ -24,7 +24,8 @@ type State = {
     serverRegions: ServerRegion[],
     gotchiSVGs: IndexedString,
     gotchiNames: IndexedString,
-    roomLeaderboard: StatisticEntry[]
+    roomLeaderboard: StatisticEntry[],
+    isLoading: boolean,
 }
 
 type Actions = {
@@ -42,6 +43,7 @@ type Actions = {
     setGotchiSVG: (key:string,svg:string) => void
     setGotchiName: (key:string, name:string) => void
     setRoomLeaderboard: (data:StatisticEntry[]) => void
+    setIsLoading: (value:boolean) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -61,6 +63,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     gotchiSVGs: {},
     gotchiNames: {},
     roomLeaderboard:[],
+    isLoading: false,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -114,7 +117,11 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setRoomLeaderboard: ( data ) =>{
         set( (state) => ({ roomLeaderboard: data }))
-    }    
+    },
+    setIsLoading: ( value ) => {
+        set( (state) => ({ isLoading: value }) )
+        value ? document.body.style.cursor = 'wait' : document.body.style.cursor = 'default'; 
+    }   
 }))
 
 //export default useGlobalStore

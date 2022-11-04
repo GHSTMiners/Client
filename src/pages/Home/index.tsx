@@ -11,11 +11,13 @@ import useGlobalStatistics from "hooks/useGlobalStatistics";
 import { TimeRange } from "helpers/vars";
 import styles from "./styles.module.css";
 import globalStyles from 'theme/globalStyles.module.css';
+import { useGlobalStore } from "store";
 
 const Home = (): JSX.Element => {
 
   // Initializing web3 hook
   const { state: { address },dispatch } = useWeb3();
+  const isLoading = useGlobalStore( state => state.isLoading );
   useEffect(() => {
     if (address)  updateAavegotchis(dispatch, address);
   }, [address,dispatch]);
@@ -23,8 +25,9 @@ const Home = (): JSX.Element => {
 
   return (
     <>
-     <div className={styles.basicGrid}>
-        
+      
+     <div className={`${styles.basicGrid} ${isLoading? globalStyles.isLoading :null}`}>
+
       <div className={`${globalStyles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
         <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
       </div>

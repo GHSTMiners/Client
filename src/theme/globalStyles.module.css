@@ -32,6 +32,10 @@
   justify-content: space-around;
 }
 
+.isLoading{
+  filter:blur(5px);
+ }
+
 
 /*  OLD CODE BELOW - TO BE REFACTORED */
 

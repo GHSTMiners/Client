@@ -11,6 +11,8 @@ import LeaderboardHeader from "assets/svgs/leaderboard_header.svg"
 import LeaderboardFooter from "assets/svgs/leaderboard_footer.svg"
 import styles from "./styles.module.css";
 import { getHighScoresWithNames } from "helpers/aavegotchi"
+import { useGlobalStore } from "store";
+import globalStyles from "theme/globalStyles.module.css"
 
 
 const Leaderboard = (): JSX.Element => {
@@ -38,6 +40,7 @@ const Leaderboard = (): JSX.Element => {
   const [activeCathegory,setActiveCathegory] = useState(emptyCathegory);
   const [highScoresData,setHighScoresData] = useState(highScores);
   const [totalDataPages,setTotalDataPages] = useState(totalPages);
+  const isLoading = useGlobalStore( state => state.isLoading );
 
   // Component to convert Chisel data into React Select options
   const renderSelectElement = ( key:string, id: number | string, tag:string) => {
@@ -151,7 +154,7 @@ const Leaderboard = (): JSX.Element => {
   const competition = { endDate , rewards:getReward };  
 
   return (
-     <div className={styles.leaderboardContainer}>
+     <div className={`${styles.leaderboardContainer} ${isLoading? globalStyles.isLoading :null}`}>
        
        <div className={styles.gotchiPodiumContainer}>
          <Podium podiumGotchis={highScoresData} />

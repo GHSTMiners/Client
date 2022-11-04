@@ -5,9 +5,10 @@ import { ICONHEIGHT } from "helpers/vars";
 import GotchiPreview from "components/GotchiPreview";
 import styles from "./styles.module.css";
 import globalStyles from 'theme/globalStyles.module.css';
+import { useGlobalStore } from "store";
 
 const About = (): JSX.Element => {
-
+  const isLoading = useGlobalStore( state => state.isLoading )
   const renderGotchiTile = (name: string, twitter:string, discord:string, role:string, gotchiID:string , aboutme:string ,description?:string) =>{
     //side={0}  options={{ animate: true, removeBg: true }} 
     return(
@@ -33,7 +34,7 @@ const About = (): JSX.Element => {
 
   return (
     <>
-    <div className={styles.basicGrid}>
+    <div className={`${styles.basicGrid} ${isLoading? globalStyles.isLoading :null}`}>
 
       <div className={`${globalStyles.gridTile} ${styles.gaameJaam}`}>
         <div className={globalStyles.tileTitle}>Gaame Jaam</div>

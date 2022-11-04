@@ -67,18 +67,23 @@ export const Header = () => {
   const inLobby = location.pathname === "/lobby";
   const inEndgame = location.pathname.includes("/endgame");
   const inGame = location.pathname === "/play";
-  const serverRegion = useGlobalStore(state => state.region);
+  const isLoading = useGlobalStore( state => state.isLoading );
+  const setIsLoading = useGlobalStore( state => state.setIsLoading )
+  const serverRegion = useGlobalStore( state => state.region );
 
   const routeToLobby = () => {
+    setIsLoading(true)
     console.log(`Trying join the lobby in the server region ${serverRegion.name}; URL: ${serverRegion.url}`)
     Client.getInstance().colyseusClient.joinOrCreate<Schema.Lobby>("Lobby").then(room => {
       console.log(`Joined lobby room`)
+      setIsLoading(false)
       Client.getInstance().lobbyRoom = room 
       Client.getInstance().lobbyRoom.onLeave(code => {
         console.log(`Left the lobby room with code: ${code}`)
       })
       navigator('/lobby')
     }).catch(exception => {
+      setIsLoading(false)
       alert(`Failed to join a lobby, maybe we're having server issues ?`)
     })
    }
@@ -104,7 +109,7 @@ export const Header = () => {
 
 
   return (
-    <header className={styles.header} hidden = { inGame } >
+    <header className={`${styles.header} ${isLoading? globalStyles.isLoading :null}`} hidden = { inGame } >
       <nav
         className={`${globalStyles.container} ${styles.desktopHeaderContent}`}
       >

@@ -15,10 +15,11 @@ import spk from "assets/images/spk.png"
 import brn from "assets/images/brn.png"
 import styles from "./styles.module.css";
 import globalStyles from "theme/globalStyles.module.css"
+import { useGlobalStore } from "store"
 
 
 const HowToPlay = (): JSX.Element => {
-
+  const isLoading = useGlobalStore( state => state.isLoading);
   const renderControlItem = ( keyIcon: string , description: string, iconHeight : number ) =>{
     return(
       <div className={styles.controlKeyContainer}>
@@ -40,7 +41,7 @@ const HowToPlay = (): JSX.Element => {
 
   return (
     <>
-      <div className={styles.basicGrid}>
+      <div className={`${styles.basicGrid} ${isLoading? globalStyles.isLoading :null}`}>
 
         <div className={`${globalStyles.gridTile} ${styles.welcomeTile}`}>
           <div className={globalStyles.tileTitle}>Welcome to Gotchi Miner</div>
