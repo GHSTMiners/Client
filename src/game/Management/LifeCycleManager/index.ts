@@ -5,7 +5,7 @@ import MainScene from "game/Scenes/MainScene";
 
 export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
-        super(scene, "ExcavationManager")
+        super(scene, "LifeCyleManager")
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameStarted, this.handleGameStarted.bind(this))
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameEnded.bind(this))
     }
@@ -14,7 +14,7 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
         console.log('Game just started!')
       }
     
-    handleGameEnded(){
+    public handleGameEnded(){
       (this.scene as MainScene).musicManager?.stop();
       (this.scene as MainScene).soundFXManager?.stop();
       Client.getInstance().phaserGame.events.emit( gameEvents.game.END,  { 

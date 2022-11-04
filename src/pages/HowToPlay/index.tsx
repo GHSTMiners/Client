@@ -69,7 +69,7 @@ const HowToPlay = (): JSX.Element => {
               return(
                 <div className={styles.gameFlowEntry} key={`illustration_${index}`}>
                   <div className={styles.imageFrame}>
-                    <img src={entry.image} className={styles.gameflowThumbnail}/>
+                    <img src={entry.image} className={styles.gameflowThumbnail} alt={entry.title}/>
                     <div className={styles.imageTitle}>{entry.title}</div>
                   </div>
                   <div className={styles.gameflowText} >{entry.text}</div>

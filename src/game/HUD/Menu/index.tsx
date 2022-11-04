@@ -3,7 +3,6 @@ import styles from "./styles.module.css";
 import gearIcon from "assets/icons/gear.svg";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { useNavigate } from "react-router-dom";
 import Marquee from "react-easy-marquee";
 import gameEvents from "game/helpers/gameEvents";
 import useVisible from "hooks/useVisible";
@@ -11,13 +10,13 @@ import leaderboardIcon from "assets/icons/top_players_blue.svg"
 import useMusicManager from "hooks/useMusicManager";
 import { useGlobalStore } from "store";
 import useSoundFXManager from "hooks/useSoundFXManager";
+import MainScene from "game/Scenes/MainScene";
 
 const Menu = () => {
   
   const menuVisibility = useVisible('menu', false); 
   const musicManager = useMusicManager();
   const soundFXManager = useSoundFXManager();
-  const navigator = useNavigate();
   const playerTotalCrypto = useGlobalStore( state => state.totalValue);
   const wallet = useGlobalStore( state => state.wallet );
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
@@ -38,10 +37,8 @@ const Menu = () => {
     } 
   }
 
-  const leaveGame = () => {
-    musicManager.stop();
-    Client.getInstance().colyseusRoom.leave();
-    navigator('/')
+  function leaveGame () {
+    (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.lifeCycleManager?.handleGameEnded();
    }
           
   return (

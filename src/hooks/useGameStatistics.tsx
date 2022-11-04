@@ -29,6 +29,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
         })
         // Fetching game statistics for all the players
         Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
+            console.log(info)
             setGameStatistics(info.statistic_entries)
             setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === +myGotchiID)) 
           }) 
