@@ -13,6 +13,7 @@ interface Props {
 const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
     const [selectedTab, setSelectedTab] = useState<number>(0);
     const gotchiSVGs = useGlobalStore( state => state.gotchiSVGs)
+    const gotchiNames = useGlobalStore( state => state.gotchiNames );
     const gameStatistics = useGameStatistics( roomId, gotchiId );
     return(
         <>
@@ -63,7 +64,10 @@ const StatisticsTabs : React.FC<Props>  = ({ roomId, gotchiId }) => {
                                         <div className={styles.entryName}>{entry.name}</div>
                                         <div className={styles.entryAmount}>{gameStatistics.roomTopScores[idKey]?.total}</div>
                                     </div>
-                                    <img src={gotchiSVG} className={styles.gotchiContainer} alt={`Gotchi#${gotchiId}`}/>
+                                    <div className={styles.entryChadPreview}>
+                                        <img src={gotchiSVG} className={styles.gotchiContainer} alt={`Gotchi#${gotchiId}`}/>
+                                        {gotchiNames[gotchiId]}
+                                    </div>
                                 </div>
                                 : null}
                             </div>
