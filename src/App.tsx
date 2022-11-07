@@ -14,6 +14,7 @@ const App = () => {
 
   return (
     <>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.min.js" integrity="sha512-8YXJj9U1jXn8Bejc5Tiyj3mgx/u2J4XQf/HAXWX9LMCL0tdIv/WxIWoORonSO2+cRL0hHvy7QK5Mnz+jCWjPxA==" crossOrigin="anonymous" referrerPolicy="no-referrer"></script>
       <LoadingModal />
       <TransitionGroup component={null}>
         <CSSTransition key={location.key} classNames="fade" timeout={375}>

@@ -8,6 +8,7 @@ import * as Schema from "matchmaking/Schemas";
 import Authenticator from "matchmaking/Authenticator";
 import { Lobby } from "matchmaking/Schemas/Lobby";
 import ServerLocator from "matchmaking/ServerLocator";
+import DatabaseFacade from "helpers/databaseFacade";
 
 export default class Client {
   private static instance: Client;
@@ -23,6 +24,7 @@ export default class Client {
   public authenticator : Authenticator
   public phaserGame!: Phaser.Game;
   public ownPlayer!: Schema.Player;
+  public databaseFacade: DatabaseFacade
   /**
    * The Singleton's constructor should always be private to prevent direct
    * construction calls with the `new` operator.
@@ -32,8 +34,8 @@ export default class Client {
     this.authenticator = new Authenticator();
     this.authenticationInfo = new Protocol.AuthenticationInfo();
     this.messageRouter = new Protocol.MessageRouter()
-    this.lobbyMessageRouter
-     = new Protocol.MessageRouter()
+    this.lobbyMessageRouter = new Protocol.MessageRouter()
+    this.databaseFacade = new DatabaseFacade()
   }
 
   /**

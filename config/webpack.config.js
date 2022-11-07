@@ -360,6 +360,12 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        /*
+        // added to support sqlite 
+        { test: /\.wasm$/,
+          type: 'javascript/auto',
+        },
+        */
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
         {
@@ -556,6 +562,7 @@ module.exports = function (webpackEnv) {
         },
       ],
     },
+    //externals: { 'sqlite3':'commonjs sqlite3', },
     plugins: [
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(

@@ -8,6 +8,7 @@ import { callSubgraph } from "web3/actions";
 import { useGlobalStore } from "store";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
+import axios from "axios";
 
 const useGameStatistics = (roomId : string , myGotchiID: string) => {
     const [ categories, setCategories] = useState(new Array<StatisticCategory>())
@@ -30,6 +31,28 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
         // Fetching game statistics for all the players
         Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
             console.log(info)
+            if (info.room_id){
+              const dataURL = `https://chisel.gotchiminer.rocks/storage/${info.log_entry.log_file}`;
+              console.log(`Fetching data from URL:${dataURL}`)
+              
+              Client.getInstance().databaseFacade.fetchDatabase(dataURL);
+              
+              axios.get(dataURL).then( response => {
+
+                //db.run(response.data)
+                console.log(response.data)
+                console.log(response.headers)
+                console.log(response.config)
+                const uInt8Array = new Uint8Array(response.data);
+                //console.log(db)
+                console.log(uInt8Array)
+                /*
+                const database = new Database( response.data , (err) => {
+                  if(!err) console.log('database loaded successfully!')
+                })
+                console.log(database)*/
+              })              
+            }
             setGameStatistics(info.statistic_entries)
             setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === +myGotchiID)) 
           }) 
