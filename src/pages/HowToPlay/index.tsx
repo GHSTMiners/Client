@@ -9,6 +9,8 @@ import numericInfoKey from "assets/svgs/infoKeys/1234.svg"
 import eKey from "assets/svgs/infoKeys/e.svg"
 import spaceKey from "assets/svgs/infoKeys/space.svg"
 import wasdKeys from "assets/svgs/infoKeys/wasd.svg"
+import tKey from "assets/svgs/infoKeys/t.svg"
+import tabKey from "assets/svgs/infoKeys/tab.svg"
 import nrg from "assets/images/nrg.png"
 import agg from "assets/images/agg.png"
 import spk from "assets/images/spk.png"
@@ -60,6 +62,8 @@ const HowToPlay = (): JSX.Element => {
             {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
             {renderControlItem(eKey,'Interact with Buildings',2.5)}
             {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
+            {renderControlItem(tKey,'Open Chat',2.5)}
+            {renderControlItem(tabKey,'Leaderboard',2.5)}
           </div>
         </div>
 
