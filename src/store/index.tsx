@@ -26,6 +26,7 @@ type State = {
     gotchiNames: IndexedString,
     roomLeaderboard: StatisticEntry[],
     isLoading: boolean,
+    isDatabaseLoaded : boolean,
 }
 
 type Actions = {
@@ -44,6 +45,7 @@ type Actions = {
     setGotchiName: (key:string, name:string) => void
     setRoomLeaderboard: (data:StatisticEntry[]) => void
     setIsLoading: (value:boolean) => void
+    setIsDatabaseLoaded: (value:boolean) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -64,6 +66,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     gotchiNames: {},
     roomLeaderboard:[],
     isLoading: false,
+    isDatabaseLoaded: false,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -121,7 +124,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setIsLoading: ( value ) => {
         set( (state) => ({ isLoading: value }) )
         value ? document.body.style.cursor = 'wait' : document.body.style.cursor = 'default'; 
-    }   
+    },
+    setIsDatabaseLoaded: ( value ) =>{
+        set( (state) => ({ isDatabaseLoaded: value }))
+    },   
 }))
-
-//export default useGlobalStore

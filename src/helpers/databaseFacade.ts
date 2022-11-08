@@ -1,47 +1,61 @@
 import initSqlJs from 'sql.js';
+import { useGlobalStore } from 'store';
+import Config from 'config';
 
 export default class DatabaseFacade {
-  public database: any;
-  public isReady: boolean = false;
-  public isLoaded: boolean = false;
-  public onLoadCallback!: (() => void);
-  private SQL: any
+  public db: any;
+  public url?: string;
+  private SQL: Promise<initSqlJs.SqlJsStatic>
+  private sql_result!: initSqlJs.SqlJsStatic
 
   /**
    * Loads the database file from the server
    */
-  constructor() {
-    var self = this;
+  constructor(url?:string) {
      // @ts-ignore: Let's ignore a compile error like this unreachable code 
-    self.SQL = initSqlJs({
-      locateFile: (file:any) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.1/sql-wasm.wasm`
-    }).then( () => this.isReady = true );
+    this.SQL = initSqlJs({
+      locateFile: (file:any) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm`
+    }).then( sql_result => this.sql_result = sql_result );
   }
 
-  public fetchDatabase(url:string){
-    if (this.isReady){
-      console.log(`[DatabaseFacade] About to fetch database url: ${url}`)
+  public setUrl( url:string){
+    this.url = url;
+    this.SQL.then(()=> this.fetchDatabase()) ;
+  }
+
+  public fetchDatabase(){
+    if (this.url && this.sql_result ){
+      console.log(`Fetching game statistics database from url: ${this.url}`)
       // Fetch base database from server
       const xhr = new XMLHttpRequest();
-      xhr.open('GET', url , true);
+      xhr.open('GET', this.url as string, true);
       xhr.responseType = 'arraybuffer';
 
       xhr.onload = e => {
         // When database file is downloaded, open and load
         const uInt8Array = new Uint8Array(xhr.response);
-        this.database = new this.SQL.Database(uInt8Array);
-      
+        this.db = new this.sql_result.Database(uInt8Array);
+              
         //Log that database is loaded, and call onDataBaseLoaded callback if is set
         console.log("Game log database was loaded 🥳")
-        this.isLoaded = true;
-        this.onLoadCallback();
+        useGlobalStore.getState().setIsDatabaseLoaded(true);
       };
       xhr.send();
     } else {
-      console.log(`[DatabaseFacade] Not ready to fetch the requested URL ${url}`)
+      console.log(`Failed to fetch database. URL: ${this.url}`)
+      console.log(this.sql_result)
     }
   }
 
+  public getPlayerDepth(playerId:number){
+    let depthHistory: number[] = [];
+    this.db.each("SELECT Value FROM Depth WHERE PlayerID = $playerId",{$playerId:playerId}, function(row:any){
+      depthHistory.push(Math.round(row.Value/Config.blockHeight))
+    });
+    console.log(depthHistory)
+
+    return depthHistory
+  }
 
 
 }
