@@ -146,3 +146,5 @@ export type RoomGotchi =  { gotchiId: number, name: string, svgURL: string } ;
 export type IndexedRoomGotchis = { [key: string]: RoomGotchi}
 
 export type endedGameMessage = { roomId: string, gotchiId: string };
+
+export type TimeSeries = { timestamps:string[]; values:number[] }
