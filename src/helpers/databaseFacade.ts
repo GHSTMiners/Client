@@ -1,7 +1,7 @@
 import initSqlJs from 'sql.js';
 import { useGlobalStore } from 'store';
 import Config from 'config';
-import { TimeSeries } from 'types';
+import { IndexedArray, TimeSeries } from 'types';
 
 export default class DatabaseFacade {
   public db: any;
@@ -48,24 +48,27 @@ export default class DatabaseFacade {
     }
   }
 
-   private fmtMSS(s:number):string{
-    return (s-(s%=60))/60+(9<s?':':':0')+Math.round(s)
-  }
-
   public getPlayerDepth(playerId:number):TimeSeries{
     let values: number[] = [];
-    let timestamps: string[] = [];
+    let timestamps: number[] = [];
     const refTimeEntry = this.db.exec("SELECT Time FROM Depth WHERE ID = 1");
     const refTime0 = refTimeEntry[0].values[0]; 
     this.db.each("SELECT Value FROM Depth WHERE PlayerID = $playerId",{$playerId:playerId}, function(row:any){
       values.push(Math.round(row.Value/Config.blockHeight))
     });
     this.db.each("SELECT Time FROM Depth WHERE PlayerID = $playerId",{$playerId:playerId}, (row:any) => {
-      timestamps.push(  this.fmtMSS( (row.Time - refTime0) /1000 )  ) // time in seconds from start
+      timestamps.push(   (row.Time - refTime0) /1000  ) // time in seconds from start
     });
     return { timestamps, values }
   }
 
+  public getPlayers(){
+    let players : IndexedArray = {};
+    this.db.each("SELECT * from Players", function( row:any){
+      players[row.ID] = row.GotchiID;
+    });
+    return players
+  }
 
 }
 

@@ -34,6 +34,7 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "chart.js": "^3.9.1",
     "chisel-api-interface": "^1.23.0",
+    "chroma-js": "^2.4.2",
     "colyseus.js": "^0.14.13",
     "css-loader": "4.3.0",
     "dotenv": "8.2.0",
@@ -136,6 +137,7 @@
     ]
   },
   "devDependencies": {
+    "@types/chroma-js": "^2.1.4",
     "@types/jquery": "^3.5.10",
     "@types/mathjs": "^9.4.2",
     "@types/merge-images": "^1.2.1",

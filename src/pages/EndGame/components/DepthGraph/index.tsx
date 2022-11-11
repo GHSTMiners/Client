@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Client from "matchmaking/Client";
 import { useGlobalStore } from "store";
 import { TimeSeries } from "types";
+import chroma from "chroma-js"
 
 Chart.register(...registerables);
 Chart.defaults.font.size=14;
@@ -15,30 +16,34 @@ type GraphEntry = { label: string, data: number[], fill: boolean, borderColor: s
 
 export const DepthGraph = () => {
   const isDatabaseLoaded = useGlobalStore( state => state.isDatabaseLoaded );
+  const gotchiNames = useGlobalStore( state => state.gotchiNames);
   const [ depthData, setDepthData ] = useState<TimeSeries[]>([])
   const [ displayData, setDisplayData ] = useState<GraphEntry[]>([])
 
   useEffect(()=>{
-    if (isDatabaseLoaded){
-      // Making sure that the display data array is empty 
+    if (isDatabaseLoaded && gotchiNames){
       setDisplayData(state => {state = []; return([...state])})
-      // TO DO: get a player list (+ missing info) and loop through the code below
-      let playerDepth: TimeSeries = Client.getInstance().databaseFacade.getPlayerDepth(1);
-      setDepthData( state => { state.push(playerDepth) ; return[...state] });
-      setDisplayData( state => {
-        state.push({ 
-          label: "Gotchinomics",
-          data: playerDepth.values,
-          fill: false,
-          borderColor: "rgba(216, 181, 97, 0.7)",
-          tension: 0.2})
+      const players = Client.getInstance().databaseFacade.getPlayers();
+      const playerColors = chroma.scale(['#fafa6e','#2A4858']).mode('lch').colors(5);
+      Object.keys(players).forEach( (playerID,i) => {
+        let playerDepth: TimeSeries = Client.getInstance().databaseFacade.getPlayerDepth(+playerID);
+        setDepthData( state => { state.push(playerDepth) ; return[...state] });
+        setDisplayData( state => {
+          state.push({ 
+            label: gotchiNames[players[playerID]],
+            data: playerDepth.values,
+            fill: false,
+            borderColor: playerColors[i],
+            tension: 0.2
+          })
           return [...state]
       })
+      })
     } 
-  },[isDatabaseLoaded])
+  },[isDatabaseLoaded,gotchiNames])
 
   const data = {
-    labels: depthData[0]?.timestamps,
+    labels: formatTimestamps(depthData[0]?.timestamps),
     datasets: displayData
   };
 
@@ -56,6 +61,12 @@ export const DepthGraph = () => {
       },
     }
   };
+
+  function formatTimestamps(timestamps:number[]):string[]{
+    let formattedData : string[] = []; 
+    timestamps?.forEach( s => formattedData.push((s-(s%=60))/60+(9<s?':':':0')+Math.round(s)) )
+    return formattedData
+  }
   
   return (
       <div className={styles.graphContainer}>
