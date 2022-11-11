@@ -10,7 +10,7 @@ const useSoundFXManager = () => {
   }
 
   const setVolume = (value:number) =>{
-    soundFXManager?.setVolume(value);
+    soundFXManager?.setVolume( Math.pow(value,4) );
   }
 
   return { play , setVolume }

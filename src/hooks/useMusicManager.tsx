@@ -26,7 +26,7 @@ const useMusicManager = () => {
   }
 
   const setVolume = (value:number) =>{
-    musicManager?.setVolume(value);
+    musicManager?.setVolume( Math.pow(value,4) );
   }
 
   const stop = () => {

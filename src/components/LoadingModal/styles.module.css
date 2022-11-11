@@ -9,6 +9,6 @@
     flex-direction: row;
     justify-content: center;
     gap: 4rem;
-    z-index: 100;
+    z-index: 300;
   }
   

@@ -6,6 +6,7 @@
   border-top-right-radius: 4px;
   display: flex;
   flex-direction: column;
+  z-index: 200;
 }
 
 .largeContainer{
