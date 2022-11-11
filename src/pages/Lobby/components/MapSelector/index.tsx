@@ -5,6 +5,7 @@ import * as Chisel from "chisel-api-interface";
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import Client from "matchmaking/Client";
 import { IndexedArray } from "types";
+import Config from "config";
 
 interface Props {
   mapVotes: IndexedArray;
@@ -65,7 +66,7 @@ const Component: React.FC<Props> = ({
     const numberOfVotes = mapVotes[world.id] ?? 0;
     return(
       <div className={styles.thumbnailContainer} onClick={disabled? ()=>{} :()=>setMapSelection(index)} key={`mapThumbnail${index}`} >         
-        <img src={`https://chisel.gotchiminer.rocks/storage/${world.thumbnail}`} 
+        <img src={`${Config.storageURL}/${world.thumbnail}`} 
              className={`${styles.thumbnailGalleryitem} ${(index === mapSelection)? styles.selectedThumbnail :''}`} 
              alt={`Mining World ${world.name}`}/>
         <div className={styles.voteContainer}>{numberOfVotes}</div> 
@@ -75,7 +76,7 @@ const Component: React.FC<Props> = ({
   
   return (
     <>
-      <img src={worldArray[mapSelection]? `https://chisel.gotchiminer.rocks/storage/${worldArray[mapSelection].thumbnail}` : ''} 
+      <img src={worldArray[mapSelection]? `${Config.storageURL}/${worldArray[mapSelection].thumbnail}` : ''} 
           className={styles.mapThumbnail} 
           alt={`Selected World ${mapSelection }`}/>
       <Arrow style={{width:'4rem'}} className={`${styles.arrowLeft} ${mapSelection === 0? styles.disabledIcon: ''}`} onClick={disabled? ()=>{} : ()=>handleArrowClick(-1)}/>

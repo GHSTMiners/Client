@@ -4,6 +4,7 @@ import * as Schema from "matchmaking/Schemas"
 import Client from "matchmaking/Client";
 import { IndexedCrypto } from "types";
 import gameEvents from "game/helpers/gameEvents";
+import Config from "config";
 
 
 const useWorldCrypto = ():[IndexedCrypto] => {
@@ -22,8 +23,8 @@ const useWorldCrypto = ():[IndexedCrypto] => {
         const newCrypto = {
           cryptoID: id,
           name: `${world.crypto[i].shortcode}`,
-          image: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].wallet_image}`,
-          crystal: `https://chisel.gotchiminer.rocks/storage/${world.crypto[i].soil_image}`,
+          image: `${Config.storageURL}/${world.crypto[i].wallet_image}`,
+          crystal: `${Config.storageURL}/${world.crypto[i].soil_image}`,
           price: (cryptoPrice? cryptoPrice.usd_value : 1)
         }
         cryptoRecord[newCrypto.cryptoID]= newCrypto;

@@ -4,6 +4,7 @@ import styles from './styles.module.css';
 import selectStyle from './selectStyle'
 import { useGlobalStore } from 'store';
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion';
+import Config from 'config';
 
 type SelectionPair = { value: string, label:any}
 
@@ -35,7 +36,7 @@ const RegionSelection = () => {
     function formatLabel(region:ServerRegion):JSX.Element{
         return(
             <>
-                <img src={ region? `https://chisel.gotchiminer.rocks/storage/${region.flag}` : '' } 
+                <img src={ region? `${Config.storageURL}/${region.flag}` : '' } 
                     style={{height: '2rem', padding: '0 0.5rem 0 0'}}
                     alt={region?.name}
                     hidden={ region? false: true }/> 

@@ -11,6 +11,7 @@ import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
 import Vignette from "./Vignette";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
+import Config from "config";
 
 export const HUD = () => {  
   const [gameLoaded, setgameLoaded] = useState(false);
@@ -47,7 +48,7 @@ export const HUD = () => {
     }
   }, []);
 
-  const loadingImgURL = `https://chisel.gotchiminer.rocks/storage/${Client.getInstance().chiselWorld.thumbnail}`;
+  const loadingImgURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.thumbnail}`;
 
   return (
     <>
