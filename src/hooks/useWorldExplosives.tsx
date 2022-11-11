@@ -3,6 +3,7 @@ import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
 import { ExplosiveItem, InventoryExplosives } from "types";
+import Config from "config";
 
 const useWorldExplosives = () => {
 
@@ -14,7 +15,7 @@ const useWorldExplosives = () => {
         let newItem : ExplosiveItem = { 
           id: explosive.id,
           name: explosive.name,
-          image: `https://chisel.gotchiminer.rocks/storage/${explosive.drop_image}`,
+          image: `${Config.storageURL}/${explosive.drop_image}`,
           pattern: explosive.explosion_coordinates,
           price: explosive.price, 
           type: 'explosive',

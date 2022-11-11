@@ -8,6 +8,7 @@ import { callSubgraph } from "web3/actions";
 import { useGlobalStore } from "store";
 import AavegotchiSVGFetcher from "game/Rendering/AavegotchiSVGFetcher";
 import { convertInlineSVGToBlobURL } from "helpers/aavegotchi";
+import Config from "config";
 
 const useGameStatistics = (roomId : string , myGotchiID: string) => {
     const [ categories, setCategories] = useState(new Array<StatisticCategory>())
@@ -31,7 +32,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
         Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
             console.log(info)
             if (info.room_id){
-              const dataURL = `https://chisel.gotchiminer.rocks/storage/${info.log_entry.log_file}`;
+              const dataURL = `${Config.storageURL}/${info.log_entry.log_file}`;
               Client.getInstance().databaseFacade.setUrl(dataURL);
             }
             setGameStatistics(info.statistic_entries)
