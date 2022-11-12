@@ -25,17 +25,16 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         return gain
     }
 
-    public playAtLocation( key:string, x:number, y:number ){
+    public playAtLocation( sound:Phaser.Sound.BaseSound, x:number, y:number ){
         this.gain = this.calculateGain(x,y);
-        this.scene.sound.play(key, { volume: this.volume * this.gain } )
+        sound.play( { volume: this.volume * this.gain } )
     }
 
-    public updateLocation(key:string, x:number, y:number){
-        const targetSound = this.scene.sound.get(key);   
-        if (targetSound){
-            this.gain = this.calculateGain(x,y);
-            (targetSound as Phaser.Sound.HTML5AudioSound).setVolume( this.volume * this.gain );
-        }     
+    public updateLocation( sound:Phaser.Sound.BaseSound, x:number, y:number){
+        this.gain = this.calculateGain(x,y);
+        sound.isPlaying?
+        (sound as Phaser.Sound.HTML5AudioSound).setVolume( this.volume * this.gain ):
+        sound.play( { volume: this.volume * this.gain } );        
     }
 
     public pause(key:string){

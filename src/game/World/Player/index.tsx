@@ -204,7 +204,7 @@ export class Player extends Phaser.GameObjects.Container {
 
     //Process sound
     if ((playerState.movementState === Schema.MovementState.Drilling) !== this.jackHammerSound.isPlaying) {
-      if((playerState.movementState === Schema.MovementState.Drilling)) this.jackHammerSound.play({volume:this.soundFXManager.volume})
+      if((playerState.movementState === Schema.MovementState.Drilling)) this.soundFXManager.updateLocation(this.jackHammerSound,this.playerSchema.playerState.x,this.playerSchema.playerState.y)
       else this.jackHammerSound.pause()
     }
 

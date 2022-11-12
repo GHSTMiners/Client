@@ -9,20 +9,22 @@ export default class Explosive extends Phaser.GameObjects.Image {
         this.soundFXManager = scene.soundFXManager;
         this.setDepth(40);
         this.setOrigin(0, 0)
-        this.soundFXManager.playAtLocation('fuse',this.schema.x, this.schema.y)
+        this.sound = this.soundFXManager.add('fuse');
+        this.soundFXManager.playAtLocation( this.sound, this.schema.x, this.schema.y)
     }
 
     public update(time: number, delta: number) {
         this.setPosition(this.schema.x, this.schema.y)
-        this.soundFXManager.updateLocation( this.visible? 'fuse' : 'explosion',this.schema.x, this.schema.y)
+        this.soundFXManager.updateLocation( this.sound, this.schema.x, this.schema.y)
     }
 
     public explode() {
-        var self = this;
-        self.visible = false; // hide bomb as soon as the explosion starts
-        this.soundFXManager.playAtLocation('explosion',this.schema.x, this.schema.y)
+        this.visible = false; // hide bomb as soon as the explosion starts
+        this.sound = this.soundFXManager.add('explosion');
+        this.soundFXManager.playAtLocation( this.sound, this.schema.x, this.schema.y)
     }
 
+    private sound
     private soundFXManager
     private schema : Schema.Explosive
 }
