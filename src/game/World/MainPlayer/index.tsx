@@ -12,6 +12,7 @@ export default class MainPlayer extends Player {
         this.storeExplosives();
         this.storeDepth();
         this.storeVitals();
+        this.storePlayerState();
         console.log('Main player initialized')
     }
 
@@ -73,6 +74,10 @@ export default class MainPlayer extends Player {
             }
             
         })
+    }
+
+    storePlayerState(){
+        useGlobalStore.getState().setPlayerState( this.playerSchema.playerState );
     }
 
     update(time: number, delta: number): void {

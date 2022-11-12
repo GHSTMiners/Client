@@ -22,7 +22,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.Q, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.E, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TAB, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ONE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false))
@@ -100,8 +100,8 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ESC)?.isDown) {
             this.scene.game.events.emit( gameEvents.dialogs.HIDE )
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.Q)?.isDown) {
-            this.scene.game.events.emit( gameEvents.exchange.SHOW )
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.E)?.isDown) {
+            this.scene.game.events.emit( gameEvents.game.USEBUILDING )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.SPACE)?.isDown) {
             this.scene.game.events.emit( gameEvents.console.CHANGE )

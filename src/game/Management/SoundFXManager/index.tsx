@@ -1,7 +1,11 @@
+import Config from "config";
+import { useGlobalStore } from "store";
+
 export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "SoundFXManager")
         this.volume = 1;
+        this.gain = 1;
     }
 
     public setVolume(volume:number) {
@@ -10,6 +14,28 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     
     public play(key:string){
         this.scene.sound.play(key, { volume: this.volume } )
+    }
+
+    private calculateGain(x:number,y:number){
+        const x0 = useGlobalStore.getState().playerState.x;
+        const y0 = useGlobalStore.getState().playerState.y;
+        const offset = 10 ; // the bigger, the smoother the decay with distance
+        const distance = Math.sqrt( Math.pow(x-x0,2) + Math.pow(y-y0,2) ) / Config.blockWidth;
+        const gain = offset / ( offset + Math.pow(distance,2) )
+        return gain
+    }
+
+    public playAtLocation( key:string, x:number, y:number ){
+        this.gain = this.calculateGain(x,y);
+        this.scene.sound.play(key, { volume: this.volume * this.gain } )
+    }
+
+    public updateLocation(key:string, x:number, y:number){
+        const targetSound = this.scene.sound.get(key);   
+        if (targetSound){
+            this.gain = this.calculateGain(x,y);
+            (targetSound as Phaser.Sound.HTML5AudioSound).setVolume( this.volume * this.gain );
+        }     
     }
 
     public pause(key:string){
@@ -26,5 +52,6 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         return newSound
     }
 
-    volume: number
+    private gain: number
+    public volume: number
 }

@@ -16,15 +16,13 @@ export default class BuildingRenderer extends Phaser.GameObjects.GameObject {
         this.buildings = new Map<APIInterface.Building, Building>()
         this.loadBuildings();
         this.scene.game.events.on( gameEvents.room.JOINED, this.handlePlayerAdded, this);
+        this.scene.game.events.on( gameEvents.game.USEBUILDING, () => this.handleActivateKey() );
         this.scene.add.existing(this);
-        var self = this
-        scene.input.keyboard.on('keydown-E', function() {
-            self.handleActivateKey()
-        }, this)
         this.currentBuilding = undefined
     }
 
     private handleActivateKey() {
+
         if(this.currentBuilding) {
             //Play sound
             this.soundFXManager.play(`building_activation_${this.currentBuilding.id}`)

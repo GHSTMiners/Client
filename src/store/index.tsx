@@ -3,6 +3,7 @@ import { StatisticEntry } from 'chisel-api-interface/lib/Statistics'
 import { Player } from 'matchmaking/Schemas'
 import Client from 'matchmaking/Client'
 import * as Colyseus from 'colyseus.js'
+import * as Schema  from "matchmaking/Schemas"
 import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 
@@ -13,6 +14,7 @@ type State = {
     vitals : PlayerVitals,
     wallet : IndexedArray,
     players: IndexedPlayers,
+    playerState: Schema.PlayerState,
     // lobby schemas    
     lobbyCountdown : number,
     // extra
@@ -36,6 +38,7 @@ type Actions = {
     setWallet: (key:string,quantity:number) => void
     setDepth: (depth:number) => void
     setPlayer: (key:string,player:Player) => void
+    setPlayerState: (playerState: Schema.PlayerState) => void
     setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
@@ -57,6 +60,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     explosives: {}, 
     depth: 0 ,
     players: {},
+    playerState: {} as Schema.PlayerState,
     lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
@@ -83,6 +87,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setPlayer: ( key , player) => {
         set( (state) => ({ players: { ...state.players, [key]:player } }))
+    },
+    setPlayerState: ( state ) => {
+        set( () => ({ playerState: state }))
     },
     setCountdown: ( time ) => {
         set( () => ({ lobbyCountdown: time }))
