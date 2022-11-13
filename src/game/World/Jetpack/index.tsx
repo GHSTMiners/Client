@@ -74,7 +74,7 @@ export default class Jetpack extends Phaser.GameObjects.Container {
         
         //Process sound        
         if(  this.jetpackSound.isPlaying !== flying ) {
-            flying? this.soundFXManager.updateLocation( this.jetpackSound, this.player.playerSchema.playerState.x,  this.player.playerSchema.playerState.y) : this.jetpackSound.pause()
+            flying? this.soundFXManager.playAtLocation( this.jetpackSound, this.player.playerSchema.playerState.x,  this.player.playerSchema.playerState.y) : this.jetpackSound.pause()
         }
     }
 

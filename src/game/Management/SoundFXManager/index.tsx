@@ -6,6 +6,7 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         super(scene, "SoundFXManager")
         this.volume = 1;
         this.gain = 1;
+        this.pan = 0;
     }
 
     public setVolume(volume:number) {
@@ -25,16 +26,21 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         return gain
     }
 
-    public playAtLocation( sound:Phaser.Sound.BaseSound, x:number, y:number ){
-        this.gain = this.calculateGain(x,y);
-        sound.play( { volume: this.volume * this.gain } )
+    private calculatePan(x:number,y:number){
+        const x0 = useGlobalStore.getState().playerState.x;
+        const maxBlocks = 10; 
+        const distanceX = (1/maxBlocks) * (x-x0) / Config.blockWidth;
+        const pan = Math.abs(distanceX)>1 ? Math.sign(distanceX) : distanceX;
+        return pan
     }
 
-    public updateLocation( sound:Phaser.Sound.BaseSound, x:number, y:number){
+    public playAtLocation( sound:Phaser.Sound.BaseSound, x:number, y:number){
         this.gain = this.calculateGain(x,y);
+        this.pan = this.calculatePan(x,y);
         sound.isPlaying?
         (sound as Phaser.Sound.HTML5AudioSound).setVolume( this.volume * this.gain ):
-        sound.play( { volume: this.volume * this.gain } );        
+        sound.play( { volume: this.volume * this.gain } );
+        (sound as Phaser.Sound.HTML5AudioSound).setPan( this.pan );
     }
 
     public pause(key:string){
@@ -51,6 +57,7 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         return newSound
     }
 
+    private pan: number
     private gain: number
     public volume: number
 }

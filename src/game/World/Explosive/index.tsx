@@ -15,7 +15,7 @@ export default class Explosive extends Phaser.GameObjects.Image {
 
     public update(time: number, delta: number) {
         this.setPosition(this.schema.x, this.schema.y)
-        this.soundFXManager.updateLocation( this.sound, this.schema.x, this.schema.y)
+        this.soundFXManager.playAtLocation( this.sound, this.schema.x, this.schema.y)
     }
 
     public explode() {
