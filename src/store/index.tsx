@@ -4,7 +4,7 @@ import { Player } from 'matchmaking/Schemas'
 import Client from 'matchmaking/Client'
 import * as Colyseus from 'colyseus.js'
 import * as Schema  from "matchmaking/Schemas"
-import { IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
+import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 
 type State = {
@@ -17,18 +17,22 @@ type State = {
     playerState: Schema.PlayerState,
     // lobby schemas    
     lobbyCountdown : number,
+    // react pages
+    usersAavegotchis: AavegotchiContractObject[],
+    serverRegions: ServerRegion[],
+    region: ServerRegion,
+    isLoading: boolean,
+    usersWalletAddress: string | undefined,
+    roomLeaderboard: StatisticEntry[],
+    isDatabaseLoaded : boolean,
+    isWalletLoaded: boolean,
+    gotchiSVGs: IndexedString,
+    gotchiNames: IndexedString,
     // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
     totalValue: number,
     depth: number,
-    region: ServerRegion,
-    serverRegions: ServerRegion[],
-    gotchiSVGs: IndexedString,
-    gotchiNames: IndexedString,
-    roomLeaderboard: StatisticEntry[],
-    isLoading: boolean,
-    isDatabaseLoaded : boolean,
 }
 
 type Actions = {
@@ -42,6 +46,7 @@ type Actions = {
     setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
+    setUsersAavegotchis: ( gotchis: AavegotchiContractObject[]) => void
     setRegion: (region:ServerRegion) => void
     setServerRegions: (regions:ServerRegion[]) => void
     setGotchiSVG: (key:string,svg:string) => void
@@ -49,6 +54,8 @@ type Actions = {
     setRoomLeaderboard: (data:StatisticEntry[]) => void
     setIsLoading: (value:boolean) => void
     setIsDatabaseLoaded: (value:boolean) => void
+    setIsWalletLoaded: (value:boolean) => void
+    setUsersWalletAddress: (address:string) => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -64,6 +71,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
+    usersAavegotchis: [],
     region:{},
     serverRegions:[],
     gotchiSVGs: {},
@@ -71,6 +79,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     roomLeaderboard:[],
     isLoading: false,
     isDatabaseLoaded: false,
+    isWalletLoaded: false,
+    usersWalletAddress: undefined,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -116,6 +126,11 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         Client.getInstance().colyseusClient = new Colyseus.Client( serverURL ) 
         console.log(`Updated server region to URL:${serverURL}`)
     },
+    setUsersAavegotchis: (gotchis) => {
+        gotchis.length === 0 ? 
+            alert(`We couldn't find any gotchis in your wallet, so unfortunately you cannot play😔. Visit www.aavegotchi.com to buy or rent an Aavegotchi if you want to play GotchiMiner.`) 
+            : set( () => ({ usersAavegotchis: gotchis }) )
+    },
     setServerRegions: (regions) => {
         set( () => ({ serverRegions: regions }) )
     },
@@ -134,5 +149,11 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setIsDatabaseLoaded: ( value ) =>{
         set( (state) => ({ isDatabaseLoaded: value }))
-    },   
+    },
+    setIsWalletLoaded: ( value ) =>{
+        set( (state) => ({ isWalletLoaded: value }))
+    },
+    setUsersWalletAddress: ( address ) =>{
+        set( (state) => ({ usersWalletAddress: address }))
+    }   
 }))

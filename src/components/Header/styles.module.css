@@ -6,6 +6,10 @@
   padding-top: 0.5rem;
 }
 
+.header > * {
+  height: 10rem;
+}
+
 .logo {
   content: url("assets/icons/logo.svg");
   width: 15em;

@@ -164,10 +164,12 @@ export const GotchiSelector = ({
   }, [searchInput, initGotchis, sort, maxVisible]);
 
   useEffect(() => {
-    if (gotchis) {
+    if (gotchis && gotchis.length >0 ) {
       if (isSameGotchis(gotchis, initGotchis)) return;
       setInitGotchis(gotchis);
       handleSelect(initialGotchiId || gotchis[0].id);
+    } else {
+      console.log('ERROR: NO GOTCHIS AVAILABLE IN THIS WALLET')
     }
   }, [gotchis, initialGotchiId, handleSelect,initGotchis]);
 

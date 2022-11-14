@@ -9,7 +9,7 @@ import { Hamburger, SideTray } from "components";
 //import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
-import GreenButton from "components/GreenButton";
+import PlayButton from "components/PlayButton";
 import RedButton from "components/RedButton";
 import * as Schema from "matchmaking/Schemas";
 import gameEvents from "game/helpers/gameEvents";
@@ -70,6 +70,7 @@ export const Header = () => {
   const isLoading = useGlobalStore( state => state.isLoading );
   const setIsLoading = useGlobalStore( state => state.setIsLoading )
   const serverRegion = useGlobalStore( state => state.region );
+  const usersAavegotchis = useGlobalStore( state => state.usersAavegotchis)
 
   const routeToLobby = () => {
     setIsLoading(true)
@@ -155,8 +156,13 @@ export const Header = () => {
         </ul>
         {/*<WalletButton />*/}
         
-        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame  }> 
-          <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
+        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame }> 
+          <PlayButton 
+            width={'15rem'} 
+            fontSize={'2rem'} 
+            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby}>
+              PLAY
+          </PlayButton>
           <RegionSelection />
         </div>
 
@@ -166,8 +172,13 @@ export const Header = () => {
       </nav>
         
       <div className={styles.mobileHeaderContent}>
-        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame  }> 
-          <GreenButton width={'15rem'} fontSize={'2rem'} onClick={routeToLobby}>PLAY</GreenButton>
+        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame }> 
+          <PlayButton 
+            width={'15rem'} 
+            fontSize={'2rem'} 
+            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby}>
+              PLAY
+          </PlayButton>
           <RegionSelection />
         </div>
 

@@ -140,6 +140,7 @@ export default class LoadingScene extends Phaser.Scene {
         crystal: `${Config.storageURL}/${crypto.soil_image}`,
         price: (cryptoPrice? cryptoPrice.usd_value : 1)
       }
+      console.log(`${newCrypto.name} price ($): ${newCrypto.price}`)
       cryptoRecord[newCrypto.cryptoID]= newCrypto;
     })
     useGlobalStore.getState().setWorldCrypto(cryptoRecord);

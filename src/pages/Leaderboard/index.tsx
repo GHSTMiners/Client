@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Pagination, RockyCheckbox } from "components";
 import { Podium , LeaderboardTable } from "./components";
-import { useWeb3, updateAavegotchis } from "web3/context";
+import { getAavegotchis } from "web3/context";
 import * as Chisel from "chisel-api-interface";
 import Client from "matchmaking/Client";
 import { HighScore } from "types";
@@ -16,12 +16,6 @@ import globalStyles from "theme/globalStyles.module.css"
 
 
 const Leaderboard = (): JSX.Element => {
-
-  // Getting User Aavegotchis, required for "only-mine" filter
-  const { state: { usersAavegotchis, address },dispatch } = useWeb3();
-  useEffect(() => {
-    if (address)  updateAavegotchis(dispatch, address);
-  }, [address,dispatch]);
 
   // Initializing internal variables and hooks
   const highScores : Array<HighScore> = [];
@@ -41,11 +35,18 @@ const Leaderboard = (): JSX.Element => {
   const [highScoresData,setHighScoresData] = useState(highScores);
   const [totalDataPages,setTotalDataPages] = useState(totalPages);
   const isLoading = useGlobalStore( state => state.isLoading );
+  const usersWalletAddress = useGlobalStore( state => state.usersWalletAddress )
+  const usersAavegotchis = useGlobalStore( state => state.usersAavegotchis )
 
   // Component to convert Chisel data into React Select options
   const renderSelectElement = ( key:string, id: number | string, tag:string) => {
     return <option key={key} value={id}>{tag}</option>
   }
+
+  //Fetch user's aavegotchis
+  useEffect(() => {
+    if (usersWalletAddress)  getAavegotchis(usersWalletAddress);
+  }, [usersWalletAddress]);
   
   // Retrieving data from Chisel
   useEffect(()=>{

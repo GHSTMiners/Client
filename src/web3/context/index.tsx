@@ -8,6 +8,7 @@ import {
   getAllAavegotchisOfOwner,
 } from "web3/actions/queries";
 import Client from "matchmaking/Client";
+import { useGlobalStore } from "store";
 
 
 export const Web3Context = createContext<{
@@ -32,7 +33,9 @@ const updateAavegotchis = async (
   try {
     const res = await callSubgraph<AavegotchisOfOwner>(
       getAllAavegotchisOfOwner(owner)
-    );
+    )
+    useGlobalStore.getState().setUsersAavegotchis(res.aavegotchis);
+    useGlobalStore.getState().setIsWalletLoaded(true);
     dispatch({
       type: "SET_USERS_AAVEGOTCHIS",
       usersAavegotchis: res.aavegotchis,
@@ -42,6 +45,18 @@ const updateAavegotchis = async (
       type: "SET_ERROR",
       error: err,
     });
+  }
+};
+
+const getAavegotchis = async ( owner: string) => {
+  try {
+    const res = await callSubgraph<AavegotchisOfOwner>(
+      getAllAavegotchisOfOwner(owner)
+    )
+    useGlobalStore.getState().setUsersAavegotchis(res.aavegotchis);
+    useGlobalStore.getState().setIsWalletLoaded(true);
+  } catch (err) {
+    console.log(err)
   }
 };
 
@@ -79,4 +94,4 @@ const Web3ContextProvider = ({ children }: Props) => {
 const useWeb3 = () => useContext(Web3Context);
 
 export default Web3ContextProvider;
-export { useWeb3, connectToNetwork, updateAavegotchis };
+export { useWeb3, connectToNetwork, updateAavegotchis, getAavegotchis };

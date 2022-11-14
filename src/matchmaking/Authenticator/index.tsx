@@ -6,6 +6,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import $ from "jquery";
 import Cookies from 'js-cookie'
 import { Action } from "web3/context/reducer";
+import { useGlobalStore } from "store";
 
 export enum AuthenticatorState{
   Start = "Start",
@@ -207,6 +208,7 @@ export default class Authenticator {
           self.m_currentAccount = accounts[0];
           self.m_state = AuthenticatorState.WalletConnected
           self.runStateMachine()
+          useGlobalStore.getState().setUsersWalletAddress(self.m_currentAccount);
         });
       } else {
         console.log(`Failed to connect to wallet`)

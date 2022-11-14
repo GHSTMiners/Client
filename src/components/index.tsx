@@ -9,7 +9,7 @@ export * from "./SearchToggle";
 export * from "./SortToggle";
 export * from "./Sidetray";
 export * from "./RockyCheckbox";
-export * from "./GreenButton";
+export * from "./PlayButton";
 export * from "./Tabs";
 export * from "./Chat";
 export * from "./Pagination"

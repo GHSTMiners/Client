@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { InfoPanel, NewsPanel, StatsPanel, DailyWinners } from "./components";
-import { updateAavegotchis, useWeb3 } from "web3/context";
+import { getAavegotchis } from "web3/context";
 import ActiveFrensIcon from "assets/icons/active_frens.svg"
 import BlocksMinedIcon from "assets/icons/blocks_mined.svg"
 import GamesPlayedIcon from "assets/icons/games_played.svg"
@@ -15,13 +15,13 @@ import { useGlobalStore } from "store";
 
 const Home = (): JSX.Element => {
 
-  // Initializing web3 hook
-  const { state: { address },dispatch } = useWeb3();
   const isLoading = useGlobalStore( state => state.isLoading );
-  useEffect(() => {
-    if (address)  updateAavegotchis(dispatch, address);
-  }, [address,dispatch]);
   const globalStats = useGlobalStatistics();
+  const usersWalletAddress = useGlobalStore( state => state.usersWalletAddress);
+  
+  useEffect(() => {
+    if (usersWalletAddress)  getAavegotchis(usersWalletAddress);
+  }, [usersWalletAddress]);
 
   return (
     <>
