@@ -51,19 +51,6 @@ h3{
   align-self: center;
 }
 
-.controlKeyContainer{
-  display: grid;
-  width: 100%;
-  flex-direction: row;
-  grid-template-columns: repeat(2,1fr);
-  align-items: center;
-  justify-content: center;
-}
-
-.controlKeyContainer>*{
-  width: 100%;
-}
-
 .traitIcon{
   height: 2rem;
   padding-right: 1rem;

@@ -5,12 +5,6 @@ import garage from "assets/images/garage.png"
 import drilling from "assets/images/drilling.png"
 import vitalsHowTo from "assets/svgs/vitals_howto.svg"
 import consoleHowTo from "assets/svgs/console_howto.svg"
-import numericInfoKey from "assets/svgs/infoKeys/1234.svg"
-import eKey from "assets/svgs/infoKeys/e.svg"
-import spaceKey from "assets/svgs/infoKeys/space.svg"
-import wasdKeys from "assets/svgs/infoKeys/wasd.svg"
-import tKey from "assets/svgs/infoKeys/t.svg"
-import tabKey from "assets/svgs/infoKeys/tab.svg"
 import nrg from "assets/images/nrg.png"
 import agg from "assets/images/agg.png"
 import spk from "assets/images/spk.png"
@@ -18,20 +12,11 @@ import brn from "assets/images/brn.png"
 import styles from "./styles.module.css";
 import globalStyles from "theme/globalStyles.module.css"
 import { useGlobalStore } from "store"
+import GameControls from "components/GameControls"
 
 
 const HowToPlay = (): JSX.Element => {
   const isLoading = useGlobalStore( state => state.isLoading);
-  const renderControlItem = ( keyIcon: string , description: string, iconHeight : number ) =>{
-    return(
-      <div className={styles.controlKeyContainer}>
-        <img src={keyIcon} style={{height:`${iconHeight}rem`}} alt={keyIcon}/>
-        <div className={styles.controlDescription}>
-          {description}
-        </div>
-      </div>
-    )
-  }
 
   const gameFlowList = [
     { image: drilling, title: 'Drill', text: 'Use your drill to find crypto crystals' },
@@ -58,12 +43,7 @@ const HowToPlay = (): JSX.Element => {
         <div className={`${globalStyles.gridTile} ${styles.controlsTile}`}>
           <div className={globalStyles.tileTitle}>Controls</div>
           <div className={globalStyles.tileContent}>
-            {renderControlItem(wasdKeys,'Movement Keys', 5)}
-            {renderControlItem(spaceKey,'Open/Close Console', 2.5)}
-            {renderControlItem(eKey,'Interact with Buildings',2.5)}
-            {renderControlItem(numericInfoKey,'Use Explosives',2.5)}
-            {renderControlItem(tKey,'Open Chat',2.5)}
-            {renderControlItem(tabKey,'Leaderboard',2.5)}
+            <GameControls />
           </div>
         </div>
 

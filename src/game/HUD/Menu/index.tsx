@@ -11,6 +11,7 @@ import useMusicManager from "hooks/useMusicManager";
 import { useGlobalStore } from "store";
 import useSoundFXManager from "hooks/useSoundFXManager";
 import MainScene from "game/Scenes/MainScene";
+import GameControls from "components/GameControls";
 
 const Menu = () => {
   
@@ -89,16 +90,31 @@ const Menu = () => {
       <div className={styles.fullScreenMenu} hidden={!menuVisibility.state}>
         <div className={styles.menuDialogContainer}>
           <button className={styles.closeButton} onClick={ menuVisibility.hide }>X</button>
-          <div className={styles.volumeSlider}>
-            <span className={styles.menuEntryTitle}> Sound FX </span>
-            <Slider max={1} step={0.01} defaultValue={1} onChange={updateSoundFXVolume} />
-          </div>
-          <div className={styles.volumeSlider}>
-            <span className={styles.menuEntryTitle}> Music</span>
-            <Slider max={1} step={0.01} defaultValue={1} onChange={updateMusicVolume} />
-          </div>
+          <div className={styles.menuWrapper}>
+            
+            <div className={styles.gameControlsContainer}>
+              <div className={styles.gameControlsTitle}> Game Controls </div>
+              <div className={styles.gameControlsWrapper}>
+                <GameControls />
+              </div>
+            </div>
+
+            <div className={styles.volumesContainer}>
+              <div className={styles.volumeSlider}>
+                <span className={styles.menuEntryTitle}> Sound FX </span>
+                <Slider max={1} step={0.01} defaultValue={1} onChange={updateSoundFXVolume} />
+              </div>
+              <div className={styles.volumeSlider}>
+                <span className={styles.menuEntryTitle}> Music</span>
+                <Slider max={1} step={0.01} defaultValue={1} onChange={updateMusicVolume} />
+              </div>
+            </div>
+            <div className={styles.leaveContainer}>
+              <button className={styles.leaveButton} onClick={leaveGame}>LEAVE GAME</button>
+            </div>
+            
           
-          <button className={styles.leaveButton} onClick={leaveGame}>LEAVE GAME</button>
+          </div>
           
         </div>
       </div>

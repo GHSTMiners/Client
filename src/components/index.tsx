@@ -13,3 +13,4 @@ export * from "./PlayButton";
 export * from "./Tabs";
 export * from "./Chat";
 export * from "./Pagination"
+export * from "./GameControls"
