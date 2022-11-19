@@ -8,6 +8,7 @@ const useGlobalStatistics = () => {
     const [statistics, setStatistics] = useState(new Map<number,GlobalStatisticEntry>())
     const [isLoading, setIsLoading] = useState(true)
 
+    
     useEffect(()=>{
         let mounted = true;
         const rawGames = Client.getInstance().apiInterface.statistics_global_games();
@@ -15,19 +16,23 @@ const useGlobalStatistics = () => {
         
         if (mounted){
             rawCathegories.then(  cathegories => {
-                setCategories( state => { 
-                    state=cathegories; 
-                    return([...state]) 
-                })
-                if (mounted){
-                    rawGames.then( statistics => {
-                        setStatistics( statistics )
-                        setIsLoading( false );
-                    })
+                if (cathegories) {
+                    setCategories( state => { 
+                        state=cathegories;
+                        return([...state]); 
+                    });
+                    if (mounted){
+                        rawGames.then( statistics => {
+                            setStatistics( statistics )
+                            setIsLoading( false );
+                        });
+                    };
+                } else {
+                    console.log('Could not fetch stat categories from API')
                 }
-            })            
+            })
+            .catch( err => console.log(`Failed fetching promise ${err}`))            
         }
-
         return () => {mounted = false}
     },[])
 
