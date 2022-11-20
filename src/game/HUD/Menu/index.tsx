@@ -39,7 +39,7 @@ const Menu = () => {
   }
 
   function leaveGame () {
-    (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.lifeCycleManager?.handleGameEnded();
+    (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.lifeCycleManager?.requestLeave();
    }
           
   return (
