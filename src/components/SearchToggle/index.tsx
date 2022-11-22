@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { SearchIcon } from "assets";
 import styles from "./styles.module.css";
 
@@ -20,13 +20,15 @@ export const SearchToggle = ({
 
   const inputRef = useRef<HTMLInputElement>(null);
 
+
   const handleToggle = () => {
-    if (!open) {
-      inputRef?.current?.focus();
-    }
     setOpen((prevState) => !prevState);
     onToggle(!open);
   };
+
+  useEffect(()=>{
+    open ? inputRef?.current?.focus() : inputRef?.current?.blur()
+  },[open])
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
@@ -43,7 +45,7 @@ export const SearchToggle = ({
       }`}
     >
       <button className={styles.toggle} onClick={handleToggle}>
-        <SearchIcon style={{padding: "0.5rem", width: "2.8rem", height:"2.8rem"}} className={styles.iconContainer}/>
+        <SearchIcon style={{width: "2rem", height:"2rem"}} className={styles.iconContainer}/>
       </button>
       <input
         ref={inputRef}
@@ -52,6 +54,7 @@ export const SearchToggle = ({
         value={value}
         onChange={handleOnChange}
         placeholder={placeholder}
+        hidden={!open}
       />
     </div>
   );
