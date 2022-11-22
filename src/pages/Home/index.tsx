@@ -60,7 +60,8 @@ const Home = (): JSX.Element => {
         <InfoPanel 
           title="Crypto Collected"
           loading={globalStats.isLoading} 
-          quantity={`$ ${globalStats.cryptoCollected(TimeRange.total)}`} 
+          quantity={globalStats.cryptoCollected(TimeRange.total)}
+          dollarLabel = {true} 
           icon={CrystalsCollectedIcon} />
       </div>
 
