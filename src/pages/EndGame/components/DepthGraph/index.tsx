@@ -17,6 +17,7 @@ type GraphEntry = { label: string, data: number[], fill: boolean, borderColor: s
 export const DepthGraph = () => {
   const isDatabaseLoaded = useGlobalStore( state => state.isDatabaseLoaded );
   const gotchiNames = useGlobalStore( state => state.gotchiNames);
+  const isDatabaseAvailable = useGlobalStore( state => state.isDatabaseAvailable);
   const [ depthData, setDepthData ] = useState<TimeSeries[]>([])
   const [ displayData, setDisplayData ] = useState<GraphEntry[]>([])
 
@@ -70,7 +71,12 @@ export const DepthGraph = () => {
   
   return (
       <div className={styles.graphContainer}>
-        <Line data={data} options={plotOptions}/>
+        { isDatabaseAvailable? 
+            <Line data={data} options={plotOptions}/>
+            :<div className={styles.graphUnavailable}>
+              This data is not yet available. Next time try not to leave your frens behind before the game finishes!
+            </div>
+        }
       </div>
   );
 };

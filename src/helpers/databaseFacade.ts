@@ -44,7 +44,7 @@ export default class DatabaseFacade {
       xhr.send();
     } else {
       console.log(`Failed to fetch database. URL: ${this.url}`)
-      console.log(this.sql_result)
+      useGlobalStore.getState().setIsDatabaseAvailable(false);
     }
   }
 

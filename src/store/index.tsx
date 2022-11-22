@@ -25,6 +25,7 @@ type State = {
     usersWalletAddress: string | undefined,
     roomLeaderboard: StatisticEntry[],
     isDatabaseLoaded : boolean,
+    isDatabaseAvailable : boolean,
     isWalletLoaded: boolean,
     gotchiSVGs: IndexedString,
     gotchiNames: IndexedString,
@@ -54,6 +55,7 @@ type Actions = {
     setRoomLeaderboard: (data:StatisticEntry[]) => void
     setIsLoading: (value:boolean) => void
     setIsDatabaseLoaded: (value:boolean) => void
+    setIsDatabaseAvailable: (value:boolean) => void
     setIsWalletLoaded: (value:boolean) => void
     setUsersWalletAddress: (address:string) => void
 }
@@ -79,6 +81,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     roomLeaderboard:[],
     isLoading: false,
     isDatabaseLoaded: false,
+    isDatabaseAvailable: true,
     isWalletLoaded: false,
     usersWalletAddress: undefined,
     
@@ -141,19 +144,22 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         set( (state) => ({ gotchiNames: { ...state.gotchiNames, [key]:name } }))
     },
     setRoomLeaderboard: ( data ) =>{
-        set( (state) => ({ roomLeaderboard: data }))
+        set( () => ({ roomLeaderboard: data }))
     },
     setIsLoading: ( value ) => {
-        set( (state) => ({ isLoading: value }) )
+        set( () => ({ isLoading: value }) )
         value ? document.body.style.cursor = 'wait' : document.body.style.cursor = 'default'; 
     },
     setIsDatabaseLoaded: ( value ) =>{
-        set( (state) => ({ isDatabaseLoaded: value }))
+        set( () => ({ isDatabaseLoaded: value }))
+    },
+    setIsDatabaseAvailable: ( value ) =>{
+        set( () => ({ isDatabaseAvailable: value }))
     },
     setIsWalletLoaded: ( value ) =>{
-        set( (state) => ({ isWalletLoaded: value }))
+        set( () => ({ isWalletLoaded: value }))
     },
     setUsersWalletAddress: ( address ) =>{
-        set( (state) => ({ usersWalletAddress: address }))
+        set( () => ({ usersWalletAddress: address }))
     }   
 }))

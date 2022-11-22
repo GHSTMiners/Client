@@ -16,6 +16,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
     const [ myStatistics, setMyStatistics ] = useState<StatisticEntry[]>([]);
     const [ mytopScores, setMyTopScores ] = useState<IndexedBooleanArray>({});
     const [ roomTopScores, setRoomTopScores ] = useState<IndexedBalance>({});
+    const setIsDatabaseAvailable = useGlobalStore( state => state.setIsDatabaseAvailable);
     const setRoomLeaderboard = useGlobalStore( state => state.setRoomLeaderboard);
     const setGotchiName = useGlobalStore( state => state.setGotchiName )
     const setGotchiSVG = useGlobalStore( state => state.setGotchiSVG )
@@ -36,6 +37,8 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
             if (info.room_id && info.log_entry && info.log_entry.log_file ){
               const dataURL = `${Config.storageURL}/${info.log_entry.log_file}`;
               Client.getInstance().databaseFacade.setUrl(dataURL);
+            } else {
+              setIsDatabaseAvailable(false);
             }
             setGameStatistics(info.statistic_entries)
             setMyStatistics(info.statistic_entries.filter(entry => entry.gotchi.gotchi_id === +myGotchiID)) 
