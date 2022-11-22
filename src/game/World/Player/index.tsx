@@ -142,7 +142,7 @@ export class Player extends Phaser.GameObjects.Container {
 
   public hideMessage() {
     this.playerMessage.setVisible(false)
-    this.scene.game.events.emit( gameEvents.buildings.EXIT,this.currentBuilding) // to close shop window automatically
+    this.scene?.game.events.emit( gameEvents.buildings.EXIT,this.currentBuilding) // to close shop window automatically
     this.currentBuilding = '';
   }
 

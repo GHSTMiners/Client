@@ -22,7 +22,7 @@ export const InfoPanel = ({
     function formatQuantity(quantity:number | undefined):string{
       let formattedLabel:string = `${quantity}` 
       if (quantity){
-        if (quantity>=1000000) formattedLabel = `${Math.floor(quantity/1000000)}.${Math.round((quantity%1000000)/10000)} M`
+        if (quantity>=1000000) formattedLabel = `${Math.floor(quantity/1000000)}.${Math.round((quantity%1000000)/100000)} M`
         if (quantity<1000000 && quantity>=1000 ) formattedLabel = `${Math.floor(quantity/1000)}.${Math.round((quantity%1000)/100)} K`
         if (dollarLabel) formattedLabel =`$ ${formattedLabel}`
       }

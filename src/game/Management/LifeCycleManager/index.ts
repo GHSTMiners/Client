@@ -7,7 +7,8 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "LifeCyleManager")
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameStarted, this.handleGameStarted.bind(this))
-        // Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameEnded.bind(this))
+        Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameStarted.bind(this))        
+        Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerLeftGame, this.handleGameEnded.bind(this))
         Client.getInstance().colyseusRoom.onLeave(this.handleGameEnded.bind(this))
     }
 
@@ -22,6 +23,7 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     }
     
     public handleGameEnded(){
+      console.log('My player left the room, my game is over');
       (this.scene as MainScene).musicManager?.stop();
       (this.scene as MainScene).soundFXManager?.stop();
 
