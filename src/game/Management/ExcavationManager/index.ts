@@ -11,8 +11,10 @@ export default class ExcavationManager extends Phaser.GameObjects.GameObject {
     }
 
     private handleMinedCrypto(notification : Protocol.NotifyPlayerMinedCrypto) {
-        this.soundFXManager.play(`crypto_${notification.cryptoId}`)
-        Client.getInstance().phaserGame.events.emit( gameEvents.game.MINEDCRYSTAL, notification.cryptoId);
+        if (notification.gotchiId == Client.getInstance().ownPlayer.gotchiID){
+            this.soundFXManager.play(`crypto_${notification.cryptoId}`)
+            Client.getInstance().phaserGame.events.emit( gameEvents.game.MINEDCRYSTAL, notification.cryptoId);
+        }
     }
 
     private soundFXManager
