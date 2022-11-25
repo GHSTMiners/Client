@@ -12,13 +12,15 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
         //Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
     }
 
-    private handleDead = () => {
-        Client.getInstance().ownPlayer?.cargo.forEach( entry => {
-            this.lostCargo[entry.cryptoID] = entry.amount
-            for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, entry.cryptoID.toString() )
-        })
-        Client.getInstance().phaserGame.events.emit( gameEvents.game.DEAD )
-        this.lostCargo = {};
+    private handleDead = (message: Protocol.NotifyPlayerDied) => {
+        if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
+            Client.getInstance().ownPlayer?.cargo.forEach( entry => {
+                this.lostCargo[entry.cryptoID] = entry.amount
+                for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, entry.cryptoID.toString() )
+            })
+            Client.getInstance().phaserGame.events.emit( gameEvents.game.DEAD )
+            this.lostCargo = {};
+        }
     }
 /*
     private handleRespawn = () => {

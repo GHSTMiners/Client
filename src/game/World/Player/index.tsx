@@ -147,13 +147,17 @@ export class Player extends Phaser.GameObjects.Container {
   }
 
   private handleCollision(message : Protocol.NotifyPlayerCollision) {
-    this.soundFXManager.play(`metalThud`)
-    this.scene.cameras.main.flash();
+    if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
+      this.soundFXManager.play(`metalThud`)
+      this.scene.cameras.main.flash();
+    }
   }
 
   private handleLavaMined(message : Protocol.NotifyPlayerMinedLava) {
-    this.soundFXManager.play(`metalThud`)
-    this.scene.cameras.main.flash(250, 255, 0, 0, true);
+    if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
+      this.soundFXManager.play(`metalThud`)
+      this.scene.cameras.main.flash(250, 255, 0, 0, true);
+    }
   }
 
   private handleDead() {
