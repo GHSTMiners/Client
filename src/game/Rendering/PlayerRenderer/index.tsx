@@ -78,7 +78,6 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
 
   private removePlayerSprite(player: Schema.Player) {
     console.log(`Player left the game with Aavegotchi ID: ${player.gotchiID}`);
-    Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT ,`[${player.name}] left the room`)
 
     let playerSprite: Player | undefined = this.playerSprites.get(
       player.gotchiID

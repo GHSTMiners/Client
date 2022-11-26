@@ -3,6 +3,7 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { IndexedArray } from "types"
 import gameEvents from "game/helpers/gameEvents";
 import { Crystal } from "game/World/Crystal";
+import { useGlobalStore } from "store";
 
 export default class RespawnManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -13,6 +14,12 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
     }
 
     private handleDead = (message: Protocol.NotifyPlayerDied) => {
+        const players= useGlobalStore.getState().players;
+        const gotchiDied = `Player 💀${players[message.gotchiId].name} died because ${message.reason} ${message.perpetratorGotchiId? `killed by 😈${players[message.perpetratorGotchiId].name}` : ''} ${message.lostCargo? `loosing ${message.lostCargo} crystals`:''} `
+        const notification = new Protocol.MessageFromServer();
+        notification.msg = gotchiDied;
+        console.log(gotchiDied)
+        Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT , notification)
         if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
             Client.getInstance().ownPlayer?.cargo.forEach( entry => {
                 this.lostCargo[entry.cryptoID] = entry.amount
