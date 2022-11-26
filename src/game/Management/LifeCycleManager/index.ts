@@ -7,9 +7,9 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "LifeCyleManager")
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameStarted, this.handleGameStarted.bind(this))
-        Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameStarted.bind(this))        
-        Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerLeftGame, this.handleGameEnded.bind(this))
-        Client.getInstance().colyseusRoom.onLeave(this.handleGameEnded.bind(this))
+        Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameEnded, this.handleGameEnded.bind(this))        
+        Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerLeftGame, this.handlePlayerLeftGame.bind(this))
+        //Client.getInstance().colyseusRoom.onLeave(this.handleGameEnded.bind(this))
     }
 
     handleGameStarted(){
@@ -20,6 +20,12 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
       let leaveRequest : Protocol.RequestLeaveGame = new Protocol.RequestLeaveGame()
       const message = Protocol.MessageSerializer.serialize(leaveRequest)
       Client.getInstance().colyseusRoom.send(message.name, message.data)
+    }
+
+    public handlePlayerLeftGame(message: Protocol.NotifyPlayerLeftGame ){
+      if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
+        this.handleGameEnded();
+      }
     }
     
     public handleGameEnded(){
