@@ -66,17 +66,21 @@ const connectToNetwork = async (dispatch: React.Dispatch<Action>, eth: any) => {
   dispatch({ type: "START_ASYNC" });
   try {
     await eth.enable();
+
     const provider = new ethers.providers.Web3Provider(eth);
-
     dispatch({ type: "SET_PROVIDER", provider });
-    const { chainId } = await provider.getNetwork();
+    useGlobalStore.getState().setUsersProvider(provider);
 
+    const { chainId } = await provider.getNetwork();
     dispatch({ type: "SET_NETWORK_ID", networkId: chainId });
+    useGlobalStore.getState().setUsersChainId(chainId);
 
     // This was commented to use ETH address directly from the stored walled in the cookie
     const address = await provider.getSigner().getAddress();
     Client.getInstance().authenticationInfo.walletAddress = address
     dispatch({ type: "SET_ADDRESS", address });
+    useGlobalStore.getState().setUsersWalletAddress(address);
+
     dispatch({ type: "END_ASYNC" });
   } catch (error) {
     dispatch({ type: "SET_ERROR", error });

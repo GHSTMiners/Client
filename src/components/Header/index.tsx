@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import globalStyles from "theme/globalStyles.module.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { useWeb3 } from "web3/context";
-import { smartTrim } from "helpers/functions";
-import { networkIdToName } from "helpers/vars";
-//import Jazzicon, { jsNumberForAddress } from "react-jazzicon";
 import { Hamburger, SideTray } from "components";
-//import { playSound } from 'helpers/hooks/useSound';
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import PlayButton from "components/PlayButton";
@@ -16,49 +11,8 @@ import gameEvents from "game/helpers/gameEvents";
 import RegionSelection from "components/RegionSelection";
 import { endedGameMessage } from "types";
 import { useGlobalStore } from "store";
+import WalletButton from "components/WalletButton";
 
-
-const WalletButton = () => {
-  const {
-    state: { address, networkId, loading },
-    dispatch,
-  } = useWeb3();
-
-
-  const handleWalletClick = () => {
-    if (!address) {
-      //playSound('click');
-      if(!loading) Client.getInstance().authenticator.authenticate(dispatch)
-    }
-  };
-
-  useEffect(() => {
-    Client.getInstance().authenticator.authenticate(dispatch)
-    // Update the document title using the browser API
-  }, [dispatch]);
-
-  return (
-    <button
-      className={styles.walletContainer}
-      onClick={handleWalletClick}
-      disabled={!!address}
-    >
-      {loading ? (
-        "Loading..."
-      ) : address ? (
-        <div className={styles.walletAddress}>
-          {/* <Jazzicon diameter={24} seed={jsNumberForAddress(address)} /> //this was commented to avoid problems */}
-          <div className={styles.connectedDetails}>
-            <p>{networkId ? networkIdToName[networkId] : ""}</p>
-            <p>{smartTrim(address, 8)}</p>
-          </div>
-        </div>
-      ) : (
-        "Connect"
-      )}
-    </button>
-  );
-};
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -213,7 +167,7 @@ export const Header = () => {
                 isActive ? styles.activeNavLink : styles.navLink
               }
             >
-              Settings
+              How to Play
             </NavLink>
             <NavLink
               to="/about"

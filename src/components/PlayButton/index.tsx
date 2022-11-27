@@ -1,7 +1,7 @@
 import React from "react";
 import { useGlobalStore } from "store";
 import styles from "./styles.module.css";
-import { SpinnerRoundOutlined } from 'spinners-react';
+import { SpinnerDotted } from 'spinners-react';
 
 
 interface Props {
@@ -28,7 +28,7 @@ const PlayButton: React.FC<Props> = ({
       disabled={ disabled}
     >
       <div className={styles.buttonText} style={{ width: width, fontSize: fontSize}}>
-        {isWalletLoaded? children : <SpinnerRoundOutlined color={'2a2a2acc'} />  }
+        {isWalletLoaded? children : <SpinnerDotted color={'2a2a2acc'} />  }
       </div>
     </button>
   );

@@ -6,6 +6,8 @@ import * as Colyseus from 'colyseus.js'
 import * as Schema  from "matchmaking/Schemas"
 import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
+import { ethers } from 'ethers'
+import { AuthenticatorState } from 'helpers/vars'
 
 type State = {
     // game schemas 
@@ -17,12 +19,16 @@ type State = {
     playerState: Schema.PlayerState,
     // lobby schemas    
     lobbyCountdown : number,
+    // web 3
+    authenticatorState: AuthenticatorState,
+    usersWalletAddress: string | undefined,
+    usersProvider: ethers.providers.Web3Provider | undefined,
+    usersChainId: number | undefined,
     // react pages
     usersAavegotchis: AavegotchiContractObject[],
     serverRegions: ServerRegion[],
     region: ServerRegion,
     isLoading: boolean,
-    usersWalletAddress: string | undefined,
     roomLeaderboard: StatisticEntry[],
     isDatabaseLoaded : boolean,
     isDatabaseAvailable : boolean,
@@ -57,7 +63,11 @@ type Actions = {
     setIsDatabaseLoaded: (value:boolean) => void
     setIsDatabaseAvailable: (value:boolean) => void
     setIsWalletLoaded: (value:boolean) => void
-    setUsersWalletAddress: (address:string) => void
+    setUsersWalletAddress: (address:string | undefined) => void
+    setUsersProvider: (provider:ethers.providers.Web3Provider | undefined) => void
+    setUsersChainId: (chainId:number | undefined) => void
+    setAuthenticatorState: (state:AuthenticatorState) => void
+    clearUserWeb3Data: () => void
 }
 
 export const useGlobalStore = create<State & Actions>((set) => ({
@@ -65,6 +75,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     worldCrypto: {},
     worldExplosives: {}, 
     wallet : {},
+    authenticatorState: AuthenticatorState.Start,
     totalValue: 0,
     explosives: {}, 
     depth: 0 ,
@@ -84,6 +95,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     isDatabaseAvailable: true,
     isWalletLoaded: false,
     usersWalletAddress: undefined,
+    usersProvider: undefined,
+    usersChainId: undefined,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -161,5 +174,23 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setUsersWalletAddress: ( address ) =>{
         set( () => ({ usersWalletAddress: address }))
+    },
+    setUsersProvider: ( provider ) =>{
+        set( () => ({ usersProvider: provider }))
+    },
+    setUsersChainId: ( chainId ) =>{
+        set( () => ({ usersChainId: chainId }))
+    },
+    setAuthenticatorState: ( state ) =>{
+        set( () => ({ authenticatorState: state }))
+    },
+    clearUserWeb3Data: () =>{
+        set( () => ({ 
+            usersChainId: undefined, 
+            usersProvider: undefined,
+            usersWalletAddress: undefined,
+            isWalletLoaded: false,
+            authenticatorState: AuthenticatorState.Disconnected,
+        }))
     }   
 }))

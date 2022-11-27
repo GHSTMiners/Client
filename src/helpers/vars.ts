@@ -53,6 +53,16 @@ export enum TimeRange {
   total
 }
 
+export enum AuthenticatorState{
+  Disconnected = "Disconnected",
+  Start = "Start",
+  AwaitingSignature = "AwaitingSignature",
+  ValidatingSignature = "ValidatingSignature",
+  ValidatingToken = "ValidatingToken",
+  Authenticated = "Authenticated",
+  WalletConnected = "WalletConnected"
+}
+
 export const UpgradeTags  = [
    { name:'common', color:'#7f63ff' },
    { name:'uncommon', color:'#33bacc' },
