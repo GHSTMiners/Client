@@ -2,9 +2,11 @@
 .infoPanel{
     width: 100%;
     height: 100%;
-    padding: 2rem;
+    display: grid;
+    align-content: center;
     font-size: 1.3rem;
     position: relative;
+    white-space: nowrap;
 }
 
 .infoTitle{

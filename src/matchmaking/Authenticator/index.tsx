@@ -171,7 +171,6 @@ export default class Authenticator {
 
       //Connect to wallet
       const provider = await this.m_web3Modal.connect();
-      console.log('modal response received')
       if(provider) {
         useGlobalStore.getState().setUsersProvider(provider);
         this.m_web3 = new Web3(provider);

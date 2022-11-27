@@ -49,7 +49,6 @@ const WalletButton = () => {
                   </div>
                 </div>)
             default:
-              console.log(`Render wallet reading state: ${authenticatorState}`)
               return('Loading...')
         }
     }  

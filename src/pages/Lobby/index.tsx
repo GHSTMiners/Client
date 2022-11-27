@@ -17,9 +17,11 @@ import globalStyles from "theme/globalStyles.module.css"
 
 const Lobby = (): JSX.Element => {
   const {
-    state: { usersAavegotchis, address, selectedAavegotchiId },
+    state: { selectedAavegotchiId },
     dispatch,
   } = useWeb3();
+  const usersWalletAddress = useGlobalStore( state => state.usersWalletAddress);
+  const usersAavegotchis = useGlobalStore( state => state.usersAavegotchis)
 
   const emptyGotchi = {} as AavegotchiObject;
   const [selectedGotchi,setSelectedGotchi]=useState(emptyGotchi);
@@ -136,11 +138,11 @@ const Lobby = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (address) {
+    if (usersWalletAddress) {
       const prevGotchis = usersAavegotchis || [];
       if (
         prevGotchis.find(
-          (gotchi) => gotchi.owner.id.toLowerCase() === address.toLowerCase()
+          (gotchi) => gotchi.owner.id.toLowerCase() === usersWalletAddress.toLowerCase()
         )
       )
         return;
@@ -149,9 +151,9 @@ const Lobby = (): JSX.Element => {
         type: "SET_SELECTED_AAVEGOTCHI",
         selectedAavegotchiId: undefined,
       });
-      updateAavegotchis(dispatch, address);
+      updateAavegotchis(dispatch, usersWalletAddress);
     }
-  }, [address,usersAavegotchis, dispatch]);
+  }, [usersWalletAddress,usersAavegotchis, dispatch]);
 
   const handlePlayerReady = ()=>{
     // sending message to server    
