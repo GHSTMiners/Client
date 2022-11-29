@@ -78,6 +78,13 @@
 
 .playButtonContainer{
   justify-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.playWrapper{
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 1300px) {

@@ -14,6 +14,7 @@ import { useGlobalStore } from "store";
 import WalletButton from "components/WalletButton";
 
 
+
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
@@ -111,18 +112,21 @@ export const Header = () => {
         {/*<WalletButton />*/}
         
         <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame }> 
-          <PlayButton 
-            width={'15rem'} 
-            fontSize={'2rem'} 
-            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby}>
-              PLAY
-          </PlayButton>
-          <RegionSelection />
+          <div className={styles.playWrapper}>
+            <PlayButton 
+              width={'15rem'} 
+              fontSize={'2rem'} 
+              onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
+            <RegionSelection />
+          </div>
+          <WalletButton />
         </div>
 
         <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 
           <RedButton width={'15rem'} fontSize={'2rem'} onClick={routeToHome}>EXIT</RedButton>
         </div>
+
+
       </nav>
         
       <div className={styles.mobileHeaderContent}>
@@ -130,9 +134,7 @@ export const Header = () => {
           <PlayButton 
             width={'15rem'} 
             fontSize={'2rem'} 
-            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby}>
-              PLAY
-          </PlayButton>
+            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
           <RegionSelection />
         </div>
 

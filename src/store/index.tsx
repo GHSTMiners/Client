@@ -7,7 +7,7 @@ import * as Schema  from "matchmaking/Schemas"
 import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
-import { AuthenticatorState } from 'helpers/vars'
+import { AuthenticatorState, WalletApps } from 'helpers/vars'
 
 type State = {
     // game schemas 
@@ -23,6 +23,7 @@ type State = {
     authenticatorState: AuthenticatorState,
     usersWalletAddress: string | undefined,
     usersProvider: ethers.providers.Web3Provider | undefined,
+    walletProviderApp : WalletApps;
     usersChainId: number | undefined,
     // react pages
     usersAavegotchis: AavegotchiContractObject[],
@@ -67,6 +68,7 @@ type Actions = {
     setUsersProvider: (provider:ethers.providers.Web3Provider | undefined) => void
     setUsersChainId: (chainId:number | undefined) => void
     setAuthenticatorState: (state:AuthenticatorState) => void
+    setWalletProviderApp: (state:WalletApps) => void
     clearUserWeb3Data: () => void
 }
 
@@ -97,6 +99,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     usersWalletAddress: undefined,
     usersProvider: undefined,
     usersChainId: undefined,
+    walletProviderApp: WalletApps.Unknown,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -184,12 +187,16 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setAuthenticatorState: ( state ) =>{
         set( () => ({ authenticatorState: state }))
     },
+    setWalletProviderApp: ( state ) =>{
+        set( () => ({ walletProviderApp: state }))
+    },
     clearUserWeb3Data: () =>{
         set( () => ({ 
             usersChainId: undefined, 
             usersProvider: undefined,
             usersWalletAddress: undefined,
             isWalletLoaded: false,
+            walletProviderApp: WalletApps.Unknown,
             authenticatorState: AuthenticatorState.Disconnected,
         }))
     }   

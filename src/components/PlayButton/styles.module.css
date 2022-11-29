@@ -21,6 +21,10 @@
   transition : box-shadow ease-in .3s;
 }
 
+.noWallet{
+  filter: grayscale(100%);
+}
+
 .buttonText{
   margin-left: 1rem;
   margin-right: 1rem;

@@ -63,6 +63,12 @@ export enum AuthenticatorState{
   WalletConnected = "WalletConnected"
 }
 
+export enum WalletApps{
+  Metamask = 'Metamask',
+  Frame = 'Frame',
+  Unknown = 'Unknown'
+}
+
 export const UpgradeTags  = [
    { name:'common', color:'#7f63ff' },
    { name:'uncommon', color:'#33bacc' },

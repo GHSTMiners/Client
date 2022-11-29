@@ -5,7 +5,7 @@ import WalletConnectProvider from "@walletconnect/web3-provider";
 import $ from "jquery";
 import Cookies from 'js-cookie'
 import { useGlobalStore } from "store";
-import { AuthenticatorState } from "helpers/vars";
+import { AuthenticatorState, WalletApps } from "helpers/vars";
 
 export default class Authenticator {
     constructor() {
@@ -172,6 +172,10 @@ export default class Authenticator {
       //Connect to wallet
       const provider = await this.m_web3Modal.connect();
       if(provider) {
+        // black magic to bypass the proxy handler and access otherwise unreachable properties
+        const provider_target =  Object.assign({}, provider);
+        if (provider_target.isMetaMask) useGlobalStore.getState().setWalletProviderApp( WalletApps.Metamask );
+        if (provider_target.isFrame) useGlobalStore.getState().setWalletProviderApp( WalletApps.Frame );
         useGlobalStore.getState().setUsersProvider(provider);
         this.m_web3 = new Web3(provider);
         //Check if we are on the right chain (Polygon or Ethereum)

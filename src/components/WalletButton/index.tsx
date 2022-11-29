@@ -1,14 +1,17 @@
 import { smartTrim } from "helpers/functions";
-import { networkIdToName, AuthenticatorState } from "helpers/vars";
+import { AuthenticatorState, WalletApps } from "helpers/vars";
 import styles from "./styles.module.css";
 import Client from "matchmaking/Client";
 import { useGlobalStore } from "store";
 import { useEffect } from "react";
+import globalStyles from "theme/globalStyles.module.css";
+import walletConnect from "assets/icons/wallet.svg"
+import metaMaskIcon from "assets/icons/metamask.svg"
 
 const WalletButton = () => {
-    const networkId = useGlobalStore(state => state.usersChainId)
     const address = useGlobalStore( state => state.usersWalletAddress)
     const authenticatorState = useGlobalStore( state => state.authenticatorState)
+    const walletProviderApp = useGlobalStore( state => state.walletProviderApp)
    
     const handleWalletClick = () => {
         switch (authenticatorState){
@@ -36,16 +39,28 @@ const WalletButton = () => {
   
     }, []);
 
+    const renderWalletAppIcon = () => {
+      switch (walletProviderApp){
+        case WalletApps.Metamask:
+          return(<img src={metaMaskIcon} alt={'MetaMask Wallet'}/>)
+        default:
+          break;
+      }  
+    }
+
     const renderWalletButton = () => {
         switch (authenticatorState){
             case AuthenticatorState.Disconnected:
-                return('Connect')
-            case AuthenticatorState.Authenticated:
                 return(
-                <div className={styles.walletAddress}>
+                  <>CONNECT</>
+                  )
+            case AuthenticatorState.Authenticated:
+              console.log(walletProviderApp)
+                return(
+                <div className={styles.walletWrapper}>
+                  <img src={walletConnect} className={styles.walletIcon} alt={'Web3 Wallet'}/>
                   <div className={styles.connectedDetails}>
-                    <p>{networkId ? networkIdToName[networkId] : ""}</p>
-                    <p>{address? smartTrim(address, 8):''}</p>
+                    {address? smartTrim(address, 8):''}
                   </div>
                 </div>)
             default:
@@ -54,9 +69,14 @@ const WalletButton = () => {
     }  
 
     return (
-      <button className={styles.walletContainer} onClick={handleWalletClick} hidden={false} >
-        {renderWalletButton()}
-      </button>
+      <div className={`${globalStyles.gridTile} ${styles.walletContainer}` }>
+        <button className={styles.walletButton} onClick={handleWalletClick} hidden={false} >
+          {renderWalletButton()}
+        </button>
+        <div className={styles.walletAppIcon}>
+          {renderWalletAppIcon()}
+        </div>
+      </div>
     );
   };
 
