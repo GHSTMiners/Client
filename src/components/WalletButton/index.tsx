@@ -29,12 +29,12 @@ const WalletButton = () => {
     useEffect(() => {
       const changeAccount = () => Client.getInstance().authenticator.authenticate()
       const changeChain = () => Client.getInstance().authenticator.authenticate()
-      window.ethereum.on("accountsChanged", changeAccount);
-      window.ethereum.on("chainChanged", changeChain );
+      window.ethereum?.on("accountsChanged", changeAccount);
+      window.ethereum?.on("chainChanged", changeChain );
   
       return () => {
-        window.ethereum.off("accountsChanged", changeAccount);
-        window.ethereum.off("chainChanged", changeChain );
+        window.ethereum?.off("accountsChanged", changeAccount);
+        window.ethereum?.off("chainChanged", changeChain );
       }
   
     }, []);
@@ -55,7 +55,6 @@ const WalletButton = () => {
                   <>CONNECT</>
                   )
             case AuthenticatorState.Authenticated:
-              console.log(walletProviderApp)
                 return(
                 <div className={styles.walletWrapper}>
                   <img src={walletConnect} className={styles.walletIcon} alt={'Web3 Wallet'}/>
