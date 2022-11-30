@@ -79,6 +79,7 @@ export default class Authenticator {
           break;
         case AuthenticatorState.Authenticated:
           useGlobalStore.getState().setAuthenticatorState(AuthenticatorState.Authenticated)
+          useGlobalStore.getState().setIsWalletLoaded(true);
           break;
       }
     }

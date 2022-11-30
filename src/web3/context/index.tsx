@@ -35,7 +35,7 @@ const updateAavegotchis = async (
       getAllAavegotchisOfOwner(owner)
     )
     useGlobalStore.getState().setUsersAavegotchis(res.aavegotchis);
-    useGlobalStore.getState().setIsWalletLoaded(true);
+    //useGlobalStore.getState().setIsWalletLoaded(true);
     dispatch({
       type: "SET_USERS_AAVEGOTCHIS",
       usersAavegotchis: res.aavegotchis,
@@ -54,7 +54,7 @@ const getAavegotchis = async ( owner: string) => {
       getAllAavegotchisOfOwner(owner)
     )
     useGlobalStore.getState().setUsersAavegotchis(res.aavegotchis);
-    useGlobalStore.getState().setIsWalletLoaded(true);
+    //useGlobalStore.getState().setIsWalletLoaded(true);
   } catch (err) {
     console.log(err)
   }

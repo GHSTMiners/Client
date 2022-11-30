@@ -26,6 +26,7 @@ export const Header = () => {
   const setIsLoading = useGlobalStore( state => state.setIsLoading )
   const serverRegion = useGlobalStore( state => state.region );
   const usersAavegotchis = useGlobalStore( state => state.usersAavegotchis)
+  const isWalletLoaded = useGlobalStore( state => state.isWalletLoaded)
 
   const routeToLobby = () => {
     setIsLoading(true)
@@ -111,8 +112,8 @@ export const Header = () => {
         </ul>
         {/*<WalletButton />*/}
         
-        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame }> 
-          <div className={styles.playWrapper}>
+        <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame}> 
+          <div className={styles.playWrapper} hidden={!isWalletLoaded }>
             <PlayButton 
               width={'15rem'} 
               fontSize={'2rem'} 

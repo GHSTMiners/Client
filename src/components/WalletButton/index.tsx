@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import globalStyles from "theme/globalStyles.module.css";
 import renderWalletIcon from "./renderWalletIcon";
 import renderWalletButton from "./renderWalletButton";
+import ReactTooltip from "react-tooltip";
 
 const WalletButton = () => {
     const address = useGlobalStore( state => state.usersWalletAddress)
     const authenticatorState = useGlobalStore( state => state.authenticatorState)
     const walletProviderApp = useGlobalStore( state => state.walletProviderApp)
+    const isWalletLoaded = useGlobalStore( state => state.isWalletLoaded)
 
     const handleWalletClick = () => {
         switch (authenticatorState){
@@ -18,7 +20,8 @@ const WalletButton = () => {
                 Client.getInstance().authenticator.authenticate()
                 break;
             case AuthenticatorState.Authenticated:
-                Client.getInstance().authenticator.signOut()
+                const answer = window.confirm("You are about to DISCONECT your wallet from this website, are you sure?");
+                if (answer) Client.getInstance().authenticator.signOut()
                 break;
             default:
               break;
@@ -37,8 +40,9 @@ const WalletButton = () => {
     }, []);
 
     return (
-      <div className={`${globalStyles.gridTile} ${styles.walletContainer}` }>
-        <button className={styles.walletButton} onClick={handleWalletClick} hidden={false} >
+      <div className={`${globalStyles.gridTile} ${styles.walletContainer} ${(authenticatorState===AuthenticatorState.Disconnected)? styles.pulsatingGlow : null}` }>
+        <button className={styles.walletButton} onClick={handleWalletClick} hidden={false} data-tip={'Click to DISCONNECT'} >
+          <ReactTooltip  effect="solid" disable={(authenticatorState!==AuthenticatorState.Authenticated)}/>
           {renderWalletButton(authenticatorState,address)}
         </button>
         <div className={styles.walletAppIcon}>

@@ -7,7 +7,10 @@ function renderWalletButton (authenticatorState: AuthenticatorState, address: st
     switch (authenticatorState){
         case AuthenticatorState.Disconnected:
             return(
-              <>CONNECT</>
+              <>
+                <img src={walletIcon} className={styles.walletIcon} alt={'Web3 Wallet'}/>
+                CONNECT
+              </>
               )
         case AuthenticatorState.Authenticated:
             return(

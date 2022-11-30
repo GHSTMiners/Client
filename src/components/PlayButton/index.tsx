@@ -1,8 +1,5 @@
 import React from "react";
-import { useGlobalStore } from "store";
 import styles from "./styles.module.css";
-import { SpinnerDotted } from 'spinners-react';
-import { AuthenticatorState } from "helpers/vars";
 
 
 interface Props {
@@ -21,30 +18,14 @@ const PlayButton: React.FC<Props> = ({
   fontSize='1.2rem',
   disabled,
 }) => {
-  const authenticatorState = useGlobalStore( state => state.authenticatorState )
-  
-  const renderPlayButton = () => {
-    switch (authenticatorState){
-        case AuthenticatorState.Disconnected:
-            return(
-              <></>
-              )
-        case AuthenticatorState.Authenticated:
-            return(
-              'PLAY')
-        default:
-          return( <SpinnerDotted color={'2a2a2acc'} />)
-    }
-  }
 
   return (
     <button
       onClick={onClick}
-      className={`${styles.greenButton} ${(authenticatorState === AuthenticatorState.Disconnected)? styles.noWallet : null }`}
-      disabled={ disabled}
-    >
+      className={styles.greenButton}
+      disabled={disabled}>
       <div className={styles.buttonText} style={{ width: width, fontSize: fontSize}}>
-        {renderPlayButton()}
+        PLAY
       </div>
     </button>
   );
