@@ -65,6 +65,7 @@ export enum AuthenticatorState{
 
 export enum WalletApps{
   Metamask = 'Metamask',
+  WalletConnect = 'WalletConnect',
   Frame = 'Frame',
   Unknown = 'Unknown'
 }

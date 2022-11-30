@@ -7,51 +7,47 @@
 }
 
 .walletButton {
-    background-color: transparent;
-    font-size: 1rem;
-    font-family: Rocks;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    place-items: center;
-    cursor: pointer;
-    height: 100%;
-    align-self: center;
-    border: 0px solid red;
-  }
+  background-color: transparent;
+  font-size: 1rem;
+  font-family: Rocks;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  cursor: pointer;
+  height: 100%;
+  align-self: center;
+  border: 0px solid red;
+}
+.walletIcon{
+  height: 2rem;
+}
+.walletAppIcon{
+  position: absolute;
+  top:0;
+  right:0;
+  transform: translate( -30% ,30% );
+}
+.walletAppIcon img{
+  height: 1.5rem;
+}
+.walletButton:disabled {
+  cursor: auto;
+}
 
-  .walletIcon{
-    height: 2rem;
-  }
+.walletWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.walletAddress p {
+  margin: 0 0 0 1.2rem;
+}
 
-  .walletAppIcon{
-    position: absolute;
-    top:0;
-    right:0;
-    transform: translate( -30% ,30% );
-  }
-
-  .walletAppIcon img{
-    height: 1.5rem;
-  }
-
-  .walletButton:disabled {
-    cursor: auto;
-  }
-  
-  .walletWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-  }
-  .walletAddress p {
-    margin: 0 0 0 1.2rem;
-  }
-  
-  .connectedDetails {
-    text-align: center;
-    color: #cecece;
-  }
+.connectedDetails {
+  text-align: center;
+  color: #cecece;
+}

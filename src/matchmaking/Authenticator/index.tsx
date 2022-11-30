@@ -174,6 +174,7 @@ export default class Authenticator {
       if(provider) {
         // black magic to bypass the proxy handler and access otherwise unreachable properties
         const provider_target =  Object.assign({}, provider);
+        if (provider_target.wc) useGlobalStore.getState().setWalletProviderApp( WalletApps.WalletConnect );
         if (provider_target.isMetaMask) useGlobalStore.getState().setWalletProviderApp( WalletApps.Metamask );
         if (provider_target.isFrame) useGlobalStore.getState().setWalletProviderApp( WalletApps.Frame );
         useGlobalStore.getState().setUsersProvider(provider);
