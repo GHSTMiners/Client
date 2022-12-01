@@ -57,10 +57,10 @@
 }
 
 .blocky{
-  border-radius: 25%;
+  border-radius: 50%;
   position: absolute;
   margin-right: 1.6rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .pulsatingGlow{

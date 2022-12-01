@@ -50,7 +50,10 @@ export default class Authenticator {
         useGlobalStore.getState().clearUserWeb3Data();
         Cookies.remove(`token_${this.m_chainId}_${this.m_currentAccount}`)
         useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected );
-      } else console.log('You need to be authenticated to sign out')
+      } else {
+        console.log('You need to be authenticated to sign out')
+        useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
+      }
     }
 
     private runStateMachine() {
@@ -96,6 +99,7 @@ export default class Authenticator {
             alert("Server rejected your token!")
           }
         } else {
+          useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
           alert("Server refused your request!")
         }
       });
@@ -118,7 +122,8 @@ export default class Authenticator {
     private async requestSignature() {
       this.m_web3.eth.personal.sign(this.m_challenge, this.m_currentAccount, "", (error: Error, signature: string) => {
         if(error) {
-          alert('You need to sign the challenge in order to validate your wallet ownership!');
+          useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
+          alert('You need to sign the challenge in order to validate your wallet ownership');
         } else {
           this.m_signedChallenge = signature
           useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.ValidatingSignature )
@@ -135,6 +140,7 @@ export default class Authenticator {
             useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.AwaitingSignature )
             this.runStateMachine()
           } else {
+            useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
             alert("Could not fetch challenge from server, maybe we're having server issues?")
           }
       });
@@ -171,35 +177,42 @@ export default class Authenticator {
       });
 
       //Connect to wallet
-      const provider = await this.m_web3Modal.connect();
-      if(provider) {
-        // black magic to bypass the proxy handler and access otherwise unreachable properties
-        const provider_target =  Object.assign({}, provider);
-        if (provider_target.wc) useGlobalStore.getState().setWalletProviderApp( WalletApps.WalletConnect );
-        if (provider_target.isMetaMask) useGlobalStore.getState().setWalletProviderApp( WalletApps.Metamask );
-        if (provider_target.isFrame) useGlobalStore.getState().setWalletProviderApp( WalletApps.Frame );
-        useGlobalStore.getState().setUsersProvider(provider);
-        this.m_web3 = new Web3(provider);
-        //Check if we are on the right chain (Polygon or Ethereum)
-        const chainId = await this.m_web3.eth.getChainId();
-        this.m_chainId = chainId;
-        useGlobalStore.getState().setUsersChainId(chainId);
-        
-        if (!(this.m_chainId === 137)) {
-          alert('This game only works with Aavegotchis on the Polygon network.' )
-          return;
+      try {
+        const provider = await this.m_web3Modal.connect();
+        if(provider) {
+            // black magic to bypass the proxy handler and access otherwise unreachable properties
+            const provider_target =  Object.assign({}, provider);
+            if (provider_target.wc) useGlobalStore.getState().setWalletProviderApp( WalletApps.WalletConnect );
+            if (provider_target.isMetaMask) useGlobalStore.getState().setWalletProviderApp( WalletApps.Metamask );
+            if (provider_target.isFrame) useGlobalStore.getState().setWalletProviderApp( WalletApps.Frame );
+            useGlobalStore.getState().setUsersProvider(provider);
+            this.m_web3 = new Web3(provider);
+            //Check if we are on the right chain (Polygon or Ethereum)
+            const chainId = await this.m_web3.eth.getChainId();
+            this.m_chainId = chainId;
+            useGlobalStore.getState().setUsersChainId(chainId);
+
+            if (!(this.m_chainId === 137)) {
+              alert('This game only works with Aavegotchis on the Polygon network.' )
+              return;
+            }
+            //Get accounts and sign message using first account
+            this.m_web3.eth.getAccounts(async (error: Error, accounts: string[]) => {
+              if (accounts.length > 1) alert('There are multiple wallet accounts connected to this site, we will use the first one by default. Please disconnect uncessary accounts from this site using your wallet application.')
+              //Assign current account
+              this.m_currentAccount = accounts[0];
+              useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.WalletConnected )
+              this.runStateMachine()
+              useGlobalStore.getState().setUsersWalletAddress(accounts[0]);
+            });
+        } else {
+          console.log(`Failed to connect to wallet`)
+          useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
         }
-        //Get accounts and sign message using first account
-        this.m_web3.eth.getAccounts(async (error: Error, accounts: string[]) => {
-          if (accounts.length > 1) alert('There are multiple wallet accounts connected to this site, we will use the first one by default. Please disconnect uncessary accounts from this site using your wallet application.')
-          //Assign current account
-          this.m_currentAccount = accounts[0];
-          useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.WalletConnected )
-          this.runStateMachine()
-          useGlobalStore.getState().setUsersWalletAddress(accounts[0]);
-        });
-      } else {
-        console.log(`Failed to connect to wallet`)
+      } catch (e) {
+        console.log("Could not get a wallet connection", e);
+        useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
+        return;
       }
     }
     public  m_web3: Web3

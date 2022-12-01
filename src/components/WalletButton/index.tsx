@@ -23,7 +23,7 @@ const WalletButton = () => {
                 if (answer) Client.getInstance().authenticator.signOut()
                 break;
             default:
-              break;
+                break;
         }
     };
 

@@ -77,7 +77,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     worldCrypto: {},
     worldExplosives: {}, 
     wallet : {},
-    authenticatorState: AuthenticatorState.Disconnected,
+    authenticatorState: AuthenticatorState.Start,
     totalValue: 0,
     explosives: {}, 
     depth: 0 ,
