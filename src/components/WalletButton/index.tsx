@@ -12,8 +12,7 @@ const WalletButton = () => {
     const address = useGlobalStore( state => state.usersWalletAddress)
     const authenticatorState = useGlobalStore( state => state.authenticatorState)
     const walletProviderApp = useGlobalStore( state => state.walletProviderApp)
-    const isWalletLoaded = useGlobalStore( state => state.isWalletLoaded)
-
+    
     const handleWalletClick = () => {
         switch (authenticatorState){
             case AuthenticatorState.Disconnected:

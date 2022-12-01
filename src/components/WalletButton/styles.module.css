@@ -23,16 +23,17 @@
   border: 0px solid red;
 }
 .walletIcon{
-  height: 2rem;
+  margin-top: 0.5rem;
+  height: 3rem;
 }
 .walletAppIcon{
   position: absolute;
   top:0;
   right:0;
-  transform: translate( -30% ,30% );
+  transform: translate( -30% ,10% );
 }
 .walletAppIcon img{
-  height: 1.5rem;
+  height: 1.2rem;
 }
 .walletButton:disabled {
   cursor: auto;
@@ -50,8 +51,16 @@
 }
 
 .connectedDetails {
+  padding-top: 0.4rem;
   text-align: center;
   color: #cecece;
+}
+
+.blocky{
+  border-radius: 25%;
+  position: absolute;
+  margin-right: 1.6rem;
+  margin-bottom: 0.3rem;
 }
 
 .pulsatingGlow{
