@@ -26,9 +26,7 @@
 }
 
 .buttonText{
-  margin-left: 1rem;
-  margin-right: 1rem;
-  height: 40%;
+  height: 60%;
   display: flex;
   justify-content: center;
   align-items: center;

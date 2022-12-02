@@ -15,6 +15,8 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
 
     private handleDead = (message: Protocol.NotifyPlayerDied) => {
         const players= useGlobalStore.getState().players;
+        //const deadPlayerColor = players[message.gotchiId].chatColor;
+        //const gotchiDied = `Player 💀<span style={{color: ${deadPlayerColor}}}>${players[message.gotchiId].name}</span> died because ${message.reason} ${message.perpetratorGotchiId? `killed by 😈${players[message.perpetratorGotchiId].name}` : ''} ${message.lostCargo? `loosing ${message.lostCargo} crystals`:''} `
         const gotchiDied = `Player 💀${players[message.gotchiId].name} died because ${message.reason} ${message.perpetratorGotchiId? `killed by 😈${players[message.perpetratorGotchiId].name}` : ''} ${message.lostCargo? `loosing ${message.lostCargo} crystals`:''} `
         const notification = new Protocol.MessageFromServer();
         notification.msg = gotchiDied;

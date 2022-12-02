@@ -9,7 +9,7 @@ export const NewsPanel = () => {
    const newsArray: newsEntry[]= [];
    newsArray.push({
      title: "🔥 Stress Test",
-     content: "GotchiMiner is almost ready for launch! Come and join us during November in the first stress test of the game. Cooperate with your frens or compite to mine all the precious crypto crystals, the choice is yours!"
+     content: "GotchiMiner is almost ready for launch! Come and join us during December in the first stress test of the game. Cooperate with your frens or compite to mine all the precious crypto crystals, the choice is yours!"
    });
    newsArray.push({
     title: "🚀 AAVEGOTCHI XP EVENT!",

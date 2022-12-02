@@ -3,16 +3,16 @@
   position: relative;
   flex-direction: row;
   margin-right: 0.4rem;
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
   margin-left: 1rem;
-  min-height: 8.2rem;
+  min-height: 7.3rem;
 }
 
 .walletButton {
   background-color: transparent;
   font-size: 1rem;
   font-family: Rocks;
-  color: white;
+  color: #cecece;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,7 +21,16 @@
   height: 100%;
   align-self: center;
   border: 0px solid red;
+  transition: all 400ms ease;
 }
+
+.walletButton:hover{
+  transition: all 400ms ease;
+  color:white;
+}
+
+
+
 .walletIcon{
   margin-top: 0.5rem;
   height: 3rem;
@@ -53,8 +62,8 @@
 .connectedDetails {
   padding-top: 0.4rem;
   text-align: center;
-  color: #cecece;
 }
+
 
 .blocky{
   border-radius: 50%;

@@ -22,9 +22,6 @@
 }
 
 .buttonText{
-  margin-left: 1rem;
-  margin-right: 1rem;
-  height: 40%;
   color: rgba(255,255,255,0.9);
   display: flex;
   justify-content: center;

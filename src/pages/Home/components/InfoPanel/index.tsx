@@ -31,11 +31,13 @@ export const InfoPanel = ({
     return (
       <div className={styles.infoPanel}>
           <div className={styles.tileHeader}>
-            <div className={styles.infoTitle}> {title} </div>
+            <div className={styles.infoTitle}> 
+              {title} 
+              <div className={styles.infoQuantity}> 
+                {loading? <SpinnerCircular color={'ffffff'}/> : formatQuantity(quantity)} 
+              </div>
+            </div>
             { icon? <img src={icon} className={styles.tileIcon} alt={title}/> : ''}
-          </div>
-          <div className={styles.infoQuantity}> 
-            {loading? <SpinnerCircular color={'ffffff'}/> : formatQuantity(quantity)} 
           </div>
       </div>
     );

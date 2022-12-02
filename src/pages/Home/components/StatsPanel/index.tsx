@@ -14,7 +14,7 @@ export const StatsPanel = () => {
     labels: ["January","February","March","April","May","June","July"],
     datasets: [
       {
-        label: "Europa",
+        label: "Europe",
         data: [956, 512, 3622, 2366, 5126, 4232, 6215],
         fill: false,
         borderColor: "rgba(216, 181, 97, 0.7)",
@@ -30,12 +30,6 @@ export const StatsPanel = () => {
         label: "Asia",
         data: [755, 1512, 4024, 6096, 3192, 5000, 6500],
         borderColor: "rgba(69, 146, 198, 0.7)",
-        tension: 0.3
-      },
-      {
-        label: "Australia",
-        data: [333, 666, 999, 1111, 2222, 1515, 3333],
-        borderColor: "rgba(75,192,192,0.7)",
         tension: 0.3
       }
     ]

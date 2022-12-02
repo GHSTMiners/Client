@@ -2,6 +2,8 @@ import styles from "./styles.module.css";
 
 const renderSystemMessage = (text: string) => {
   //${styles.rainbow} ${styles.rainbow_text_animated} 
+  //const formattedText = new DOMParser().parseFromString(text, "text/html");
+  //console.log(formattedText.firstElementChild?.innerHTML)
   return (
      <div className={`${styles.chatMessage} `} key={Date.now()}> {text} </div>
    );

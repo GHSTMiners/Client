@@ -2,11 +2,6 @@
 
 .header {
   background-color: transparent;
-  height: 7rem;
-  padding-top: 0.5rem;
-}
-
-.header > * {
   height: 10rem;
 }
 
@@ -36,8 +31,8 @@
   font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
-  display: block;
-  padding-top: 2.5rem ;
+  display: grid;
+  align-content: center;
   white-space: nowrap;
   transition: 0.3s all ease-out;
   border-bottom:3px solid rgba(206,206,206,0);
@@ -57,15 +52,14 @@
 }
 
 .activeNavLink {
-  text-align: right;
   color: #dddddd;
   font-family: Rocks;
   opacity: 1;
   font-size: 1.9em;
   text-transform: uppercase;
   text-decoration: none;
-  display: block;
-  padding-top: 2.5rem ;
+  display: grid;
+  align-content: center;
   cursor: default;
   transition: 0.3s;
   white-space: nowrap;
@@ -78,6 +72,10 @@
 
 .playButtonContainer{
   justify-self: center;
+  height: 10rem;
+  padding-bottom:1rem;
+  align-items: center;
+  align-self: center;
   display: flex;
   flex-direction: row;
 }
@@ -100,7 +98,7 @@
 
   .navContainer {
     display: flex;
-    margin: 0;
+    margin: 0rem;
     padding: 0;
   }
   .navContainer > * + * {
@@ -114,6 +112,12 @@
   .walletContainer {
     margin-top: 0;
     margin-left: 0;
+  }
+}
+
+@media all and (max-width: 1600px) {
+  html {
+    font-size: 14px;
   }
 }
 
