@@ -148,3 +148,9 @@ export type IndexedRoomGotchis = { [key: string]: RoomGotchi}
 export type endedGameMessage = { roomId: string, gotchiId: string };
 
 export type TimeSeries = { timestamps:number[]; values:number[] }
+
+export type ScatteredData = {x:number, y:number} ; 
+
+export type GraphEntry = { label: string, data: ScatteredData[], fill: boolean, borderColor: string, tension: number };
+
+export type GraphData = { datasets: GraphEntry[]}

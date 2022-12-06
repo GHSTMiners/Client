@@ -1,18 +1,21 @@
 import initSqlJs from 'sql.js';
 import { useGlobalStore } from 'store';
 import Config from 'config';
-import { IndexedArray, TimeSeries } from 'types';
+import { IndexedArray, ScatteredData } from 'types';
+import { DatabaseTables } from './vars';
 
 export default class DatabaseFacade {
   public db: any;
   public url?: string;
   private SQL: Promise<initSqlJs.SqlJsStatic>
   private sql_result!: initSqlJs.SqlJsStatic
+  private refTime0: number;
 
   /**
    * Loads the database file from the server
    */
   constructor(url?:string) {
+    this.refTime0 = 0;
      // @ts-ignore: Let's ignore a compile error like this unreachable code 
     this.SQL = initSqlJs({
       locateFile: (file:any) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.wasm`
@@ -40,6 +43,7 @@ export default class DatabaseFacade {
         //Log that database is loaded, and call onDataBaseLoaded callback if is set
         console.log("Game log database was loaded 🥳")
         useGlobalStore.getState().setIsDatabaseLoaded(true);
+        this.getTime0();
       };
       xhr.send();
     } else {
@@ -48,18 +52,55 @@ export default class DatabaseFacade {
     }
   }
 
-  public getPlayerDepth(playerId:number):TimeSeries{
-    let values: number[] = [];
+  public getScatteredData(playerId:number,table:DatabaseTables):ScatteredData[]{
+    let data: ScatteredData[] = [];
+    this.db.each(`SELECT * FROM ${table} WHERE PlayerID = $playerId`,{$playerId:playerId}, (row:any) => {
+      const dataPoint: ScatteredData = { 
+        x : this.normalizeTimestamp(row.Time), 
+        y:  this.formatData(row.Value,table),
+      }
+      data.push(dataPoint)
+    });
+    return data 
+  }
+
+  public getPlayerDeaths (playerId:number,table:DatabaseTables):ScatteredData[]{
+    let data: ScatteredData[] = [];
     let timestamps: number[] = [];
+    this.db.each("SELECT Time FROM Events WHERE PlayerID = $playerId",{$playerId:playerId}, (row:any) => {
+      timestamps.push(  row.Time ) // time in seconds from start
+    });
+    timestamps.forEach( timestamp => {
+      const closestValue = this.db.exec(`
+        SELECT Value FROM ${table} 
+        WHERE PlayerID = $playerId
+        ORDER BY ABS( Time - ${timestamp} ) 
+        LIMIT 1`,{$playerId:playerId});
+      const dataPoint: ScatteredData = { 
+        x : this.normalizeTimestamp(timestamp), 
+        y:  this.formatData(closestValue[0].values[0],table),
+      }
+      data.push(dataPoint);
+    })
+    return data
+  }
+  
+  private formatData(value:number,table:DatabaseTables):number{
+    switch(table){
+      case DatabaseTables.Depth:
+        return( Math.round(value/Config.blockHeight) )
+      default:
+        return( value )
+    }
+  }
+
+  private normalizeTimestamp( timestamp: number ){
+    return  (timestamp - this.refTime0) /1000 
+  }
+
+  private getTime0(){
     const refTimeEntry = this.db.exec("SELECT Time FROM Depth WHERE ID = 1");
-    const refTime0 = refTimeEntry[0].values[0]; 
-    this.db.each("SELECT Value FROM Depth WHERE PlayerID = $playerId",{$playerId:playerId}, function(row:any){
-      values.push(Math.round(row.Value/Config.blockHeight))
-    });
-    this.db.each("SELECT Time FROM Depth WHERE PlayerID = $playerId",{$playerId:playerId}, (row:any) => {
-      timestamps.push(   (row.Time - refTime0) /1000  ) // time in seconds from start
-    });
-    return { timestamps, values }
+    this.refTime0 = refTimeEntry[0].values[0]; 
   }
 
   public getPlayers(){

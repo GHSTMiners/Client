@@ -70,6 +70,17 @@ export enum WalletApps{
   Unknown = 'Unknown'
 }
 
+export enum DatabaseTables{
+  Cargo = 'Cargo',
+  Crypto = 'Crypto',
+  Depth = 'Depth',
+  Events = 'Events',
+  Fuel = 'Fuel',
+  Health = 'Health',
+  Players = 'Players',
+  sql_sequence =  'sql_sequence'
+}
+
 export const UpgradeTags  = [
    { name:'common', color:'#7f63ff' },
    { name:'uncommon', color:'#33bacc' },
