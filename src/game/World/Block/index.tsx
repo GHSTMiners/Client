@@ -36,40 +36,29 @@ export default class Block extends Phaser.GameObjects.Container {
             switch(blockInfo.spawnType) {
                 case APIInterface.SpawnType.Crypto: 
                     this.itemSprite.setTexture(`crypto_soil_${blockInfo.spawnID}`)
-                    this.backgroundSprite.setAlpha(1)
+                    this.backgroundSprite.clearTint()
                     this.itemSprite.visible = true
                 break;
                 case APIInterface.SpawnType.Rock: 
                     this.itemSprite.setTexture(`rock_${blockInfo.spawnID}`)
-                    this.backgroundSprite.setAlpha(1)
+                    this.backgroundSprite.clearTint()
                     this.itemSprite.visible = true
 
                 break;
                 case APIInterface.SpawnType.WhiteSpace: 
-                    this.backgroundSprite.setAlpha(1)
+                    this.backgroundSprite.clearTint()
                     this.itemSprite.visible = false
                 break;
                 case APIInterface.SpawnType.FallThrough:
                 case APIInterface.SpawnType.None:
                     this.itemSprite.visible = false
-                    this.backgroundSprite.setAlpha(0.5)
+                    this.backgroundSprite.setTint(0x808080)
                 break;
             }
             // Scale images
             this.itemSprite.displayHeight = 128
             this.itemSprite.displayWidth = 128
         }
-    }
-
-    private blockUpdated() {
-        if((this.blockInfo?.spawnType === SpawnType.None || this.blockInfo?.spawnType === SpawnType.FallThrough) && this.backgroundSprite ) {
-            this.backgroundSprite.setAlpha(0.5)
-            //Remove foreground sprite too if it exists
-            if(this.itemSprite) {
-                this.remove(this.itemSprite, true)
-            }
-        }
-
     }
 
     protected preDestroy(): void {
