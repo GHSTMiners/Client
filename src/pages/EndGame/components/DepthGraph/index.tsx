@@ -9,6 +9,7 @@ import { GraphData, GraphEntry } from "types";
 import chroma from "chroma-js"
 import { DatabaseTables } from "helpers/vars";
 import { linePlotOptions } from "./displayOptions"
+import deathGotchiIcon from "assets/icons/deathGhost.svg"
 
 Chart.register(...registerables);
 Chart.defaults.font.size=14;
@@ -18,37 +19,52 @@ export const DepthGraph = () => {
   const isDatabaseLoaded = useGlobalStore( state => state.isDatabaseLoaded );
   const gotchiNames = useGlobalStore( state => state.gotchiNames);
   const isDatabaseAvailable = useGlobalStore( state => state.isDatabaseAvailable);
-  const [ lineData , setLineData ] = useState<GraphData>({} as GraphData)
+  const [ graphData , setGraphData ] = useState<GraphData>({} as GraphData)
+  const selectedTableData = DatabaseTables.Depth;
+  let markerIcon = new Image();
+  markerIcon.src = deathGotchiIcon;
+  markerIcon.width = 20;
+  markerIcon.height = 20;
 
   useEffect(()=>{
     if (isDatabaseLoaded && gotchiNames ){
-      const datasets: GraphEntry[] = [];
+      const graphDatasets: GraphEntry[] = [];
       const players = Client.getInstance().databaseFacade.getPlayers();
       const playerColors = chroma.scale(['#fafa6e','#2A4858']).mode('lch').colors(5);
       
       Object.keys(players).forEach( (playerID,i) => {
-        const playerDepth = Client.getInstance().databaseFacade.getScatteredData( +playerID, DatabaseTables.Depth );
-        const historicalData = { 
-          label: gotchiNames[players[playerID]],
-          data: playerDepth,
-          fill: true,
-          showLine: true,
-          borderColor: playerColors[i],
-          tension: 0.2
+        const rawPlayerData = Client.getInstance().databaseFacade.getScatteredData( +playerID, selectedTableData );
+        const playerDeaths = Client.getInstance().databaseFacade.getPlayerDeaths( +playerID, selectedTableData );
+
+        const deathDataset = { 
+          label: 'deathEventDataset',
+          data: playerDeaths,
+          showLine: false,
+          pointStyle: markerIcon,
         };
-        datasets.push(historicalData);
+        graphDatasets.push(deathDataset);
+
+        const playerData = { 
+          label: gotchiNames[players[playerID]],
+          data: rawPlayerData,
+          showLine: true,
+          radius: 0,
+          borderColor: playerColors[i],
+          tension: 0.2,
+        };
+        graphDatasets.push(playerData);
+
       })
-      setLineData( { datasets: datasets }  )
-      console.count('Rendering graph data...') 
+      setGraphData( { datasets: graphDatasets } )
     } 
   },[isDatabaseLoaded,gotchiNames])
   
   return (
       <div className={styles.graphContainer}>
         { isDatabaseAvailable? 
-             ( lineData.datasets? 
-              <>
-                <Scatter data={lineData} options={linePlotOptions} />  
+             ( graphData.datasets? 
+              <> 
+                <Scatter data={graphData} options={linePlotOptions} />
               </>
                 : null )
             :<div className={styles.graphUnavailable}>
@@ -58,5 +74,3 @@ export const DepthGraph = () => {
       </div>
   );
 };
-  
-// <Line data={lineData} options={plotOptions}/>
