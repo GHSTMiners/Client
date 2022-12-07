@@ -151,6 +151,6 @@ export type TimeSeries = { timestamps:number[]; values:number[] }
 
 export type ScatteredData = {x:number, y:number} ; 
 
-export type GraphEntry = { label: string, data: ScatteredData[], fill: boolean, borderColor: string, tension: number };
+export type GraphEntry = { label?: string, data: ScatteredData[], fill?: boolean, borderColor?: string, tension?: number , radius?: number, pointStyle?:any, pointRadius?:number};
 
 export type GraphData = { datasets: GraphEntry[]}

@@ -2,13 +2,12 @@
    export const linePlotOptions =  {
     responsive: true,
     maintainAspectRatio: false,
-    radius: 0,
     scales: {
       x: {
         min: 0,
         max: 1800,
         ticks: {
-          count: 11,
+          stepSize: 180,
           callback: function(timestamp:any){
             return (timestamp-(timestamp%=60))/60+(9<timestamp?':':':0')+Math.round(timestamp) 
           }
@@ -21,6 +20,12 @@
     plugins: {
       legend: {
         position: "right" as const,
+        labels: {
+          filter: function(item:any, _chart:any) {
+            if (item.text !== 'deathEventDataset' ) return true
+            return !item.text.includes('deathEventDataset') 
+          },
+        }
       },
     }
   };

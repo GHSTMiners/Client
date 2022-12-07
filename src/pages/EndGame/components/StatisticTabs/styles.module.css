@@ -17,7 +17,7 @@
   
   .selectedTab, .tabButton:hover{
     background-color: transparent;
-    border-bottom: none;
+    border-bottom: 1px solid transparent;
     color: white;
   }
   
