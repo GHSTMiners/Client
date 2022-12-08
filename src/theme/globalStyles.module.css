@@ -91,6 +91,24 @@
   opacity: 0.4;
 }
 
+.customSelect{
+  height: 3rem;
+  width: 100%;
+  font-family: Rocks;
+  z-index: 3;
+}
+
+.customSelect:focus{
+  border: none;
+}
+
+.customSelect>div{
+  height: 100%;
+  color: white;
+  background-color: rgba(0,0,0,0.3);
+  border: none;
+}
+
 pre {
   background-color: var(--color-dark_1);
   padding: 1.2rem;

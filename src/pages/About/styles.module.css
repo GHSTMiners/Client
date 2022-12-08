@@ -5,12 +5,12 @@
   display: grid;
   gap: 1rem;
   width: 100%;
-  grid-template-columns: repeat(5,minmax(10rem,1fr)) ;
+  grid-template-columns: repeat(4,minmax(10rem,1fr)) ;
   grid-auto-rows: 19rem 15rem 10rem; /*240px;*/
   grid-template-areas:
-  "guild smokey gotchinomics fabio machete"
-  "jaam smokey gotchinomics fabio machete"
-  "donations  smokey gotchinomics fabio machete";
+  "guild gotchinomics fabio machete"
+  "jaam gotchinomics fabio machete"
+  "donations gotchinomics fabio machete";
  }
 
 .gaameJaam{

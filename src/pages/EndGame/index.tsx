@@ -37,7 +37,6 @@ const EndGame= () => {
             </div> 
             
             <div className={`${globalStyles.gridTile} ${styles.depthHistory}`} >
-                <div className={globalStyles.tileTitle} style={{alignSelf: 'flex-start'}}> Depth History </div>
                 <div className={globalStyles.tileContent}>
                     <DepthGraph />
                 </div>

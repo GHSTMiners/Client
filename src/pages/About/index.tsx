@@ -77,6 +77,7 @@ const About = (): JSX.Element => {
           </span>
         </div>
       </div>
+      {/* 
       <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.smokey}`}>
         {renderGotchiTile('SmokeyTheBandit',
                           '@smokeyZheBandit',
@@ -86,6 +87,7 @@ const About = (): JSX.Element => {
                           'Security speciallist, embedded software developer and full-stack beast. Computers fear him, he has been coding since he was 8, has not stopped since',
                           'VOYAGER was carefully named after a product created by Smokey in real life.')}
       </div>
+      */}
       <div className={`${globalStyles.gridTile} ${styles.gotchiTile} ${styles.gotchinomics}`}>
         {renderGotchiTile('Gotchinomics',
                           '@gotchinomics',

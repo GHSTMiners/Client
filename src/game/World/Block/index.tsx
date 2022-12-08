@@ -1,5 +1,4 @@
 import * as APIInterface from "chisel-api-interface"
-import { SpawnType } from "chisel-api-interface";
 import { BlockInterface } from "game/helpers/BlockSchemaWrapper";
 
 export enum SoilType {

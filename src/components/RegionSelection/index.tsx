@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
-import styles from './styles.module.css';
-import selectStyle from './selectStyle'
+import globalStyles from "theme/globalStyles.module.css";
+import selectStyle from 'theme/selectStyle'
 import { useGlobalStore } from 'store';
 import { ServerRegion } from 'chisel-api-interface/lib/ServerRegion';
 import Config from 'config';
-
-type SelectionPair = { value: string, label:any}
+import { SelectionPair } from 'types';
 
 const RegionSelection = () => {
     
@@ -54,7 +53,7 @@ const RegionSelection = () => {
             loadingMessage={() => "Loading..."}
             value={selectedOption}
             defaultValue={selectedOption}
-            className={styles.customSelect}
+            className={globalStyles.customSelect}
             onChange={(value)=> {updateRegion(value as SelectionPair); }}
             styles={selectStyle}
             openMenuOnFocus

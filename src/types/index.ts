@@ -154,3 +154,5 @@ export type ScatteredData = {x:number, y:number} ;
 export type GraphEntry = { label?: string, data: ScatteredData[], fill?: boolean, borderColor?: string, tension?: number , radius?: number, pointStyle?:any, pointRadius?:number};
 
 export type GraphData = { datasets: GraphEntry[]}
+
+export type SelectionPair = { value: string, label:any}
