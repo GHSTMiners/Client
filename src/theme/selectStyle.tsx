@@ -13,6 +13,7 @@ const selectStyle = {
     control: (base:any) => ({
       ...base,
       outline:'none',
+      boxShadow: 'none',
     }),
     option: (base:any,state:any) => ({
       ...base,

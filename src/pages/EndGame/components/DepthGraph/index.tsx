@@ -24,6 +24,7 @@ export const DepthGraph = () => {
   const gotchiNames = useGlobalStore( state => state.gotchiNames);
   const isDatabaseAvailable = useGlobalStore( state => state.isDatabaseAvailable);
   const [ graphData , setGraphData ] = useState<GraphData>({} as GraphData);
+  const [ graphOptions , setGraphOptions ] = useState(linePlotOptions);
   const selectRef = useRef(null);
   const [selectedTableData, setSelectedOption ]= useState<DatabaseTables>(DatabaseTables.Depth);
   const selectionOptions = [ DatabaseTables.Depth, DatabaseTables.Crypto, DatabaseTables.Cargo, DatabaseTables.Fuel, DatabaseTables.Health ];
@@ -67,6 +68,8 @@ export const DepthGraph = () => {
   },[isDatabaseLoaded,gotchiNames,selectedTableData])
 
   function updateSelection(option:DatabaseTables){
+    (option===DatabaseTables.Depth)? graphOptions.scales.y.reverse = true : graphOptions.scales.y.reverse = false; 
+    setGraphOptions(state => { return {...state} })
     setSelectedOption(option)
   }
 
@@ -97,7 +100,7 @@ export const DepthGraph = () => {
           { isDatabaseAvailable? 
                ( graphData.datasets? 
                 <> 
-                  <Scatter data={graphData} options={linePlotOptions} />
+                  <Scatter data={graphData} options={graphOptions} />
                 </>
                   : null )
               :<div className={styles.graphUnavailable}>
