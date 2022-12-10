@@ -59,6 +59,7 @@
   text-transform: uppercase;
   text-decoration: none;
   display: grid;
+  justify-content: flex-end;
   align-content: center;
   cursor: default;
   transition: 0.3s;

@@ -3,7 +3,6 @@ import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { IndexedArray } from "types"
 import gameEvents from "game/helpers/gameEvents";
 import { Crystal } from "game/World/Crystal";
-import { useGlobalStore } from "store";
 
 export default class RespawnManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {

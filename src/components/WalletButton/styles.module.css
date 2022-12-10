@@ -1,5 +1,6 @@
 .walletContainer{
   display: flex;
+  justify-content: flex-end;
   position: relative;
   flex-direction: row;
   margin-right: 0.4rem;
