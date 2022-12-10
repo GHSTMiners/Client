@@ -13,15 +13,8 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
         //Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
     }
 
-    private handleDead = (message: Protocol.NotifyPlayerDied) => {
-        const players= useGlobalStore.getState().players;
-        //const deadPlayerColor = players[message.gotchiId].chatColor;
-        //const gotchiDied = `Player 💀<span style={{color: ${deadPlayerColor}}}>${players[message.gotchiId].name}</span> died because ${message.reason} ${message.perpetratorGotchiId? `killed by 😈${players[message.perpetratorGotchiId].name}` : ''} ${message.lostCargo? `loosing ${message.lostCargo} crystals`:''} `
-        const gotchiDied = `Player 💀${players[message.gotchiId].name} died because ${message.reason} ${message.perpetratorGotchiId? `killed by 😈${players[message.perpetratorGotchiId].name}` : ''} ${message.lostCargo? `loosing ${message.lostCargo} crystals`:''} `
-        const notification = new Protocol.MessageFromServer();
-        notification.msg = gotchiDied;
-        console.log(gotchiDied)
-        Client.getInstance().phaserGame.events.emit( gameEvents.chat.ANNOUNCEMENT , notification)
+    private handleDead = ( message: Protocol.NotifyPlayerDied ) => {
+        Client.getInstance().phaserGame.events.emit( gameEvents.chat.PLAYERDEAD , message )
         if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
             Client.getInstance().ownPlayer?.cargo.forEach( entry => {
                 this.lostCargo[entry.cryptoID] = entry.amount

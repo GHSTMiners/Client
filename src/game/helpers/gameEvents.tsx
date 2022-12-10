@@ -2,7 +2,7 @@ import { CustomEvents , GameEventList } from "types"
 
 const gameEvents : GameEventList = {
     buildings: { EXIT: Symbol('EXITED_BUILDING')},
-    chat: {...createDisplayEvent('chat'), ANNOUNCEMENT: Symbol('SYSTEM_MESSAGE'), MESSAGE: Symbol('CHAT_MESSAGE')},
+    chat: {...createDisplayEvent('chat'), ANNOUNCEMENT: Symbol('SYSTEM_MESSAGE'), MESSAGE: Symbol('CHAT_MESSAGE'), DEADPLAYER: Symbol('DEAD_PPLAYER')},
     console : { ...createDisplayEvent('console'),  
                     SHORTCUT: Symbol('USED_SHORTCUT') 
                 },

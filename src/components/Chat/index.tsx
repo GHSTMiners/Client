@@ -9,6 +9,7 @@ import renderPlayerMessage from "./renderPlayerMessage"
 import renderSystemMessage from "./renderSystemMessage"
 import submitMessage from "./submitMessage";
 import useVisible from "hooks/useVisible";
+import { useGlobalStore } from "store";
 
 interface Props {
   gameMode?: boolean;
@@ -27,16 +28,61 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
     const printAnnouncement = (notification: Protocol.MessageFromServer)=>{
       if (notification.msg)   setChatHistory([renderSystemMessage(notification.msg)].concat(chatHistory));
     }
+    const printDeadMessage = (message: Protocol.NotifyPlayerDied)=>{
+      const formattedMessage = renderDeadMessage(message);
+      setChatHistory([formattedMessage].concat(chatHistory));
+    }
     if (gameMode) {
-        Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE, printMessage)
-        Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.MESSAGE, printMessage )
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.ANNOUNCEMENT, printAnnouncement )
+        Client.getInstance().phaserGame.events.on( gameEvents.chat.PLAYERDEAD , printDeadMessage )
     }
     
     return () =>{
       Client.getInstance().phaserGame.events.off( gameEvents.chat.MESSAGE, printMessage)
       Client.getInstance().phaserGame.events.off( gameEvents.chat.ANNOUNCEMENT,printAnnouncement)
+      Client.getInstance().phaserGame.events.off( gameEvents.chat.PLAYERDEAD , printDeadMessage )
     }
   },[chatHistory,gameMode]);
+
+  function renderDeadMessage (message: Protocol.NotifyPlayerDied):JSX.Element{
+    const players= useGlobalStore.getState().players;
+    const deadPlayerColor = players[message.gotchiId]?.chatColor;
+    const killerPlayerColor = players[message.perpetratorGotchiId]?.chatColor;
+    const deathReason = Protocol.DeathReason[message.reason];
+    console.log(message)
+    switch (+deathReason){
+      case Protocol.DeathReason.Exploded:
+          return(
+            <span key={Date.now()}>
+              💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name} </span> was blown up 
+              {message.perpetratorGotchiId? ' by 😈':''}<span style={{color: killerPlayerColor, fontWeight: 'bold'}}>{message.perpetratorGotchiId? players[message.perpetratorGotchiId].name:''}</span>
+              {message.lostCargo? ` loosing ${message.lostCargo} crystals`:''} 
+            </span>
+          )
+      case Protocol.DeathReason.Collision:
+        return(
+          <span key={Date.now()}>
+            💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name}</span> died smashed against the ground 
+            {message.lostCargo? ` loosing ${message.lostCargo} crystals`:''} 
+          </span>
+        )
+      case Protocol.DeathReason.OutOfFuel:
+        return(
+          <span key={Date.now()}>
+            💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name}</span> run out of fueld and died
+            {message.lostCargo? ` loosing ${message.lostCargo} crystals`:''} 
+          </span>
+        )
+      default:
+          return(
+            <span key={Date.now()}>
+              💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name}</span> died 
+              {message.lostCargo? ` loosing ${message.lostCargo} crystals`:''} 
+            </span>
+          )
+    }
+  }
 
   function handleClick (event:any) {
     const divID = event.target.getAttribute('id');
