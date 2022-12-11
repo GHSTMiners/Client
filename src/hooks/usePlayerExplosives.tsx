@@ -10,7 +10,10 @@ const usePlayerExplosives = () => {
   useEffect(() => {
 
     const updateExplosives = (id:number, value:number) => {
-      setPlayerExplosives( state => { state[id]=value; return( {...state} ) })
+      setPlayerExplosives( state => { 
+        (value===0)? delete state[id] : state[id]=value ; 
+        return( {...state} ) })
+        console.log(playerExplosives)
     }
 
     const explosiveListeners = () => {

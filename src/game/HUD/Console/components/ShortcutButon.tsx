@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { ExplosiveItem } from "types";
 import dropExplosive from "../helpers/dropExplosive";
 import styles from "../styles.module.css"
+import { useDrag } from 'react-dnd'
 
 interface Props {
   item: ExplosiveItem | undefined, 
@@ -14,6 +15,14 @@ interface Props {
 }
 
 const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
+  
+  const [{ isDragging }, dragRef] = useDrag({
+    type: 'consumable',
+    item: { item, amount, index },
+    collect: (monitor) => ({
+        isDragging: monitor.isDragging()
+    })
+  })
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
@@ -32,7 +41,7 @@ const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
       disabled={amount ? false : true}
       key={`squareButton${index}`}
       onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
-      <div className={styles.inventoryConsumable}>
+      <div className={styles.inventoryConsumable} ref={dragRef}>
         <img src={amount ? item?.image : ''}  alt={amount ? item?.name : 'empty'} hidden={amount? false: true} />
       </div>
     </SquareButton>
