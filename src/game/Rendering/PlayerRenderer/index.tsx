@@ -90,7 +90,11 @@ export default class PlayerRenderer extends Phaser.GameObjects.GameObject {
 
   update(time: number, delta: number): void {
     this.playerSprites.forEach((sprite) => {
-      sprite.update(time, delta);
+      try{
+        sprite.update(time, delta);
+      } catch(err){
+        console.log(err)
+      }
     });
   }
 
