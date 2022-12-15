@@ -116,7 +116,12 @@ export default class Authenticator {
           useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
           alert("Server refused your request!")
         }
-      });
+      })
+      .fail( (xhr, status, error) => {
+        useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.Disconnected )
+        alert('😔Sorry fren, we are unable to validate your signature, maybe due to the type of wallet app that you are using. If the problem persists, please try again using a hot wallet preferably connected to MetaMask.')
+        console.log(error)
+      })
     }
 
     private async requestSignature() {

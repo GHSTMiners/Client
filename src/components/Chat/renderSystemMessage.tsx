@@ -1,11 +1,9 @@
 import styles from "./styles.module.css";
+import { format } from 'fecha';
 
 const renderSystemMessage = (text: string) => {
-  //${styles.rainbow} ${styles.rainbow_text_animated} 
-  //const formattedText = new DOMParser().parseFromString(text, "text/html");
-  //console.log(formattedText.firstElementChild?.innerHTML)
   return (
-     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`} key={Date.now()}> {text} </div>
+     <div className={`${styles.chatMessage} ${styles.rainbow} ${styles.rainbow_text_animated}`} key={Date.now()}> [{format(new Date(), 'shortTime')}] {text} </div>
    );
  };
 
