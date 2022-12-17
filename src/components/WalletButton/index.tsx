@@ -28,8 +28,8 @@ const WalletButton = () => {
     };
 
     useEffect(() => {
-      const changeAccount = () => Client.getInstance().authenticator.authenticate()
-      const changeChain = () => Client.getInstance().authenticator.authenticate()
+      const changeAccount = () => Client.getInstance().authenticator.signOut()
+      const changeChain = () => Client.getInstance().authenticator.signOut()
       window.ethereum?.on("accountsChanged", changeAccount);
       window.ethereum?.on("chainChanged", changeChain );
       return () => {
