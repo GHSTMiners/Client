@@ -73,7 +73,10 @@ const Leaderboard = (): JSX.Element => {
                function(categoryObj) { 
                  return renderSelectElement(categoryObj.name as string, categoryObj.id as number, categoryObj.name as string) 
                 }
-             ) 
+             )
+             .filter( element => (element.key !== 'Playtime') ) 
+             .filter( element => (element.key !== 'Amount spent on upgrades') ) 
+
              if (optionList && mounted){
               setLeaderboardCathegories(optionList);
              }
