@@ -51,8 +51,8 @@
 }
 
 .itemImage {
-  height: auto;
-  width: 4rem;
+  max-width: 4rem;
+  max-height: 4rem;  
   opacity: 0.9;
 }
 

@@ -1,5 +1,6 @@
 import MainScene from "game/Scenes/MainScene";
 import * as Schema from "matchmaking/Schemas";
+import { useGlobalStore } from "store";
 
 
 export default class Explosive extends Phaser.GameObjects.Image {
@@ -8,9 +9,16 @@ export default class Explosive extends Phaser.GameObjects.Image {
         this.schema = schema
         this.soundFXManager = scene.soundFXManager;
         this.setDepth(40);
-        this.setOrigin(0, 0)
-        this.sound = this.soundFXManager.add('fuse');
-        this.soundFXManager.playAtLocation( this.sound, this.schema.x, this.schema.y)
+        this.setOrigin(0, 0);
+        
+        const worldExplosives = useGlobalStore.getState().worldExplosives; 
+        if (worldExplosives[schema.explosiveID]?.name === 'Nuke'){
+            this.sound = this.soundFXManager.add('nuke');
+            this.soundFXManager.play('nuke')
+        } else {
+            this.sound = this.soundFXManager.add('fuse');
+            this.soundFXManager.playAtLocation( this.sound, this.schema.x, this.schema.y)
+        }
     }
 
     public update(time: number, delta: number) {

@@ -40,6 +40,7 @@ export default class LoadingScene extends Phaser.Scene {
     this.load.audio("jackHammer", "assets/audio/jackHammer.webm");
     this.load.audio("metalThud", "assets/audio/metalThud.wav");
     this.load.audio("explosion", "assets/audio/explosion.mp3");
+    this.load.audio("nuke", "assets/audio/nuke.mp3");
     this.load.audio("fuse", "assets/audio/fuse.mp3");
     this.load.audio("thrusters", "assets/audio/thrusters.mp3");
     this.load.audio("upgraded", "assets/audio/upgraded.mp3");

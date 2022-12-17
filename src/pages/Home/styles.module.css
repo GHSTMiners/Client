@@ -62,7 +62,7 @@
 
 @media all and (max-width: 1200px) {
   .basicGrid {
-    grid-template-columns: repeat(4,minmax(200px,1fr));
+    grid-template-columns: repeat(4,minmax(100px,1fr));
     grid-template-areas:
     "topPlayer topPlayer topPlayer topPlayer"
     "topPlayer topPlayer topPlayer topPlayer"
@@ -75,7 +75,7 @@
 
 @media all and (max-width: 870px) {
   .basicGrid {
-    grid-template-columns: repeat(2,minmax(200px,1fr));
+    grid-template-columns: repeat(2,minmax(100px,1fr));
     grid-template-areas:
     "topPlayer topPlayer"
     "topPlayer topPlayer"
