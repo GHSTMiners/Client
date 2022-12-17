@@ -28,6 +28,10 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TWO, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.THREE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.FOUR, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FOUR, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.ESC, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.T, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.SPACE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false))
@@ -79,16 +83,16 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.ONE)?.isDown) {
+        if( this.keys.get(Phaser.Input.Keyboard.KeyCodes.ONE)?.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE)?.isDown ) {
             this.scene.game.events.emit( gameEvents.console.SHORTCUT, 1 )
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TWO)?.isDown) {
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TWO)?.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO)?.isDown ) {
             this.scene.game.events.emit( gameEvents.console.SHORTCUT, 2 )
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.THREE)?.isDown) {
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.THREE)?.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE)?.isDown ) {
             this.scene.game.events.emit( gameEvents.console.SHORTCUT, 3 )
         }
-        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown) {
+        if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.FOUR)?.isDown || this.keys.get(Phaser.Input.Keyboard.KeyCodes.NUMPAD_FOUR)?.isDown ) {
             this.scene.game.events.emit( gameEvents.console.SHORTCUT, 4 )
         }
         if(this.keys.get(Phaser.Input.Keyboard.KeyCodes.TAB)?.isDown) {

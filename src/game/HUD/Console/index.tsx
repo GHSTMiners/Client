@@ -9,7 +9,7 @@ import Cargo from "./components/Cargo";
 import ConsoleButtons from "./components/ConsoleButtons";
 import useVisible from "hooks/useVisible";
 import React from "react";
-import { DndProvider, useDrag } from 'react-dnd'
+import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 
 const Console = () => {
