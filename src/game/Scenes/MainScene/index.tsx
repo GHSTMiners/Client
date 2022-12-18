@@ -49,7 +49,7 @@ export default class MainScene extends Phaser.Scene {
   private chatManager? : ChatManager
   public musicManager?: MusicManager;
   public globalRenderer?: GlobalRenderer;
-  private movementManager?: MovementManager;
+  public movementManager?: MovementManager;
   public diagnosticsManager? : DiagnosticsManager
   private excavationManager?: ExcavationManager;
   private respawnManager?: RespawnManager;

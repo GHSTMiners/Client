@@ -65,7 +65,7 @@ export default class MovementManager extends Phaser.GameObjects.GameObject {
         });        
     }
 
-    private clearKeys=()=>{
+    public clearKeys=()=>{
         // remove all keys' callbacks
         this.keys.forEach( key =>  this.scene.input.keyboard.removeKey(key.keyCode) );
         // remove key events being routed to phaser, unblocking its usage

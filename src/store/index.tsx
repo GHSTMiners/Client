@@ -192,7 +192,11 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         set( () => ({ walletProviderApp: state }))
     },
     clearUserGameData: () =>{
-        set( () => ({ totalValue: 0 }))
+        set( () => ({ 
+            totalValue: 0,
+            cargo: {},
+            explosives: {}  
+        }))
     },
     clearUserWeb3Data: () =>{
         set( () => ({ 
