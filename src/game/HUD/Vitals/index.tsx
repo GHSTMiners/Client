@@ -9,6 +9,7 @@ const Vitals = () => {
   const health = useGlobalStore( state => state.vitals.health );
   const cargo = useGlobalStore( state => state.vitals.cargo );
   const depth = useGlobalStore( state => state.depth );
+  const gameEndUTC = new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )
   const { lowFuel } = useLowFuel(fuel);
 
   return (
@@ -32,7 +33,7 @@ const Vitals = () => {
           Depth:<br /> {depth}
         </div>
 
-        <CountdownTimer targetDate={ (new Date(Client.getInstance().colyseusRoom.state.gameEndUTC )) }/>
+        <CountdownTimer targetDate={ gameEndUTC }/>
         
       </div>
     </>

@@ -14,8 +14,6 @@ const ConsoleButtons = () => {
     const playerExplosives = useGlobalStore( state => state.explosives )
     const [ explosiveKeys , setExplosivesKeys] = useState(Object.keys(playerExplosives))
     
-    
-    //console.count('Rendering console buttons:')
     useEffect(()=>{
       setExplosivesKeys([...Object.keys(playerExplosives)]);
     },[playerExplosives])
@@ -27,6 +25,7 @@ const ConsoleButtons = () => {
                 item={ worldExplosives[+explosiveKeys[button.id]] } 
                 amount={ playerExplosives[+explosiveKeys[button.id]] } 
                 index={ button.shortcut }
+                key= {`shortcut${button.id}`}
               />
         )}
       </> 

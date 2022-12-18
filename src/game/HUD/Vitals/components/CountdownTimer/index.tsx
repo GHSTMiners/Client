@@ -1,9 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCountdown from 'hooks/useCountdown';
 import styles from './styles.module.css'
-//import Client from 'matchmaking/Client'
-//import gameEvents from 'game/helpers/gameEvents';
-
 
 interface Props{
     targetDate : Date
@@ -11,13 +8,10 @@ interface Props{
 
 const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
   const [ minutes, seconds] = useCountdown(targetDate);
-
+  const [ isHidden , setIsHidden] = useState(false)
 
   useEffect(()=>{
-    if ( minutes<=0 && seconds<=0){
-        //console.log('Triggering end game 💀 💀 💀 💀 💀 ')
-        //Client.getInstance().phaserGame.events.emit( gameEvents.game.END )
-    }
+    ( (minutes+seconds) <= 0 )? setIsHidden(true) : setIsHidden(false)
   },[minutes,seconds])
 
   function formatDigits(value:number){
@@ -29,7 +23,7 @@ const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
   }
 
     return(
-        <div className={styles.timerContainer}>
+        <div className={styles.timerContainer} hidden={ isHidden }>
             <span className={styles.minutesLeft}>
                 {formatDigits(minutes)[0]}
             </span>
