@@ -49,7 +49,7 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     }
 
     public stop(){
-        this.scene.sound?.stopAll();
+        this.scene?.sound?.stopAll();
     }
 
     public add(key:string):Phaser.Sound.BaseSound{

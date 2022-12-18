@@ -24,6 +24,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
     useEffect(() => {
         // Fetching base statistics cathegories
         Client.getInstance().apiInterface.statistic_categories().then( (cathegories: StatisticCategory[]) => {
+          console.log(cathegories)
             if (cathegories){
               setCategories( state => { 
                   state=cathegories; 
@@ -84,16 +85,18 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
         // Checking the top players per cathegory
         categories.forEach( entry=>{
             const filteredData = gameStatistics.filter( searchEntry => searchEntry.game_statistic_category_id === entry.id );
-            const topEntry = filteredData.reduce( function (prev,current){
-                return (prev.value > current.value)? prev : current
-            } )
-            const idKey = entry.id as number;
-            if (idKey){
-              setRoomTopScores( state => {
-                state[idKey] = {playerId: topEntry.gotchi.gotchi_id, total: topEntry.value };
-                return({...state}) 
-              });  
-            } 
+            if (filteredData[0]){
+                const topEntry = filteredData.reduce( function (prev,current){
+                  return (prev.value > current.value)? prev : current
+              } )
+              const idKey = entry.id as number;
+              if (idKey){
+                setRoomTopScores( state => {
+                  state[idKey] = {playerId: topEntry.gotchi.gotchi_id, total: topEntry.value };
+                  return({...state}) 
+                });  
+              }
+            }
         })
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps

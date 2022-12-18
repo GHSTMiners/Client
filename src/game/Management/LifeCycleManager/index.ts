@@ -31,9 +31,7 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     
     public handleGameEnded(){
       console.log('My player left the room, my game is over');
-      (this.scene as MainScene).musicManager?.stop();
-      (this.scene as MainScene).soundFXManager?.stop();
-      (this.scene as MainScene).movementManager?.clearKeys();
+      (this.scene as MainScene).shutdown();
       useGlobalStore.getState().clearUserGameData();
 
       Client.getInstance().phaserGame.events.emit( gameEvents.game.END,  { 
