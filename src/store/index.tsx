@@ -69,6 +69,7 @@ type Actions = {
     setUsersChainId: (chainId:number | undefined) => void
     setAuthenticatorState: (state:AuthenticatorState) => void
     setWalletProviderApp: (state:WalletApps) => void
+    clearUserGameData: () => void
     clearUserWeb3Data: () => void
 }
 
@@ -189,6 +190,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setWalletProviderApp: ( state ) =>{
         set( () => ({ walletProviderApp: state }))
+    },
+    clearUserGameData: () =>{
+        set( () => ({ totalValue: 0 }))
     },
     clearUserWeb3Data: () =>{
         set( () => ({ 

@@ -2,6 +2,7 @@ import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents"
 import MainScene from "game/Scenes/MainScene";
+import { useGlobalStore } from "store";
 
 export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
@@ -32,6 +33,7 @@ export default class LifeCycleManager extends Phaser.GameObjects.GameObject {
       console.log('My player left the room, my game is over');
       (this.scene as MainScene).musicManager?.stop();
       (this.scene as MainScene).soundFXManager?.stop();
+      useGlobalStore.getState().clearUserGameData();
 
       Client.getInstance().phaserGame.events.emit( gameEvents.game.END,  { 
         roomId: Client.getInstance().colyseusRoom.id , 
