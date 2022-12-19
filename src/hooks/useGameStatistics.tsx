@@ -24,7 +24,6 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
     useEffect(() => {
         // Fetching base statistics cathegories
         Client.getInstance().apiInterface.statistic_categories().then( (cathegories: StatisticCategory[]) => {
-          console.log(cathegories)
             if (cathegories){
               setCategories( state => { 
                   state=cathegories; 
@@ -34,6 +33,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
         })
         // Fetching game statistics for all the players
         Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
+            console.log(`Room ID: ${roomId}`)
             console.log(info)
             if (info.room_id && info.log_entry && info.log_entry.log_file ){
               const dataURL = `${Config.storageURL}/${info.log_entry.log_file}`;

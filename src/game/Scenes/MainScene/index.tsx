@@ -47,7 +47,7 @@ export default class MainScene extends Phaser.Scene {
 
   shutdown(){
     this.sound.stopAll();
-    this.musicManager?.stop();
+    this.musicManager?.shutdown();
     this.movementManager?.clearKeys();
   }
 

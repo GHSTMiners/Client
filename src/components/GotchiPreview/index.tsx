@@ -14,17 +14,21 @@ const GotchiPreview = ( { tokenId , lazyLoading = true , options} : Props ) => {
     const [gotchiSVG , setGotchiSVG] =useState<string|undefined>(undefined);
 
     useEffect(()=>{
+        let mounted = true;
         if (+tokenId !== undefined && tokenId !== 'undefined' && +tokenId > 0 ){
             const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
             console.log(`Fetching gotchi ID#${+tokenId}`)
             aavegotchiSVGFetcher.frontWithoutBackground(+tokenId ).then((svg) => {
-                let styledSvg = svg;
-                if (options){
-                    styledSvg = customiseSvg(svg,options)
+                if (mounted){
+                    let styledSvg = svg;
+                    if (options){
+                        styledSvg = customiseSvg(svg,options)
+                    }
+                    setGotchiSVG(convertInlineSVGToBlobURL(styledSvg))
                 }
-                setGotchiSVG(convertInlineSVGToBlobURL(styledSvg))
             });
-        }    
+        }
+        return () => {mounted = false}    
     },[tokenId,options])
     
     return(

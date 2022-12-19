@@ -194,6 +194,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     clearUserGameData: () =>{
         set( () => ({ 
             totalValue: 0,
+            depth: 0 ,
+            vitals : {fuel: 100, health: 100, cargo:0} ,
             cargo: {},
             explosives: {}  
         }))
