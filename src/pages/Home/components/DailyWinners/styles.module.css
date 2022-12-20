@@ -40,6 +40,22 @@
     border:none
 }
 
+.selectDropdown{
+    background-color: rgba(0.3,0.3,0.3,0.3);
+    color:white;
+    font-size: 1rem;
+    border:none;
+    height: 2rem;
+    width: 11rem;
+    align-self: space-around;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+
+.noHighscores{
+    font-size: 1.1rem;
+}
+
 .playerContainer{
     
 }

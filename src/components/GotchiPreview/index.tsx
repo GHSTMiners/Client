@@ -17,7 +17,7 @@ const GotchiPreview = ( { tokenId , lazyLoading = true , options} : Props ) => {
         let mounted = true;
         if (+tokenId !== undefined && tokenId !== 'undefined' && +tokenId > 0 ){
             const aavegotchiSVGFetcher = new AavegotchiSVGFetcher();
-            console.log(`Fetching gotchi ID#${+tokenId}`)
+            //console.log(`Fetching gotchi ID#${+tokenId}`)
             aavegotchiSVGFetcher.frontWithoutBackground(+tokenId ).then((svg) => {
                 if (mounted){
                     let styledSvg = svg;

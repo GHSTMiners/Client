@@ -317,8 +317,34 @@ export function replaceParts(svg: string, element: ReplaceElement) {
 }
 
 // Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
-export const getHighScoresWithNames = async (gotchiIDs:string[],displayData:HighScore[]): Promise<Array<HighScore>> => {
-  const updateList=[...displayData];
+export const getHighScoresWithNames = async ( gotchiIDs:string[], displayData:HighScore[] ): Promise<Array<HighScore>> => {
+  let updateList=[...displayData];
+
+  try {
+    const res = await callSubgraph<AavegotchisNameArray>(
+      getAavegotchiNames(gotchiIDs)
+    );
+    if (res){
+      res.aavegotchis.forEach( entry =>{
+        const unnamedEntry = updateList.find( oldEntry => oldEntry.tokenId === entry.id);
+        if (unnamedEntry) unnamedEntry.name = entry.name;
+      })
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return updateList
+};
+
+// Fetching aavegotchi names from the subGraph and returning an array with the right gotchi names
+export const formatHighScoreData = async ( gotchiIDs:string[], values:number[] ): Promise<Array<HighScore>> => {
+  let updateList: HighScore[] = [];
+  
+  gotchiIDs.map( (gotchiID,i) => updateList.push({  
+    tokenId: gotchiID,
+    score: values[i],
+    name: ''}))
+
   try {
     const res = await callSubgraph<AavegotchisNameArray>(
       getAavegotchiNames(gotchiIDs)

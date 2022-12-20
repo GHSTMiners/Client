@@ -9,11 +9,11 @@ export const NewsPanel = () => {
    const newsArray: newsEntry[]= [];
    newsArray.push({
      title: "🔥 Stress Test",
-     content: "GotchiMiner is almost ready for launch! Come and join us during December in the first stress test of the game. Cooperate with your frens or compete to mine all the precious crypto crystals, the choice is yours!"
+     content: "GotchiMiner is almost ready for launch! Come and join us our first public stress test of the game before the 25th of December. Cooperate with your frens or compete to mine all the precious crypto crystals, the choice is yours!"
    });
    newsArray.push({
     title: "🚀 AAVEGOTCHI XP EVENT!",
-    content: "After of a LOT of hard work, we are getting ready for the first official Aavegotchi XP event of GotchiMiner. Specific details of the event will be published shortly after the stress is concluded."
+    content: "After of a LOT of hard work, we are getting ready for the first official Aavegotchi XP event of GotchiMiner. Specific details of the event will be published shortly."
   });
  
    const renderNewsEntry = ( news : newsEntry) => {

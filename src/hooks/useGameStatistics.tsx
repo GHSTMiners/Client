@@ -1,4 +1,4 @@
-import { GameStatistics, StatisticCategory } from "chisel-api-interface/lib/Statistics"
+import { ExtendedGame, StatisticCategory } from "chisel-api-interface/lib/Statistics"
 import Client from "matchmaking/Client";
 import { StatisticEntry } from "chisel-api-interface/lib/Statistics"
 import { useEffect, useState } from "react";
@@ -32,7 +32,7 @@ const useGameStatistics = (roomId : string , myGotchiID: string) => {
             }
         })
         // Fetching game statistics for all the players
-        Client.getInstance().apiInterface.game(roomId).then( (info: GameStatistics) => {
+        Client.getInstance().apiInterface.game(roomId).then( (info: ExtendedGame) => {
             //console.log(info)
             if (info.room_id && info.log_entry && info.log_entry.log_file ){
               const dataURL = `${Config.storageURL}/${info.log_entry.log_file}`;
