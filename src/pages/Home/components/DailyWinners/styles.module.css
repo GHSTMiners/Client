@@ -4,6 +4,7 @@
     height: 100%;
     padding: 2rem;
     font-size: 1.3rem;
+    display: grid;
 }
 
 .infoTitle{
@@ -76,5 +77,8 @@
     .winnersContainer{
         flex-direction: row;
         justify-content: space-around;
+    }
+    .selectDropdown{
+        height: 3rem;
     }
   }
