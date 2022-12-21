@@ -42,6 +42,8 @@ export const Header = () => {
     }).catch(exception => {
       setIsLoading(false)
       alert(`Failed to join a lobby, maybe we're having server issues ?`)
+      console.log('Failed to join the lobby. Reason:')
+      console.log(exception)
     })
    }
 
