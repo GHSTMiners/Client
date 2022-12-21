@@ -197,7 +197,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
             depth: 0 ,
             vitals : {fuel: 100, health: 100, cargo:0} ,
             cargo: {},
-            explosives: {}  
+            explosives: {},
+            wallet : {},
+            worldExplosives: {},   
         }))
     },
     clearUserWeb3Data: () =>{
