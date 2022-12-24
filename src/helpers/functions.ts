@@ -9,3 +9,11 @@ export const smartTrim = (string: string, maxLength: number) => {
   const rstrip = toremove - lstrip;
   return `${string.substring(0, midpoint - lstrip)}...${string.substring(midpoint + rstrip)}`;
 };
+
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount) 
+}
+
+export const formatNumber = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {  maximumFractionDigits: 0 }).format(amount) 
+}

@@ -26,12 +26,12 @@ const Leaderboard = (): JSX.Element => {
   const totalPages: number = 1;
   const emptyWorlds : JSX.Element[] = [];
   const emptyCathegories : JSX.Element[] = [];
-  const emptyStatisticsCathegory: StatisticCategory[] =[];
-  const emptyCathegory = {} as StatisticCategory;
+  const emptyStatisticsCategory: StatisticCategory[] =[];
+  const emptyCategory = {} as StatisticCategory;
   const [leaderboardWorlds,setLeaderboardWorlds] = useState(emptyWorlds);
   const [leaderboardCathegories,setLeaderboardCathegories] = useState(emptyCathegories);
-  const [statisticsCathegories,setStatisticsCathegories] = useState(emptyStatisticsCathegory);
-  const [activeCathegory,setActiveCathegory] = useState(emptyCathegory);
+  const [statisticsCathegories,setStatisticsCathegories] = useState(emptyStatisticsCategory);
+  const [activeCategory,setActiveCategory] = useState(emptyCategory);
   const [highScoresData,setHighScoresData] = useState(highScores);
   const [totalDataPages,setTotalDataPages] = useState(totalPages);
   const isLoading = useGlobalStore( state => state.isLoading );
@@ -82,8 +82,8 @@ const Leaderboard = (): JSX.Element => {
              }
           })
       }
-      // Setting default statistic cathegory
-      setActiveCathegory( {id:3, name:"Endgame crypto"} );
+      // Setting default statistic category
+      setActiveCategory( {id:3, name:"Endgame crypto"} );
     } catch (err) {
       console.log(err);
     }
@@ -91,24 +91,24 @@ const Leaderboard = (): JSX.Element => {
     return () => {mounted = false}; // cleanup function
   },[])
 
-  // Updating component of the drop-down select cathegory element
-  const updateCathegory = (event: ChangeEvent<HTMLSelectElement>) => {
+  // Updating component of the drop-down select category element
+  const updateCategory = (event: ChangeEvent<HTMLSelectElement>) => {
     if (statisticsCathegories){
       let selectedId = number(event.target.value) as number;
       let selectedName = statisticsCathegories.find( element => element.id === selectedId)?.name;
       if (selectedName){
-        const requestedCathegory: StatisticCategory= {id:selectedId, name:selectedName};
-        setActiveCathegory(requestedCathegory);
+        const requestedCategory: StatisticCategory= {id:selectedId, name:selectedName};
+        setActiveCategory(requestedCategory);
       }
     }
   }
 
-  // Fetching leaderboard data for the selected cathegory
+  // Fetching leaderboard data for the selected category
   useEffect(()=>{
     let mounted = true;
-    if (activeCathegory && Object.keys(activeCathegory).length !== 0 ){
+    if (activeCategory && Object.keys(activeCategory).length !== 0 ){
       try{
-        const rawHighScores = Client.getInstance().apiInterface.highscores(activeCathegory)
+        const rawHighScores = Client.getInstance().apiInterface.highscores(activeCategory)
         if (mounted){
           rawHighScores.then( rawScoresData => {
             let displayData: Array<HighScore> = [];
@@ -138,19 +138,19 @@ const Leaderboard = (): JSX.Element => {
       }
     }
     return () => {mounted = false}; // cleanup function
-  },[activeCathegory,highScoresData.length])
+  },[activeCategory,highScoresData.length])
 
   // Competition parameters [Please don't puke, it's just an example of the data format :P ]. TO DO: get this from Chisel
-  const endDate = new Date('June 15, 2022 16:00:00 UTC+2') ;
+  const endDate = new Date('December 25, 2022 22:00:00 UTC+1') ;
   const getReward = (position : number , score?:  number) => {
     if (position === 1) {
-      return "1 x MYTHICAL TICKET"
-    } else if (position <= 3 ) {
-      return "1 x LEGENDARY TICKET"
-    } else if (position <= 5 ) {
-      return "1 x RARE TICKET"
+      return "1 x MINER HELMET"
+    } else if (position === 2 ) {
+      return "1 x LAAND PARCEL"
+    } else if (position === 3 ) {
+      return "1 x LE GOLDEN TILE"
     } else if (position <= 10 ) {
-      return "1 x UNCOMMON TICKET"
+      return "1 x DECORATION"
     } else {
       return ""
     }
@@ -182,7 +182,7 @@ const Leaderboard = (): JSX.Element => {
              </div>
              <div>
                <div className={styles.leaderboardTag}>Category</div>
-               <select value={activeCathegory.id} onChange={(e)=>updateCathegory(e)} className={styles.selectDropdown}>
+               <select value={activeCategory.id} onChange={(e)=>updateCategory(e)} className={styles.selectDropdown}>
                  {leaderboardCathegories}
                </select>
              </div>
@@ -193,6 +193,7 @@ const Leaderboard = (): JSX.Element => {
              <LeaderboardTable pageIndex={currentPage}
                              entriesPerPage={entriesPerPage}
                              highscores={highScoresData}
+                             category={activeCategory}
                              ownedGotchis={usersAavegotchis?.map((gotchi) => gotchi.id)}
                              onlyMine={showOnlyMine}
                              competition={competition}   />

@@ -1,3 +1,5 @@
+import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
+import { formatCurrency, formatNumber } from "helpers/functions";
 import { useEffect, useState } from "react";
 import { HighScore } from "types";
 import styles from "./styles.module.css";
@@ -7,6 +9,7 @@ interface Props {
   pageIndex:number;
   entriesPerPage:number;
   highscores?: Array<HighScore>;
+  category?: StatisticCategory;
   ownedGotchis?: Array<string>;
   onlyMine?: boolean;
   competition?: {
@@ -20,7 +23,7 @@ interface LeaderbordData extends HighScore {
   reward?: React.ReactNode;
 }
 
-export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotchis,onlyMine,competition}:Props) => {
+export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,ownedGotchis,onlyMine,competition}:Props) => {
 
   const [leaderboardData, setLeaderboardData] = useState<Array<LeaderbordData>>([]);
   const [displayedScores, setDisplayedScores] = useState<Array<LeaderbordData>>([]);
@@ -56,16 +59,22 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,ownedGotch
   }, [onlyMine, leaderboardData, ownedGotchis, entriesPerPage, pageIndex]);
   
   const renderRankingRow = ( rank:number, name:string, score: number) =>{
+    let formattedScore = `${score}`
+    if ( category?.name === 'Endgame crypto' || category?.name === 'Total crypto' || category?.name === 'Amount spent on explosives' ){
+      formattedScore = formatCurrency(score)
+    } else {
+      formattedScore = formatNumber(score)
+    }
     return(
     <div className={styles.tableRow} key={name}>
       <div> `&#35;` {rank}</div>
       <div>{name}</div>
-      <div>{score}</div>
+      <div>{formattedScore}</div>
     </div>
     )
   }
   
-  let leaderboardDisplayData = displayedScores?.map(function (row,i) {
+  let leaderboardDisplayData = displayedScores?.map( (row,i) => {
     return( renderRankingRow( row.position, row.name, row.score) )
   });
 
