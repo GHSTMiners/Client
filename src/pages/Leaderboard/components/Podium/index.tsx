@@ -5,9 +5,11 @@ import { HighScore } from 'types';
 import { number } from 'mathjs';
 import GotchiPreview from 'components/GotchiPreview';
 import { CustomiseOptions } from 'helpers/aavegotchi';
+import { StatisticCategory } from 'chisel-api-interface/lib/Statistics';
 
 interface Props {
   podiumGotchis : Array<HighScore>;
+  category: StatisticCategory
 }
 
 export const Podium: React.FC<Props> = ({

@@ -142,7 +142,7 @@ const Leaderboard = (): JSX.Element => {
 
   // Competition parameters [Please don't puke, it's just an example of the data format :P ]. TO DO: get this from Chisel
   const endDate = new Date('December 25, 2022 22:00:00 UTC+1') ;
-  const getReward = (position : number , score?:  number) => {
+  const getReward = (position : number , score?:  number):string => {
     if (position === 1) {
       return "1 x MINER HELMET"
     } else if (position === 2 ) {
@@ -161,7 +161,7 @@ const Leaderboard = (): JSX.Element => {
      <div className={`${styles.leaderboardContainer} ${isLoading? globalStyles.isLoading :null}`}>
        
        <div className={styles.gotchiPodiumContainer}>
-         <Podium podiumGotchis={highScoresData} />
+         <Podium podiumGotchis={highScoresData} category={activeCategory}/>
        </div>
   
        <div className={styles.tableContainer}>

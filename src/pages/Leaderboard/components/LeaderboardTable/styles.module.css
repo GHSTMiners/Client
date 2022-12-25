@@ -10,11 +10,11 @@
 
 .tableRow{
   display: grid;
-  grid-template-columns: 1.5fr 10fr 1.5fr;
+  grid-template-columns: 2fr 8fr 8fr 5rem;
   width: 100%;
   align-items: center;
   justify-items: flex-start;
-  padding-right: 3rem;
+  padding-right: 2rem;
   padding-bottom: 1rem;
 }
 
@@ -25,6 +25,8 @@
 .rankingHeader{
   border-top: 2px solid white;
   padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 8fr 8fr 5rem;
   border-bottom: 2px solid white;
   margin-bottom: 1rem;
 }
