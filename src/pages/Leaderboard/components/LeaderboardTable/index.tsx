@@ -1,5 +1,5 @@
 import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
-import { formatCurrency, formatNumber } from "helpers/functions";
+import { formatScore } from "helpers/functions";
 import { ReactNode, useEffect, useState } from "react";
 import { HighScore } from "types";
 import styles from "./styles.module.css";
@@ -59,19 +59,12 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,o
   }, [onlyMine, leaderboardData, ownedGotchis, entriesPerPage, pageIndex]);
   
   const renderRankingRow = ( rank:number, name:string, score: number, reward?:ReactNode) =>{
-    let formattedScore = `${score}`
-    if ( category?.name === 'Endgame crypto' || category?.name === 'Total crypto' || category?.name === 'Amount spent on explosives' ){
-      formattedScore = formatCurrency(score)
-
-    } else {
-      formattedScore = formatNumber(score)
-    }
     return(
     <div className={styles.tableRow} key={name}>
       <div> `&#35;` {rank}</div>
       <div>{name}</div>
       <div className={styles.rewardColumn} >{(category?.name === 'Endgame crypto')? reward: ''}</div>
-      <div>{formattedScore}</div>
+      <div>{formatScore(score,category)}</div>
     </div>
     )
   }
@@ -85,7 +78,7 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,o
         <div className={`${styles.rankingHeader} ${styles.tableRow}`} key={"leaderboardHeader"}>
           <div>Rank</div>
           <div>Name</div>
-          <div>Reward</div>
+          <div>{(category?.name === 'Endgame crypto')? 'Reward': ''}</div>
           <div>Score</div>
         </div>
         <div className={styles.rankingData}  key={"leaderboardDataList"}>

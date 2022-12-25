@@ -6,6 +6,7 @@ import { number } from 'mathjs';
 import GotchiPreview from 'components/GotchiPreview';
 import { CustomiseOptions } from 'helpers/aavegotchi';
 import { StatisticCategory } from 'chisel-api-interface/lib/Statistics';
+import { formatScore } from 'helpers/functions';
 
 interface Props {
   podiumGotchis : Array<HighScore>;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export const Podium: React.FC<Props> = ({
-  podiumGotchis
+  podiumGotchis, category
 }) => {
     
     const renderGotchi = (id:number, winner:boolean, options?: CustomiseOptions)=>{
@@ -32,21 +33,21 @@ export const Podium: React.FC<Props> = ({
           </div>
           <div className={`${styles.podiumText} ${styles.rank1Text}`}>
             {podiumGotchis[0].name}
-            <div style={{color:'#ffffff'}} >{podiumGotchis[0].score}</div>
+            <div style={{color:'#ffffff'}} >{formatScore(podiumGotchis[0].score,category)}</div>
           </div>
           <div className={styles.gotchiRank2}>
             {renderGotchi(number(podiumGotchis[1].tokenId) as number,false)}
           </div>
           <div className={`${styles.podiumText} ${styles.rank2Text}`}>
             {podiumGotchis[1].name}
-            <div style={{color:'#ffffff'}} >{podiumGotchis[1].score}</div>
+            <div style={{color:'#ffffff'}} >{formatScore(podiumGotchis[1].score,category)}</div>
           </div>
           <div className={styles.gotchiRank3}>
             {renderGotchi(number(podiumGotchis[2].tokenId) as number,false)}
           </div>
           <div className={`${styles.podiumText} ${styles.rank3Text}`}>
             {podiumGotchis[2].name}
-            <div style={{color:'#ffffff'}} >{podiumGotchis[2].score}</div>
+            <div style={{color:'#ffffff'}} >{formatScore(podiumGotchis[2].score,category)}</div>
           </div>
         </>
         : ''}

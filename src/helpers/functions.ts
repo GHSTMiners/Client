@@ -1,3 +1,5 @@
+import { StatisticCategory } from "chisel-api-interface/lib/Statistics";
+
 export const smartTrim = (string: string, maxLength: number) => {
   if (maxLength < 1) return string;
   if (string.length <= maxLength) return string;
@@ -16,4 +18,14 @@ export const formatCurrency = (amount: number) => {
 
 export const formatNumber = (amount: number) => {
   return new Intl.NumberFormat('en-US', {  maximumFractionDigits: 0 }).format(amount) 
+}
+
+export function formatScore( score:number, category?:StatisticCategory ){
+  let formattedScore = `${score}`
+  if ( category?.name === 'Endgame crypto' || category?.name === 'Total crypto' || category?.name === 'Amount spent on explosives' ){
+    formattedScore = formatCurrency(score)
+  } else {
+    formattedScore = formatNumber(score)
+  }
+  return formattedScore
 }
