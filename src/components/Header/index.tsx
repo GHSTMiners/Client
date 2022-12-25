@@ -11,6 +11,7 @@ import gameEvents from "game/helpers/gameEvents";
 import RegionSelection from "components/RegionSelection";
 import { endedGameMessage } from "types";
 import { useGlobalStore } from "store";
+import temporarilyClosed from "assets/images/temporarily_closed.png" 
 import WalletButton from "components/WalletButton";
 
 
@@ -65,7 +66,8 @@ export const Header = () => {
       Client.getInstance().phaserGame?.events.off( gameEvents.game.END, routeToEndgame)
      }
    },[navigator])
-
+ 
+  let serversOnline = false;
 
   return (
     <header className={`${styles.header} ${isLoading? globalStyles.isLoading :null}`} hidden = { inGame } >
@@ -115,12 +117,17 @@ export const Header = () => {
         {/*<WalletButton />*/}
         
         <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame}> 
+
           <div className={styles.playWrapper} hidden={!isWalletLoaded }>
-            <PlayButton 
-              width={'15rem'} 
-              fontSize={'2rem'} 
-              onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
-            <RegionSelection />
+          {serversOnline? 
+            <> 
+              <PlayButton 
+                width={'15rem'} 
+                fontSize={'2rem'} 
+                onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
+              <RegionSelection />
+            </>
+            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }}/> }
           </div>
           <WalletButton />
         </div>
@@ -134,11 +141,15 @@ export const Header = () => {
         
       <div className={styles.mobileHeaderContent}>
         <div className={styles.playButtonContainer} hidden = { inLobby || inEndgame }> 
-          <PlayButton 
-            width={'15rem'} 
-            fontSize={'2rem'} 
-            onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
-          <RegionSelection />
+        {serversOnline? 
+            <> 
+              <PlayButton 
+                width={'15rem'} 
+                fontSize={'2rem'} 
+                onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
+              <RegionSelection />
+            </>
+            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }}/> }
         </div>
 
         <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 

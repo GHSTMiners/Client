@@ -8,12 +8,12 @@ export const NewsPanel = () => {
    // Temporary events, replace hard-coded news and fetch from Chissel
    const newsArray: newsEntry[]= [];
    newsArray.push({
-     title: "🔥 Stress Test",
-     content: "GotchiMiner is almost ready for launch! Come and join us our first public stress test of the game before the 25th of December. Cooperate with your frens or compete to mine all the precious crypto crystals, the choice is yours!"
+     title: "🥳 Successful Stress Test",
+     content: "GotchiMiner successfully finished its first public stress test! At the moment all the servers are temporarily closed so we can work on improving the game and adding moaar fun stuff. Feel free to check out the current stastistics and leaderboards."
    });
    newsArray.push({
     title: "🚀 AAVEGOTCHI XP EVENT!",
-    content: "After of a LOT of hard work, we are getting ready for the first official Aavegotchi XP event of GotchiMiner. Specific details of the event will be published shortly."
+    content: "The first official Aavegotchi XP event of GotchiMiner is being planned. Specific details of the event will be publised via Twitter, don't forget to follow the GhostSquad guild!"
   });
  
    const renderNewsEntry = ( news : newsEntry) => {
