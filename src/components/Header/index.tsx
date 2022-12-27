@@ -67,7 +67,7 @@ export const Header = () => {
      }
    },[navigator])
  
-  let serversOnline = false;
+  let serversOnline = (process.env.NODE_ENV === 'development') ? true: false;
 
   return (
     <header className={`${styles.header} ${isLoading? globalStyles.isLoading :null}`} hidden = { inGame } >
@@ -127,7 +127,7 @@ export const Header = () => {
                 onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
               <RegionSelection />
             </>
-            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }}/> }
+            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }} alt={'Temporarily closed'}/> }
           </div>
           <WalletButton />
         </div>
@@ -149,7 +149,7 @@ export const Header = () => {
                 onClick={ (usersAavegotchis.length===0) ? ()=>alert('😔No gotchis found in your wallet'): routeToLobby} />
               <RegionSelection />
             </>
-            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }}/> }
+            : <img src={temporarilyClosed} style={{height: '7.3rem', marginTop: '0.6rem' }} alt={'Temporarily closed'}/> }
         </div>
 
         <div className={styles.playButtonContainer} hidden = { !( inLobby || inEndgame ) }> 

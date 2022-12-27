@@ -1,12 +1,12 @@
 import Client from "matchmaking/Client"
 import * as APIInterface from "chisel-api-interface"
+import { useGlobalStore } from "store"
 
 export default class MusicManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "MusicManager")
         this.music = []
         this.currentSong = 0
-        this.volume = 1
         Client.getInstance().chiselWorld.music.forEach(music => {
             this.music.push(music)
         })
@@ -22,7 +22,7 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
             { 
                 loop : false
             });
-            this.currentSound.play( {volume:this.volume} )
+            this.currentSound.play( {volume: useGlobalStore.getState().musicVolume } )
             this.currentSound.once(Phaser.Sound.Events.COMPLETE, this.next.bind(this))
         }
     }
@@ -67,11 +67,14 @@ export default class MusicManager extends Phaser.GameObjects.GameObject {
     }
 
     public setVolume(newVolume:number) {
-        this.volume = newVolume;
+        useGlobalStore.getState().setMusicVolume(newVolume);
         (this.currentSound as Phaser.Sound.HTML5AudioSound).setVolume(newVolume);
     }
 
-    private volume : number 
+    public getVolume() {
+        return useGlobalStore.getState().musicVolume;
+    }
+
     private music : APIInterface.Music[]
     private currentSound : Phaser.Sound.BaseSound | undefined
     private currentSong : number

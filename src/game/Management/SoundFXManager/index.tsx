@@ -4,17 +4,18 @@ import { useGlobalStore } from "store";
 export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "SoundFXManager")
-        this.volume = 1;
-        this.gain = 1;
-        this.pan = 0;
     }
 
     public setVolume(volume:number) {
-        this.volume = volume;
+        useGlobalStore.getState().setSoundFXVolume(volume);
+    }
+
+    public getVolume(){
+        return useGlobalStore.getState().soundFXVolume ;
     }
     
     public play(key:string){
-        this.scene.sound.play(key, { volume: this.volume } )
+        this.scene.sound.play(key, { volume: useGlobalStore.getState().soundFXVolume } )
     }
 
     private calculateGain(x:number,y:number){
@@ -35,12 +36,12 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
     }
 
     public playAtLocation( sound:Phaser.Sound.BaseSound, x:number, y:number){
-        this.gain = this.calculateGain(x,y);
-        this.pan = this.calculatePan(x,y);
+        const gain = this.calculateGain(x,y);
+        const pan = this.calculatePan(x,y);
         sound.isPlaying?
-        (sound as Phaser.Sound.HTML5AudioSound).setVolume( this.volume * this.gain ):
-        sound.play( { volume: this.volume * this.gain } );
-        (sound as Phaser.Sound.HTML5AudioSound).setPan( this.pan );
+        (sound as Phaser.Sound.HTML5AudioSound).setVolume( useGlobalStore.getState().soundFXVolume * gain ):
+        sound.play( { volume: useGlobalStore.getState().soundFXVolume * gain } );
+        (sound as Phaser.Sound.HTML5AudioSound).setPan( pan );
     }
 
     public pause(key:string){
@@ -56,8 +57,4 @@ export default class SoundFXManager extends Phaser.GameObjects.GameObject {
         const newSound = this.scene.sound.add(key)
         return newSound
     }
-
-    private pan: number
-    private gain: number
-    public volume: number
 }

@@ -17,6 +17,9 @@ type State = {
     wallet : IndexedArray,
     players: IndexedPlayers,
     playerState: Schema.PlayerState,
+    // game settings
+    soundFXVolume : number,
+    musicVolume: number,
     // lobby schemas    
     lobbyCountdown : number,
     // web 3
@@ -51,6 +54,8 @@ type Actions = {
     setDepth: (depth:number) => void
     setPlayer: (key:string,player:Player) => void
     setPlayerState: (playerState: Schema.PlayerState) => void
+    setSoundFXVolume: (volume: number) => void
+    setMusicVolume: (volume: number) => void
     setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
@@ -84,6 +89,8 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     depth: 0 ,
     players: {},
     playerState: {} as Schema.PlayerState,
+    soundFXVolume : 1,
+    musicVolume: 0.5,
     lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
@@ -120,6 +127,12 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setPlayerState: ( state ) => {
         set( () => ({ playerState: state }))
+    },
+    setSoundFXVolume: ( volume ) =>{
+        set( () => ({ soundFXVolume: volume }))
+    },
+    setMusicVolume: ( volume ) =>{
+        set( () => ({ musicVolume: volume }))
     },
     setCountdown: ( time ) => {
         set( () => ({ lobbyCountdown: time }))

@@ -102,11 +102,11 @@ const Menu = () => {
             <div className={styles.volumesContainer}>
               <div className={styles.volumeSlider}>
                 <span className={styles.menuEntryTitle}> Sound FX </span>
-                <Slider max={1} step={0.01} defaultValue={1} onChange={updateSoundFXVolume} />
+                <Slider max={1} step={0.01} defaultValue={ soundFXManager.getVolume() } onChange={updateSoundFXVolume} />
               </div>
               <div className={styles.volumeSlider}>
                 <span className={styles.menuEntryTitle}> Music</span>
-                <Slider max={1} step={0.01} defaultValue={1} onChange={updateMusicVolume} />
+                <Slider max={1} step={0.01} defaultValue={ musicManager.getVolume() } onChange={updateMusicVolume} />
               </div>
             </div>
             <div className={styles.leaveContainer}>
