@@ -67,7 +67,7 @@ export const Header = () => {
      }
    },[navigator])
  
-  let serversOnline = (process.env.NODE_ENV === 'development') ? true: false;
+  let serversOnline = true;//(process.env.NODE_ENV === 'development') ? true: false;
 
   return (
     <header className={`${styles.header} ${isLoading? globalStyles.isLoading :null}`} hidden = { inGame } >
