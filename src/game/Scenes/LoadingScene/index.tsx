@@ -6,6 +6,8 @@ import * as Schema from "matchmaking/Schemas"
 import { ExplosiveItem, IndexedCrypto, InventoryExplosives } from "types"
 import { useGlobalStore } from "store"
 import Config from "config";
+import { ItemTypes } from "helpers/vars";
+import deployExplosive from "game/World/Explosive/deployExplosive";
 
 export default class LoadingScene extends Phaser.Scene {
   graphics!: Phaser.GameObjects.Graphics;
@@ -157,7 +159,8 @@ export default class LoadingScene extends Phaser.Scene {
         image: `${Config.storageURL}/${explosive.drop_image}`,
         pattern: explosive.explosion_coordinates,
         price: explosive.price, 
-        type: 'explosive',
+        type: ItemTypes.Explosive,
+        callback: () => deployExplosive(explosive.id),
         quantity: 0    
       };
       explosivesRecord[explosive.id]= newItem;

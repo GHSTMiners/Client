@@ -4,7 +4,7 @@ import { Player } from 'matchmaking/Schemas'
 import Client from 'matchmaking/Client'
 import * as Colyseus from 'colyseus.js'
 import * as Schema  from "matchmaking/Schemas"
-import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedPlayers, IndexedString, InventoryExplosives, PlayerVitals } from 'types'
+import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
 import { AuthenticatorState, WalletApps } from 'helpers/vars'
@@ -20,6 +20,8 @@ type State = {
     // game settings
     soundFXVolume : number,
     musicVolume: number,
+    // game UI
+    userShortcuts: IndexedItem,
     // lobby schemas    
     lobbyCountdown : number,
     // web 3
@@ -56,6 +58,7 @@ type Actions = {
     setPlayerState: (playerState: Schema.PlayerState) => void
     setSoundFXVolume: (volume: number) => void
     setMusicVolume: (volume: number) => void
+    setUserShortcut: (id: number, item: Item) => void
     setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
@@ -91,6 +94,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     playerState: {} as Schema.PlayerState,
     soundFXVolume : 1,
     musicVolume: 0.5,
+    userShortcuts: {} as IndexedItem,
     lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
@@ -133,6 +137,16 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setMusicVolume: ( volume ) =>{
         set( () => ({ musicVolume: volume }))
+    },
+    setUserShortcut: ( id , item) => {
+        set( (state) => {
+            let newState = {...state.userShortcuts};
+            let duplicateItemKey =  Object.keys(newState).find( key => newState[key].id === item.id );
+            if (duplicateItemKey) newState[duplicateItemKey]= {} as Item; 
+            return(
+                { userShortcuts: {...newState, [id]:item} }
+            )
+        })
     },
     setCountdown: ( time ) => {
         set( () => ({ lobbyCountdown: time }))

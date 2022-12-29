@@ -109,6 +109,7 @@ export default class Authenticator {
       console.log(`Requesting validation for the following wallet address: '${this.m_currentAccount}' and ChainId: '${this.m_chainId}'`)
       $.post( "https://chisel.gotchiminer.rocks/api/wallet/validate", { wallet_address: this.m_currentAccount, chain_id: this.m_chainId, challenge: this.m_challenge, signature: this.m_signedChallenge } , async ( data, succes ) => {
         if(succes) {
+          console.log(data)
           Cookies.set(`token_${this.m_chainId}_${this.m_currentAccount}`, data.token, {expires : 356})
           this.m_token = data.token
           useGlobalStore.getState().setAuthenticatorState( AuthenticatorState.ValidatingToken )

@@ -90,6 +90,12 @@ export const UpgradeTags  = [
    { name:'godlike', color:'#51ffa8' }
 ];
 
+export enum ItemTypes{
+  Explosive = 'Explosive',
+  Consumable = 'Consumable',
+  Artifact = 'Artifact'
+}
+
 export const ITEMWIDTH = '3.3rem';
 export const ARTIFACTWIDTH = '5.8rem';
 export const ICONHEIGHT = '0.8rem';

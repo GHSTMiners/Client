@@ -1,35 +1,27 @@
-import { useEffect, useState } from "react";
 import ShortcutButon from "./ShortcutButon";
 import { useGlobalStore } from "store";
 
 const buttonsSetup = [
-  { id: 0 , shortcut: 1 },
-  { id: 1 , shortcut: 2 },
-  { id: 2 , shortcut: 3 },
-  { id: 3 , shortcut: 4 }
+  { shortcut: 1 },
+  { shortcut: 2 },
+  { shortcut: 3 },
+  { shortcut: 4 }
 ]
 
 const ConsoleButtons = () => {
-    const worldExplosives = useGlobalStore( state => state.worldExplosives );  
-    const playerExplosives = useGlobalStore( state => state.explosives )
-    const [ explosiveKeys , setExplosivesKeys] = useState(Object.keys(playerExplosives))
-    
-    useEffect(()=>{
-      setExplosivesKeys([...Object.keys(playerExplosives)]);
-    },[playerExplosives])
-
+    const userShortcuts = useGlobalStore(state => state.userShortcuts )
+    const playerExplosives = useGlobalStore(state => state.explosives)
     return ( 
       <>
         { buttonsSetup.map( button => 
             <ShortcutButon 
-                item={ worldExplosives[+explosiveKeys[button.id]] } 
-                amount={ playerExplosives[+explosiveKeys[button.id]] } 
+                item={ userShortcuts[button.shortcut] } 
+                amount={  playerExplosives[+userShortcuts[button.shortcut]?.id] } 
                 index={ button.shortcut }
-                key= {`shortcut${button.id}`}
-              />
-        )}
+                key= {`shortcut${button.shortcut}`}
+              /> )}
       </> 
-      )
+    )
 }
 
 export default ConsoleButtons

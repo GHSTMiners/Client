@@ -17,16 +17,9 @@ const SquareButton: React.FC<Props> = ({
   disabled,
 }) => {
   return (
-    <button
-      onClick={onClick}
-      className={styles.squareButton}
-      disabled={disabled}
-    >
+    <button onClick={onClick} className={styles.squareButton} disabled={disabled}>
       <div className={`${styles.buttonText} ${quantity<1? styles.disabled: '' }`} style={{ width: size, height: size }}>
         {children}
-      </div>
-      <div className={styles.quantity}>
-        { quantity>=0 ? `x  ${quantity}` : ''}
       </div>
     </button>
   );

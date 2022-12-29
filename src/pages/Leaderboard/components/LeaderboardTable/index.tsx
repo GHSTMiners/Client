@@ -58,9 +58,10 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,o
     }
   }, [onlyMine, leaderboardData, ownedGotchis, entriesPerPage, pageIndex]);
   
-  const renderRankingRow = ( rank:number, name:string, score: number, reward?:ReactNode) =>{
+  const renderRankingRow = ( rank:number, name:string, score: number, reward?:ReactNode, wallet?:string) =>{
+    console.log(`${rank}: ${wallet}`)
     return(
-    <div className={styles.tableRow} key={name}>
+    <div className={styles.tableRow} key={`${name}${score}`}>
       <div> `&#35;` {rank}</div>
       <div>{name}</div>
       <div className={styles.rewardColumn} >{(category?.name === 'Endgame crypto')? reward: ''}</div>
@@ -70,7 +71,7 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,o
   }
   
   let leaderboardDisplayData = displayedScores?.map( (row,i) => {
-    return( renderRankingRow( row.position, row.name, row.score, row.reward) )
+    return( renderRankingRow( row.position, row.name, row.score, row.reward , row.wallet) )
   });
 
   return (

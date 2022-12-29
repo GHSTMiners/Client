@@ -198,6 +198,13 @@ body {
   z-index: 0;
 }
 
+.quantity {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 0.8em;
+}
+
 .overlay {
   position: absolute;
   background-color: #008cba;

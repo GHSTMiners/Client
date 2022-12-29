@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import gameEvents from 'game/helpers/gameEvents';
 import { Player } from 'matchmaking/Schemas/Player';
 import * as Chisel from "chisel-api-interface";
+import { ItemTypes } from 'helpers/vars';
 
 export interface Tuple<T extends unknown, L extends number> extends Array<T> {
   0: T;
@@ -86,6 +87,7 @@ export interface SubmitScoreReq {
 export interface HighScore {
   tokenId: string,
   score: number,
+  wallet?: string,
   name: string,
 }
 
@@ -105,6 +107,8 @@ export type IndexedString = {[key: string]: string};
 
 export type IndexedBooleanArray = {[key: string]: boolean};
 
+export type IndexedItem = {[key: string]: Item};
+
 export type GameEventKey = keyof typeof gameEvents;
 
 export type PricePair = { cryptoId:number, cost:number };
@@ -123,7 +127,9 @@ export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 
-export type ExplosiveItem = { id:number, name: string, image:string, pattern: Chisel.ExplosionCoordinate[], type: string, quantity: number, price: number }
+export type Item = { id:number, name: string, image:string, type: ItemTypes, quantity: number, price: number, callback: () => void }
+
+export type ExplosiveItem = Item & { pattern: Chisel.ExplosionCoordinate[] }
 
 export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
 

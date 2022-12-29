@@ -13,6 +13,7 @@ import { useGlobalStore } from "store";
 import LobbyCountdown from "./components/LobbyCountdown";
 import styles from "./styles.module.css";
 import globalStyles from "theme/globalStyles.module.css"
+import MainScene from "game/Scenes/MainScene";
 
 
 const Lobby = (): JSX.Element => {
@@ -77,9 +78,14 @@ const Lobby = (): JSX.Element => {
 
                 Client.getInstance().colyseusClient.joinById<Schema.World>(Client.getInstance().lobbyRoom.state.game_id, Client.getInstance().authenticationInfo).then(room => {
                     room.onError( (code:number, message?:string) => {
-                      alert(`😔Sorry fren, unfortunately an unexpected error just happened and you cannot longer continue playing this game. This was likely caused by the connection to the server (code:${code}).`)
-                      console.log(`💩 A wild error appeared in the Room...#${code}: ${message}`)
-                      navigate("/", {replace: false}); 
+                      alert(`😔Sorry fren, unfortunately an unexpected error just happened and you cannot longer continue playing this game. This was likely caused by a connection interruption (code:${code}).`)
+                      console.error(`💩 A wild error appeared in the Room...#${code}: ${message}`)
+                      try{
+                        (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.lifeCycleManager?.handleGameEnded();
+                      } catch{
+                        console.error('Unable to route the client to the endgame page')
+                        navigate("/", {replace: false});
+                      }
                     })
                     room.onStateChange.once((state) => {
                         Client.getInstance().colyseusRoom = room;

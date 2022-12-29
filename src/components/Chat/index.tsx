@@ -70,7 +70,7 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
       case Protocol.DeathReason.OutOfFuel:
         return(
           <span key={Date.now()}>
-            💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name}</span> ran out of fueld and died
+            💀<span style={{color: deadPlayerColor, fontWeight: 'bold'}}>{players[message.gotchiId]?.name}</span> ran out of fuel and died
             {message.lostCargo? ` loosing ${message.lostCargo} crystals`:''} 
           </span>
         )

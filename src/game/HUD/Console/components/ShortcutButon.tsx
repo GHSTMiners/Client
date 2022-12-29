@@ -1,34 +1,25 @@
 import SquareButton from "components/SquareButton";
 import gameEvents from "game/helpers/gameEvents";
-import { ITEMWIDTH } from "helpers/vars";
+import { ItemTypes, ITEMWIDTH } from "helpers/vars";
 import Client from "matchmaking/Client";
 import { useEffect } from "react";
-import { ExplosiveItem } from "types";
-import dropExplosive from "../helpers/dropExplosive";
-import styles from "../styles.module.css"
-//import { useDrag } from 'react-dnd'
+import { useDrop } from "react-dnd";
+import { useGlobalStore } from "store";
+import { Item } from "types";
+import Explosive from "./Explosive";
 
 interface Props {
-  item: ExplosiveItem | undefined, 
+  item: Item | undefined, 
   amount: number, 
   index: number
 }
 
-const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
-  
-  /*
-  const [{ isDragging }, dragRef] = useDrag({
-    type: 'consumable',
-    item: { item, amount, index },
-    collect: (monitor) => ({
-        isDragging: monitor.isDragging()
-    })
-  })
-  */
+const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
+  const setUserShortcut = useGlobalStore(state => state.setUserShortcut)
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
-      if (shotcutID === index) dropExplosive( item?.id) 
+      if ( item && shotcutID === index) item.callback();
     }
     Client.getInstance().phaserGame.events.on( gameEvents.console.SHORTCUT, shortcutCallback );
     
@@ -37,16 +28,38 @@ const ShortcutButon: React.FC<Props>  = ({item, amount, index}) => {
     }
   },[ item , index ])
 
+  const renderItem = () => {
+    switch(item?.type){
+      case ItemTypes.Explosive:
+        return( <Explosive item={item} amount={amount}/>  )
+      default:
+        return( <div></div> )
+    }
+  }
+
+  const [{ isOver }, dropRef] = useDrop({
+    accept: ItemTypes.Explosive,
+    hover: (item,monitor) =>{
+      console.log(`This item is hovering: ${item.name}`)
+    },
+    drop: ( droppedItem:Item ) => {
+      setUserShortcut(index, droppedItem)
+      },
+    collect: (monitor) => ({
+        isOver: monitor.isOver()
+    })
+  })
+
   return (
-    <SquareButton size={ITEMWIDTH}
-      quantity={amount ? amount : -1}
-      disabled={amount ? false : true}
-      key={`squareButton${index}`}
-      onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
-      <div className={styles.inventoryConsumable}>
-        <img src={amount ? item?.image : ''}  alt={amount ? item?.name : 'empty'} hidden={amount? false: true} />
-      </div>
-    </SquareButton>
+    <div ref={dropRef}>
+      <SquareButton size={ITEMWIDTH}
+        quantity={amount ? amount : -1}
+        key={`squareButton${index}`}
+        onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
+        { renderItem() }
+        {isOver && <div>{`SHORTCUT KEY ${index}`}</div>}
+      </SquareButton>
+    </div>
   );
 }
 

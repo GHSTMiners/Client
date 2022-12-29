@@ -117,8 +117,9 @@ const Leaderboard = (): JSX.Element => {
               const entryId = data.gotchi.gotchi_id.toString();
               const entryScore = data.entry.value;
               const entryName = `${entryId}`;
+              const entryWallet = data.entry.wallet.address;
               idArray.push(entryId);
-              displayData.push({ tokenId: entryId, name: entryName, score: entryScore });
+              displayData.push({ tokenId: entryId, name: entryName, score: entryScore , wallet: entryWallet});
             })
             const highScoreDataWithNames = getHighScoresWithNames(idArray,displayData);
             if (mounted){
@@ -143,7 +144,7 @@ const Leaderboard = (): JSX.Element => {
   // Competition parameters [Please don't puke, it's just an example of the data format :P ]. TO DO: get this from Chisel
   const endDate = new Date('December 25, 2022 22:00:00 UTC+1') ;
   const getReward = (position : number , score?:  number):string => {
-    if (position === 1) {
+    /*if (position === 1) {
       return "1 x MINER HELMET"
     } else if (position === 2 ) {
       return "1 x LAAND PARCEL"
@@ -151,9 +152,9 @@ const Leaderboard = (): JSX.Element => {
       return "1 x LE GOLDEN TILE"
     } else if (position <= 10 ) {
       return "1 x DECORATION"
-    } else {
+    } else {*/
       return ""
-    }
+    //}
   }
   const competition = { endDate , rewards:getReward };  
 

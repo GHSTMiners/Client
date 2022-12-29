@@ -11,7 +11,7 @@ const Artifacts = () => {
 
   return (
     <div className={styles.artifactsContainer}>
-      <div className={styles.sectionTitle}>ARTIFACTS</div>
+      <div className={styles.sectionTitle}>CONSUMABLES</div>
       <div className={styles.artifactItems}>{artifactList}</div>
     </div>
   );

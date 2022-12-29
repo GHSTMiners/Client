@@ -6,16 +6,17 @@
   border-top-right-radius: 4px;
   display: flex;
   flex-direction: column;
-  z-index: 200;
 }
 
 .largeContainer{
   height: 20rem;
   background-color: rgba(0,0,0,0.2);
+  z-index: 200;
 }
 .smallContainer{
   height: 11rem;
   background-color: transparent;
+  z-index: 5;
 }
 
 .chatHistory {
