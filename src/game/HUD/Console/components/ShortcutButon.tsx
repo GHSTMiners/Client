@@ -21,7 +21,7 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
-      if ( item && shotcutID === index) item.callback();
+      if ( item && shotcutID === index && Object.keys(item).length >0 ) item.callback();
     }
     Client.getInstance().phaserGame.events.on( gameEvents.console.SHORTCUT, shortcutCallback );
     
@@ -57,7 +57,7 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
         type={ItemTypes.Explosive}
         quantity={amount ? amount : -1}
         key={`squareButton${index}`}
-        onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
+        onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, index) }}>
         {!isOver && renderItem() }
         {isOver && <div>{`SHORTCUT KEY ${index}`}</div>}
       </SquareButton>
