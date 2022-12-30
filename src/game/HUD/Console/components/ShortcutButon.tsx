@@ -1,6 +1,7 @@
 import SquareButton from "components/SquareButton";
 import gameEvents from "game/helpers/gameEvents";
 import { ItemTypes, ITEMWIDTH } from "helpers/vars";
+import useSoundFXManager from "hooks/useSoundFXManager";
 import Client from "matchmaking/Client";
 import { useEffect } from "react";
 import { useDrop } from "react-dnd";
@@ -16,6 +17,7 @@ interface Props {
 
 const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   const setUserShortcut = useGlobalStore(state => state.setUserShortcut)
+  const soundFXManager = useSoundFXManager();
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
@@ -31,7 +33,7 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   const renderItem = () => {
     switch(item?.type){
       case ItemTypes.Explosive:
-        return( <Explosive item={item} amount={amount}/>  )
+        return( <>{!isOver && <Explosive item={item} amount={amount}/>}</>  )
       default:
         return( <div></div> )
     }
@@ -39,11 +41,10 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
 
   const [{ isOver }, dropRef] = useDrop({
     accept: ItemTypes.Explosive,
-    hover: (item,monitor) =>{
-      console.log(`This item is hovering: ${item.name}`)
-    },
+    hover: (item,monitor) =>{},
     drop: ( droppedItem:Item ) => {
       setUserShortcut(index, droppedItem)
+      soundFXManager.play('locked')
       },
     collect: (monitor) => ({
         isOver: monitor.isOver()
@@ -53,10 +54,11 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   return (
     <div ref={dropRef}>
       <SquareButton size={ITEMWIDTH}
+        type={ItemTypes.Explosive}
         quantity={amount ? amount : -1}
         key={`squareButton${index}`}
         onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, item?.id) }}>
-        { renderItem() }
+        {!isOver && renderItem() }
         {isOver && <div>{`SHORTCUT KEY ${index}`}</div>}
       </SquareButton>
     </div>

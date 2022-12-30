@@ -22,6 +22,7 @@ type State = {
     musicVolume: number,
     // game UI
     userShortcuts: IndexedItem,
+    isDraggingItem: boolean,
     // lobby schemas    
     lobbyCountdown : number,
     // web 3
@@ -59,6 +60,7 @@ type Actions = {
     setSoundFXVolume: (volume: number) => void
     setMusicVolume: (volume: number) => void
     setUserShortcut: (id: number, item: Item) => void
+    setIsDraggingItem: (state:boolean) => void
     setCountdown : (time:number) => void
     setWorldCrypto: (crypto:IndexedCrypto) => void
     setWorldExplosives: (explosives:InventoryExplosives) => void
@@ -92,9 +94,10 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     depth: 0 ,
     players: {},
     playerState: {} as Schema.PlayerState,
-    soundFXVolume : 1,
-    musicVolume: 0.5,
+    soundFXVolume : 0.8,
+    musicVolume: 0.4,
     userShortcuts: {} as IndexedItem,
+    isDraggingItem: false,
     lobbyCountdown: 0,
     vitals : {fuel: 100, health: 100, cargo:0} ,
     cargo: {} ,
@@ -147,6 +150,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
                 { userShortcuts: {...newState, [id]:item} }
             )
         })
+    },
+    setIsDraggingItem: ( state ) =>{
+        set( () => ({ isDraggingItem: state }))
     },
     setCountdown: ( time ) => {
         set( () => ({ lobbyCountdown: time }))

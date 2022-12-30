@@ -1,6 +1,6 @@
 import styles from "./styles.module.css";
 import SquareButton from "components/SquareButton";
-import { ITEMWIDTH } from "helpers/vars"
+import { ItemTypes, ITEMWIDTH } from "helpers/vars"
 import { useGlobalStore } from "store";
 import Explosive from "./Explosive";
 
@@ -20,6 +20,7 @@ const Consumables = () => {
             item.quantity = quantity;
             return(
               <SquareButton size={ITEMWIDTH} 
+                            type={ItemTypes.Explosive}
                             quantity={ quantity }
                             disabled={ false }
                             key={`inventoryConsumable${id}`}>
