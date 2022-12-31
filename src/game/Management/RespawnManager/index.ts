@@ -7,26 +7,18 @@ import { Crystal } from "game/World/Crystal";
 export default class RespawnManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "RespawnManager")
-        this.lostCargo = {};
         Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerDied, this.handleDead.bind(this))
         //Client.getInstance().messageRouter.addRoute(Protocol.NotifyPlayerRespawned, this.handleRespawn.bind(this))
     }
 
     private handleDead = ( message: Protocol.NotifyPlayerDied ) => {
         Client.getInstance().phaserGame.events.emit( gameEvents.chat.PLAYERDEAD , message )
-        if (message.gotchiId === Client.getInstance().ownPlayer?.gotchiID){
-            Client.getInstance().ownPlayer?.cargo.forEach( entry => {
-                this.lostCargo[entry.cryptoID] = entry.amount
-                for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, entry.cryptoID.toString() )
-            })
-            Client.getInstance().phaserGame.events.emit( gameEvents.game.DEAD )
-            this.lostCargo = {};
-        }
+        const lostCargo : IndexedArray = {};
+        const deadPlayer = Client.getInstance().colyseusRoom.state.players.find( player => player.gotchiID === message.gotchiId)
+        deadPlayer?.cargo.forEach( entry => {
+            lostCargo[entry.cryptoID] = entry.amount
+            for (let i = 0; i < entry.amount; i++) new Crystal(this.scene, message.gotchiId, entry.cryptoID.toString() )
+        })
+        Client.getInstance().phaserGame.events.emit( gameEvents.game.DEAD )
     }
-/*
-    private handleRespawn = () => {
-        
-    }*/
-
-    private lostCargo : IndexedArray
 }

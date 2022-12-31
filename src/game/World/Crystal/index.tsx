@@ -1,9 +1,8 @@
 import Config from "config";
 import MainScene from "game/Scenes/MainScene";
-import Client from "matchmaking/Client";
 
 export class Crystal extends Phaser.GameObjects.Sprite {
-    constructor(scene: Phaser.Scene, cryptoID : string ) {
+    constructor(scene: Phaser.Scene, gotchiId: number, cryptoID : string ) {
         super(scene, 0, 0, cryptoID);
         this.cryptoID = cryptoID;
         this.setDepth(30)
@@ -16,17 +15,16 @@ export class Crystal extends Phaser.GameObjects.Sprite {
         this.displayHeight = Config.blockHeight;
         this.displayWidth = Config.blockWidth;
         this.setOrigin(0, 0)
-        const myGotchiID = Client.getInstance().ownPlayer.gotchiID;
-        this.myPlayer  = (scene as MainScene).globalRenderer?.playerRender.playerSprites.get( myGotchiID )        
-        if (this.myPlayer) this.myPlayer.add(this)
+        this.player  = (scene as MainScene).globalRenderer?.playerRender.playerSprites.get( gotchiId )        
+        if (this.player) this.player.add(this)
         this.scene.time.delayedCall( 2000, this.delete.bind(this))
     }
 
     public delete () {
-        if (this.myPlayer) this.myPlayer.remove(this)
+        if (this.player) this.player.remove(this)
         this.destroy();
     }
 
-    private myPlayer
+    private player
     private cryptoID
 }
