@@ -12,6 +12,8 @@ import gameEvents from "game/helpers/gameEvents";
 import Vignette from "./Vignette";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
 import Config from "config";
+import ReactPlayer from "react-player";
+import demoVideo from "assets/videos/demo.mp4"
 
 export const HUD = () => {  
   const [gameLoaded, setgameLoaded] = useState(false);
@@ -55,9 +57,10 @@ export const HUD = () => {
       <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
         <div className={styles.loadingText}>{!gameLoaded?'Loading game...':''}</div>
         {loadingBar(loadingPercentage)}
-        <img src={loadingImgURL} 
+        <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
+        {/*<img src={loadingImgURL} 
             alt={'world preview'}
-            className={styles.backgroundImage}/>
+            className={styles.backgroundImage}/>*/}
       </div>
       <div className={`${styles.hudContainer} ${!gameLoaded? styles.hidden : styles.reveal }`} 
            onClick={e => handleClick(e)}

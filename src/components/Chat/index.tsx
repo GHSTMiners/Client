@@ -50,7 +50,7 @@ const Chat : React.FC<Props> = ({ gameMode=true }) => {
     const deadPlayerColor = players[message.gotchiId]?.chatColor;
     const killerPlayerColor = players[message.perpetratorGotchiId]?.chatColor;
     const deathReason = Protocol.DeathReason[message.reason];
-    console.log(message)
+
     switch (+deathReason){
       case Protocol.DeathReason.Exploded:
           return(

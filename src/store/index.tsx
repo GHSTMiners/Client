@@ -165,13 +165,19 @@ export const useGlobalStore = create<State & Actions>((set) => ({
             // auto-assigning a console shortcut if a new explosive is purchased and space is available
             const userShortcuts = {...state.userShortcuts};
             if (Object.keys(userShortcuts).length < SHORTCUTS ){
-                const lastKey = Object.keys(userShortcuts).reduce( (prev,current) => {
-                    return (+prev > +current)? prev : current })
-                const newKey = 1+(lastKey as unknown as number);
+                let lastKey = '0';
+                console.log(Object.keys(userShortcuts))
+                if (Object.keys(userShortcuts).length > 0){
+                    lastKey = Object.keys(userShortcuts).reduce( (prev,current) => {
+                        return (+prev > +current)? prev : current })
+                } 
+                const newKey = 1+(+lastKey as unknown as number);
+                console.log(`new key about to be assigned=${newKey}`)
                 if (newKey <= SHORTCUTS ){
                     const item = state.worldExplosives[+key];
                     item.quantity = quantity;
                     state.setUserShortcut(newKey,item)
+                    console.log(`new shortcut assigned to key ${newKey}`)
                 }
             }
             //

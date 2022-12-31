@@ -342,6 +342,8 @@ body {
 }
 
 .crystalTag {
+  display: flex;
+  flex-direction: column;
   margin-left: 0.8rem;
 }
 

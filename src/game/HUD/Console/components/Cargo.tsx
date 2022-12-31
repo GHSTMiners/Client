@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import cargoIcon from "assets/hud/cargo_icon.svg";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useGlobalStore } from "store";
+import { formatCurrency } from "helpers/functions";
 
 const Cargo = () => {  
   
@@ -18,8 +19,8 @@ const Cargo = () => {
             effect={'blur'}/>
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
-        {quantity? quantity : 0} x {tag}
-        {price}
+        <div>{quantity? quantity : 0} x {tag}</div>
+        <div>{formatCurrency(price)}</div>
       </div>
     </div>
   );
