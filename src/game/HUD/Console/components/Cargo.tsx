@@ -8,7 +8,7 @@ const Cargo = () => {
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
   const playerCargo = useGlobalStore( state => state.cargo );
   
-  const inventoryCrystal = (tag: string, quantity: number, image: string) => (
+  const inventoryCrystal = (tag: string, quantity: number, image: string, price: number) => (
     <div className={styles.crystalContainer} key={`inventory${tag}`}>
       <LazyLoadImage 
             src={image} 
@@ -19,6 +19,7 @@ const Cargo = () => {
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
         {quantity? quantity : 0} x {tag}
+        {price}
       </div>
     </div>
   );
@@ -38,7 +39,8 @@ const Cargo = () => {
               return inventoryCrystal(
                 crypto.name,
                 playerCargo[crypto.cryptoID],
-                crypto.crystal)
+                crypto.crystal,
+                crypto.price)
             })
         }
       </div>

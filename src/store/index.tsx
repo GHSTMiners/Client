@@ -7,7 +7,7 @@ import * as Schema  from "matchmaking/Schemas"
 import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
-import { AuthenticatorState, WalletApps } from 'helpers/vars'
+import { AuthenticatorState, SHORTCUTS, WalletApps } from 'helpers/vars'
 
 type State = {
     // game schemas 
@@ -141,7 +141,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setMusicVolume: ( volume ) =>{
         set( () => ({ musicVolume: volume }))
     },
-    setUserShortcut: ( id , item) => {
+    setUserShortcut: ( id:number , item) => {
         set( (state) => {
             let newState = {...state.userShortcuts};
             let duplicateItemKey =  Object.keys(newState).find( key => newState[key].id === item.id );
@@ -161,7 +161,24 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         set( (state) => ({ vitals: { ...state.vitals, [vital]:level } }))
     },
     setExplosives: (key,quantity) => {
-        set( (state) => ({ explosives: {...state.explosives, [key]: quantity}}) )
+        set( (state) => { 
+            // auto-assigning a console shortcut if a new explosive is purchased and space is available
+            const userShortcuts = {...state.userShortcuts};
+            if (Object.keys(userShortcuts).length < SHORTCUTS ){
+                const lastKey = Object.keys(userShortcuts).reduce( (prev,current) => {
+                    return (+prev > +current)? prev : current })
+                const newKey = 1+(lastKey as unknown as number);
+                if (newKey <= SHORTCUTS ){
+                    const item = state.worldExplosives[+key];
+                    item.quantity = quantity;
+                    state.setUserShortcut(newKey,item)
+                }
+            }
+            //
+            return( 
+                {explosives: {...state.explosives, [key]: quantity}}
+            ) 
+        })
     },
     setWallet: (key,quantity) => {
         set( (state) => ({ wallet : { ...state.wallet , [key]:quantity } }) )

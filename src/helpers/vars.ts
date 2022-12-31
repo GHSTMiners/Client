@@ -99,3 +99,4 @@ export enum ItemTypes{
 export const ITEMWIDTH = '3.3rem';
 export const ARTIFACTWIDTH = '5.8rem';
 export const ICONHEIGHT = '0.8rem';
+export const SHORTCUTS = 4; // adjust buttonsSetup and CSS positioning if changed

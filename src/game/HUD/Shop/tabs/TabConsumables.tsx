@@ -142,7 +142,9 @@ const TabConsumables: FC<{}> = () => {
         { Object.keys( worldExplosives ).map( (id) => renderShopItem( +id ) )}
       </div>
       <div className={styles.detailsPanel}>
-        {detailsItem.name ? detailsPanel() : ''}
+        {detailsItem.name ? 
+          detailsPanel() 
+          : 'Welcome to the GotchiMiner shop! Here you can use your refined crypto to buy explosives, consumable or upgrades. Convert any crypto to GHST by interacting with the top menu bar.'}
       </div>
     </div>
   );
