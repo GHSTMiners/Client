@@ -3,6 +3,7 @@ import Client from "matchmaking/Client";
 import * as Chisel from "chisel-api-interface";
 import gameEvents from "game/helpers/gameEvents";
 import * as Schema from "matchmaking/Schemas"
+import * as Protocol from "gotchiminer-multiplayer-protocol"
 import { ExplosiveItem, IndexedCrypto, InventoryExplosives } from "types"
 import { useGlobalStore } from "store"
 import Config from "config";
@@ -15,6 +16,15 @@ export default class LoadingScene extends Phaser.Scene {
 
   constructor() {
     super({ key: "LoadingScene" });
+    var self = this;
+    //Register message handlers
+    Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
+      Client.getInstance().messageRouter.processRawMessage( type as string, message);
+    });
+    Client.getInstance().messageRouter.addRoute(Protocol.NotifyGameStarted, () => {
+      console.log("game started")
+      self.scene.start("MainScene");
+    });
   }
 
   preload() {
@@ -179,6 +189,9 @@ export default class LoadingScene extends Phaser.Scene {
     this.storeWorldCrypto();
     this.storeWorldExplosives();
     console.log("Loading assets complete!");
-    this.scene.start("MainScene");
+    // Send request game start
+    let requestGameStartMessage : Protocol.RequestStartGame = new Protocol.RequestStartGame()
+    let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(requestGameStartMessage)
+    Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
   }
 }

@@ -55,9 +55,9 @@ export const HUD = () => {
   return (
     <>
       <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
-        <div className={styles.loadingText}>{!gameLoaded?'Loading game...':''}</div>
+        <div className={styles.loadingText}>{loadingPercentage<100?'Loading game...':'Waiting for other players'}</div>
         {loadingBar(loadingPercentage)}
-        <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
+        <ReactPlayer url={demoVideo} playing={true} muted={true} width={'100%'} height={'100%'}/>
         {/*<img src={loadingImgURL} 
             alt={'world preview'}
             className={styles.backgroundImage}/>*/}

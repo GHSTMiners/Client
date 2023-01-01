@@ -17,10 +17,6 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    //Register message handlers
-    Client.getInstance().colyseusRoom.onMessage("*", (type, message) => {
-      Client.getInstance().messageRouter.processRawMessage( type as string, message);
-    });
     this.soundFXManager = new SoundFXManager(this);
     this.chatManager = new ChatManager(this);
     this.musicManager = new MusicManager(this);
