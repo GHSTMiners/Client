@@ -10,7 +10,6 @@ export default class Explosive extends Phaser.GameObjects.Image {
         this.soundFXManager = scene.soundFXManager;
         this.setDepth(40);
         this.setOrigin(0, 0);
-        
         const worldExplosives = useGlobalStore.getState().worldExplosives; 
         if (worldExplosives[schema.explosiveID]?.name === 'Nuke'){
             this.sound = this.soundFXManager.add('nuke');

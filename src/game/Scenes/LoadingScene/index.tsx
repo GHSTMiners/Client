@@ -127,9 +127,10 @@ export default class LoadingScene extends Phaser.Scene {
         `explosive_${explosive.id}`,
         `${Config.storageURL}/${explosive.explosion_sound}`
       );
-      this.load.image(
+      this.load.svg(
         `explosive_soil_${explosive.id}`,
-        `${Config.storageURL}/${explosive.soil_image}`
+        `${Config.storageURL}/${explosive.soil_image}`,
+        {width: 128, height: 128}
       );
       this.load.image(
         `explosive_drop_${explosive.id}`,
