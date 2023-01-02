@@ -13,7 +13,6 @@ import Vignette from "./Vignette";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
 import Config from "config";
 import ReactPlayer from "react-player";
-import demoVideo from "assets/videos/demo.mp4"
 
 export const HUD = () => {  
   const [gameLoaded, setgameLoaded] = useState(false);
@@ -51,13 +50,14 @@ export const HUD = () => {
   }, []);
 
   const loadingImgURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.thumbnail}`;
+  const loadingVideoURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.teaser}`;
 
   return (
     <>
       <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
         <div className={styles.loadingText}>{loadingPercentage<100?'Loading game...':'Waiting for other players'}</div>
         {loadingBar(loadingPercentage)}
-        <ReactPlayer url={demoVideo} playing={true} muted={true} width={'100%'} height={'100%'}/>
+        <ReactPlayer url={loadingVideoURL} playing={!gameLoaded} muted={false} width={'100%'} height={'100%'}/>
         {/*<img src={loadingImgURL} 
             alt={'world preview'}
             className={styles.backgroundImage}/>*/}
