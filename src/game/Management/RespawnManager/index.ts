@@ -14,10 +14,7 @@ export default class RespawnManager extends Phaser.GameObjects.GameObject {
     private handleDead = ( message: Protocol.NotifyPlayerDied ) => {
         Client.getInstance().phaserGame.events.emit( gameEvents.chat.PLAYERDEAD , message )
         const lostCargo : IndexedArray = {};
-        console.log(`Looking for player ID ${message.gotchiId}`)
         const deadPlayer = Client.getInstance().colyseusRoom.state.players.find( player => player.gotchiID === message.gotchiId)
-        Client.getInstance().colyseusRoom.state.players.forEach(player=> console.log(`Player available with gotchi ID:${player.gotchiID}`))
-        console.log(deadPlayer)
         try{
             deadPlayer?.cargo.forEach( entry => {
                 lostCargo[entry.cryptoID] = entry.amount

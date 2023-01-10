@@ -59,7 +59,7 @@ export const LeaderboardTable = ({pageIndex,entriesPerPage,highscores,category,o
   }, [onlyMine, leaderboardData, ownedGotchis, entriesPerPage, pageIndex]);
   
   const renderRankingRow = ( rank:number, name:string, score: number, reward?:ReactNode, wallet?:string) =>{
-    console.log(`${rank}: ${wallet}`)
+    //console.log(`${rank}: ${wallet}`)
     return(
     <div className={styles.tableRow} key={`${name}${score}`}>
       <div> `&#35;` {rank}</div>

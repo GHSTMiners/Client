@@ -59,6 +59,7 @@ type Actions = {
     setPlayerState: (playerState: Schema.PlayerState) => void
     setSoundFXVolume: (volume: number) => void
     setMusicVolume: (volume: number) => void
+    initializeUserShortcuts: () => void
     setUserShortcut: (id: number, item: Item) => void
     setIsDraggingItem: (state:boolean) => void
     setCountdown : (time:number) => void
@@ -141,9 +142,17 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setMusicVolume: ( volume ) =>{
         set( () => ({ musicVolume: volume }))
     },
+    initializeUserShortcuts: () =>{
+        set( (state) => {
+            let newState = {...state.userShortcuts};
+            for (let i = 1; i <= SHORTCUTS; i++) newState[i] = {} as Item;
+            return( { userShortcuts: newState } )
+        })
+    },
     setUserShortcut: ( id:number , item) => {
         set( (state) => {
             let newState = {...state.userShortcuts};
+            //searching and emptying duplicate entries
             let duplicateItemKey =  Object.keys(newState).find( key => newState[key].id === item.id );
             if (duplicateItemKey) newState[duplicateItemKey]= {} as Item; 
             return(
@@ -164,23 +173,14 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         set( (state) => { 
             // auto-assigning a console shortcut if a new explosive is purchased and space is available
             const userShortcuts = {...state.userShortcuts};
-            if (Object.keys(userShortcuts).length < SHORTCUTS ){
-                let lastKey = '0';
-                console.log(Object.keys(userShortcuts))
-                if (Object.keys(userShortcuts).length > 0){
-                    lastKey = Object.keys(userShortcuts).reduce( (prev,current) => {
-                        return (+prev > +current)? prev : current })
-                } 
-                const newKey = 1+(+lastKey as unknown as number);
-                console.log(`new key about to be assigned=${newKey}`)
-                if (newKey <= SHORTCUTS ){
-                    const item = state.worldExplosives[+key];
-                    item.quantity = quantity;
-                    state.setUserShortcut(newKey,item)
-                    console.log(`new shortcut assigned to key ${newKey}`)
-                }
+            const availableShortcut = Object.keys(userShortcuts).find( shortcutKey => userShortcuts[shortcutKey].id === undefined )
+            const savedShortcut = Object.keys(userShortcuts).find( shortcutKey => userShortcuts[shortcutKey].id === +key )
+            if ( availableShortcut && savedShortcut === undefined ) {
+                const item = state.worldExplosives[+key];
+                item.quantity = quantity;
+                state.setUserShortcut(+availableShortcut,item)
+                console.log(`new shortcut auto-assigned to key ${availableShortcut}`)
             }
-            //
             return( 
                 {explosives: {...state.explosives, [key]: quantity}}
             ) 
