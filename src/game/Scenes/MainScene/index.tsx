@@ -1,4 +1,5 @@
-import MovementManager from "game/Management/MovementManager";
+import KeyboardInputManager from "game/Management/KeyboardInputManager";
+import GamePadInputManager from "game/Management/GamePadInputManager";
 import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
@@ -21,7 +22,8 @@ export default class MainScene extends Phaser.Scene {
     this.chatManager = new ChatManager(this);
     this.musicManager = new MusicManager(this);
     this.globalRenderer = new GlobalRenderer(this);
-    this.movementManager = new MovementManager(this);
+    this.gamePadInputManager = new GamePadInputManager(this);
+    this.keyboardInputManager = new KeyboardInputManager(this);
     this.excavationManager = new ExcavationManager(this);
     this.respawnManager = new RespawnManager(this);
     this.diagnosticsManager = new DiagnosticsManager(this);
@@ -44,7 +46,7 @@ export default class MainScene extends Phaser.Scene {
   shutdown(){
     this.sound.stopAll();
     this.musicManager?.shutdown();
-    this.movementManager?.clearKeys();
+    this.keyboardInputManager?.clearKeys();
   }
 
   public soundFXManager!: SoundFXManager;
@@ -52,7 +54,8 @@ export default class MainScene extends Phaser.Scene {
   private chatManager? : ChatManager
   public musicManager?: MusicManager;
   public globalRenderer?: GlobalRenderer;
-  public movementManager?: MovementManager;
+  public keyboardInputManager?: KeyboardInputManager;
+  public gamePadInputManager? : GamePadInputManager
   public diagnosticsManager? : DiagnosticsManager
   private excavationManager?: ExcavationManager;
   private respawnManager?: RespawnManager;

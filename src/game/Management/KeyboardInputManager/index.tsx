@@ -1,9 +1,9 @@
 import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
-export default class MovementManager extends Phaser.GameObjects.GameObject {
+export default class KeyboardInputManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
-        super(scene, "MovementManager")
+        super(scene, "KeyboardInputManager")
         this.keys = new Map<number, Phaser.Input.Keyboard.Key>()
         this.addAllKeys();
         this.setGameMode();
