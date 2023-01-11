@@ -3,7 +3,6 @@ import GamePadInputManager from "game/Management/GamePadInputManager";
 import ExcavationManager from "game/Management/ExcavationManager";
 import GlobalRenderer from "game/Rendering/GlobalRenderer";
 import * as Phaser from "phaser";
-import Client from "matchmaking/Client";
 import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";

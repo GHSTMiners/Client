@@ -49,7 +49,7 @@ export const HUD = () => {
     }
   }, []);
 
-  const loadingImgURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.thumbnail}`;
+  //const loadingImgURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.thumbnail}`;
   const loadingVideoURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.teaser}`;
 
   return (
