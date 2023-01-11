@@ -8,7 +8,7 @@ import { HUD } from "game/HUD";
 export default class Play extends React.Component {
   componentDidMount() {
     if (Client.getInstance().colyseusRoom) {
-      const config = {
+      let config = {
         type: Phaser.AUTO,
         parent: "phaser-game",
         antialias: true,
@@ -22,6 +22,9 @@ export default class Play extends React.Component {
           arcade: {
             debug: false,
           }
+        },
+        input: {
+          gamepad: true
         },
         scene: [LoadingScene, MainScene],
       };
