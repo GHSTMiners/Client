@@ -8,7 +8,7 @@ import { Tuple } from "types";
 export default class AavegotchiSVGFetcher {
   constructor() {
     //Initialize web3 using polygon rpc
-    this.web3 = new Web3("https://rpc.ankr.com/polygon");
+    this.web3 = new Web3(Config.defaultRPC);
     //Load our smart contract
     const diamondAddress = "0x86935F11C86623deC8a25696E1C19a8659CbF95d";
     this.aavegotchiFacet = new this.web3.eth.Contract(
@@ -51,20 +51,3 @@ export default class AavegotchiSVGFetcher {
   private web3: Web3;
   private aavegotchiFacet: Contract;
 }
-
-/*
-    // from Coyote, an example found on his Github
-    // Given tokenId, return Aavegotchi sideviews   
-    const getAavegotchiSideview = async (
-        tokenId: string,
-        contract: ethers.Contract
-      ) => {
-        try {
-          // Returns an array of SVGs corresponding to each side of the Aavegotchi
-          const res = await contract.getAavegotchiSideSvgs(tokenId);
-          setSelectedGotchiSideviews(res);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-*/
