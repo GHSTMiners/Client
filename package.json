@@ -92,6 +92,7 @@
     "react-refresh": "^0.8.3",
     "react-router-dom": "^6.0.2",
     "react-select": "^5.4.0",
+    "react-switch": "^7.0.0",
     "react-tooltip": "^4.2.21",
     "react-transition-group": "^4.4.5",
     "resolve": "1.18.1",

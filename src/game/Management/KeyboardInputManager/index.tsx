@@ -1,6 +1,8 @@
 import Client from "matchmaking/Client"
 import * as Protocol from "gotchiminer-multiplayer-protocol"
 import gameEvents from "game/helpers/gameEvents";
+import { useGlobalStore } from "store";
+import { KeyboardLayouts } from "helpers/vars";
 export default class KeyboardInputManager extends Phaser.GameObjects.GameObject {
     constructor(scene : Phaser.Scene) {
         super(scene, "KeyboardInputManager")
@@ -17,10 +19,6 @@ export default class KeyboardInputManager extends Phaser.GameObjects.GameObject 
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.UP, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.LEFT, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.RIGHT, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.W, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.S, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
-        this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.B, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.B, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.E, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.TAB, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB, true, false))
@@ -36,6 +34,13 @@ export default class KeyboardInputManager extends Phaser.GameObjects.GameObject 
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.T, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.T, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.SPACE, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE, true, false))
         this.keys.set(Phaser.Input.Keyboard.KeyCodes.F3, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F3, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.A, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.S, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.D, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.W, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.Q, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Q, true, false))
+        this.keys.set(Phaser.Input.Keyboard.KeyCodes.Z, this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z, true, false))
+
     }
 
     private setGameMode=()=>{
@@ -74,11 +79,24 @@ export default class KeyboardInputManager extends Phaser.GameObjects.GameObject 
 
     private keysChangedGaming() {
         let directionChangedMessage : Protocol.ChangeDirection = new Protocol.ChangeDirection()
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
-
+        
+        switch (useGlobalStore.getState().keyboardLayout){
+            case KeyboardLayouts.QWERTY:
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) directionChangedMessage.x-=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) directionChangedMessage.y-=1
+                break;
+            case KeyboardLayouts.AZERTY:
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.Q)?.isDown) directionChangedMessage.x-=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) directionChangedMessage.y+=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown) ||this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) directionChangedMessage.x+=1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown) || this.keys.get(Phaser.Input.Keyboard.KeyCodes.Z)?.isDown) directionChangedMessage.y-=1
+                break;
+            default:
+                break;
+        }
+        
         if (directionChangedMessage){    
             let serializedMessage : Protocol.Message = Protocol.MessageSerializer.serialize(directionChangedMessage)
             Client.getInstance().colyseusRoom.send(serializedMessage.name, serializedMessage.data)
@@ -126,11 +144,22 @@ export default class KeyboardInputManager extends Phaser.GameObjects.GameObject 
  
     public velocityVector () : Phaser.Math.Vector2 {
         var velocityVector : Phaser.Math.Vector2 = new Phaser.Math.Vector2(0, 0)
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) velocityVector.x -= 1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) velocityVector.y -= 1
-        if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
-             
+        switch (useGlobalStore.getState().keyboardLayout){
+            case KeyboardLayouts.QWERTY:
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.A)?.isDown) velocityVector.x -= 1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.W)?.isDown) velocityVector.y -= 1
+                break;
+            case KeyboardLayouts.AZERTY:
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.LEFT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.Q)?.isDown) velocityVector.x -= 1
+            	if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.RIGHT)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.D)?.isDown) velocityVector.x += 1
+            	if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.DOWN)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.S)?.isDown) velocityVector.y += 1       
+                if( (this.keys.get(Phaser.Input.Keyboard.KeyCodes.UP)?.isDown)  || this.keys.get(Phaser.Input.Keyboard.KeyCodes.Z)?.isDown) velocityVector.y -= 1
+            	break;
+            default:
+                break;
+        }
         return velocityVector;
     }
 

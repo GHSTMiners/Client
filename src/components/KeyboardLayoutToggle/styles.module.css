@@ -1,0 +1,8 @@
+.toggleDisabled{
+    color:black;
+    transform: translatex(-40%);
+}
+
+.toggleEnabled{
+    transform: translatex(50%);
+}

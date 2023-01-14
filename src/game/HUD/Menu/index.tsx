@@ -12,6 +12,7 @@ import { useGlobalStore } from "store";
 import useSoundFXManager from "hooks/useSoundFXManager";
 import MainScene from "game/Scenes/MainScene";
 import GameControls from "components/GameControls";
+import KeyboardLayoutToggle from "components/KeyboardLayoutToggle";
 
 const Menu = () => {
   
@@ -99,7 +100,11 @@ const Menu = () => {
               </div>
             </div>
 
-            <div className={styles.volumesContainer}>
+            <div className={styles.settingsContainer}>
+              <div className={styles.keyboardLayoutWrapper}>
+                <div className={styles.menuEntryTitle}> Keyboard Layout</div>
+                <KeyboardLayoutToggle />
+              </div>
               <div className={styles.volumeSlider}>
                 <span className={styles.menuEntryTitle}> Sound FX </span>
                 <Slider max={1} step={0.01} defaultValue={ soundFXManager.getVolume() } onChange={updateSoundFXVolume} />

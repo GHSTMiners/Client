@@ -12,10 +12,12 @@ export default class GamePadInputManager extends Phaser.GameObjects.GameObject {
         })
         this.buttonStates = new Map<ButtonMapping, boolean>()
 
+        /*
         for (let item in Object.values(ButtonMapping)) {
             console.log(ButtonMapping[item])
             // this.buttonStates.set(item, false)
         }
+        */
     }
 
     private attachGamePad(gamepad : Phaser.Input.Gamepad.Gamepad) {

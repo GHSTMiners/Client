@@ -141,7 +141,7 @@
   grid-template-columns: 20rem 20rem;
   grid-template-rows:20rem 10rem;
   grid-template-areas:
-  "controls volume"
+  "controls settings"
   "controls leave";
   height: 100%;
 }
@@ -154,8 +154,8 @@
   grid-area: controls;
 }
 
-.volumesContainer{
-  grid-area: volume;
+.settingsContainer{
+  grid-area: settings;
   display: grid;
   justify-content: center;
   align-content: space-evenly;
@@ -164,6 +164,7 @@
 .leaveContainer{
   grid-area: leave;
   display: grid;
+  align-content: center;
   justify-items: center;
 }
 

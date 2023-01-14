@@ -96,6 +96,11 @@ export enum ItemTypes{
   Artifact = 'Artifact'
 }
 
+export enum KeyboardLayouts{
+  QWERTY = 'QWERTY',
+  AZERTY = 'AZERTY',
+}
+
 export const ITEMWIDTH = '3.3rem';
 export const ARTIFACTWIDTH = '5.8rem';
 export const ICONHEIGHT = '0.8rem';

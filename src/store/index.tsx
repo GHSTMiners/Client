@@ -7,7 +7,7 @@ import * as Schema  from "matchmaking/Schemas"
 import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
-import { AuthenticatorState, SHORTCUTS, WalletApps } from 'helpers/vars'
+import { AuthenticatorState, KeyboardLayouts, SHORTCUTS, WalletApps } from 'helpers/vars'
 
 type State = {
     // game schemas 
@@ -20,6 +20,7 @@ type State = {
     // game settings
     soundFXVolume : number,
     musicVolume: number,
+    keyboardLayout: KeyboardLayouts,
     // game UI
     userShortcuts: IndexedItem,
     isDraggingItem: boolean,
@@ -59,6 +60,7 @@ type Actions = {
     setPlayerState: (playerState: Schema.PlayerState) => void
     setSoundFXVolume: (volume: number) => void
     setMusicVolume: (volume: number) => void
+    setKeyboardLayout: (layout:KeyboardLayouts) => void
     initializeUserShortcuts: () => void
     setUserShortcut: (id: number, item: Item) => void
     setIsDraggingItem: (state:boolean) => void
@@ -96,6 +98,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     players: {},
     playerState: {} as Schema.PlayerState,
     soundFXVolume : 0.8,
+    keyboardLayout: KeyboardLayouts.QWERTY,
     musicVolume: 0.4,
     userShortcuts: {} as IndexedItem,
     isDraggingItem: false,
@@ -141,6 +144,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     },
     setMusicVolume: ( volume ) =>{
         set( () => ({ musicVolume: volume }))
+    },
+    setKeyboardLayout: ( layout ) =>{
+        set( () => ({ keyboardLayout: layout }))
     },
     initializeUserShortcuts: () =>{
         set( (state) => {
