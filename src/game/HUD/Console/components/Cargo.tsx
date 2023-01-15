@@ -20,7 +20,7 @@ const Cargo = () => {
       <div className={`${styles.crystalTag}
                        ${ quantity>0 ? styles.itemEnabled : styles.itemDisabled}`}>
         <div>{quantity? quantity : 0} x {tag}</div>
-        <div>{formatCurrency(price)}</div>
+        <div className={styles.cryptoPrice}>{formatCurrency(price)}</div>
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ body {
 
 .mainConsoleContainer {
   display: grid;
-  background-image: url("assets/hud/main_hud.svg");
+  background-image: url("assets/hud/main_hud_v2.svg");
   background-size: cover;
   width: 100rem;
   height: 44rem;
@@ -75,10 +75,9 @@ body {
   align-items: flex-end;
   justify-self: center;
   display: flex;
-  width: 100%;
-  padding-bottom: 7.8%;
-  padding-right: 16.2%;
-  padding-left: 8.2%;
+  width: 51.7rem;
+  margin-right: 3.4rem;
+  margin-bottom: 5.6rem;
   justify-content: space-evenly;
 }
 

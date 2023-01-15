@@ -1,8 +1,6 @@
 import styles from "./styles.module.css";
-import SquareButton from "components/SquareButton";
 import expandIcon from "assets/hud/expand_icon.svg";
-import drillIcon from "assets/hud/drill.png";
-import { ITEMWIDTH, ARTIFACTWIDTH, ItemTypes } from "helpers/vars"
+import { ITEMWIDTH } from "helpers/vars"
 import Consumables from "./components/Consumables";
 import Artifacts from "./components/Artifacts";
 import Cargo from "./components/Cargo";
@@ -24,9 +22,9 @@ const Console = () => {
       <div className={styles.mainConsoleContainer}>
         <DndProvider backend={HTML5Backend}>
           <div className={styles.playerButtons}>
-            <SquareButton size={ARTIFACTWIDTH} type={ItemTypes.Artifact} quantity={1}>
+            {/*<SquareButton size={ARTIFACTWIDTH} type={ItemTypes.Artifact} quantity={1}>
               <img src={drillIcon} className={styles.toolIcon} alt={'drill'}/>
-            </SquareButton>
+            </SquareButton>*/}
             <ConsoleButtons />
             <div
               className={styles.expandButton}

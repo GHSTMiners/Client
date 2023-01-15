@@ -5,7 +5,8 @@ const buttonsSetup = [
   { shortcut: 1 },
   { shortcut: 2 },
   { shortcut: 3 },
-  { shortcut: 4 }
+  { shortcut: 4 },
+  { shortcut: 5 }
 ]
 
 const ConsoleButtons = () => {
