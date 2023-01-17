@@ -1,5 +1,5 @@
 import { KeyboardLayouts } from "helpers/vars";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Switch from "react-switch"
 import { useGlobalStore } from "store";
 import styles from "./styles.module.css"
@@ -8,6 +8,10 @@ const KeyboardLayoutToggle: React.FC  = () => {
     const keyboardLayout = useGlobalStore.getState().keyboardLayout;
     const setKeyboardLayout = useGlobalStore.getState().setKeyboardLayout;
     const [checked,setChecked] = useState(keyboardLayout===KeyboardLayouts.QWERTY) ;
+
+    useEffect(()=>{
+        setChecked(keyboardLayout === KeyboardLayouts.QWERTY)
+    },[keyboardLayout])
 
     const handleChange = (nextChecked:boolean) => {
         nextChecked? setKeyboardLayout(KeyboardLayouts.QWERTY):setKeyboardLayout(KeyboardLayouts.AZERTY)

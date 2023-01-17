@@ -7,7 +7,8 @@ import * as Schema  from "matchmaking/Schemas"
 import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
-import { AuthenticatorState, KeyboardLayouts, SHORTCUTS, WalletApps } from 'helpers/vars'
+import { AuthenticatorState, CookieSettings, KeyboardLayouts, SHORTCUTS, WalletApps } from 'helpers/vars'
+import Cookies from 'js-cookie'
 
 type State = {
     // game schemas 
@@ -43,6 +44,7 @@ type State = {
     isWalletLoaded: boolean,
     gotchiSVGs: IndexedString,
     gotchiNames: IndexedString,
+    settingsCookie: string,
     // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
@@ -61,7 +63,7 @@ type Actions = {
     setSoundFXVolume: (volume: number) => void
     setMusicVolume: (volume: number) => void
     setKeyboardLayout: (layout:KeyboardLayouts) => void
-    initializeUserShortcuts: () => void
+    initializeUserSettings: () => void
     setUserShortcut: (id: number, item: Item) => void
     setIsDraggingItem: (state:boolean) => void
     setCountdown : (time:number) => void
@@ -97,9 +99,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     depth: 0 ,
     players: {},
     playerState: {} as Schema.PlayerState,
-    soundFXVolume : 0.8,
+    soundFXVolume : 1,
     keyboardLayout: KeyboardLayouts.QWERTY,
-    musicVolume: 0.4,
+    musicVolume: 1,
     userShortcuts: {} as IndexedItem,
     isDraggingItem: false,
     lobbyCountdown: 0,
@@ -119,6 +121,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     usersProvider: undefined,
     usersChainId: undefined,
     walletProviderApp: WalletApps.Unknown,
+    settingsCookie:'',
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -140,19 +143,36 @@ export const useGlobalStore = create<State & Actions>((set) => ({
         set( () => ({ playerState: state }))
     },
     setSoundFXVolume: ( volume ) =>{
-        set( () => ({ soundFXVolume: volume }))
+        set( () => { 
+            Cookies.set( CookieSettings.soundFXVolume, `${volume}`, {expires : 356})
+            return( {soundFXVolume: volume }) 
+        })
     },
     setMusicVolume: ( volume ) =>{
-        set( () => ({ musicVolume: volume }))
+        set( () => {
+            Cookies.set( CookieSettings.musicVolume, `${volume}`, {expires : 356})
+            return ({ musicVolume: volume })
+        })
     },
     setKeyboardLayout: ( layout ) =>{
-        set( () => ({ keyboardLayout: layout }))
+        set( () => {
+            Cookies.set( CookieSettings.keyboardLayout, layout, {expires : 356})
+            return({ keyboardLayout: layout })
+        })
     },
-    initializeUserShortcuts: () =>{
+    initializeUserSettings: () =>{
         set( (state) => {
             let newState = {...state.userShortcuts};
             for (let i = 1; i <= SHORTCUTS; i++) newState[i] = {} as Item;
-            return( { userShortcuts: newState } )
+            const soundFXVolume = Cookies.get( CookieSettings.soundFXVolume );
+            const musicVolume = Cookies.get( CookieSettings.musicVolume );
+            const keyboardLayout = Cookies.get( CookieSettings.keyboardLayout );
+            return( { 
+                userShortcuts: newState,
+                soundFXVolume: soundFXVolume? +soundFXVolume : 1,
+                musicVolume: musicVolume? +musicVolume : 1,
+                keyboardLayout: keyboardLayout? keyboardLayout as KeyboardLayouts : KeyboardLayouts.QWERTY,         
+             } )
         })
     },
     setUserShortcut: ( id:number , item) => {
@@ -273,5 +293,5 @@ export const useGlobalStore = create<State & Actions>((set) => ({
             walletProviderApp: WalletApps.Unknown,
             authenticatorState: AuthenticatorState.Disconnected,
         }))
-    }   
+    }
 }))

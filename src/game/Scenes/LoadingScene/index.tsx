@@ -189,7 +189,7 @@ export default class LoadingScene extends Phaser.Scene {
   complete() {   
     this.storeWorldCrypto();
     this.storeWorldExplosives();
-    useGlobalStore.getState().initializeUserShortcuts();
+    useGlobalStore.getState().initializeUserSettings();
     console.log("Loading assets complete!");
     // Send request game start
     let requestGameStartMessage : Protocol.RequestStartGame = new Protocol.RequestStartGame()

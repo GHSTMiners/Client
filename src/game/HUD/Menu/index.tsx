@@ -13,6 +13,7 @@ import useSoundFXManager from "hooks/useSoundFXManager";
 import MainScene from "game/Scenes/MainScene";
 import GameControls from "components/GameControls";
 import KeyboardLayoutToggle from "components/KeyboardLayoutToggle";
+import { VOLUMENPOWERORDER } from "helpers/vars";
 
 const Menu = () => {
   
@@ -22,7 +23,9 @@ const Menu = () => {
   const playerTotalCrypto = useGlobalStore( state => state.totalValue);
   const wallet = useGlobalStore( state => state.wallet );
   const worldCrypto = useGlobalStore( state => state.worldCrypto );
-  
+  const musicVolume = useGlobalStore( state => state.musicVolume );
+  const soundFXVolume = useGlobalStore( state => state.soundFXVolume );
+
   const updateMusicVolume = (volume:number | number[]) =>{
     if (typeof volume === "number") {
       musicManager.setVolume(volume);
@@ -107,11 +110,11 @@ const Menu = () => {
               </div>
               <div className={styles.volumeSlider}>
                 <span className={styles.menuEntryTitle}> Sound FX </span>
-                <Slider max={1} step={0.01} defaultValue={ soundFXManager.getVolume() } onChange={updateSoundFXVolume} />
+                <Slider max={1} step={0.01} value={ Math.pow( soundFXVolume, 1/ VOLUMENPOWERORDER ) } onChange={updateSoundFXVolume} />
               </div>
               <div className={styles.volumeSlider}>
                 <span className={styles.menuEntryTitle}> Music</span>
-                <Slider max={1} step={0.01} defaultValue={ musicManager.getVolume() } onChange={updateMusicVolume} />
+                <Slider max={1} step={0.01} value={ Math.pow( musicVolume, 1/ VOLUMENPOWERORDER ) } onChange={updateMusicVolume} />
               </div>
             </div>
             <div className={styles.leaveContainer}>

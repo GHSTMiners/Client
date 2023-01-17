@@ -1,11 +1,12 @@
 import Client from "matchmaking/Client";
 import MainScene from "game/Scenes/MainScene";
+import { useGlobalStore } from "store";
+import { VOLUMENPOWERORDER } from "helpers/vars";
 
 const useSoundFXManager = () => {
   
   const soundFXManager = (Client.getInstance().phaserGame?.scene.getScene('MainScene') as MainScene)?.soundFXManager;
-  const volumePowerOrder = 4 // to get a exponential feeling for the volume slider, more natural
-  
+ 
   const play = (key:string) => {
     soundFXManager?.play(key)
   }
@@ -15,8 +16,8 @@ const useSoundFXManager = () => {
   }
 
   const getVolume = () =>{
-    const rawVolume = soundFXManager?.getVolume();
-    return rawVolume? Math.pow( rawVolume, 1/volumePowerOrder ): 1 ;
+    const rawVolume = useGlobalStore.getState().soundFXVolume;
+    return Math.pow( rawVolume, 1/VOLUMENPOWERORDER ) ;
   }
 
   return { play , setVolume , getVolume }
