@@ -4,6 +4,7 @@ import Client from "matchmaking/Client";
 import LoadingScene from "game/Scenes/LoadingScene";
 import MainScene from "game/Scenes/MainScene";
 import { HUD } from "game/HUD";
+import LoadingGame from "components/LoadingGame";
 
 export default class Play extends React.Component {
   componentDidMount() {
@@ -43,6 +44,7 @@ export default class Play extends React.Component {
     if (Client.getInstance().colyseusRoom) {
       return (
         <>
+          <LoadingGame />
           <HUD />
           <div id="phaser-game" />
         </>

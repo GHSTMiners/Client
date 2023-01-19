@@ -7,9 +7,9 @@ import MusicManager from "game/Management/MusicManager";
 import ChatManager from "game/Management/ChatManager";
 import SoundFXManager from "game/Management/SoundFXManager";
 import DiagnosticsManager from "game/Management/DiagnosticsManager";
-import gameEvents from "game/helpers/gameEvents";
 import RespawnManager from "game/Management/RespawnManager";
 import LifeCycleManager from "game/Management/LifeCycleManager";
+import { useGlobalStore } from "store";
 
 export default class MainScene extends Phaser.Scene {
   constructor() {
@@ -27,10 +27,10 @@ export default class MainScene extends Phaser.Scene {
     this.respawnManager = new RespawnManager(this);
     this.diagnosticsManager = new DiagnosticsManager(this);
     this.lifeCycleManager = new LifeCycleManager(this);
-    this.game.events.emit( gameEvents.phaser.MAINSCENE);
     this.sound.pauseOnBlur = false
     this.cameras.main.zoom = 0.75
-
+    useGlobalStore.getState().setIsGameLoaded(true);
+    
     setInterval(() => {
       this.diagnosticsManager?.requestPong()
     }, 2000)

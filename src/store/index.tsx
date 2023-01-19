@@ -45,6 +45,7 @@ type State = {
     gotchiSVGs: IndexedString,
     gotchiNames: IndexedString,
     settingsCookie: string,
+    isGameLoaded: boolean,
     // extra
     worldCrypto: IndexedCrypto,
     worldExplosives: InventoryExplosives, 
@@ -79,6 +80,7 @@ type Actions = {
     setIsDatabaseLoaded: (value:boolean) => void
     setIsDatabaseAvailable: (value:boolean) => void
     setIsWalletLoaded: (value:boolean) => void
+    setIsGameLoaded: (value:boolean) => void
     setUsersWalletAddress: (address:string | undefined) => void
     setUsersProvider: (provider:ethers.providers.Web3Provider | undefined) => void
     setUsersChainId: (chainId:number | undefined) => void
@@ -122,6 +124,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     usersChainId: undefined,
     walletProviderApp: WalletApps.Unknown,
     settingsCookie:'',
+    isGameLoaded: false,
     
     // Settings methods
     setWorldCrypto: (crypto) => { 
@@ -258,6 +261,9 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setIsWalletLoaded: ( value ) =>{
         set( () => ({ isWalletLoaded: value }))
     },
+    setIsGameLoaded: ( value ) =>{
+        set( () => ({ isGameLoaded: value }))
+    },
     setUsersWalletAddress: ( address ) =>{
         set( () => ({ usersWalletAddress: address }))
     },
@@ -281,7 +287,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
             cargo: {},
             explosives: {},
             wallet : {},
-            worldExplosives: {},   
+            worldExplosives: {},  
         }))
     },
     clearUserWeb3Data: () =>{

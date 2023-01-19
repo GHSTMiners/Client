@@ -17,7 +17,7 @@ interface Props {
 
 const Chat : React.FC<Props> = ({ gameMode=true }) => {
   const [chatMessage, setChatMessage] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<JSX.Element[]>([<span style={{ color: 'white' }} key={'Startup'}>The game will start in about 30 seconds</span>]);
+  const [chatHistory, setChatHistory] = useState<JSX.Element[]>([]);
   const chatVisibility = useVisible('chat', false); 
   const inputRef = useRef<any>(null);
 

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Chat from "components/Chat";
 import GameLeaderboard from "./Leaderboard";
 import Vitals from "./Vitals";
@@ -11,20 +10,10 @@ import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
 import Vignette from "./Vignette";
 import MinedCryptoFX from "./Animations/MinedCryptoFX";
-import Config from "config";
-import ReactPlayer from "react-player";
+import { useGlobalStore } from "store";
 
 export const HUD = () => {  
-  const [gameLoaded, setgameLoaded] = useState(false);
-  const [loadingPercentage, setLoadingPercentage] = useState<number>(0);
-
-  const loadingBar = (value:number) =>{
-    return(
-        <div className={styles.progressBar} hidden={gameLoaded}>
-          <div className={styles.progressValue} style={{width: `${value}%`}}></div>
-       </div>
-    )
-  }
+  const isGameLoaded = useGlobalStore( state => state.isGameLoaded );
 
   function handleClick (event:any ) {
     // if the user clicks on the background, all open dialogs are closed
@@ -35,37 +24,12 @@ export const HUD = () => {
     }
   }
 
-  // Declaring event listeners
-  useEffect(() => {
-    const setGameReady = () => {setgameLoaded(true)};
-    const handleLoadingBar = (percentage:number) => setLoadingPercentage(percentage);
-
-    Client.getInstance().phaserGame.events.on( gameEvents.phaser.LOADING, handleLoadingBar );
-    Client.getInstance().phaserGame.events.on( gameEvents.phaser.MAINSCENE, setGameReady);
-
-    return () => {
-      Client.getInstance().phaserGame.events.off(gameEvents.phaser.LOADING, handleLoadingBar );
-      Client.getInstance().phaserGame.events.off(gameEvents.phaser.MAINSCENE, setGameReady);
-    }
-  }, []);
-
-  //const loadingImgURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.thumbnail}`;
-  const loadingVideoURL = `${Config.storageURL}/${Client.getInstance().chiselWorld.teaser}`;
-
   return (
     <>
-      <div className={`${styles.loadingScene} ${gameLoaded? styles.hidden : styles.reveal }`} >
-        <div className={styles.loadingText}>{loadingPercentage<100?'Loading game...':'Waiting for other players'}</div>
-        {loadingBar(loadingPercentage)}
-        <ReactPlayer url={loadingVideoURL} playing={!gameLoaded} muted={false} width={'100%'} height={'100%'}/>
-        {/*<img src={loadingImgURL} 
-            alt={'world preview'}
-            className={styles.backgroundImage}/>*/}
-      </div>
-      <div className={`${styles.hudContainer} ${!gameLoaded? styles.hidden : styles.reveal }`} 
+      <div className={`${styles.hudContainer} ${!isGameLoaded? styles.hidden : styles.reveal }`} 
            onClick={e => handleClick(e)}
            id="game-background"
-           hidden={!gameLoaded}>
+           hidden={!isGameLoaded}>
           {/* EFFECTS */}
           <MinedCryptoFX />
           <Vignette />

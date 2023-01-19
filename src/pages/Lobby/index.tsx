@@ -31,6 +31,7 @@ const Lobby = (): JSX.Element => {
   const [mapVoting,setMapVoting]= useState<IndexedArray>({});
   const navigate = useNavigate();
   const setCountdown = useGlobalStore(store => store.setCountdown)
+  useGlobalStore.getState().setIsGameLoaded(false);
 
   /**
    * Updates global state with selected gotchi
