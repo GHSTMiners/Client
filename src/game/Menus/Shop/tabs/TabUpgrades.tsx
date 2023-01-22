@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
-import UpgradeBar from "game/HUD/Shop/components/UpgradeBar";
+import UpgradeBar from "../components/UpgradeBar";
 import buyUpgrade from "../helpers/buyUpgrade";
 import { UpgradePrice } from "types";
 import useWorldUpgrades from "hooks/useWorldUpgrades";

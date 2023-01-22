@@ -1,10 +1,8 @@
 import Chat from "components/Chat";
-import GameLeaderboard from "./Leaderboard";
 import Vitals from "./Vitals";
 import Diagnostics from "./Diagnostics";
 import Console from "./Console";
-import Menu from "./Menu";
-import Shop from "./Shop";
+import Score from "./Score";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
@@ -33,14 +31,11 @@ export const HUD = () => {
           {/* EFFECTS */}
           <MinedCryptoFX />
           <Vignette />
-          {/* PERMANENT HUD ELEMENTS */}
+          {/* HUD ELEMENTS */}
           <Vitals />
           <Console />
           <Chat />
-          <Menu />
-          {/* DIALOGS HUD */}
-          <Shop />
-          <GameLeaderboard hidden={true} />
+          <Score />
           <Diagnostics hidden={true} />
       </div> 
     </>
