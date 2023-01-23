@@ -6,8 +6,6 @@ import Score from "./Score";
 import Client from "matchmaking/Client";
 import styles from "./styles.module.css";
 import gameEvents from "game/helpers/gameEvents";
-import Vignette from "./Vignette";
-import MinedCryptoFX from "./Animations/MinedCryptoFX";
 import { useGlobalStore } from "store";
 
 export const HUD = () => {  
@@ -28,10 +26,6 @@ export const HUD = () => {
            onClick={e => handleClick(e)}
            id="game-background"
            hidden={!isGameLoaded}>
-          {/* EFFECTS */}
-          <MinedCryptoFX />
-          <Vignette />
-          {/* HUD ELEMENTS */}
           <Vitals />
           <Console />
           <Chat />

@@ -6,6 +6,7 @@ import MainScene from "game/Scenes/MainScene";
 import { HUD } from "game/HUD";
 import LoadingGame from "components/LoadingGame";
 import Menus from "game/Menus";
+import VisualFX from "game/VisualFX";
 
 export default class Play extends React.Component {
   componentDidMount() {
@@ -48,6 +49,7 @@ export default class Play extends React.Component {
           <LoadingGame />
           <HUD />
           <Menus />
+          <VisualFX />
           <div id="phaser-game" />
         </>
       );

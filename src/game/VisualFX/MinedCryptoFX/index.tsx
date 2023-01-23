@@ -2,7 +2,7 @@ import gameEvents from "game/helpers/gameEvents";
 import Client from "matchmaking/Client";
 import { useEffect, useState } from "react";
 import { useGlobalStore } from "store";
-import styles from "./minedCryptoFX.module.css"
+import styles from "./styles.module.css"
 
 const MinedCryptoFX = () => {
     
