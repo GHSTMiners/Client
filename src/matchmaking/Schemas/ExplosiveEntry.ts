@@ -10,4 +10,7 @@ import { Schema, type } from "@colyseus/schema"
 export class ExplosiveEntry extends Schema {
     @type ("number") public explosiveID!: number;
     @type ("number") public amount!: number;
+    @type ("number") nextTimeAvailable! : number;
+    @type ("number") amountSpawned! : number;
+    @type ("number") amountPurchased! : number;
 }
