@@ -7,7 +7,7 @@ interface Props{
 }
 
 const CountdownTimer : React.FC<Props>   = ( { targetDate } ) => {
-  const [ minutes, seconds] = useCountdown(targetDate);
+  const [ minutes, seconds] = useCountdown(targetDate,1000);
   const [ isHidden , setIsHidden] = useState(false)
 
   useEffect(()=>{

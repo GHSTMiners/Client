@@ -165,7 +165,7 @@ export default class LoadingScene extends Phaser.Scene {
    storeWorldExplosives(){
     const world =   Client.getInstance().chiselWorld;
     let explosivesRecord : InventoryExplosives ={};
-    world.explosives.forEach((explosive)=>{
+    world.explosives.forEach((explosive: Chisel.Explosive)=>{
       let newItem : ExplosiveItem = { 
         id: explosive.id,
         name: explosive.name,
@@ -173,6 +173,7 @@ export default class LoadingScene extends Phaser.Scene {
         pattern: explosive.explosion_coordinates,
         price: explosive.price, 
         type: ItemTypes.Explosive,
+        cooldown: explosive.lifespan,
         callback: () => deployExplosive(explosive.id),
         quantity: 0    
       };

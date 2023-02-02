@@ -32,10 +32,14 @@ export default class MainPlayer extends Player {
     }
 
     storeExplosives(){
-        this.playerSchema.explosives.onAdd = (explosives) => {
-            explosives.onChange= () => {
-                useGlobalStore.getState().setExplosives(`${explosives.explosiveID}`,explosives.amount)
-                if (explosives.amount === 0) delete useGlobalStore.getState().explosives[explosives.explosiveID]
+        this.playerSchema.explosives.onAdd = (explosive) => {
+            explosive.onChange= () => {
+                useGlobalStore.getState().setExplosives(`${explosive.explosiveID}`,{
+                    amount: explosive.amount, 
+                    nextTimeAvailable: explosive.nextTimeAvailable,
+                    amountSpawned: explosive.amountSpawned,
+                    amountPurchased: explosive.amountPurchased
+                })
             }
         }
     }

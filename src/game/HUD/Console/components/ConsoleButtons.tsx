@@ -17,7 +17,7 @@ const ConsoleButtons = () => {
         { buttonsSetup.map( button => 
             <ShortcutButon 
                 item={ userShortcuts[button.shortcut] } 
-                amount={  playerExplosives[+userShortcuts[button.shortcut]?.id] } 
+                amount={  playerExplosives[+userShortcuts[button.shortcut]?.id]?.amount } 
                 index={ button.shortcut }
                 key= {`shortcut${button.shortcut}`}
               /> )}

@@ -4,7 +4,7 @@ import { Player } from 'matchmaking/Schemas'
 import Client from 'matchmaking/Client'
 import * as Colyseus from 'colyseus.js'
 import * as Schema  from "matchmaking/Schemas"
-import { AavegotchiContractObject, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
+import { AavegotchiContractObject, ConsumableSchema, ConsumableRecord, IndexedArray, IndexedCrypto, IndexedItem, IndexedPlayers, IndexedString, InventoryExplosives, Item, PlayerVitals } from 'types'
 import create from 'zustand'
 import { ethers } from 'ethers'
 import { AuthenticatorState, CookieSettings, KeyboardLayouts, SHORTCUTS, WalletApps } from 'helpers/vars'
@@ -13,7 +13,7 @@ import Cookies from 'js-cookie'
 type State = {
     // game schemas 
     cargo : IndexedArray,
-    explosives: IndexedArray, 
+    explosives: ConsumableRecord, 
     vitals : PlayerVitals,
     wallet : IndexedArray,
     players: IndexedPlayers,
@@ -55,7 +55,7 @@ type State = {
 
 type Actions = {
     setCargo: (key:string,quantity:number) => void
-    setExplosives: (key:string,quantity:number) => void
+    setExplosives: (key:string,explosiveSchema : ConsumableSchema) => void
     setVitals: (field:string, level:number) => void
     setWallet: (key:string,quantity:number) => void
     setDepth: (depth:number) => void
@@ -198,7 +198,7 @@ export const useGlobalStore = create<State & Actions>((set) => ({
     setVitals: ( vital , level) => {
         set( (state) => ({ vitals: { ...state.vitals, [vital]:level } }))
     },
-    setExplosives: (key,quantity) => {
+    setExplosives: (key,explosiveSchema) => {
         set( (state) => { 
             // auto-assigning a console shortcut if a new explosive is purchased and space is available
             const userShortcuts = {...state.userShortcuts};
@@ -206,12 +206,11 @@ export const useGlobalStore = create<State & Actions>((set) => ({
             const savedShortcut = Object.keys(userShortcuts).find( shortcutKey => userShortcuts[shortcutKey].id === +key )
             if ( availableShortcut && savedShortcut === undefined ) {
                 const item = state.worldExplosives[+key];
-                item.quantity = quantity;
+                item.quantity = explosiveSchema.amount;
                 state.setUserShortcut(+availableShortcut,item)
-                console.log(`new shortcut auto-assigned to key ${availableShortcut}`)
             }
             return( 
-                {explosives: {...state.explosives, [key]: quantity}}
+                {explosives: {...state.explosives, [key]: explosiveSchema}}
             ) 
         })
     },

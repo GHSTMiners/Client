@@ -15,7 +15,7 @@ const Consumables = () => {
       <div className={styles.consumableItems}>
         { 
           Object.keys(worldExplosives).map( (id) =>{
-            const quantity =  explosives[+id] ? explosives[+id] : 0;
+            const quantity =  explosives[+id] ? explosives[+id].amount : 0;
             const item = worldExplosives[+id];
             item.quantity = quantity;
             return(

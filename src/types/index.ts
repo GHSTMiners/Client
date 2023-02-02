@@ -127,11 +127,24 @@ export type GameEventList = { [key:string]: CustomEvents }
 
 export type IndexedPlayers =  {[key: string]: Player} ;
 
-export type Item = { id:number, name: string, image:string, type: ItemTypes, quantity: number, price: number, callback: () => void }
+export type Item = { 
+  id:number, 
+  name: string, 
+  image:string, 
+  type: ItemTypes, 
+  quantity: number, 
+  price: number, 
+  cooldown:number,
+  callback: () => void, 
+}
 
 export type ExplosiveItem = Item & { pattern: Chisel.ExplosionCoordinate[] }
 
 export type IndexedExplosives =  {[key: string]: ExplosiveItem} ;
+
+export type ConsumableSchema = { amount:number, nextTimeAvailable:number, amountSpawned:number, amountPurchased:number };
+
+export type ConsumableRecord = Record< number, ConsumableSchema>;
 
 export type InventoryExplosives = Record< number, ExplosiveItem>;
 

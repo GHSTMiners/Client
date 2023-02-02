@@ -491,3 +491,13 @@ body {
 .songTitle{
   margin-left: 0.5rem;
 }
+
+.shortcutContainer{
+  position: relative;
+}
+
+.cooldownContainer{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

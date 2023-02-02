@@ -3,11 +3,13 @@ import gameEvents from "game/helpers/gameEvents";
 import { ItemTypes, ITEMWIDTH } from "helpers/vars";
 import useSoundFXManager from "hooks/useSoundFXManager";
 import Client from "matchmaking/Client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDrop } from "react-dnd";
 import { useGlobalStore } from "store";
 import { Item } from "types";
 import Explosive from "./Explosive";
+import styles from "./styles.module.css"
+import ButtonCooldown from "./ButtonCooldown";
 
 interface Props {
   item: Item | undefined, 
@@ -18,17 +20,24 @@ interface Props {
 const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   const setUserShortcut = useGlobalStore(state => state.setUserShortcut)
   const soundFXManager = useSoundFXManager();
+  const [nextTimeAvailable, setNextTimeAvailable] = useState<Date>(new Date(0))
+  const explosivesRecord = useGlobalStore( state => state.explosives )
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
-      if ( item && shotcutID === index && Object.keys(item).length >0 ) item.callback();
+      if ( item && shotcutID === index && Object.keys(item).length >0 ) {
+        console.log(`💣The explosive dropped has a cooldown of (s) ${item.cooldown}`)
+        const currentTime = new Date();
+        setNextTimeAvailable( state => { state = new Date( currentTime.getTime() + (item.cooldown * 1000) ); return state })
+        item.callback()
+      };
     }
     Client.getInstance().phaserGame.events.on( gameEvents.console.SHORTCUT, shortcutCallback );
     
     return () => {
       Client.getInstance().phaserGame.events.off( gameEvents.console.SHORTCUT, shortcutCallback );
     }
-  },[ item , index ])
+  },[ item , index , explosivesRecord,nextTimeAvailable])
 
   const renderItem = () => {
     switch(item?.type){
@@ -52,12 +61,13 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   })
 
   return (
-    <div ref={dropRef}>
+    <div className={styles.shortcutContainer} ref={dropRef}>
+      <ButtonCooldown deadline={nextTimeAvailable} itemCooldown={item? item?.cooldown: 0} />
       <SquareButton size={ITEMWIDTH}
         type={ItemTypes.Explosive}
         quantity={amount ? amount : -1}
         key={`squareButton${index}`}
-        onClick={() => {Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, index) }}>
+        onClick={() => { Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, index)  }}>
         {!isOver && renderItem() }
         {isOver && <div>{`SHORTCUT KEY ${index}`}</div>}
       </SquareButton>
