@@ -70,6 +70,7 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
         type={ItemTypes.Explosive}
         quantity={amount ? amount : -1}
         key={`squareButton${index}`}
+        disabled={secondsLeft>0}
         onClick={() => { Client.getInstance().phaserGame.events.emit( gameEvents.console.SHORTCUT, index)  }}>
         {!isOver && renderItem() }
         {isOver && <div>{`SHORTCUT KEY ${index}`}</div>}

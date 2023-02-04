@@ -162,7 +162,7 @@ export class Player extends Phaser.GameObjects.Container {
 
   private handleDead() {
     this.soundFXManager.play(`dead`)
-    this.scene.cameras.main.flash(1000, 255, 0, 0, true);
+    this.scene?.cameras.main.flash(1000, 255, 0, 0, true);
   }
 
   private handleRespawn() {

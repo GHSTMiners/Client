@@ -30,7 +30,7 @@ const SquareButton: React.FC<Props> = ({
   return (
     <button onClick={onClick} className={styles.squareButton} disabled={disabled} ref={buttonRef}>
       <div className={(isDraggingItem && children instanceof Array && type === ItemTypes.Explosive)? styles.isDragging :''}>
-        <div className={`${styles.buttonText} ${(quantity === undefined || quantity <1)? styles.disabled: '' }`} style={{ width: size, height: size }}>
+        <div className={`${styles.buttonText} ${(quantity === undefined || quantity <1 || disabled)? styles.disabled: '' }`} style={{ width: size, height: size }}>
           {children}
         </div>
       </div>
