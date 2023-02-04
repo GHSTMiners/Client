@@ -10,6 +10,7 @@ import { Item } from "types";
 import Explosive from "./Explosive";
 import styles from "./styles.module.css"
 import ButtonCooldown from "./ButtonCooldown";
+import useCooldown from "hooks/useCooldown";
 
 interface Props {
   item: Item | undefined, 
@@ -21,11 +22,13 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
   const setUserShortcut = useGlobalStore(state => state.setUserShortcut)
   const soundFXManager = useSoundFXManager();
   const [nextTimeAvailable, setNextTimeAvailable] = useState<Date>(new Date(0))
+  const [secondsLeft, cooldownProgress]=useCooldown(nextTimeAvailable,item? item?.cooldown: 0);
   const explosivesRecord = useGlobalStore( state => state.explosives )
 
   useEffect(()=>{ 
     const shortcutCallback = (shotcutID:number) => {
-      if ( item && shotcutID === index && Object.keys(item).length >0 ) {
+      const isItemReady = (new Date(nextTimeAvailable).getTime() - new Date().getTime() )<=0;
+      if ( item && shotcutID === index && Object.keys(item).length >0 && item.quantity>0  &&  isItemReady) {
         console.log(`💣The explosive dropped has a cooldown of (s) ${item.cooldown}`)
         const currentTime = new Date();
         setNextTimeAvailable( state => { state = new Date( currentTime.getTime() + (item.cooldown * 1000) ); return state })
@@ -62,7 +65,7 @@ const ShortcutButon: React.FC<Props> = ({item, amount, index}) => {
 
   return (
     <div className={styles.shortcutContainer} ref={dropRef}>
-      <ButtonCooldown deadline={nextTimeAvailable} itemCooldown={item? item?.cooldown: 0} />
+      <ButtonCooldown secondsLeft={secondsLeft} cooldownProgress={cooldownProgress} />
       <SquareButton size={ITEMWIDTH}
         type={ItemTypes.Explosive}
         quantity={amount ? amount : -1}

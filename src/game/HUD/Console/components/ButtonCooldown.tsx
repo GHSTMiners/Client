@@ -1,14 +1,12 @@
-import useCooldown from "hooks/useCooldown";
 import styles from "./styles.module.css"
 
 interface Props {
-    deadline: Date, 
-    itemCooldown: number
+    secondsLeft: number, 
+    cooldownProgress: number
   }
 
-const ButtonCooldown : React.FC<Props> = ({deadline, itemCooldown} ) => {
-    const [secondsLeft, cooldownProgress]=useCooldown(deadline,itemCooldown);
-
+const ButtonCooldown : React.FC<Props> = ({secondsLeft, cooldownProgress} ) => {
+    
     return(
         <>
             <div className={styles.cooldownContainer} 
