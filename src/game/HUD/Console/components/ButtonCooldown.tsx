@@ -10,7 +10,7 @@ const ButtonCooldown : React.FC<Props> = ({secondsLeft, cooldownProgress} ) => {
     return(
         <>
             <div className={styles.cooldownContainer} 
-                style={{background:`conic-gradient(rgba(0, 0, 0, 0) ${cooldownProgress}%,rgba(126,240,159,0.8)  0)`}}
+                style={{background:`conic-gradient(rgba(0, 0, 0, 0) ${cooldownProgress}%,rgba(204,255,254,0.8)  0)`}}
                 hidden={(secondsLeft<=0)}>
                     {secondsLeft}
             </div>

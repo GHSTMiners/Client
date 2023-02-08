@@ -2,18 +2,20 @@ import Client from 'matchmaking/Client'
 import { useEffect, useState } from 'react';
 import { GlobalStatisticEntry, StatisticCategory } from 'chisel-api-interface/lib/Statistics'
 import { TimeRange } from 'helpers/vars';
+import { GraphData, GraphEntry, ScatteredData } from 'types';
 
 const useGlobalStatistics = () => {
     const [categories, setCategories] = useState(new Array<StatisticCategory>())
     const [statistics, setStatistics] = useState(new Map<number,GlobalStatisticEntry>())
+    const [serverGraphData, setServerGraphData] = useState<GraphData>({} as GraphData);
     const [isLoading, setIsLoading] = useState(true)
-
     
     useEffect(()=>{
         let mounted = true;
         const rawGames = Client.getInstance().apiInterface.statistics_global_games();
         const rawCathegories = Client.getInstance().apiInterface.statistic_categories();
-        
+        const rawGameAmounts = Client.getInstance().apiInterface.game_amounts();
+
         if (mounted){
             rawCathegories.then(  cathegories => {
                 if (cathegories) {
@@ -24,8 +26,36 @@ const useGlobalStatistics = () => {
                     if (mounted){
                         rawGames.then( statistics => {
                             setStatistics( statistics )
-                            setIsLoading( false );
                         });
+                        if (mounted){
+                            rawGameAmounts.then( gameAmountEntries => {
+                                const graphDatasets: GraphEntry[] = [];
+                                let dataPoints:ScatteredData[] = [];
+                                gameAmountEntries.forEach( gameEntry => {
+                                    const nGames = gameEntry.games_per_region["1"];
+                                    const dataPoint = {
+                                        x: new Date(gameEntry?.start_date).getTime(),
+                                        y: nGames || 0
+                                    }
+                                    dataPoints.push(dataPoint)
+                                })
+
+                                const serverData = { 
+                                    label: 'Western-Europe',
+                                    data: dataPoints,
+                                    showLine: true,
+                                    radius: 0,
+                                    borderColor: 'rgb(255,0,0)',
+                                    tension: 0.2,
+                                  };
+                                
+                                  graphDatasets.push(serverData)
+                                  console.log(graphDatasets)
+
+                                setServerGraphData({ datasets: graphDatasets})
+                                setIsLoading( false );
+                            })
+                        }
                     };
                 } else {
                     console.log('Could not fetch stat categories from API')
@@ -74,7 +104,7 @@ const useGlobalStatistics = () => {
         return  statistics.get(-1)?.total 
     }
 
-    return { categories, statistics , isLoading, deaths, cryptoCollected, blocksMined, totalGames }
+    return { categories, statistics , isLoading, serverGraphData, deaths, cryptoCollected, blocksMined, totalGames }
     
 }
 

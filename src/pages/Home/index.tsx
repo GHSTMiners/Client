@@ -17,16 +17,14 @@ const Home = (): JSX.Element => {
 
   const isLoading = useGlobalStore( state => state.isLoading );
   const globalStats = useGlobalStatistics();
-  const usersWalletAddress = useGlobalStore( state => state.usersWalletAddress);
+  const usersWalletAddress = useGlobalStore( state => state.usersWalletAddress );
   
   useEffect(() => {
     if (usersWalletAddress)  getAavegotchis(usersWalletAddress);
   }, [usersWalletAddress]);
 
-  return (
-    <>
-      
-     <div className={`${styles.basicGrid} ${isLoading? globalStyles.isLoading :null}`}>
+  return (      
+    <div className={`${styles.basicGrid} ${isLoading? globalStyles.isLoading :null}`}>
 
       <div className={`${globalStyles.gridTile} ${styles.video}`} style={{backgroundColor : '#000000'}}> 
         <ReactPlayer url={demoVideo} controls playing={true} muted={true} width={'100%'} height={'100%'}/>
@@ -74,11 +72,10 @@ const Home = (): JSX.Element => {
       </div>
 
       <div className={`${globalStyles.gridTile} ${styles.myStaats}`} >
-        <StatsPanel />
+        <StatsPanel graphData={globalStats.serverGraphData} isDataReady={!globalStats.isLoading}/>
       </div>
 
-      </div>        
-    </>
+    </div>        
   );
 };
 export default Home;
