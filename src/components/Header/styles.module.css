@@ -1,0 +1,125 @@
+@import "theme/vars.css";
+
+.header {
+  background-color: transparent;
+  height: 10rem;
+}
+
+.logo {
+  content: url("assets/icons/logo.svg");
+  width: 15em;
+  height: 5em;
+}
+
+.desktopHeaderContent {
+  display: none;
+}
+
+.mobileHeaderContent {
+  /*padding: 1.6rem;*/
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 3rem 0 3rem;
+}
+
+.navLink {
+  text-align: right;
+  color: #cecece;
+  font-family: Rocks;
+  opacity: 0.6;
+  font-size: 1.9em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: grid;
+  align-content: center;
+  white-space: nowrap;
+  transition: 0.3s all ease-out;
+  border-bottom:3px solid rgba(206,206,206,0);
+}
+
+.navLink:hover {
+  color: #cecece;
+  font-family: Rocks;
+  opacity: 0.9;
+  border-bottom:3px solid #cecece;
+}
+
+@font-face {
+  font-family: Rocks;
+  white-space: nowrap;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.activeNavLink {
+  color: #dddddd;
+  font-family: Rocks;
+  opacity: 1;
+  font-size: 1.9em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: grid;
+  justify-content: flex-end;
+  align-content: center;
+  cursor: default;
+  transition: 0.3s;
+  white-space: nowrap;
+  border-bottom:3px solid white;
+}
+
+.activeNavLink:hover {
+  color: #dddddd;
+}
+
+.playButtonContainer{
+  justify-self: center;
+  height: 10rem;
+  padding-bottom:1rem;
+  align-items: center;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.playWrapper{
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 1300px) {
+  .desktopHeaderContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobileHeaderContent {
+    display: none;
+  }
+
+  .navContainer {
+    display: flex;
+    margin: 0rem;
+    padding: 0;
+  }
+  .navContainer > * + * {
+    margin-left: 3.2rem;
+  }
+
+  .navLink {
+    text-align: left;
+  }
+
+  .walletContainer {
+    margin-top: 0;
+    margin-left: 0;
+  }
+}
+
+@media all and (max-width: 1600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+

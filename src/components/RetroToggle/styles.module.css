@@ -1,0 +1,55 @@
+
+  .buttonContainer{
+    position: absolute;
+    right: 23.3%;
+    top:4.5rem;
+  }
+
+  .buttonWrapper{
+    position: relative;
+    height: 3.2rem;
+    width: 5.8rem;
+    display: grid;
+    justify-content: center;
+    background-color: #828282ff;
+  }
+  
+  .expandButton {
+    position: relative;
+    top: -0.5rem;
+    background-color: #4f403aff;
+    width: 5.3rem;
+    height: 2.8rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+    transition: all 200ms ease;
+    border-radius: 3px;
+  }
+  .expandButton:hover{
+    top: -0.2rem;
+    transition: all 200ms ease;
+  }
+
+  .buttonBase{
+    position: relative;
+    top:-1.9rem;
+    background-color: #382e2aff;
+    width: 5.3rem;
+    height: 2rem;
+    z-index: 2;
+  }
+
+  .expandIcon{
+    height: 1.7rem;
+  }
+  
+  .expandIconUp {
+    transition: all 400ms ease;
+  }
+  
+  .expandIconDown {
+    transform: rotate(180deg);
+    transition: all 400ms ease;
+  }  

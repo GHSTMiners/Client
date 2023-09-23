@@ -1,0 +1,102 @@
+.walletContainer{
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  flex-direction: row;
+  margin-right: 0.4rem;
+  margin-top: 0.6rem;
+  margin-left: 1rem;
+  min-height: 7.3rem;
+}
+
+.walletButton {
+  background-color: transparent;
+  font-size: 1rem;
+  font-family: Rocks;
+  color: #cecece;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  cursor: pointer;
+  height: 100%;
+  align-self: center;
+  border: 0px solid red;
+  transition: all 400ms ease;
+}
+
+.walletButton:hover{
+  transition: all 400ms ease;
+  color:white;
+}
+
+
+
+.walletIcon{
+  margin-top: 0.5rem;
+  height: 3rem;
+}
+.walletAppIcon{
+  position: absolute;
+  top:0;
+  right:0;
+  transform: translate( -30% ,10% );
+}
+.walletAppIcon img{
+  height: 1.2rem;
+}
+.walletButton:disabled {
+  cursor: auto;
+}
+
+.walletWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+.walletAddress p {
+  margin: 0 0 0 1.2rem;
+}
+
+.connectedDetails {
+  padding-top: 0.4rem;
+  text-align: center;
+}
+
+
+.blocky{
+  border-radius: 50%;
+  position: absolute;
+  margin-right: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.pulsatingGlow{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+	box-shadow: 0 0 0 0 rgb(205, 206, 69);
+	transform: scale(1);
+	animation: goldenPulse 2s infinite;
+}
+
+@keyframes goldenPulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(205, 206, 69, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgb(205, 206, 69, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(205, 206, 69, 0);
+	}
+}

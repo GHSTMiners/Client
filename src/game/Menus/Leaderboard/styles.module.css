@@ -1,0 +1,75 @@
+.leaderboardContainer {
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  font-family: Pixelar;
+  position: absolute;
+  width: 50rem;
+  height: 40rem;
+  left: 50%;
+  transform: translate(-45%, 0%);
+  overflow: hidden;
+  z-index: 10;
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.displayOn{
+  top: 50vh;
+  transform: translate( -50%, -50%);
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -100rem;
+  transition: all 400ms ease;
+}
+
+.tableHeader{
+  display: grid;
+  grid-template-columns: repeat(4, 10rem);
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1.2rem;
+  color: white;
+  border-bottom: 2px solid white;
+  margin-bottom: 1rem;
+}
+
+.playerEntry{
+  display: grid;
+  grid-template-columns: repeat(4, 10rem);
+  grid-template-rows: 6rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  font-size: 1.2rem;
+  color: white;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 4px;
+}
+
+.playerEntry>div {
+
+}
+
+.gotchi{
+  text-align: center;
+}
+
+.gotchiPreviewContainer{
+  height: 4rem;
+}
+
+.upgradeBar{
+  display: flex;
+  flex-direction: row;
+}
+
+.upgradeElement{
+  width: 0.75rem;
+  height: 1.5rem;
+  margin-right: 0.2rem;
+  transform: skew(-18deg);
+}

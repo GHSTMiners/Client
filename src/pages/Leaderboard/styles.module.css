@@ -1,0 +1,75 @@
+@import "theme/vars.css";
+
+
+.leaderboardContainer{
+  padding:0rem 5rem 0 5rem;
+  display: grid;
+  gap: 4rem;
+  grid-template-columns: repeat(auto-fit,minmax(45rem,0.5fr));
+  justify-content: center;
+}
+
+.gotchiPodiumContainer{
+  display: grid;
+  justify-content: center;
+  z-index: 2;
+}
+
+.tableContainer{
+  height: 100%;
+  display: grid;
+  justify-content: center;
+  position: relative;
+}
+
+.tableBackground{
+  margin:11% 3rem 0rem 3rem;
+  position: absolute;
+  width: 90%;
+  z-index: 0;
+  background-color: rgba(0,0,0,0.3);  
+}
+
+.leaderboardFooter{
+  width: 100%;
+  margin-top:auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+.leaderboardHeader{
+  width: 100%;
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.leaderboardTableContainer{
+
+}
+
+.tableToolbar{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 0.8fr;
+  justify-items: center;
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+
+.selectDropdown{
+  background-color: rgba(0.3,0.3,0.3,0.3);
+  color:white;
+  border:none;
+  height: 2rem;
+  width: 11rem;
+  align-self: space-around;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.leaderboardTag{
+  color: white;
+  text-align: left;
+  font-family: Rocks;
+}

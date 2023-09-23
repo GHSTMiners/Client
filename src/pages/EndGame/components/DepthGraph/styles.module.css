@@ -1,0 +1,25 @@
+
+.graphContainer{
+    width: 100%;
+    height: 95%;
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.infoTitle{
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
+}
+
+.graphUnavailable{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    font-family: Rocks;
+    align-items: center;
+    justify-content: center;
+}
+
+.selectContainer{
+    width: 10rem;
+}

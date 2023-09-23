@@ -1,0 +1,50 @@
+
+.newsPanel{
+    width: 100%;
+    height: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.newsEntry{
+    position: relative;
+}
+
+.newsTitle{
+    text-transform: uppercase ;
+    margin-bottom: 0.5rem;
+}
+
+.newsDescription{
+    font-size: 1rem;
+    text-align: justify;
+    text-justify: inter-word;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+.tileIcon{
+    width: 2rem;
+    height: 2rem;
+}
+
+.tileHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.countdown{
+    background-color: rgba(255,255,255,0.15);
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    padding: 1rem 0rem;
+    border-radius: 4px;
+}

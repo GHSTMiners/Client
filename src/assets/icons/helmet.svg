@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 26.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 63.299999 42.33815"
+   xml:space="preserve"
+   sodipodi:docname="helmet.svg"
+   width="63.299999"
+   height="42.33815"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs37" /><sodipodi:namedview
+   id="namedview35"
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1.0"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   showgrid="false"
+   inkscape:zoom="13.625"
+   inkscape:cx="31.743119"
+   inkscape:cy="12.880734"
+   inkscape:window-width="1858"
+   inkscape:window-height="1057"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+<style
+   type="text/css"
+   id="style2">
+	.st0{fill:#FFA62B;}
+	.st1{fill:none;stroke:#DB7C26;stroke-width:3.0215;stroke-miterlimit:10;}
+	.st2{fill:#DB7C26;}
+	.st3{fill:none;stroke:#727272;stroke-width:3.1571;stroke-miterlimit:10;}
+	.st4{fill:#B0FFF2;}
+	.st5{fill:#FFFFFF;}
+</style>
+<g
+   id="g32"
+   transform="translate(-0.2,-7.2618505)">
+	<g
+   id="g28">
+		<path
+   class="st0"
+   d="M 52.7,17.6 C 41.7,5.5 22.6,5.4 11.4,17.4 6.6,22.6 3.9,29.3 3.9,36.4 L 3.8,48.7 H 59.9 L 60,36.7 C 60,29.6 57.4,22.8 52.7,17.6 Z"
+   id="path4" />
+		<path
+   class="st1"
+   d="m 19.9,40 c 0,0 -2.5,-21.3 9.3,-31.6"
+   id="path6" />
+		<path
+   class="st1"
+   d="M 43.3,40 C 43.3,40 45.8,18.7 34,8.4"
+   id="path8" />
+		<rect
+   x="0.2"
+   y="34.299999"
+   class="st2"
+   width="63.299999"
+   height="15.3"
+   id="rect10" />
+		<circle
+   class="st2"
+   cx="31.9"
+   cy="32.799999"
+   r="13.3"
+   id="circle12" />
+		<path
+   class="st1"
+   d="M 10.1,37 C 10.1,37 8,19.8 17.6,11.5"
+   id="path14" />
+		<path
+   class="st1"
+   d="m 52.7,37 c 0,0 2,-17.2 -7.5,-25.5"
+   id="path16" />
+		<path
+   class="st3"
+   d="M 30,8.4"
+   id="path18" />
+		<path
+   class="st3"
+   d="M 20.7,40"
+   id="path20" />
+		<path
+   class="st3"
+   d="M 34,8.4"
+   id="path22" />
+		<path
+   class="st3"
+   d="M 43.3,40"
+   id="path24" />
+		<circle
+   class="st4"
+   cx="32"
+   cy="32.900002"
+   r="9.8000002"
+   id="circle26" />
+	</g>
+	<path
+   class="st5"
+   d="m 40,27.2 c 0,0 -1.9,-2.5 -3.8,-3.2 L 23.5,37.7 c 0,0 1.1,2.3 3.9,3.8 z"
+   id="path30" />
+</g>
+</svg>

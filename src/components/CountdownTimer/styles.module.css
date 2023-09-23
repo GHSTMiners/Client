@@ -1,0 +1,14 @@
+.timerContainer{
+    display: flex;
+    margin: auto;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.number{
+    font-size: 2rem;
+}
+
+.textTag{
+    font-size: 1rem;
+}

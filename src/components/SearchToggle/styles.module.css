@@ -1,0 +1,50 @@
+@import "theme/vars.css";
+
+.inputContainer {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.1);
+  height: 3rem;
+  width: 3rem;
+  border-radius: 1rem;
+  transition: width 200ms ease;
+}
+.inputContainer.open {
+  width: 25rem;
+}
+.inputContainer.open .input {
+  padding-left: 4.6rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+  color: white;
+}
+
+.toggle {
+  position: absolute;
+  background-color: transparent;
+  height:3rem;
+  width: 3rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  padding: 0.4rem;
+  font-size: 1.6rem;
+  border: none;
+  opacity: 0;
+  transition: all 300ms ease;
+}
+.input:focus {
+  outline: none;
+}
+
+.iconContainer{
+  /*background-color: rgba(255,255,255,0.1);
+  border-radius: 25%;*/
+}

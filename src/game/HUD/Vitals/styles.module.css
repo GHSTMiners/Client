@@ -1,0 +1,127 @@
+.vitalsConsole {
+  width: 28rem;
+  height: 6.2rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  background-image: url("assets/hud/vitals_console_rear.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 3;
+  filter: drop-shadow(10px 10px 2px rgba(0, 0, 0, 0.4));
+}
+
+.vitalsBarsCovers {
+  background-image: url("assets/hud/vitals_console_front.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+}
+
+.fuelBarContainer,
+.healthBarContainer,
+.cargoBarContainer {
+  position: absolute;
+  z-index: 4;
+  height: 1rem;
+  width: 12.3rem;
+  left: 9.2rem;
+  border-radius: 0 10px 10px 0;
+  overflow: hidden;
+}
+
+.fuelBarContainer {
+  top: 0.5rem;
+}
+
+.healthBarContainer {
+  top: 2.6rem;
+}
+
+.cargoBarContainer {
+  top: 4.7rem;
+}
+
+.fuelBar,
+.healthBar,
+.cargoBar {
+  display: block;
+  height: 100%;
+}
+
+.fuelBar {
+  background-color: #fce359ff;
+}
+
+.healthBar {
+  display: block;
+  background-color: #92d245ff;
+}
+
+.cargoBar {
+  display: block;
+  background-color: #a4fffdff;
+}
+
+
+.lowFuelBar{
+  color: red;
+}
+
+.lowFuelIndicator {
+  position: absolute;
+  top: 0.2rem;
+  left: 6.85rem;
+  width: 1.9rem;
+  height: 1.4rem;
+  border-radius: 20%;
+  z-index: 6;
+  background-color: rgba(255, 0, 0, 0.3);
+  box-shadow: 0px 0px 1.5rem 0px red;
+  animation-name: lowFuelAnimation;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes lowFuelAnimation {
+  0%   {background-color:rgba(255, 0, 0, 0.1)}
+  50%  {background-color:rgba(255, 0, 0, 0.3)}
+  100% {background-color:rgba(255, 0, 0, 0.1)}
+}
+
+
+
+.vitalBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.depthTag {
+  font-size: 1rem;
+  color: white;
+  width: 4rem;
+  left: 1.2rem;
+  top: 2.8rem;
+  line-height: 1.4rem;
+  text-align: center;
+  position: absolute;
+  opacity: 1;
+  z-index: 3;
+  text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
+    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
+    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
+}
+
+.cargoIcon {
+  position: absolute;
+  width: 2em;
+  left: 19%;
+  top: 2%;
+}

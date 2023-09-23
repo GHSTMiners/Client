@@ -1,0 +1,32 @@
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+body {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 1.5s, opacity 1.5s linear;
+}
+
+.reveal {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s 0.5s, opacity 0.5s linear;
+}
+
+.hudContainer {
+  position: absolute;
+  font-family: Pixelar;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}

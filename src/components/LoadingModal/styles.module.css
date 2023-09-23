@@ -1,0 +1,14 @@
+.loadingContainer{
+    position: absolute;
+    width: 100%;
+    bottom: 50vh;
+    color:white;
+    font-size: 30px;
+    display: flex;
+    font-family: Pixelar;
+    flex-direction: row;
+    justify-content: center;
+    gap: 4rem;
+    z-index: 300;
+  }
+  

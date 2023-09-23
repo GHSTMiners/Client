@@ -1,0 +1,78 @@
+.arrowLeft,
+.arrowRight {
+  transform: rotate(180deg) ;
+  padding:1.5rem;
+  opacity: 0.5;
+}
+
+.arrowRight{
+  transform: rotate(0deg);
+}
+
+.arrowLeft:hover, .arrowRight:hover{
+  opacity: 0.9;
+  transition: all 400ms ease;
+}
+
+.disabledIcon{
+  opacity: 0.2;
+}
+
+.disabledIcon:hover{
+  opacity: 0.2;
+}
+
+.mapTitle{
+  font-family: Rocks;
+  font-size: 1.5rem;
+  color: rgba(255,255,255,1);
+  z-index: 2;
+}
+
+.mapThumbnail{
+  position: absolute;
+  opacity: 0.9;
+  width: 100%;
+  transition: all 400ms ease;
+}
+
+.thumbnailGallery{
+  width: 100%;
+  bottom: -1rem;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.thumbnailGalleryitem{
+  width: 5rem;
+  opacity: 0.9;
+  z-index: 10;
+}
+
+.thumbnailGalleryitem:hover{
+  border:1px solid white;
+}
+
+.selectedThumbnail{
+  border:2px solid white;
+}
+
+.thumbnailContainer{
+  position: relative;
+}
+
+.voteContainer{
+  position: absolute;
+  background-color: rgba(0,0,0,0.4);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  top:0;
+  padding-top: 1rem;
+  font-size: 1.2rem;
+  z-index: 15;
+  transition: all 400ms ease;
+}

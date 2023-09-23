@@ -1,0 +1,44 @@
+.chatContainer{
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto 3rem;
+  margin: auto;
+}
+
+.chatHistory{
+  padding: 1rem;
+  border-bottom: 1px solid white;
+}
+
+
+.textBoxContainer {
+  width: 100%;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.formContainer{
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+}
+
+.textBox {
+  width: 80%;
+  justify-content: flex-start;
+  color: white;
+  padding-left: 0.5rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.chatButton {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  outline: none;
+  height: 3rem;
+  margin: 0rem;
+  border:none;
+  border-left: 1px solid white;
+}

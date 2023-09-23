@@ -1,0 +1,96 @@
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+body {
+  user-select: none; /* supported by Chrome and Opera */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+}
+
+.mainConsole {
+  position: absolute;
+  width: 100rem;
+  left: 50%;
+  bottom: -36rem;
+  transform: translate(-50%, 0);
+  margin-top: 10rem;
+  overflow: hidden;
+  z-index: 10;
+  filter: drop-shadow(10px 10px 2px rgba(0, 0, 0, 0.4));
+}
+
+.mainConsoleDown {
+  bottom: -35.5rem;
+  transition: all 400ms ease;
+}
+
+.mainConsoleUp {
+  bottom: 0rem;
+  transition: all 400ms ease;
+}
+
+.mainConsoleImg {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  z-index: 0;
+}
+
+.mainConsoleContainer {
+  display: grid;
+  background-image: url("assets/hud/main_hud_v3.svg");
+  background-size: cover;
+  width: 100rem;
+  height: 44rem;
+  grid-template-rows: 11.2rem 1fr 4fr 4fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    "playerButtons playerButtons"
+    "inventory inventory"
+    "explosives crypto"
+    "consumables crypto";
+  padding-left: 12.9rem;
+  padding-right: 15.5rem;
+  padding-bottom: 2rem;
+  column-gap: 2rem;
+  font-size: 3em;
+  color: white;
+  font-family: Pixelar;
+  text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
+    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
+    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
+  z-index: 10;
+}
+
+.mainConsoleContainer > * >* {
+  font-size: 0.5em;
+}
+
+.playerButtons {
+  grid-area: playerButtons;
+  align-items: flex-end;
+  justify-self: center;
+  display: flex;
+  width: 42rem;
+  margin-bottom: 3.7rem;
+  margin-right: 4.6rem;
+  justify-content: space-between;
+}
+
+.toolIcon {
+  width: 80%;
+}
+
+.inventoryConsumable > img {
+  height: 1.5rem;
+}
+
+.inventoryTitle {
+  grid-area: inventory;
+  font-size: 1em;
+  justify-self: center;
+}

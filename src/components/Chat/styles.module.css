@@ -1,0 +1,66 @@
+.textBox {
+  width: 80%;
+  justify-content: flex-start;
+  color: white;
+  padding-left: 0.5rem;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.chatMessage {
+  color: white;
+}
+
+.chatUser {
+  font-weight: bold;
+}
+
+.closeButton{
+  position: absolute;
+  background-color: transparent;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.9rem;
+  right: 0.5rem;
+  top: 0.5rem;
+  color:rgba(255,255,255,0.8);
+  outline: 0;
+  margin: auto;
+  box-shadow: 0;
+  border: 1px solid rgba(255,255,255,0.5);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border: 1px solid white;
+  color: white;
+  background-color: rgba(255,255,255,0.5);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.rainbow {
+  text-decoration: underline;  
+}
+
+.rainbow_text_animated {
+  background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: rainbow_animation 6s ease-in-out infinite;
+  background-size: 400% 100%;
+}
+
+@keyframes rainbow_animation {
+  0%,100% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 100% 0;
+  }
+}
+

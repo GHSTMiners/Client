@@ -1,0 +1,109 @@
+.rankingWrapper{
+    height: 100%;
+    display: flex;
+    margin-left: 1rem;
+    flex-direction: column;
+    gap: .7rem;
+}
+  
+.rankingEntry{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3.9rem;
+    gap: 1rem;
+    padding-left: 2rem;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.rankEntryData{
+}
+
+.rankName{
+  font-size: 1.25rem;
+}
+
+.rankValue{
+    font-size: 0.9rem;
+  }
+
+.medal{
+    padding: 0.1rem;
+    height: 3rem;
+}
+
+.goldenMedalContainer{
+  border-radius: 50%;
+  background-color: rgba(252, 171, 40,0.7);
+	box-shadow: 0 0 0 0 rgb(205, 206, 69);
+	transform: scale(1);
+	animation: goldenPulse 2s infinite;
+}
+
+.silverMedalContainer{
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+	box-shadow: 0 0 0 0 rgb(255, 255, 255);
+	transform: scale(1);
+	animation: silverPulse 2s infinite;
+}
+
+.bronzeMedalContainer{
+  border-radius: 50%;
+  background-color: rgba(106, 56, 5, 0.5);
+	box-shadow: 0 0 0 0 rgb(173, 138, 86);
+	transform: scale(1);
+	animation: bronzePulse 2s infinite;
+}
+
+
+@keyframes goldenPulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(205, 206, 69, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgb(205, 206, 69, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(205, 206, 69, 0);
+	}
+}
+
+@keyframes silverPulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(255, 255, 255, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgb(255, 255, 255, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(255, 255, 255, 0);
+	}
+}
+
+@keyframes bronzePulse {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(173, 138, 86, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgb(173, 138, 86, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgb(173, 138, 86, 0);
+	}
+}

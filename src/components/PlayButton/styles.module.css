@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+.greenButton {
+  background-image: url("assets/icons/green_button.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  background-size: contain;
+  font-family: Rocks;
+  font-size: 1.2em;
+  color: rgba(42, 42, 42, 0.8);
+  aspect-ratio: 3;
+  border: 0px solid cyan;
+  outline: 0;
+  margin: auto;
+  box-shadow: 0;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.noWallet{
+  filter: grayscale(100%);
+}
+
+.buttonText{
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonText:hover {
+  box-shadow: 0 5px 20px rgba(0, 255, 0, 0.8);
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}

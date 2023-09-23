@@ -1,0 +1,33 @@
+.timerContainer{
+    position: absolute;
+    top:0.5rem;
+    font-size: 1rem;
+    width: 8rem;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 0 2px #cecece55, 0 0 5px #cecece55, 0 0 9px #cecece55,
+    0 0 24px #00ffaa75, 0 0 35px #00ffaa75, 0 0 45px #00ffaa75,
+    0 0 60px #00ffaa75, 0 0 70px #00ffaa75;
+}
+
+.minutesLeft, 
+.minutesRight,
+.secondsLeft,
+.secondsRight{
+    position: absolute;
+}
+
+.minutesLeft{
+    left:0.8rem;
+}
+
+.minutesRight{
+    left:2.05rem;
+}
+
+.secondsLeft{
+    left:4rem;
+}
+
+.secondsRight{
+    left:5.25rem;
+}

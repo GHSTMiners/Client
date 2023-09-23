@@ -1,0 +1,107 @@
+.shopContainer{
+  background-image: url('assets/hud/shop_hud.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  font-family: Pixelar;
+  width: 70rem;
+  height: 47rem;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.screenContainer{
+  position:relative;
+  width: 68%;
+  margin-top: 22%;
+  height: 28rem;
+  margin-left: 16%;
+}
+
+
+.shopHeader{
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #a4ffff;
+}
+
+.walletContainer{
+  display: flex;
+  flex-direction: row;
+  gap:1rem;
+  margin: auto;
+}
+
+.walletWrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  color:white;
+  font-size: 1.2rem;
+  align-items: center;
+}
+
+.closeButton{
+  background-color: transparent;
+  width: 2rem;
+  height: 2rem;
+  color:#a4ffff;
+  border: none;
+  border-left: 1px solid #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.closeButton:hover {
+  border-width: 1px;
+    background-color: rgba(0,255,255,0.3);
+    border-color: #a4ffff;
+  -webkit-transition : box-shadow ease-in .3s;
+  transition : box-shadow ease-in .3s;
+}
+
+.displayOn{
+  top: 0rem;
+  transition: all 400ms ease;
+}
+
+.displayOff{
+  top: -100rem;
+  transition: all 400ms ease;
+}
+
+.playerDoekoes{
+  background-color: transparent;
+  text-align: center;
+  width: 8rem;
+  height: 2rem;
+  right: 2.5rem;
+  top: 0.5rem;
+  color:#a4ffff;
+  margin: auto;
+  box-shadow: 0;
+  position: absolute;
+  border: 1px solid #a4ffff;
+}
+
+.coinUnavailable{
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
+.shopTabs{
+  padding-top: 3rem;
+  font-size: 2em;
+  display: flex;
+  color: white;
+  position: static;
+}
+
+.currencyThumbnail{
+  height: 1.5rem;
+}

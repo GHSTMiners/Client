@@ -1,0 +1,39 @@
+
+.rankingList{
+  font-family: Rocks;
+  color: white;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.tableRow{
+  display: grid;
+  grid-template-columns: 2fr 8fr 8fr 5rem;
+  width: 100%;
+  align-items: center;
+  justify-items: flex-start;
+  padding-right: 2rem;
+  padding-bottom: 1rem;
+}
+
+.tableEntry{
+
+}
+
+.rankingHeader{
+  border-top: 2px solid white;
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 8fr 8fr 5rem;
+  border-bottom: 2px solid white;
+  margin-bottom: 1rem;
+}
+
+.rankingData{
+  height: 27rem;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  margin-bottom: 1rem;
+}

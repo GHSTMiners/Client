@@ -1,0 +1,100 @@
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+.upgradeRowContainer{
+  width: 100%;
+  height: 3.5rem;
+  border-color: #a4ffff;
+  border-top: 1px solid #a4ffff;
+  z-index: 50;
+  display: grid;
+  grid-template-columns: repeat(3,1fr) ;
+  align-items: center;
+}
+
+.upgradeBarContainer{
+  display: flex;
+  flex-direction: row;
+  min-width: 12rem;
+  margin-right: 1rem;
+  z-index: 10;
+  padding-left: 1rem;
+}
+
+.upgradeButton {
+  width: 5.5rem;
+  height: 1.5rem;
+  text-align:center; 
+  vertical-align:middle;
+  background-color: #a4ffff;
+  padding: 0px;
+  z-index: 50;
+  clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
+}
+
+.upgradeButton:hover {
+  box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
+}
+
+.upgradeButtonText{
+  font-size: 0.8rem;
+  font-family:verdana;
+  transform: translate(-10%,-10%);
+  color: #3c4c41;
+}
+
+.levelContainer{
+  display: flex;
+  margin-left: 0rem;
+}
+
+.enabledElement, .disabledElement{
+  width: 0.75rem;
+  height: 1.5rem;
+  margin-right: 0.2rem;
+  transform: skew(-18deg);
+}
+
+.disabledElement{
+  border:1px solid #cecece;
+}
+
+.upgradeBarTitle{
+  justify-self:flex-start;
+  padding-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.costContainer{
+  /*border-left: 1px solid #a4ffff;
+  border-right: 1px solid #a4ffff;*/
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.exchangeCoin{
+  height: 3rem;
+  width: 3rem;
+  padding: 0.5rem;
+  padding-left: 0;
+  margin-bottom: 0.2rem;
+}
+
+.upgradeUnavailable{
+  opacity: 0.4;
+  filter: grayscale(0.7);
+}
+
+.buttonUnavailable{
+  background-color: #a4ffff ;
+  filter:grayscale(0.4);
+  opacity: 0.4;
+  z-index: 50;
+  clip-path: polygon(0 0, 100% 0%, 90% 100%, 0% 100%);
+}

@@ -1,0 +1,64 @@
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+
+
+@font-face {
+  font-family: Pixelar;
+  src: url("assets/fonts/pixelar_regular.woff2");
+}
+
+@font-face {
+  font-family: MSDOS;
+  src: url("assets/fonts/Perfect_DOS_VGA_437.ttf");
+}
+
+.squareButton {
+  background: transparent;
+  font-family: Pixelar;
+  font-size: 0.6em;
+  color: white;
+  border: 0px solid red;
+  outline: 1px dashed #cecece;
+  outline-width: 3px;
+  overflow: hidden;
+  box-shadow: 0 0 1em  #00ffaa75;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}  
+
+.buttonText {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.disabled {
+  filter:grayscale(1);
+}
+
+.isDragging{
+  filter: none;
+  background: rgb(1,255,0);
+  background: radial-gradient(circle, rgba(1,255,0,0.5) 0%, rgba(64,154,42,0.3) 50%, rgba(64,154,42,0) 75%);
+}
+
+
+.squareButton:hover {
+  box-shadow: 0 0 1.5em rgba(0, 255, 0, 0.8);
+}
+
+.squareButton:disabled {
+  box-shadow: none;
+  color: #cecece;
+}
+
+.quantity {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 0.8em;
+}
+

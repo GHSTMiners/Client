@@ -1,0 +1,136 @@
+@import "theme/vars.css";
+
+h3{
+  padding-bottom: 0.5rem;
+}
+
+.basicGrid {
+  margin-top: 0rem;
+  padding: 0rem 2rem 0 2rem;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr) minmax(25rem,3fr);
+  grid-auto-rows: 14rem; /*240px;*/
+  grid-template-areas:
+  "welcome flow controls"
+  "traits flow controls"
+  "vitals flow console";
+ }
+
+.welcomeTile{
+  grid-area: welcome;
+} 
+
+.controlsTile{
+  grid-area: controls;
+  gap: 2rem;
+} 
+
+.gameflowTile{
+  grid-area: flow;
+  
+} 
+
+.traitsTile{
+  grid-area: traits;
+} 
+
+.vitalsTile{
+  grid-area: vitals;
+} 
+
+.consoleTile{
+  grid-area: console;
+} 
+
+.flowImage{
+  align-self: center;
+  padding-bottom: 2rem;
+  width: 100%;
+  max-height: 90%;
+}
+
+.traitIcon{
+  height: 2rem;
+  padding-right: 1rem;
+}
+
+.traitList{
+  margin-top: 0.3rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.traitElement{
+  display: flex;
+  flex-direction: row;
+}
+
+.gameFlowEntry{
+  display: flex;
+  position: relative;
+  align-items: center;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+.imageFrame{
+  display: flex;
+  height: 6rem;
+  width: 6rem;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.imageTitle{
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  width: 4rem;
+  color: black;
+  background-color: white;
+  border-radius: 5rem;
+  transform: translateY(50%);
+}
+
+.gameflowThumbnail{
+  align-self: center;
+  height: 3rem;
+}
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: minmax(30rem,4fr) minmax(20rem,3fr);
+    grid-auto-rows: 240px;
+    grid-template-areas:
+    "welcome controls"
+    "traits  controls"
+    "vitals  console"
+    "flow flow"
+    "flow flow"
+    "flow flow";
+  }
+
+  .flowTitle{
+    align-self: center;
+  }
+}
+
+
+@media all and (max-width: 870px) {
+  .basicGrid {
+    grid-template-columns: minmax(30rem,1fr);
+    grid-template-areas:
+    "welcome"
+    "traits"
+    "controls"
+    "controls"
+    "console"
+    "vitals"
+    "flow"
+    "flow"
+    "flow";
+  }
+}

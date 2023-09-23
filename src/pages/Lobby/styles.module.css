@@ -1,0 +1,245 @@
+.basicGrid {
+  margin-top: 0rem;
+  padding: 0rem 2rem 0 2rem;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns:  minmax(48rem,2fr) minmax(15rem,1fr); /*grid-template-columns:  minmax(24rem,1fr)  minmax(24rem,2fr) minmax(15rem,1fr);*/
+  grid-auto-rows: 160px;
+  grid-template-areas:
+  " gotchi players"
+  " gotchi map"
+  " gotchi map"
+  " gotchi counter"
+ }
+
+.gotchiSelection{
+  grid-area: gotchi;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 2fr;
+  grid-template-areas:
+  "selection preview traits";
+  align-content: center;
+} 
+
+.gotchiSelection > div{
+  height: 100%;
+  /*border:1px solid white;*/
+}
+
+.gotchiSelectionBar{
+  padding-top: 0.5rem;
+  grid-area:selection;
+  justify-items: center;
+}
+
+.gotchiPreview{
+  grid-area:preview;
+  display: flex;
+  flex-direction: column;
+  width: 17rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.gotchiContainer{
+  width: 70%;
+}
+
+.gotchiTraitsContainer{
+  grid-area:traits;
+}
+
+.readyUpContainer{
+  grid-area:readyup;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.mapSelection{
+  grid-area: map;
+} 
+
+.availablePlayers{
+  grid-area: players;
+  justify-content: flex-start;
+} 
+
+.chat{
+  grid-area: chat;
+  justify-content: flex-start;
+} 
+
+.readyUpButton{
+  width: 100%;
+  height: 8rem;
+  font-family: Rocks;
+  font-size: 32px;
+  color: rgba(255,255,255,0.9);
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border:none;
+  background-color: rgba(210,210,210,0.5);
+  transition: all 400ms ease;
+}
+
+.readyUpButton:hover{
+  background-color: rgba(210,210,210,0.7);
+  transition: all 400ms ease;
+}
+
+.gotchiName {
+  color: white;
+  font-size: 1.7rem;
+  font-family: Rocks;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.mapSelectionContainer{
+  width: 100%;
+  height: 15rem;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  justify-self: center;
+  justify-items: center;
+  padding: 0rem 3rem ;
+  position: relative;
+}
+
+.arrowLeft,
+.arrowRight {
+  transform: rotate(180deg) ;
+  padding:1.5rem;
+  opacity: 0.3;
+}
+
+.arrowRight{
+  transform: rotate(0deg);
+}
+
+.mapTitle{
+  font-family: Rocks;
+  font-size: 1.5rem;
+  color: rgba(255,255,255,1);
+  z-index: 2;
+}
+
+.mapThumbnail{
+  position: absolute;
+  opacity: 0.6;
+  width: 100%;
+}
+
+.timeCounter{
+  grid-area: counter;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  background-color: transparent;
+}
+
+.chatContainer{
+  height: 100%;
+  width: 100%;
+  padding: 1rem 2rem 2rem 2rem;
+  display: grid;
+  grid-template-rows: auto 3rem;
+  margin: auto;
+}
+
+.chatText{
+  background-color: rgba(0,0,0,0.3);
+  padding: 1rem;
+  border-bottom: 2px solid white;
+}
+
+.chatInputContainer{
+  width: 100%;
+  display: grid;
+  background-color: rgba(0,0,0,0.4);
+  grid-template-columns: 4fr 1fr;
+}
+
+.chatInput{
+  background-color: transparent;
+  border: none;
+  color: white;
+  padding-left: 1rem;
+}
+
+.chatButton {
+  background-color: transparent;
+  margin: 0.4rem;
+  color: white;
+  font-weight: bold;
+  outline: none;
+  border: 1px solid white;
+}
+
+
+
+
+@media all and (min-width: 2000px) {
+  .basicGrid {
+    font-size: 18px;
+    grid-auto-rows: 200px;
+  }
+}
+
+@media all and (min-width: 2500px) {
+  .basicGrid {
+    font-size: 20px;
+    grid-auto-rows: 250px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: repeat(2,minmax(160px,1fr));
+    grid-template-areas:
+    "gotchi gotchi"
+    "gotchi gotchi"
+    "gotchi  gotchi"
+    "gotchi  gotchi"
+    "gotchi  gotchi"
+    "map  players"
+    "counter counter";
+  }
+  .gotchiSelection{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 1.5fr;
+    grid-template-areas:
+    "selection traits"
+    "selection readyup";
+  }
+  .gotchiPreview{
+    display: none;
+  }
+}
+
+@media all and (max-width: 800px) {
+  html{
+    font-size:10px;
+  }
+  .basicGrid {
+    padding: 0;
+    grid-template-areas:
+    "gotchi gotchi"
+    "gotchi gotchi"
+    "gotchi  gotchi"
+    "map  players"
+    "counter counter";
+  }
+}

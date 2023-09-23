@@ -1,0 +1,22 @@
+:root {
+  --color-dark_0: #080315;
+  --color-dark_1: #12032e;
+  --color-dark_2: #47238d;
+
+  --color-pink_0: #fc16f4;
+  --color-purple_0: #6d18f8;
+
+  --container-width-xl: 150rem;
+}
+
+@font-face {
+  font-family: Rocks;
+  src: url("assets/fonts/gomarice_rocks.woff");
+}
+/*
+@media only screen and (min-width: 2048px) {
+  html{
+    font-size: 20px;
+  }
+}
+*/

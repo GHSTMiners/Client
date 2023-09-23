@@ -1,0 +1,91 @@
+@import "theme/vars.css";
+
+.basicGrid {
+  margin-top: 0rem;
+  padding: 0rem 2rem 0 2rem;
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  grid-template-columns: repeat(5,minmax(100px,1fr));
+  grid-auto-rows: 170px;
+  grid-template-areas:
+  "video  video  crystals blocks  topPlayer "
+  "video  video  games   frens topPlayer "
+  "news   news   stats  stats  topPlayer "
+  "news   news   stats  stats  topPlayer ";
+ }
+
+.video{
+  grid-area: video;
+}
+
+.iframe{
+ 
+}
+
+.activeFrens{
+  grid-area: frens
+} 
+
+.blocksMined{
+  grid-area: blocks;
+} 
+
+.gamesPlayed{
+  grid-area: games;
+} 
+
+.crystalsCollected{
+  grid-area: crystals;
+}
+
+
+.topPlayers{
+  grid-area:topPlayer;
+}
+
+.alphaNews{
+  grid-area:news;
+}
+
+.myStaats{
+  grid-area:stats;
+}
+
+
+@media all and (min-width: 2500px) {
+  .basicGrid {
+    font-size: 20px;
+    grid-auto-rows: 250px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .basicGrid {
+    grid-template-columns: repeat(4,minmax(100px,1fr));
+    grid-template-areas:
+    "topPlayer topPlayer topPlayer topPlayer"
+    "topPlayer topPlayer topPlayer topPlayer"
+    "video  video  frens  blocks"
+    "video  video  games  crystals"
+    "news   news   stats  stats"
+    "news   news   stats  stats";
+  }
+}
+
+@media all and (max-width: 870px) {
+  .basicGrid {
+    grid-template-columns: repeat(2,minmax(100px,1fr));
+    grid-template-areas:
+    "topPlayer topPlayer"
+    "topPlayer topPlayer"
+    "video  video"
+    "video  video"
+    "frens  blocks"
+    "games  crystals"
+    "news   news"
+    "news   news"
+    "stats  stats"
+    "stats  stats";
+  }
+}
