@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "7.12.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
     "@portis/web3": "^4.0.7",
     "@svgdotjs/svg.js": "^3.1.1",
     "@svgr/webpack": "5.5.0",
@@ -110,7 +110,7 @@
     "web3": "^1.7.5",
     "web3modal": "^1.9.9",
     "webpack": "4.46.0",
-    "webpack-dev-server": "3.11.1",
+    "webpack-dev-server": "5.0.4",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4",
     "yarn": "^1.22.19",
